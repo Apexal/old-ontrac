@@ -48,11 +48,11 @@ module.exports = function(io) {
             password: password
           }
         }, function(error, response, body){
-          console.log("1: "+response.statusCode);
             if(error) {
-                console.log("UGH");
+                console.log(error);
                 errs.push("1: An error occured, please try again later.");
             }else{
+              console.log("1: "+response.statusCode);
               var $ = cheerio.load(body);
               var title = $("title").text();
               //console.log(body);
