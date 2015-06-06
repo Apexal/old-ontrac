@@ -1,9 +1,17 @@
 doctype html
 html
   head
+    meta(charset="utf-8")
     title= title
+    meta(name="description", content="")
+    meta(name="author", content="")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+
+    link(rel='stylesheet', href='/stylesheets/normalize.css')
+    link(rel='stylesheet', href='/stylesheets/skeleton.css')
     link(rel="stylesheet/less", type="text/css", href="/stylesheets/all.less")
 
   body
-    block content
-  script(src="/javascripts/less.min.js")
+    .container
+      block content
+    script(src="/javascripts/less.min.js")
