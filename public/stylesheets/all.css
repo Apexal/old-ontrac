@@ -1,0 +1,51 @@
+/* Sections
+ * 01 - Layout
+ * 02 -
+ * 03 - Service specific
+ */
+
+
+
+
+/*** 01 - Layout ***/
+
+@media (min-width: 790px) {
+  ul.nav li.dropdown:hover > ul.dropdown-menu {
+    display: block;
+  }
+}
+
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  padding-top: 70px;
+  padding-bottom: 50px;
+}
+
+
+
+
+
+
+/*** 02 - ***/
+
+
+/*** 03 - Service specific ***/
+
+/* Intro-page */
+#recent-changes td:nth-child(even) {
+  text-align: right;
+}
+
+
+.larger {
+  font-size: 120%;
+}
+
+.no-margin {
+  margin-bottom: 0;
+  margin-top: 0;
+}
