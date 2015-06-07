@@ -2,6 +2,9 @@ extends /layout
 
 block content
   h1= title
+
+  include /info
+  
   p
     b adiutor, adiutoris
     |  (m) - helper, assistant; deputy
@@ -38,3 +41,18 @@ block content
 
 
   h3 #{today.format("dddd, MMMM Do YYYY")}
+
+  if loggedIn
+    .fixed-action-btn(style="bottom: 45px; right: 45px;")
+      a.btn-floating.btn-large.red(href="")
+        i.large.mdi-action-view-module
+      ul
+        li
+          a.btn-floating.red(href="/grader")
+            i.mdi-editor-insert-chart
+        li
+          a.btn.btn-floating.yellow(href="/noter")
+            i.mdi-action-note-add
+        li
+          a.btn.btn-floating.green(href="/scheduler")
+            i.mdi-notification-event-note
