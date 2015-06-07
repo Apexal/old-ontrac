@@ -1,28 +1,43 @@
 extends layout
 
 block content
-  .row
-    .col-xs-12
-      h1= title
-      p
-        b adiutor, adiutoris
-        |  (m) - helper, assistant; deputy
+  h1= title
+  p
+    b adiutor, adiutoris
+    |  (m) - helper, assistant; deputy
 
-      p.
-        Imagine that there was a website that could help you take control of your work.
-        You'd get to school and quick check a page on your phone telling you that you
-        have a quiz that day, or maybe even a test. It reminds you that a big
-        English essay is coming up soon, and you're only halfway through it. During
-        the day in between classes you would whip out your phone again to check the
-        site. It tells you your next class is Math in room 511 and you have an
-        worksheet you haven't done yet! You quick scribble down random answers on it
-        and are able to hand it in on time. At the end of the day you fill in your
-        homework using the site once again and check it in the locker room to know
-        what books to bring home.
-      a.btn.btn-primary(href="#") Interested?
+  p.
+    Imagine that there was a website that could help you take control of your work.
+    You'd get to school and quick check a page on your phone telling you that you
+    have a quiz that day, or maybe even a test. It reminds you that a big
+    English essay is coming up soon, and you're only halfway through it. During
+    the day in between classes you would whip out your phone again to check the
+    site. It tells you your next class is Math in room 511 and you have an
+    worksheet you haven't done yet! You quick scribble down random answers on it
+    and are able to hand it in on time. At the end of the day you fill in your
+    homework using the site once again and check it in the locker room to know
+    what books to bring home.
+
+  a.btn.waves-effect.waves-light.tooltipped(data-position="bottom", data-delay="50", data-tooltip="I am tooltip") Hover me!
+
   .row
-    .col-xs-12.col-md-6
-      h3 What is it?
-    .col-xs-12.col-md-6
-      h3 When is it?
-      p Soon.
+    .col.s12.m6
+      .card
+        .card-image
+          img.activator(src="http://www.xavierhs.org/s/81/images/editor/tom/regis.jpg")
+        .card-content
+          span.card-title.activator.grey-text.text-darken-4 Regis High School
+            i.mdi-navigation-more-vert.right
+        .card-reveal
+          span.card-title.activator.grey-text.text-darken-4 I Get It
+            i.mdi-navigation-close.right
+          p.
+            Regis is hard. We get a lot of work and little time to do it all.
+            Wouldn't it be great if we could organize everything we get, giving us
+            that much more free time for anything?
+
+
+  h3 What is it?
+
+  h3 When is it?
+  p Soon.
