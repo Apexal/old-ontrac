@@ -1,7 +1,12 @@
 module.exports = {
   user : {
+    firstName: String,
+    lastName: String,
     username: String,
+    code: String,
     email: { type: String, required: true, unique: true },
+    advisement: String,
+    classes: Array,
     password: {type: String, required: true},
     rank: Number,
     points: Number,

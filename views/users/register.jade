@@ -1,0 +1,29 @@
+extends /layout
+
+block content
+  h1 Register
+  .row
+    .col.s12
+      include /info
+      form(method="POST", action="/users/register")
+        .input-field.col.s12.m6
+          input.validate#name(required=true, name="name", maxlength="25", placeholder="Full Name", type="text")
+          label(for="name") Full Name
+
+        .input-field.col.s12.m6
+          input.validate#email(required=true, name="email", maxlength="25", placeholder="Email", type="text")
+          label(for="email") Email
+        .input-field.col.s12.m6
+          input.validate#password(required=true, name="password", maxlength="25", placeholder="Password", type="password")
+          label(for="password") Password
+        .input-field.col.s12.m6
+          select#advisement(name="advisement", required=true)
+            for a in adv
+              option= a
+          label(for="advisement") Advisement
+        .input-field.col.s12
+          input.validate#code(required=true, name="code", maxlength="25", placeholder="Code", type="text")
+          label(for="code") Password
+        .col.s12
+            a.left.btn(href="/login") Already Registered?
+            button.btn.right.btn-large Register

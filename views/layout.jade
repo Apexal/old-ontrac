@@ -50,14 +50,20 @@ html
                 a(href="#") Test
 
             .valign-wrapper.right(style="width: 60px; height: 100%")
-              img.circle(style="width: 70%", src="http://www.clker.com/cliparts/5/7/4/8/13099629981030824019profile.svg.med.png")
+              if loggedIn
+                  #navbar-photo.right(style="background-image: url(https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg)")
+              else
+                a(href="/login", style="height: 100%")
+                  #navbar-photo.right(style="background-image: url(http://www.clker.com/cliparts/5/7/4/8/13099629981030824019profile.svg.med.png)")
+
             ul.right.hide-on-small-only
               if loggedIn
                 li
-                  a(href="#") currentUser.fullname
+                  a(href="#")= currentUser.fullName
               else
                 li
                   a(href="/login") Not Logged In
+
     main
       .container
         block content

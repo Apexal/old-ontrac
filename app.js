@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var colors = require('colors');
 var session = require('express-session');
+var bCrypt = require('bcrypt-nodejs');
 
 var moment = require('moment');
 
@@ -38,7 +39,7 @@ passport.use(new LocalStrategy(
       if (!user) {
         return done(null, false, { message: 'Incorrect username.' });
       }
-      if (!user.validPassword(password)) {
+      if (!isValidPassword(user, password)) {
         return done(null, false, { message: 'Incorrect password.' });
       }
       return done(null, user);
@@ -88,6 +89,8 @@ app.locals.moment = moment;
 
 app.use(function(req, res, next) {
   console.log(("\nRequest from "+req.connection.remoteAddress).blue.bold);
+
+  req.User = User;
 
   var info = school_years.getCurrent();
   req.year = info.years;
@@ -143,5 +146,8 @@ app.use(function(err, req, res, next) {
   });
 });
 
+var isValidPassword = function(user, password){
+  return bCrypt.compareSync(password, user.password);
+}
 
 module.exports = app;
