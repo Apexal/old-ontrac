@@ -42,6 +42,9 @@ passport.use(new LocalStrategy(
       if (!isValidPassword(user, password)) {
         return done(null, false, { message: 'Incorrect password.' });
       }
+      user.loginCount +=1;
+      user.last_login_time = new Date();
+      user.save();
       return done(null, user);
     });
   }

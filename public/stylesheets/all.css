@@ -31,7 +31,15 @@ main {
   flex: 1 0 auto;
 }
 
+.user-card {
+  width: 150px;
+}
 
+.user-card .card-title {
+  font-size: 160%;
+  position: absolute;
+  bottom: 5px;
+}
 
 /*** 02 - ***/
 

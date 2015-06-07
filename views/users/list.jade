@@ -1,0 +1,27 @@
+extends /layout
+
+block content
+  h1 Users
+
+  .row
+    for user in users
+      .col.s12.m4.l3
+        .card.user-card
+          .card-image
+            img.activator(src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
+          .card-content
+            span.activator.grey-text.text-darken-4= user.fullName
+          .card-reveal
+            p
+              | In
+              b  #{user.advisement}
+              br
+              br
+              | Has
+              b  #{user.points} points
+              br
+              br
+              | Logged in
+              b  #{user.loginCount} times
+            span.card-title.grey-text.text-darken-4.left Member
+              i.mdi-navigation-close.right(style="margin-right: 5px")
