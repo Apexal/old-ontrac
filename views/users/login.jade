@@ -1,0 +1,15 @@
+extends /layout
+
+block content
+  h1 Login
+
+  .row
+    .col.s12
+      form(method="POST", action="/users/login")
+        .input-field.col.s12.m6
+          input.validate#username(required=true, name="username", placeholder="Username", type="text")
+          label(for="username") Username
+        .input-field.col.s12.m6
+          input.validate#password(required=true, name="password", placeholder="Password", type="password")
+          label(for="password") Password
+        button.btn Login

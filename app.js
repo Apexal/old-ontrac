@@ -27,7 +27,7 @@ db.once('open', function (callback) {
   User = mongoose.model('User', userSchema);
 });
 
-var passport = require('passport')
+passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
 
@@ -46,7 +46,15 @@ passport.use(new LocalStrategy(
   }
 ));
 
+passport.serializeUser(function(user, done) {
+  done(null, user._id);
+});
 
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
 
 
 var routes = require('./routes/index');
@@ -71,6 +79,8 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.locals.basedir = path.join(__dirname, 'views');

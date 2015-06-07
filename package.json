@@ -20,6 +20,7 @@
     "passport-local": "*",
     "mongoose": "*",
     "express-session": "*",
-    "moment": "*"
+    "moment": "*",
+    "bcrypt-nodejs": "*"
   }
 }

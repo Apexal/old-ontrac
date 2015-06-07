@@ -52,13 +52,12 @@ html
             .valign-wrapper.right(style="width: 60px; height: 100%")
               img.circle(style="width: 70%", src="http://www.clker.com/cliparts/5/7/4/8/13099629981030824019profile.svg.med.png")
             ul.right.hide-on-small-only
-              if 4 == 4
+              if loggedIn
                 li
-                li
-                  a(href="#") Not Logged In
+                  a(href="#") currentUser.fullname
               else
                 li
-                  a(href="#") Logged In
+                  a(href="/login") Not Logged In
     main
       .container
         block content

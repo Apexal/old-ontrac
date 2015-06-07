@@ -7,4 +7,9 @@ router.get('/', function(req, res, next) {
   res.render('index', req.toJade);
 });
 
+router.get('/login', function(req, res, next) {
+  req.toJade.title = "Login";
+  res.render('users/login', req.toJade);
+});
+
 module.exports = router;
