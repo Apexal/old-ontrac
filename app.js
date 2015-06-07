@@ -5,9 +5,54 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var colors = require('colors');
+var session = require('express-session');
+
+var moment = require('moment');
+
+var config = require('./modules/config');
+
+// Database stuff
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var schemas = require('./modules/schemas.js');
+mongoose.connect('mongodb://127.0.0.1/'+config.db);
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'Failed to connect to database:'));
+db.once('open', function (callback) {
+  console.log('Connected to database');
+  var userSchema = new Schema(schemas.user);
+  userSchema.virtual('fullName').get(function () {
+    return this.firstName + ' ' + this.lastName;
+  });
+  User = mongoose.model('User', userSchema);
+});
+
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
+
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function(err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+
+
+
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+
+var school_years = require('./modules/years');
 
 var app = express();
 
@@ -21,10 +66,36 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  secret: 'oh mr savage',
+  resave: false,
+  saveUninitialized: true
+}));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.locals.basedir = path.join(__dirname, 'views');
+app.locals.moment = moment;
 
 app.use(function(req, res, next) {
   console.log(("\nRequest from "+req.connection.remoteAddress).blue.bold);
+
+  var info = school_years.getCurrent();
+  req.year = info.years;
+  req.trimester = info.trimester;
+  req.full_year = info.full;
+
+  req.today = moment().startOf('day');
+
+  req.toJade = {
+    title: "Page",
+    year: info.years,
+    tri: info.trimester,
+    full_year: info.full,
+    today: req.today,
+    currentUser: req.user,
+    loggedIn: req.isAuthenticated()
+  }
+
   next();
 });
 
