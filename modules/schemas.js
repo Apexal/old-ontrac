@@ -13,6 +13,7 @@ module.exports = {
     loginCount: Number,
     last_login_time: Date,
     last_point_login_time: Date,
-    preferences: Object
+    preferences: Object,
+    verified: Boolean
   }
 }

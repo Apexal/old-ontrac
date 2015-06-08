@@ -31,7 +31,7 @@ html
       .navbar-fixed
         nav.red
           .nav-wrapper
-            a.brand-logo.center(href="#") Adiutor
+            //a.brand-logo.center(href="#") Adiutor
             a.button-collapse(href="#", data-activates="nav-mobile")
               i.mdi-navigation-menu(style="margin-left: 20px;")
             ul.side-nav#nav-mobile
@@ -42,14 +42,12 @@ html
               li
                 a(href="#") Test
             ul.left.hide-on-med-and-down
-              li.active
+              li(class=(title=="Adiutor" ? "active" : ""))
                 a.mdi-action-home(href="/")
-              li
+              li(class=(title=="Users" ? "active" : ""))
                 a(href="/users") Users
               li
                 a(href="#") Test
-
-
 
             if loggedIn
                 img.right#nav-bar-photo(src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg")
@@ -57,13 +55,14 @@ html
               a(href="/login", style="height: 100%; padding-top: 7px")
                 img.right#nav-bar-photo(src="http://gurucul.com/wp-content/uploads/2015/01/default-user-icon-profile.png")
 
-            ul.right.hide-on-small-only
-              if loggedIn
-                li
-                  a(href="#")= currentUser.fullName
-              else
-                li
-                  a(href="/login") Not Logged In
+            //
+              ul.right.hide-on-small-only
+                if loggedIn
+                  li
+                    a(href="#")= currentUser.fullName
+                else
+                  li
+                    a(href="/login") Not Logged In
 
     main
       .container

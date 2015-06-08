@@ -54,7 +54,8 @@ router.post('/register', function(req, res) {
         loginCount: 0,
         last_login_time: new Date(),
         last_point_login_time: new Date(),
-        preferences: {}
+        preferences: {},
+        verified: false
       });
 
       newUser.save();

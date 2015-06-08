@@ -26,15 +26,18 @@ block content
             img.activator(src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
           .card-content
             span.activator.grey-text.text-darken-4= user.fullName
-              b  #{user.advisement}
+              if user.verified
+                i.mdi-action-verified-user.right
           .card-reveal
             .user-buttons
               a.btn(href="/users") Profile
               a.btn(href="mailto:"+user.email) Email
               a.btn(target="_blank", href="http://intranet.regis.org/infocenter/schedule/Print.cfm?StudentCode="+user.code+"&showweek=1&Print=1&NoShading=0") Schedule
               a.btn(href="/users") Advisement
-            span.card-title.grey-text.text-darken-4.left Member
-              i.mdi-navigation-close.right(style="margin-right: 5px")
+            span.card-title.grey-text.text-darken-4.left.center-align.truncated(style="line-height: 25px;") #{user.gradeName}
+              br
+              span(style="font-size: 80%") #{user.advisement}
+      
 
   .fixed-action-btn
     a.btn-floating.btn-large.red(onclick="$('#search').slideToggle()")
