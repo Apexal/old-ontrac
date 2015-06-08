@@ -4,6 +4,21 @@ block content
   h1 Users
 
   .row
+    form#search.hidden.col.s12
+      .row
+        .input-field.col.s5
+          i.mdi-action-account-circle.prefix
+          input.validate#first_name(name="first_name", type="text")
+          label(for="first_name") First Name
+        .input-field.col.s5
+          i.mdi-action-account-circle.prefix
+          input.validate#last_name(name="last_name", type="text")
+          label(for="last_name") Last Name
+        .col.s2
+          br
+          button.btn.red.right Search
+
+  .row
     for user in users
       .col.s12.m4.l3
         .card.user-card
@@ -11,17 +26,16 @@ block content
             img.activator(src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
           .card-content
             span.activator.grey-text.text-darken-4= user.fullName
-          .card-reveal
-            p
-              | In
               b  #{user.advisement}
-              br
-              br
-              | Has
-              b  #{user.points} points
-              br
-              br
-              | Logged in
-              b  #{user.loginCount} times
+          .card-reveal
+            .user-buttons
+              a.btn(href="/users") Profile
+              a.btn(href="mailto:"+user.email) Email
+              a.btn(target="_blank", href="http://intranet.regis.org/infocenter/schedule/Print.cfm?StudentCode="+user.code+"&showweek=1&Print=1&NoShading=0") Schedule
+              a.btn(href="/users") Advisement
             span.card-title.grey-text.text-darken-4.left Member
               i.mdi-navigation-close.right(style="margin-right: 5px")
+
+  .fixed-action-btn(style="bottom: 45px; right: 45px;")
+    a.btn-floating.btn-large.red(onclick="$('#search').slideToggle()")
+      i.large.mdi-action-search

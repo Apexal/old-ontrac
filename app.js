@@ -25,6 +25,30 @@ db.once('open', function (callback) {
   userSchema.virtual('fullName').get(function () {
     return this.firstName + ' ' + this.lastName;
   });
+
+  userSchema.virtual('grade').get(function () {
+    return 8+parseInt(this.advisement.charAt(0));
+  });
+
+  userSchema.virtual('gradeName').get(function () {
+    var adv = this.advisement.charAt(0);
+    var grade = "";
+    switch(adv) {
+      case "1":
+        grade = "Freshman";
+        break;
+      case "2":
+        grade = "Sophmore";
+        break;
+      case "3":
+        grade = "Junior";
+        break;
+      case "4":
+        grade = "Senior";
+        break;
+    }
+    return grade;
+  });
   User = mongoose.model('User', userSchema);
 });
 

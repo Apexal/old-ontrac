@@ -29,15 +29,15 @@ html
   body
     header
       .navbar-fixed
-        nav
+        nav.red
           .nav-wrapper
             a.brand-logo.center(href="#") Adiutor
             a.button-collapse(href="#", data-activates="nav-mobile")
               i.mdi-navigation-menu(style="margin-left: 20px;")
             ul.side-nav#nav-mobile
-              li.active
+              li(class=(title=="Adiutor" ? "active" : ""))
                 a(href="/") Home
-              li
+              li(class=(title=="Users" ? "active" : ""))
                 a(href="/users") Users
               li
                 a(href="#") Test

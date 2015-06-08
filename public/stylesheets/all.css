@@ -38,7 +38,15 @@ main {
 .user-card .card-title {
   font-size: 160%;
   position: absolute;
+
   bottom: 5px;
+}
+
+.user-card .card-content {
+  padding: 10px;
+  padding-left: 2px;
+  padding-right: 2px;
+  text-align: center;
 }
 
 /*** 02 - ***/
@@ -69,4 +77,17 @@ main {
     width: 50px;
     height: 50px;
 
+}
+
+/* User List Page */
+
+.user-buttons a.btn{
+  width: 110px;
+  text-align: center;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.hidden {
+  display: none;
 }
