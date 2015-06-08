@@ -69,14 +69,8 @@ main {
   margin-top: 0;
 }
 
-#navbar-photo {
-  background-repeat: no-repeat;
-    background-position: 50%;
-    background-size: 100% 100%;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-
+#nav-bar-photo{
+    height: 100%;
 }
 
 /* User List Page */
@@ -90,4 +84,20 @@ main {
 
 .hidden {
   display: none;
+}
+
+.btn, .btn:hover {
+  background-color: #e53935;
+}
+
+.fixed-action-btn {
+  bottom: 45px;
+  right: 45px;
+}
+
+@media (max-width: 790px) {
+  .fixed-action-btn {
+    bottom: 10px;
+    right: 10px;
+  }
 }

@@ -49,12 +49,13 @@ html
               li
                 a(href="#") Test
 
-            .valign-wrapper.right(style="width: 60px; height: 100%")
-              if loggedIn
-                  #navbar-photo.right(style="background-image: url(https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg)")
-              else
-                a(href="/login", style="height: 100%; padding-top: 7px")
-                  #navbar-photo.right(style="background-image: url(http://www.clker.com/cliparts/5/7/4/8/13099629981030824019profile.svg.med.png)")
+
+
+            if loggedIn
+                img.right#nav-bar-photo(src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg")
+            else
+              a(href="/login", style="height: 100%; padding-top: 7px")
+                img.right#nav-bar-photo(src="http://gurucul.com/wp-content/uploads/2015/01/default-user-icon-profile.png")
 
             ul.right.hide-on-small-only
               if loggedIn

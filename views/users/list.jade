@@ -6,15 +6,15 @@ block content
   .row
     form#search.hidden.col.s12
       .row
-        .input-field.col.s5
+        .input-field.col.s12.m5
           i.mdi-action-account-circle.prefix
           input.validate#first_name(name="first_name", type="text")
           label(for="first_name") First Name
-        .input-field.col.s5
+        .input-field.col.s12.m5
           i.mdi-action-account-circle.prefix
           input.validate#last_name(name="last_name", type="text")
           label(for="last_name") Last Name
-        .col.s2
+        .col.s12.m2
           br
           button.btn.red.right Search
 
@@ -36,6 +36,6 @@ block content
             span.card-title.grey-text.text-darken-4.left Member
               i.mdi-navigation-close.right(style="margin-right: 5px")
 
-  .fixed-action-btn(style="bottom: 45px; right: 45px;")
+  .fixed-action-btn
     a.btn-floating.btn-large.red(onclick="$('#search').slideToggle()")
       i.large.mdi-action-search
