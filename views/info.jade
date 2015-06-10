@@ -1,13 +1,10 @@
-if errs
-  for e in errs
-    .row
-      .col.s12
-        .card-panel.red
-          span.white-text= e
-
-if info
+if info != null
   for i in info
-    .row
-      .col.s12
-        .card-panel.green
-          span.white-text= i
+    .alert.alert-info.alert-dismissible(data-dismiss="alert", aria-label="Close", role="alert")= i
+      button.close(data-dismiss="alert")
+
+if errs != null
+  for err in errs
+    .alert.alert-danger.alert-dismissible(data-dismiss="alert", role="alert")= err
+      button.close(type="button", data-dismiss="alert")
+        span &times;

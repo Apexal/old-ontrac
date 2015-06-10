@@ -11,11 +11,11 @@ html
     title= title
 
     // Bootstrap
-    //link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css')
-    //link(rel='stylesheet', href='https://bootswatch.com/paper/bootstrap.min.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css')
+    link(rel='stylesheet', href='https://bootswatch.com/cosmo/bootstrap.min.css')
 
     // Material Design
-    link(rel='stylesheet', href='/stylesheets/materialize.min.css')
+    //link(rel='stylesheet', href='/stylesheets/materialize.min.css')
 
     // JQuery
     link(rel="stylesheet", href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/black-tie/jquery-ui.css")
@@ -28,48 +28,48 @@ html
 
   body
     header
-      .navbar-fixed
-        nav.red
-          .nav-wrapper
-            //a.brand-logo.center(href="#") Adiutor
-            a.button-collapse(href="#", data-activates="nav-mobile")
-              i.mdi-navigation-menu(style="margin-left: 20px;")
-            ul.side-nav#nav-mobile
-              li(class=(title=="Adiutor" ? "active" : ""))
+      nav.navbar.navbar-default.navbar-fixed-top
+        .container
+          .navbar-header
+            button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a.navbar-brand(href=(title=="Worker" ? "#": "/")) Worker
+          #navbar.navbar-collapse.collapse
+            ul.nav.navbar-nav
+              li(class=(title=="Adiutor" || title=="Your Home" ? "active" : ""))
                 a(href="/") Home
-              li(class=(title=="Users" ? "active" : ""))
+              li(class=(title=="Users"? "active" : ""))
                 a(href="/users") Users
               li
-                a(href="#") Test
-            ul.left.hide-on-med-and-down
-              li(class=(title=="Adiutor" ? "active" : ""))
-                a.mdi-action-home(href="/")
-              li(class=(title=="Users" ? "active" : ""))
-                a(href="/users") Users
-              li
-                a(href="#") Test
-
-            if loggedIn
-                img.right#nav-bar-photo(src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg")
-            else
-              a(href="/login", style="height: 100%; padding-top: 7px")
-                img.right#nav-bar-photo(src="http://gurucul.com/wp-content/uploads/2015/01/default-user-icon-profile.png")
-
-            //
-              ul.right.hide-on-small-only
-                if loggedIn
-                  li
-                    a(href="#")= currentUser.fullName
-                else
-                  li
-                    a(href="/login") Not Logged In
+                a(target="_blank", href="https://bitbucket.org/apexal/adiutor") Source
+            ul.nav.navbar-nav.navbar-right
+              li.dropdown
+                  if loggedIn
+                      a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')= currentUser._json.name
+                          span.caret
+                  else
+                      a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Not Logged In
+                          span.caret
+                  ul.dropdown-menu(role='menu')
+                      if loggedIn
+                        li
+                            a(href='/logout') Logout
+                      else
+                        li
+                            a(href='/login') Login
+                        li
+                            a(href='/register') Register
 
     main
-      .container
-        block content
+      //.container
+      //  .alert.alert-danger(role="alert") Warning! This is the development server, so I have no idea how you found your way here. Don't touch anything!
+      block content
 
     script(src='http://code.jquery.com/jquery-2.1.4.min.js')
     script(src='http://code.jquery.com/ui/1.11.4/jquery-ui.min.js')
-    script(src='/javascripts/materialize.min.js')
-    script(src='/javascripts/effects.js')
-    //script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js')
+    //script(src='/javascripts/materialize.min.js')
+    //script(src='/javascripts/effects.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js')

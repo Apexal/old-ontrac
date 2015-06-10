@@ -20,33 +20,8 @@ html {
   height: 100%;
 }
 
-body {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
-
-
 main {
-  flex: 1 0 auto;
-}
-
-.user-card {
-  width: 150px;
-}
-
-.user-card .card-title {
-  font-size: 160%;
-  position: absolute;
-
-  bottom: 5px;
-}
-
-.user-card .card-content {
-  padding: 10px;
-  padding-left: 2px;
-  padding-right: 2px;
-  text-align: center;
+  margin-top: 70px;
 }
 
 /*** 02 - ***/
@@ -55,51 +30,20 @@ main {
 /*** 03 - Service specific ***/
 
 /* Intro-page */
-#recent-changes td:nth-child(even) {
-  text-align: right;
-}
-
 
 .larger {
   font-size: 120%;
 }
 
 .no-margin {
-  margin-bottom: 0;
-  margin-top: 0;
+  margin: 0;
 }
 
-#nav-bar-photo{
-    height: 100%;
-}
 
 /* User List Page */
 
-.user-buttons a.btn{
-  width: 110px;
-  text-align: center;
-  padding-left: 0px;
-  padding-right: 0px;
-}
-
-.hidden {
-  display: none;
-}
-
-.btn, .btn:hover {
-  background-color: #e53935;
-}
-
-.fixed-action-btn {
-  bottom: 45px;
-  right: 45px;
-}
-
 @media (max-width: 790px) {
-  .fixed-action-btn {
-    bottom: 10px;
-    right: 10px;
-  }
+
 }
 
 .user-verified {

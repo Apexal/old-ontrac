@@ -29,7 +29,10 @@ router.post('/register', function(req, res) {
     errs.push("Must use a Regis email.");
 
   if(name.split(" ").length != 2)
-      errs.push("Your full name must be used.")
+      errs.push("Your full name must be used.");
+
+  if(isNaN(code))
+    errs.push("Thats not a Student ID#");
 
   req.User.findOne({email: email}, function(err, user) {
     if(user){
@@ -60,7 +63,7 @@ router.post('/register', function(req, res) {
 
       newUser.save();
       req.toJade.title="Adiutor";
-      req.toJade.info = ["You have successfully registered! Check your email to verify yoru account."];
+      req.toJade.info = ["You have successfully registered! Check your email to verify your account."];
 
       res.render('index', req.toJade);
     }else{
