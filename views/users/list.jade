@@ -1,44 +1,30 @@
 extends /layout
 
 block content
-  h1 Users
+  .container
+    .page-header
+      h1 Users
 
-  .row
-    form#search.hidden.col.s12
-      .row
-        .input-field.col.s12.m5
-          i.mdi-action-account-circle.prefix
-          input.validate#first_name(name="first_name", type="text")
-          label(for="first_name") First Name
-        .input-field.col.s12.m5
-          i.mdi-action-account-circle.prefix
-          input.validate#last_name(name="last_name", type="text")
-          label(for="last_name") Last Name
-        .col.s12.m2
-          br
-          button.btn.red.right Search
+    .row
+      .col-xs-12
+        form.form-inline#search.hidden
+          .form-group
+            label(for="name") Name
+            input.form-control(type="text", name="name")
+          button.btn.btn-primary Search
 
-  .row
-    for user in users
-      .col.s12.m4.l3
-        .card.user-card
-          .card-image
-            img.activator(src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
-          .card-content
-            span.activator.grey-text.text-darken-4= user.fullName
-              if user.verified
-                i.mdi-action-verified-user.right
-          .card-reveal
-            .user-buttons
-              a.btn(href="/users") Profile
-              a.btn(href="mailto:"+user.email) Email
-              a.btn(target="_blank", href="http://intranet.regis.org/infocenter/schedule/Print.cfm?StudentCode="+user.code+"&showweek=1&Print=1&NoShading=0") Schedule
-              a.btn(href="/users") Advisement
-            span.card-title.grey-text.text-darken-4.left.center-align.truncated(style="line-height: 25px;") #{user.gradeName}
-              br
-              span(style="font-size: 80%") #{user.advisement}
-
-
-  .fixed-action-btn
-    a.btn-floating.btn-large.red(onclick="$('#search').slideToggle()")
-      i.large.mdi-action-search
+    .row
+      for user in users
+        .col-xs-12.col-md-4.col-lg-3.text-center
+          .user-box
+            img(alt=user.bio, src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
+            .btn-group.full-width
+              b.user-adv(href="/users/"+user.username)= user.advisement
+              button.full-width.btn.btn-default.dropdown-toggle(data-toggle="dropdown", ara-expanded="false", type="button")= user.fullName+" "
+                span.caret
+              ul.dropdown-menu(role="menu")
+                li
+                  a(href="/users/"+user.username) View Profile
+                  a(href="/users/"+user.username+"/schedule") View Schedule
+                  a(href="#") View Advisement
+                  a(href="mailto:"+user.email) Email

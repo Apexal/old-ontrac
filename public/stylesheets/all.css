@@ -5,7 +5,9 @@
  */
 
 
-
+.right {
+  float: right;
+}
 
 /*** 01 - Layout ***/
 
@@ -44,6 +46,23 @@ main {
 
 @media (max-width: 790px) {
 
+}
+
+.user-box {
+  margin: 0 auto;
+}
+
+.user-box, .user-box img {
+  width: 160px;
+}
+
+.user-adv {
+  position: absolute;
+  bottom: 45px;
+  font-size: 1.7em;
+  font-weight: bold;
+  color: #222;
+  left: 105px;
 }
 
 .user-verified {
