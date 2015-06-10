@@ -174,6 +174,7 @@ app.use(function(err, req, res, next) {
 });
 
 var isValidPassword = function(user, password){
+  console.log(bCrypt.compareSync(password, user.password));
   return bCrypt.compareSync(password, user.password);
 }
 

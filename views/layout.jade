@@ -48,7 +48,7 @@ html
             ul.nav.navbar-nav.navbar-right
               li.dropdown
                   if loggedIn
-                      a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')= currentUser._json.name
+                      a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')= currentUser.fullName
                           span.caret
                   else
                       a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Not Logged In
@@ -67,6 +67,27 @@ html
       //.container
       //  .alert.alert-danger(role="alert") Warning! This is the development server, so I have no idea how you found your way here. Don't touch anything!
       block content
+
+    footer
+      .navbar.navbar-default.navbar-fixed-bottom
+        .container
+
+          #navbar.navbar-collapse.collapse
+            ul.nav.navbar-nav
+              if loggedIn
+                li.active
+                  a(href='#') Homework &nbsp;
+                    span.badge 4
+                li
+                  a(href='#') Grades
+                li
+                  a(href='#') Notes
+                li
+                  a(href='#') Schedule &nbsp;
+                    span.badge 2
+              else
+                li
+                  a(href="/login") Login to access the services.
 
     script(src='http://code.jquery.com/jquery-2.1.4.min.js')
     script(src='http://code.jquery.com/ui/1.11.4/jquery-ui.min.js')
