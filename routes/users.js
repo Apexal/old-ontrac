@@ -58,7 +58,8 @@ router.post('/register', function(req, res) {
         last_login_time: new Date(),
         last_point_login_time: new Date(),
         preferences: {},
-        verified: false
+        verified: false,
+        registered_date: new Date()
       });
 
       newUser.save();
@@ -78,5 +79,29 @@ router.post('/register', function(req, res) {
 var createHash = function(password){
  return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
 }
+
+
+router.get("/:username", function(req, res){
+  if(req.toJade.loggedIn == false){
+    res.redirect("/users");
+    return;
+  }
+
+  req.User.findOne({username: req.params.username}, function(err, user) {
+    if(user){
+      req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+"'s Profile";
+      req.toJade.user = user;
+      res.render('users/profile', req.toJade);
+    }
+  });
+});
+
+
+
+
+
+
+
+
 
 module.exports = router;

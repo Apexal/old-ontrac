@@ -49,6 +49,33 @@ db.once('open', function (callback) {
     }
     return grade;
   });
+
+  userSchema.virtual('rankName').get(function () {
+    var rank = this.rank;
+    switch(rank) {
+      case 0:
+        rank = "Guest";
+        break;
+      case 2:
+        ranl = "User";
+        break;
+      case 3:
+        rank = "Member";
+        break;
+      case 4:
+        rank = "Operator";
+        break;
+      case 5:
+        rank = "Moderator";
+        break;
+      case 6:
+        rank = "Administrator";
+      case 7:
+        rank = "Owner";
+    }
+    return rank;
+  });
+
   User = mongoose.model('User', userSchema);
 });
 
@@ -156,10 +183,10 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
+    req.toJade.title = "Error!";
+    req.toJade.message = err.message;
+    req.toJade.error = err;
+    res.render('error', req.toJade);
   });
 }
 

@@ -1,0 +1,53 @@
+extends /layout
+
+block content
+  .container
+    .page-header
+      h1 #{user.fullName}'s Profile
+
+    .user-profile
+      .row
+        .col-xs-12.col-sm-6.col-md-4
+          img#profile-pic(src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
+          br
+          blockquote
+            p= user.bio
+        .col-xs-12.col-sm-6.col-md-4
+          .panel.panel-default
+            .panel-heading
+              h1.panel-title  Info
+            .panel-body
+              .user-info
+                b Rank:
+                |  #{user.rankName}
+                br
+                b Grade:
+                |  #{user.gradeName}
+                br
+                b Advisement:
+                |  #{user.advisement}
+        .col-xs-12.col-sm-6.col-md-4
+          .panel.panel-primary
+            .panel-heading
+              h1.panel-title  Classes
+            .panel-body
+              .user-info
+                b Advisement:
+                |  #{user.advisement}
+      .row
+        .col-xs-12.col-sm-6.col-md-4
+          .panel.panel-success
+            .panel-heading
+              h1.panel-title  Achievements
+            .panel-body
+              .user-info
+                b Advisement:
+                |  #{user.advisement}
+        .col-xs-12.col-sm-6.col-md-4
+          .panel.panel-warning
+            .panel-heading
+              h1.panel-title  Stats
+            .panel-body
+              .user-info
+                b Advisement:
+                |  #{user.advisement}
