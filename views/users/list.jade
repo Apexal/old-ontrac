@@ -15,7 +15,7 @@ block content
 
     .row
       for user in users
-        .col-xs-12.col-md-4.col-lg-3.text-center
+        .col-xs-12.col-sm-6.col-md-4.col-lg-3.text-center
           .user-box
             img(alt=user.bio, src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
             .btn-group.full-width
@@ -27,5 +27,5 @@ block content
                   if loggedIn
                     a(href="/users/"+user.username) View Profile
                     a(href="/users/"+user.username+"/schedule") View Schedule
-                  a(href="#") View Advisement
+                  a(href="/advisements/"+user.advisement) View Advisement
                   a(href="mailto:"+user.email) Email

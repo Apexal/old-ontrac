@@ -25,10 +25,12 @@ html
 
     // My own
     link(rel="stylesheet", href="/stylesheets/all.css")
+    script(src='http://code.jquery.com/jquery-2.1.4.min.js')
+    script(src='http://code.jquery.com/ui/1.11.4/jquery-ui.min.js')
 
   body
     header
-      nav.navbar.navbar-default.navbar-fixed-top
+      nav.navbar.navbar-default.navbar-fixed-top#real-nav
         .container
           .navbar-header
             button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
@@ -43,8 +45,13 @@ html
                 a(href="/") Home
               li(class=(title=="Users"? "active" : ""))
                 a(href="/users") Users
-              li
-                a(target="_blank", href="https://bitbucket.org/apexal/adiutor") Source
+              li(class=(title=="Advisements" ? "active" : ""))
+                a(href="/advisements") Advisements
+              li(class=(title=="Forum" ? "active" : ""))
+                a(href="/forum") Forum
+              //
+                li
+                  a(target="_blank", href="https://bitbucket.org/apexal/adiutor") Source
             ul.nav.navbar-nav.navbar-right
               li.dropdown
                   if loggedIn
@@ -73,13 +80,12 @@ html
       block content
 
     footer
-      .navbar.navbar-default.navbar-fixed-bottom
+      .navbar.navbar-default.navbar-fixed-bottom#real-bottom-nav
         .container
-
           #navbar.navbar-collapse.collapse
             ul.nav.navbar-nav
               if loggedIn
-                li.active
+                li
                   a(href='#') Homework &nbsp;
                     span.badge 4
                 li
@@ -107,8 +113,7 @@ html
             img.right.navbar-pic(src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg")
 
 
-    script(src='http://code.jquery.com/jquery-2.1.4.min.js')
-    script(src='http://code.jquery.com/ui/1.11.4/jquery-ui.min.js')
+
     //script(src='/javascripts/materialize.min.js')
     //script(src='/javascripts/effects.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js')

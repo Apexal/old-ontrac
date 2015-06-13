@@ -1,0 +1,21 @@
+extends /layout
+
+block content
+  iframe#schedule(style="positiion: absolute;", src="http://intranet.regis.org/infocenter/schedule/Print.cfm?StudentCode="+user.code+"&showweek=0&Print=1&NoShading=0")
+
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js")
+  script.
+    $( "#schedule" ).position({
+      my: "left top",
+      at: "left bottom",
+      of: "#real-nav"
+    });
+    var res = function(){
+      var h = $(document).height(); var topH = $("#real-nav").height(); var bottomH = $("#real-bottom-nav").height();
+
+      var real = h-(topH+bottomH);
+      $("#schedule").height(real).width($(document).width());
+    }
+
+    res();
+    $(window).resize(_.debounce(res, 300));

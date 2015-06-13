@@ -92,16 +92,27 @@ router.get("/:username", function(req, res){
       req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+"'s Profile";
       req.toJade.user = user;
       res.render('users/profile', req.toJade);
+    }else{
+      res.redirect("/users");
     }
   });
 });
 
+router.get("/:username/schedule", function(req, res){
+  if(req.toJade.loggedIn == false){
+    res.redirect("/users");
+    return;
+  }
 
-
-
-
-
-
-
+  req.User.findOne({username: req.params.username}, function(err, user) {
+    if(user){
+      req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+"'s Schedule";
+      req.toJade.user = user;
+      res.render('users/schedule', req.toJade);
+    }else{
+      res.redirect("/users");
+    }
+  });
+});
 
 module.exports = router;

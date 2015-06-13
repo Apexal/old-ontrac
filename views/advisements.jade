@@ -1,0 +1,19 @@
+extends /layout
+
+block content
+  .container
+    .page-header
+      h1 Advisements
+        if loggedIn == false
+          small.right Login for more info.
+
+    for users, a in adv
+      .col-xs-12.col-sm-6.col-md-4
+        .panel(class=(users.length > 0 ? "panel-primary" : "panel-default"))
+          .panel-heading
+            b= a
+          .panel-body
+            if users.length > 0
+              a(href="/advisements/"+a) #{users.length} Users
+            else
+              span Nobody in #{a} has registered yet!

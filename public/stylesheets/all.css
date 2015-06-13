@@ -75,14 +75,26 @@ main {
   #bottom-bar {
     max-height: none;
   }
+
+  .center-xs {
+    text-align: center;
+  }
 }
 
-.user-box {
+.user-box, .advisement-user-box {
   margin: 0 auto;
 }
 
 .user-box, .user-box img {
   width: 160px;
+}
+
+.advisement-user-box, .advisement-user-box img {
+  width: 100px;
+}
+
+.advisement-user-box button {
+  font-size: 80%;
 }
 
 .user-adv {
