@@ -106,6 +106,15 @@ main {
   left: 105px;
 }
 
+.profile-user-adv {
+  position: absolute;
+  bottom: 95px;
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #222;
+  left: 135px;
+}
+
 .user-verified {
   padding-right: 5px;
 }

@@ -3,7 +3,7 @@ extends /layout
 block content
   .container
     .page-header
-      h1.center-xs #{user.fullName}'s Profile
+      h1.center-xs #{user.fullName} of #{user.advisement}
 
     .user-profile
       .row
@@ -11,6 +11,7 @@ block content
           img#profile-pic(src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
           br
           blockquote
+            a.profile-user-adv(href="/advisements/"+user.advisement)= user.advisement
             if user.bio
               p= user.bio
             else

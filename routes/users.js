@@ -86,10 +86,9 @@ router.get("/:username", function(req, res){
     res.redirect("/users");
     return;
   }
-
   req.User.findOne({username: req.params.username}, function(err, user) {
     if(user){
-      req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+"'s Profile";
+      req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+" of "+user.advisement;
       req.toJade.user = user;
       res.render('users/profile', req.toJade);
     }else{
