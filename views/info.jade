@@ -1,10 +1,14 @@
 if info != null
-  for i in info
-    .alert.alert-info.alert-dismissible(data-dismiss="alert", aria-label="Close", role="alert")= i
-      button.close(data-dismiss="alert")
+  .alert.alert-info.alert-dismissible(data-dismiss="alert", aria-label="Close", role="alert")= i
+    for i in info
+      | #{i}
+      br
+    button.close(data-dismiss="alert")
 
 if errs != null
-  for err in errs
-    .alert.alert-danger.alert-dismissible(data-dismiss="alert", role="alert")= err
-      button.close(type="button", data-dismiss="alert")
-        span &times;
+  .alert.alert-danger.alert-dismissible(data-dismiss="alert", role="alert")= err
+    for err in errs
+      | #{err}
+      br
+    button.close(type="button", data-dismiss="alert")
+      span &times;

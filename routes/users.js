@@ -6,6 +6,7 @@ var adv = require('../modules/advisements');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   req.toJade.title = "Users";
+  req.toJade.tableForm = (req.query.table == "1" ? true : false);
   req.User.find({}, function(err, users){
     if(err) console.log(err);
     req.toJade.users = users;

@@ -47,6 +47,8 @@ html
                 a(href="/users") Users
               li(class=(title=="Advisements" ? "active" : ""))
                 a(href="/advisements") Advisements
+              li
+                a(href="/ranks") Ranks
               li(class=(title=="Forum" ? "active" : ""))
                 a(href="/forum") Forum
               //
@@ -80,7 +82,7 @@ html
       block content
 
     footer
-      .navbar.navbar-default.navbar-fixed-bottom#real-bottom-nav
+      .navbar.navbar-default.navbar-fixed-bottom#real-bottom-nav(style="z-index: 50;")
         .container
           #navbar.navbar-collapse.collapse
             ul.nav.navbar-nav
