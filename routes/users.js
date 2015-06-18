@@ -15,8 +15,7 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.post('/login', passport.authenticate('local', { successRedirect: '/',
-                                                    failureRedirect: '/login' }));
+
 
 router.post('/register', function(req, res) {
   var email = req.body.email;
@@ -83,10 +82,6 @@ var createHash = function(password){
 
 
 router.get("/:username", function(req, res){
-  if(req.toJade.loggedIn == false){
-    res.redirect("/users");
-    return;
-  }
   req.User.findOne({username: req.params.username}, function(err, user) {
     if(user){
       req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+" of "+user.advisement;
@@ -99,11 +94,6 @@ router.get("/:username", function(req, res){
 });
 
 router.get("/:username/schedule", function(req, res){
-  if(req.toJade.loggedIn == false){
-    res.redirect("/users");
-    return;
-  }
-
   req.User.findOne({username: req.params.username}, function(err, user) {
     if(user){
       req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+"'s Schedule";

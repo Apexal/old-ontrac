@@ -7,7 +7,7 @@ block content
 
     .row
       .col-xs-12
-        form(method="POST", action="/users/login")
+        form(method="POST", action="/login?redir="+redir)
           .form-group
             label(for="username") Username
             input.form-control#username(required=true, name="username", placeholder="Username", type="text")
@@ -16,3 +16,4 @@ block content
             input.form-control#password(required=true, name="password", placeholder="Password", type="password")
           a.left.btn.btn-default(href="/register") Not Yet Registered?
           button.btn.right.btn-primary Login
+          a.btn.right.btn-danger(href="/forgot") Forgot
