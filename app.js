@@ -8,6 +8,8 @@ var colors = require('colors');
 var session = require('express-session');
 var bCrypt = require('bcrypt-nodejs');
 
+var helpers = require('./modules/helpers');
+
 var moment = require('moment');
 
 var config = require('./modules/config');
@@ -141,6 +143,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.locals.basedir = path.join(__dirname, 'views');
 app.locals.moment = moment;
+app.locals.helpers = helpers;
 
 app.use(function(req, res, next) {
   console.log(("\nRequest from "+req.connection.remoteAddress).blue.bold);

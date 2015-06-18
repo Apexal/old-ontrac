@@ -12,8 +12,18 @@ block content
         .panel(class=(users.length > 0 ? "panel-primary" : "panel-default"))
           .panel-heading
             b= a
+            if users.length > 0
+              a.right(style="color: white;", href="/advisements/"+a) #{users.length + " "+helpers.pluralize(users.length, "User", "Users")}
           .panel-body
             if users.length > 0
-              a(href="/advisements/"+a) #{users.length} Users
+
+              if loggedIn
+                span
+                  for u in users
+                    a(href="/users/"+u.username)= u.fullName
+                    | ,
+              else
+                span Log in to see what users in #[b= a] have registered.
+
             else
               span Nobody in #{a} has registered yet!

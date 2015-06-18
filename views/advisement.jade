@@ -4,7 +4,7 @@ block content
   .container
     .page-header
       h1 Advisement #{advisement}
-      h3 #[b= advisement] has #[b= users.length] registered users and is advised by #[b NAME].
+      h3 #[b= advisement] has #[b= users.length] registered #{helpers.pluralize(users.length, "user", "users")} and is advised by #[b NAME].
     .col-xs-12
       .row
         for user in users
