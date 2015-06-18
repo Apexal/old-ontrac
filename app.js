@@ -93,7 +93,7 @@ passport.use(new LocalStrategy(
       if (!isValidPassword(user, password)) {
         return done(null, false, { message: 'Incorrect password.' });
       }
-      user.loginCount +=1;
+      user.login_count +=1;
       user.last_login_time = new Date();
       user.save();
       return done(null, user);
@@ -155,6 +155,8 @@ app.use(function(req, res, next) {
   req.today = moment().startOf('day');
 
   req.toJade = {
+    info: (req.session.info ? req.session.info : []),
+    errs: (req.session.errs ? req.session.errs : []),
     title: "Page",
     year: info.years,
     tri: info.trimester,
@@ -164,6 +166,8 @@ app.use(function(req, res, next) {
     loggedIn: req.isAuthenticated()
   }
 
+  req.session.info = [];
+  req.session.errs = [];
   next();
 });
 

@@ -10,7 +10,7 @@ module.exports = {
     password: {type: String, required: true},
     rank: Number,
     points: Number,
-    loginCount: Number,
+    login_count: Number,
     last_login_time: Date,
     last_point_login_time: Date,
     preferences: Object,

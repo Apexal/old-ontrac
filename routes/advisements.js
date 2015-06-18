@@ -14,8 +14,6 @@ router.get('/', function(req, res){
         return el.advisement == a;
       });
     });
-
-    console.log(req.toJade.adv);
     res.render('advisements', req.toJade);
   });
 });
