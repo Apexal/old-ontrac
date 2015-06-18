@@ -1,13 +1,13 @@
 extends /layout
-            
+
 block content
   .container
     .page-header
       h1 Register
-    .row    
+    .row
       .col-xs-12
         include /info
-        form(method="POST", action="/users/register")
+        form(method="POST", action="/register")
           .form-group
             label(for="name") Full Name
             input.form-control#name(required=true, name="name", maxlength="25", placeholder="Full Name", type="text")

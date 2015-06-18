@@ -171,6 +171,7 @@ app.use(function(req, res, next) {
 
   req.session.info = [];
   req.session.errs = [];
+  console.log(req.session.message);
   next();
 });
 
