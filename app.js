@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var colors = require('colors');
 var session = require('express-session');
 var bCrypt = require('bcrypt-nodejs');
-
+var flash = require('connect-flash');
 var helpers = require('./modules/helpers');
 
 var moment = require('moment');
@@ -81,39 +81,6 @@ db.once('open', function (callback) {
   User = mongoose.model('User', userSchema);
 });
 
-passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy;
-
-
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    User.findOne({ username: username }, function(err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!isValidPassword(user, password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      user.login_count +=1;
-      user.last_login_time = new Date();
-      user.save();
-      return done(null, user);
-    });
-  }
-));
-
-passport.serializeUser(function(user, done) {
-  done(null, user._id);
-});
-
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-    done(err, user);
-  });
-});
-
-
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var advisements = require('./routes/advisements');
@@ -137,8 +104,6 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }));
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.locals.basedir = path.join(__dirname, 'views');
@@ -146,7 +111,7 @@ app.locals.moment = moment;
 app.locals.helpers = helpers;
 
 app.use(function(req, res, next) {
-  console.log(("\nRequest from "+req.connection.remoteAddress).blue.bold);
+  console.log(("\nRequest from "+req.connection.remoteAddress).blue.bold +(req.session.currentUser));
 
   req.User = User;
 
@@ -165,13 +130,12 @@ app.use(function(req, res, next) {
     tri: info.trimester,
     full_year: info.full,
     today: req.today,
-    currentUser: req.user,
-    loggedIn: req.isAuthenticated()
+    currentUser: req.session.currentUser,
+    loggedIn: (req.session.currentUser ? true : false)
   }
 
   req.session.info = [];
   req.session.errs = [];
-  console.log(req.session.message);
   next();
 });
 
@@ -221,8 +185,6 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var isValidPassword = function(user, password){
-  return bCrypt.compareSync(password, user.password);
-}
+
 
 module.exports = app;

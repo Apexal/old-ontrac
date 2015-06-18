@@ -17,20 +17,41 @@ router.get('/login', function(req, res, next) {
   res.render('users/login', req.toJade);
 });
 
-router.post('/login', passport.authenticate('local'), function(req, res) {
-  var fiveMinAgo = moment().subtract(5, 'minutes');
-  if(moment(req.user.last_point_login_time).isBefore(fiveMinAgo)){
-      req.User.findOne({username: req.user.username}, function(err, user) {
-        user.points += 10;
-        req.session.info.push("You got 10 points for logging in!");
-        user.last_point_login_time = new Date();
+router.post('/login', function(req, res, next) {
+  var username = req.body.username;
+  var password = req.body.password;
+
+  var errs = [];
+  req.User.findOne({username: username}, function(err, user) {
+    if(err) console.log(err);
+
+    if(!user){
+      errs.push("Incorrect username or password.")
+    }else{
+      if(!isValidPassword(user, password)){
+        errs.push("Incorrect username or password.")
+      }else{
+
+        req.user = user;
+        req.session.currentUser = user;
+        console.log(req.session.currentUser.fullName);
+        user.login_count +=1;
+        user.last_login_time = new Date();
+        var fiveMinAgo = moment().subtract(5, 'minutes');
+        if(moment(user.last_point_login_time).isBefore(fiveMinAgo)){
+          user.points += 10;
+          req.session.info.push("You have been rewarded 10 points for logging in.");
+          user.last_point_login_time = new Date();
+        }
         user.save();
-        console.log("10 points given to "+user.username+" for logging in");
-        res.redirect(req.query.redir);
-      });
-  }else{
-    res.redirect(req.query.redir);
-  }
+      }
+    }
+    req.session.errs = errs;
+    if(errs.length == 0)
+      res.redirect(req.query.redir);
+    else
+      res.redirect("/login");
+  });
 });
 
 router.get('/register', function(req, res) {
@@ -106,12 +127,17 @@ var createHash = function(password){
 }
 
 router.get('/logout', function(req, res) {
-  req.logout();
+  delete req.session.currentUser;
+  req.session.info.push("You have successfully logged out.");
   res.redirect('/');
 });
 
 router.get('/forgot', function(req, res) {
 
 });
+
+var isValidPassword = function(user, password){
+  return bCrypt.compareSync(password, user.password);
+}
 
 module.exports = router;

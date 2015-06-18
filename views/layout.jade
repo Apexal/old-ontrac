@@ -57,7 +57,7 @@ html
             ul.nav.navbar-nav.navbar-right
               li.dropdown
                   if loggedIn
-                      a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')= currentUser.fullName
+                      a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')= currentUser.firstName + " "+currentUser.lastName
                           span.caret
                   else
                       a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Not Logged In
