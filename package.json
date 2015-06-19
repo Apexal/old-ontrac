@@ -5,7 +5,7 @@
   "scripts": {
     "watch": "nodemon bin/www",
     "run": "DEBUG=adiutor npm start",
-    "start": "nodemon ./bin/www"
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.12.4",
