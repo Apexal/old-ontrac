@@ -112,6 +112,12 @@ router.post('/register', function(req, res) {
       req.toJade.title="Adiutor";
       req.toJade.info = ["You have successfully registered! Check your email to verify your account."];
 
+      try{
+        require("../modules/mailer.js")(newUser.email, "Welcome to Worker!", "Ayy lmao");
+      }catch (err) {
+        console.log(err);
+      }
+
       res.render('index', req.toJade);
     }else{
       req.toJade.title = "Register";

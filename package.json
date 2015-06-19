@@ -20,6 +20,6 @@
     "express-session": "*",
     "moment": "*",
     "bcrypt-nodejs": "*",
-    "node-mailer": "*"
+    "nodemailer": "*"
   }
 }
