@@ -142,7 +142,7 @@ router.get('/verify', function(req, res) {
       user.verified = true;
       user.save();
 
-      var message = "<p>Congratulations, "+user.firstName". You are now ready to \
+      var message = "<p>Congratulations, "+user.firstName+". You are now ready to \
       use <b>Worker</b>!</p><br><p>Once you login, edit your profile to select \
       your classes.";
 
