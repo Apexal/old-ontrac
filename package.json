@@ -19,6 +19,7 @@
     "mongoose": "*",
     "express-session": "*",
     "moment": "*",
-    "bcrypt-nodejs": "*"
+    "bcrypt-nodejs": "*",
+    "node-mailer": "*"
   }
 }

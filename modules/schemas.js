@@ -16,5 +16,18 @@ module.exports = {
     preferences: Object,
     verified: Boolean,
     registered_date: Date
+  },
+  class : {
+    mID: Number,
+    title: String,
+    desc: String,
+    teacherID: String,
+    grade: Array
+  },
+  teacher : {
+    email: String,
+    tID: Number,
+    firstName: String,
+    lastName: String
   }
 }

@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var colors = require('colors');
 var session = require('express-session');
 var bCrypt = require('bcrypt-nodejs');
-var flash = require('connect-flash');
 var helpers = require('./modules/helpers');
 
 var moment = require('moment');
@@ -111,7 +110,7 @@ app.locals.moment = moment;
 app.locals.helpers = helpers;
 
 app.use(function(req, res, next) {
-  console.log(("\nRequest from "+req.connection.remoteAddress).blue.bold +(req.session.currentUser));
+  console.log(("\nRequest from "+req.connection.remoteAddress).blue.bold +(req.session.currentUser ? " by "+req.session.currentUser.username : " "));
 
   req.User = User;
 
