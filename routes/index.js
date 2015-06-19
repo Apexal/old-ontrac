@@ -112,8 +112,12 @@ router.post('/register', function(req, res) {
       req.toJade.title="Adiutor";
       req.toJade.info = ["You have successfully registered! Check your email to verify your account."];
 
+      var message = "<p>Thank you for registering for <b>Worker</b>! <br> \
+                    Before you can start using it, please verify your account by  \
+                    clicking <a href='http://regismumble.ddns.net:3000/verify?id="+newUser._id.toString()+"'>here</a>.</p>"
+
       try{
-        require("../modules/mailer.js")(newUser.email, "Welcome to Worker!", "Ayy lmao");
+        require("../modules/mailer.js")(newUser.email, "Welcome to Worker!", message);
       }catch (err) {
         console.log(err);
       }
@@ -128,9 +132,29 @@ router.post('/register', function(req, res) {
   }
 });
 
-var createHash = function(password){
- return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
-}
+router.get('/verify', function(req, res) {
+  var id = req.query.id;
+  req.User.findOne({_id: id}, function(err, user) {
+    if(err) console.log(err);
+
+    if(user){
+      req.session.info.push("You have successfully verified your account.");
+      user.verified = true;
+      user.save();
+
+      var message = "<p>Congratulations, "+user.firstName". You are now ready to \
+      use <b>Worker</b>!</p><br><p>Once you login, edit your profile to select \
+      your classes.";
+
+      try{
+        require("../modules/mailer.js")(user.email, "All Ready", message);
+      }catch (err) {
+        console.log(err);
+      }
+    }
+    res.redirect("/");
+  });
+});
 
 router.get('/logout', function(req, res) {
   delete req.session.currentUser;
@@ -141,6 +165,10 @@ router.get('/logout', function(req, res) {
 router.get('/forgot', function(req, res) {
 
 });
+
+var createHash = function(password){
+ return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
+}
 
 var isValidPassword = function(user, password){
   return bCrypt.compareSync(password, user.password);
