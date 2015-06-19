@@ -136,7 +136,6 @@ router.get('/verify', function(req, res) {
   var id = req.query.id;
   req.User.findOne({_id: id}, function(err, user) {
     if(err) console.log(err);
-
     if(user){
       req.session.info.push("You have successfully verified your account.");
       user.verified = true;

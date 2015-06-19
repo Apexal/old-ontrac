@@ -138,8 +138,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-
-app.use('/users/:username', function(req, res, next) {
+app.use(['/users/:username', '/users/profile', '/advisements/:advisement'], function(req, res, next) {
 
   if(req.toJade.loggedIn){
     next();
@@ -147,7 +146,6 @@ app.use('/users/:username', function(req, res, next) {
     res.redirect("/login?redir="+req._parsedUrl.pathname);
   }
 });
-
 
 app.use('/', routes);
 app.use('/users', users);

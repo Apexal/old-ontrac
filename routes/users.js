@@ -13,6 +13,9 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get("/profile", function(req, res) {
+  req.toJade.title = "Your Profile";
+});
 
 router.get("/:username", function(req, res){
   req.User.findOne({username: req.params.username}, function(err, user) {
