@@ -22,6 +22,9 @@ module.exports = {
       }
     });
     return true;
+  },
+  isPage : function(word, other) {
+    return (word.indexOf(other) > -1 ? "active" : "");
   }
 
 }

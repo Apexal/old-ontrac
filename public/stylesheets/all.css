@@ -129,7 +129,8 @@ main {
 
 /* User Profile Page */
 
-#profile-pic, .user-profile blockquote {
+#profile-pic, .holder {
+  margin: 0 auto;
   max-width: 200px;
 }
 

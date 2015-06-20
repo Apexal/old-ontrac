@@ -43,15 +43,15 @@ html
             ul.nav.navbar-nav
               li(class=(title=="Adiutor" || title=="Your Home" ? "active" : ""))
                 a(href="/") Home
-              li(class=(title=="Users"? "active" : ""))
+              li(class=(helpers.isPage(page, "users")))
                 a(href="/users") Users
-              li(class=(title=="Advisements" ? "active" : ""))
+              li(class=(helpers.isPage(page, "advisements")))
                 a(href="/advisements") Advisements
 
               if loggedIn
-                li
+                li(class=(helpers.isPage(page, "teachers")))
                   a(href="/teachers") Teachers
-                li
+                li(class=(helpers.isPage(page, "classes")))
                   a(href="/classes") Classes
                 li(class=(title=="Forum" ? "active" : ""))
                   a(href="/forum") Forum
@@ -85,12 +85,13 @@ html
       //  .alert.alert-danger(role="alert") Warning! This is the development server, so I have no idea how you found your way here. Don't touch anything!
       block content
 
-    footer
-      .navbar.navbar-default.navbar-fixed-bottom#real-bottom-nav(style="z-index: 50;")
-        .container
-          #navbar.navbar-collapse.collapse
-            ul.nav.navbar-nav
-              if loggedIn
+    if loggedIn
+      footer
+        .navbar.navbar-default.navbar-fixed-bottom#real-bottom-nav(style="z-index: 50;")
+          .container
+            #navbar.navbar-collapse.collapse
+              ul.nav.navbar-nav
+
                 li
                   a(href='#') Homework &nbsp;
                     span.badge 4
@@ -101,12 +102,9 @@ html
                 li
                   a(href='#') Schedule &nbsp;
                     span.badge 2
-              else
-                li
-                  a(href="/login") Login to access the services.
-            if loggedIn
+
               img.right.navbar-pic(src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg")
-        if loggedIn
+
           #mobile-bottom-bar.visible-xs
             span
               a.fa.fa-th-list

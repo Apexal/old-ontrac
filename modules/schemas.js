@@ -22,7 +22,7 @@ module.exports = {
     title: String,
     desc: String,
     tID: String,
-    grade: Array
+    grade: Number
   },
   teacher : {
     email: String,

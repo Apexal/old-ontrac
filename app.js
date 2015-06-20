@@ -83,8 +83,14 @@ app.use(['/users/:username', '/users/profile', '/advisements/:advisement', '/tea
   }
 });
 
-app.use('/teachers/*', function(req, res, next) {
+app.use('/*', function(req, res, next) {
+  req.toJade.page = req.baseUrl;
+  next();
+});
+
+app.use('/teachers', function(req, res, next) {
   req.Teacher = mongo.Teacher;
+  console.log(req.baseUrl);
   next();
 });
 

@@ -63,11 +63,21 @@ db.once('open', function (callback) {
     }
     return rank;
   });
+  var User = mongoose.model('User', userSchema);
+
+  var teacherSchema = new Schema(schemas.teacher);
+  var Teacher = mongoose.model('Teacher', teacherSchema);
+
+  var classSchema = new Schema(schemas.class);
+  classSchema.statics.getTeacher = function(c, cb) {
+    return Teacher.find({tID : c.tID}, cb);
+  };
+  var Class = mongoose.model('Class', classSchema);
 
 
-  var teacherSchema = Schema(schemas.teacher);
+  teacherSchema
 
-
-  module.exports.Teacher = mongoose.model('Teacher', teacherSchema);
-  module.exports.User = mongoose.model('User', userSchema);
+  module.exports.Class = Class;
+  module.exports.Teacher = Teacher;
+  module.exports.User = User;
 });

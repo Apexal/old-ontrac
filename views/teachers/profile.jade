@@ -2,8 +2,16 @@ extends /layout
 
 block content
   .container
-    .page-header
-      h1= title
-    .col-xs-12
+    if found
+      .page-header
+        h1= title
       .row
-        img.teacher-profile-img(src="https://webeim.regis.org/photos/regis/Staff/"+teacher.tID+".jpg")
+        .col-xs-12
+          img.teacher-profile-img(src="https://webeim.regis.org/photos/regis/Staff/"+teacher.tID+".jpg")
+    else
+      .page-header
+        h1 That teacher does not exist!
+
+      .row
+        .col-xs-12
+          a.btn.btn-default(href="/teachers") Teacher Index
