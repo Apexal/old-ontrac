@@ -132,3 +132,10 @@ main {
 #profile-pic, .user-profile blockquote {
   max-width: 200px;
 }
+
+
+/* Teacher Pages */
+
+.teacher-profile-img {
+  max-width: 200px;
+}

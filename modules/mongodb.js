@@ -64,5 +64,10 @@ db.once('open', function (callback) {
     return rank;
   });
 
+
+  var teacherSchema = Schema(schemas.teacher);
+
+
+  module.exports.Teacher = mongoose.model('Teacher', teacherSchema);
   module.exports.User = mongoose.model('User', userSchema);
 });

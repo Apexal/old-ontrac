@@ -21,12 +21,12 @@ module.exports = {
     mID: Number,
     title: String,
     desc: String,
-    teacherID: String,
+    tID: String,
     grade: Array
   },
   teacher : {
     email: String,
-    tID: Number,
+    tID: String,
     firstName: String,
     lastName: String
   }

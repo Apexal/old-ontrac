@@ -47,13 +47,17 @@ html
                 a(href="/users") Users
               li(class=(title=="Advisements" ? "active" : ""))
                 a(href="/advisements") Advisements
-              li
-                a(href="/ranks") Ranks
-              li(class=(title=="Forum" ? "active" : ""))
-                a(href="/forum") Forum
-              //
+
+              if loggedIn
                 li
-                  a(target="_blank", href="https://bitbucket.org/apexal/adiutor") Source
+                  a(href="/teachers") Teachers
+                li
+                  a(href="/classes") Classes
+                li(class=(title=="Forum" ? "active" : ""))
+                  a(href="/forum") Forum
+                //
+                  li
+                    a(target="_blank", href="https://bitbucket.org/apexal/adiutor") Source
             ul.nav.navbar-nav.navbar-right
               li.dropdown
                   if loggedIn
