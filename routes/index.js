@@ -74,8 +74,11 @@ router.post('/register', function(req, res) {
   if(email.indexOf("@regis.org", email.length - "@regis.org".length) == -1)
     errs.push("Must use a Regis email.");
 
+  if(!app.locals.helpers.clean(name[0]) || !app.locals.helpers.clean(name[1]))
+    errs.push("Remove the expletives from your name.");
+
   if(name.split(" ").length != 2)
-      errs.push("Your full name must be used.");
+    errs.push("Your full name must be used.");
 
   if(isNaN(code))
     errs.push("Thats not a Student ID#");
