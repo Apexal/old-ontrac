@@ -17,10 +17,13 @@ module.exports = {
     verified: Boolean,
     registered_date: Date
   },
+  advisement : {
+    name: String,
+    tID: Number
+  }
   class : {
     mID: Number,
     title: String,
-    desc: String,
     tID: String,
     grade: Number
   },
