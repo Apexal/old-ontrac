@@ -22,7 +22,7 @@ router.post('/login', function(req, res, next) {
   var password = req.body.password;
 
   var errs = [];
-  req.User.findOne({username: username}, function(err, user) {
+  req.Student.findOne({registered: true, username: username}, function(err, user) {
     if(err) console.log(err);
 
     if(!user){
@@ -64,67 +64,46 @@ router.get('/register', function(req, res) {
 
 
 router.post('/register', function(req, res) {
-  var email = req.body.email;
-  var name = req.body.name;
+  var username = req.body.username;
   var password =  createHash(req.body.password);
-  var advisement = req.body.advisement;
   var code = req.body.code;
   var errs = [];
-
-  if(email.indexOf("@regis.org", email.length - "@regis.org".length) == -1)
-    errs.push("Must use a Regis email.");
-
-  if(!app.locals.helpers.clean(name[0]) || !app.locals.helpers.clean(name[1]))
-    errs.push("Remove the expletives from your name.");
-
-  if(name.split(" ").length != 2)
-    errs.push("Your full name must be used.");
 
   if(isNaN(code))
     errs.push("Thats not a Student ID#");
 
-  req.User.findOne({email: email}, function(err, user) {
+  req.Student.findOne({username: username}, function(err, user) {
+    if (err) console.log(err);
+
     if(user){
-      errs.push("User already exists!");
+      if(user.registered == true){
+        errs.push("User already exists!");
+      }
+    }else{
+      errs.push("Please use a valid username.");
     }
-    finish();
-  });
-
-  function finish() {
     if(errs.length == 0){
-      var newUser = new req.User({
-        firstName: name.split(" ")[0],
-        lastName: name.split(" ")[1],
-        username: email.replace("@regis.org", ""),
-        code: code,
-        email: email,
-        advisement: advisement,
-        classes: [],
-        password: password,
-        rank: 0,
-        points: 10,
-        loginCount: 0,
-        last_login_time: new Date(),
-        last_point_login_time: new Date(),
-        preferences: {},
-        verified: false,
-        registered_date: new Date()
-      });
+      user.code = code;
+      user.password = password;
+      user.loginCount = 0;
+      user.last_login_time = new Date()
+      user.last_point_login_time = new Date()
+      user.registered_date = new Date();
+      user.registered = true;
 
-      newUser.save();
+      user.save();
       req.toJade.title="Adiutor";
       req.toJade.info = ["You have successfully registered! Check your email to verify your account."];
 
       var message = "<p>Thank you for registering for <b>Worker</b>! <br> \
                     Before you can start using it, please verify your account by  \
-                    clicking <a href='http://regismumble.ddns.net:3000/verify?id="+newUser._id.toString()+"'>here</a>.</p>"
+                    clicking <a href='http://regismumble.ddns.net:3000/verify?id="+user._id.toString()+"'>here</a>.</p>"
 
       try{
-        require("../modules/mailer.js")(newUser.email, "Welcome to Worker!", message);
+        require("../modules/mailer.js")(user.email, "Welcome to Worker!", message);
       }catch (err) {
         console.log(err);
       }
-
       res.render('index', req.toJade);
     }else{
       req.toJade.title = "Register";
@@ -132,12 +111,14 @@ router.post('/register', function(req, res) {
       req.toJade.adv = adv;
       res.render('users/register', req.toJade);
     }
-  }
+
+  });
+
 });
 
 router.get('/verify', function(req, res) {
   var id = req.query.id;
-  req.User.findOne({_id: id}, function(err, user) {
+  req.Student.findOne({registered: true, _id: id}, function(err, user) {
     if(err) console.log(err);
     if(user){
       req.session.info.push("You have successfully verified your account.");

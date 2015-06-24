@@ -6,7 +6,7 @@ var adv = require('../modules/advisements');
 router.get('/', function(req, res, next) {
   req.toJade.title = "Users";
   req.toJade.tableForm = (req.query.table == "1" ? true : false);
-  req.User.find({}, function(err, users){
+  req.Student.find({registered: true}, function(err, users){
     if(err) console.log(err);
     req.toJade.users = users;
     res.render('users/list', req.toJade);
@@ -18,7 +18,7 @@ router.get("/profile", function(req, res) {
 });
 
 router.get("/:username", function(req, res){
-  req.User.findOne({username: req.params.username}, function(err, user) {
+  req.Student.findOne({registered: true, username: req.params.username}, function(err, user) {
     if(user){
       req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+" of "+user.advisement;
       req.toJade.user = user;
@@ -30,7 +30,7 @@ router.get("/:username", function(req, res){
 });
 
 router.get("/:username/schedule", function(req, res){
-  req.User.findOne({username: req.params.username}, function(err, user) {
+  req.Student.findOne({registered: true, username: req.params.username}, function(err, user) {
     if(user){
       req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+"'s Schedule";
       req.toJade.user = user;

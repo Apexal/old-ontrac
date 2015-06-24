@@ -1,5 +1,5 @@
 module.exports = {
-  user : {
+  student : {
     firstName: String,
     lastName: String,
     username: String,
@@ -15,7 +15,8 @@ module.exports = {
     last_point_login_time: Date,
     preferences: Object,
     verified: Boolean,
-    registered_date: Date
+    registered_date: Date,
+    registered: Boolean
   },
   advisement : {
     name: String,

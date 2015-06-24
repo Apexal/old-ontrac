@@ -9,16 +9,16 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Failed to connect to database:'));
 db.once('open', function (callback) {
   console.log('Connected to database');
-  var userSchema = new Schema(schemas.user);
-  userSchema.virtual('fullName').get(function () {
+  var studentSchema = new Schema(schemas.student);
+  studentSchema.virtual('fullName').get(function () {
     return this.firstName + ' ' + this.lastName;
   });
 
-  userSchema.virtual('grade').get(function () {
+  studentSchema.virtual('grade').get(function () {
     return 8+parseInt(this.advisement.charAt(0));
   });
 
-  userSchema.virtual('gradeName').get(function () {
+  studentSchema.virtual('gradeName').get(function () {
     var adv = this.advisement.charAt(0);
     var grade = "";
     switch(adv) {
@@ -38,7 +38,7 @@ db.once('open', function (callback) {
     return grade;
   });
 
-  userSchema.virtual('rankName').get(function () {
+  studentSchema.virtual('rankName').get(function () {
     var rank = this.rank;
     switch(rank) {
       case 0:
@@ -63,7 +63,7 @@ db.once('open', function (callback) {
     }
     return rank;
   });
-  var User = mongoose.model('User', userSchema);
+  var Student = mongoose.model('Student', studentSchema);
 
   var teacherSchema = new Schema(schemas.teacher);
   var Teacher = mongoose.model('Teacher', teacherSchema);
@@ -74,23 +74,7 @@ db.once('open', function (callback) {
   };
   var Course = mongoose.model('Course', courseSchema);
 
-  Course.find({}, function(err, courses) {
-    if(err) console.log(err);
-    courses.forEach(function(course){
-      if(typeof course.tID !== 'number'){
-        console.log(course);
-        Teacher.find({lastName: course.tID}, function(err, item){
-          if(err) console.log(err);
-          
-          course.tID = item.tID;
-          course.save();
-        });
-      }
-
-    });
-  });
-
   module.exports.Course = Course;
   module.exports.Teacher = Teacher;
-  module.exports.User = User;
+  module.exports.Student = Student;
 });

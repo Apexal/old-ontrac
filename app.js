@@ -48,7 +48,7 @@ app.locals.helpers = helpers;
 app.use(function(req, res, next) {
   console.log(("\nRequest from "+req.connection.remoteAddress).blue.bold +(req.session.currentUser ? " by "+req.session.currentUser.username : " "));
 
-  req.User = mongo.User;
+  req.Student = mongo.Student;
 
   var info = school_years.getCurrent();
   req.year = info.years;
