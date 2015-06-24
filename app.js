@@ -18,7 +18,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var advisements = require('./routes/advisements');
 var teachers = require('./routes/teachers');
-
+var courses = require('./routes/courses');
 
 
 var school_years = require('./modules/years');
@@ -74,8 +74,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(['/users/:username', '/users/profile', '/advisements/:advisement', '/teachers/*'], function(req, res, next) {
-
+app.use(['/users/:username', '/users/profile', '/advisements/:advisement', '/teachers'], function(req, res, next) {
   if(req.toJade.loggedIn){
     next();
   }else{
@@ -90,7 +89,11 @@ app.use('/*', function(req, res, next) {
 
 app.use('/teachers', function(req, res, next) {
   req.Teacher = mongo.Teacher;
-  console.log(req.baseUrl);
+  next();
+});
+
+app.use('/courses', function(req, res, next) {
+  req.Course = mongo.Course;
   next();
 });
 
@@ -98,6 +101,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/advisements', advisements);
 app.use('/teachers', teachers);
+app.use('/courses', courses);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

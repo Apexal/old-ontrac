@@ -68,16 +68,29 @@ db.once('open', function (callback) {
   var teacherSchema = new Schema(schemas.teacher);
   var Teacher = mongoose.model('Teacher', teacherSchema);
 
-  var classSchema = new Schema(schemas.class);
-  classSchema.statics.getTeacher = function(c, cb) {
+  var courseSchema = new Schema(schemas.course);
+  courseSchema.statics.getTeacher = function(c, cb) {
     return Teacher.find({tID : c.tID}, cb);
   };
-  var Class = mongoose.model('Class', classSchema);
+  var Course = mongoose.model('Course', courseSchema);
 
+  Course.find({}, function(err, courses) {
+    if(err) console.log(err);
+    courses.forEach(function(course){
+      if(typeof course.tID !== 'number'){
+        console.log(course);
+        Teacher.find({lastName: course.tID}, function(err, item){
+          if(err) console.log(err);
+          
+          course.tID = item.tID;
+          course.save();
+        });
+      }
 
-  teacherSchema
+    });
+  });
 
-  module.exports.Class = Class;
+  module.exports.Course = Course;
   module.exports.Teacher = Teacher;
   module.exports.User = User;
 });

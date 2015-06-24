@@ -20,8 +20,9 @@ module.exports = {
   advisement : {
     name: String,
     tID: Number
-  }
-  class : {
+  },
+  course : {
+    courseType: String,
     mID: Number,
     title: String,
     tID: String,
