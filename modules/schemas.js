@@ -1,5 +1,6 @@
 module.exports = {
   student : {
+    mID: Number,
     firstName: String,
     lastName: String,
     username: String,

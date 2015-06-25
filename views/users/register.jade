@@ -8,6 +8,10 @@ block content
       .col-xs-12
         include /info
         form(method="POST", action="/register")
+          .form-group
+            label(for="code") Student ID#
+            input.form-control#code(required=true, name="code", maxlength="25", placeholder="Code", type="text")
+
           //
             .form-group
               label(for="name") Full Name
@@ -15,9 +19,9 @@ block content
             .form-group
               label(for="email") Email
               input.form-control#email(required=true, name="email", maxlength="25", placeholder="Email", type="email")
-          .form-group
-            label(for="username") Username
-            input.form-control#username(required=true, name="username", maxlength="35", placeholder="Username", type="text")
+            .form-group
+              label(for="username") Username
+              input.form-control#username(required=true, name="username", maxlength="35", placeholder="Username", type="text")
           .form-group
             label(for="password") Password
             input.form-control#password(required=true, name="password", pattern=".{5,}", maxlength="25", placeholder="Password", type="password")
@@ -27,9 +31,6 @@ block content
               select.form-control#advisement(name="advisement", required=true)
                 for a in adv
                   option= a
-          .form-group
-            label(for="code") Student ID#
-            input.form-control#code(required=true, name="code", maxlength="25", placeholder="Code", type="text")
 
           .row
             a.left.btn.btn-default(href="/login") Already Registered?

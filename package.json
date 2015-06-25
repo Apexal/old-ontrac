@@ -20,6 +20,8 @@
     "express-session": "*",
     "moment": "*",
     "bcrypt-nodejs": "*",
-    "nodemailer": "*"
+    "nodemailer": "*",
+    "request": "*",
+    "cheerio": "*"
   }
 }

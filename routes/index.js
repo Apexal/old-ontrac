@@ -3,7 +3,10 @@ var router = express.Router();
 var adv = require('../modules/advisements');
 var moment = require('moment');
 var bCrypt = require('bcrypt-nodejs');
-redir = "/";
+var request = require("request");
+var cheerio = require("cheerio");
+
+var redir = "/";
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -64,56 +67,111 @@ router.get('/register', function(req, res) {
 
 
 router.post('/register', function(req, res) {
-  var username = req.body.username;
   var password =  createHash(req.body.password);
   var code = req.body.code;
   var errs = [];
 
+  var advisement = "";
+  var username = "";
+
   if(isNaN(code))
     errs.push("Thats not a Student ID#");
 
-  req.Student.findOne({username: username}, function(err, user) {
-    if (err) console.log(err);
 
-    if(user){
-      if(user.registered == true){
-        errs.push("User already exists!");
+  var cookieJar = request.jar();
+  request({
+      url: 'https://intranet.regis.org/login/submit.cfm', //URL to hit
+      jar: cookieJar,
+      method: 'POST',
+      //Lets post the following key/values as form
+      form: {
+          username: 'fmatranga18',
+          password: '1hope1havenotusedthisbefore!'
       }
-    }else{
-      errs.push("Please use a valid username.");
-    }
-    if(errs.length == 0){
-      user.code = code;
-      user.password = password;
-      user.loginCount = 0;
-      user.last_login_time = new Date()
-      user.last_point_login_time = new Date()
-      user.registered_date = new Date();
-      user.registered = true;
+  }, function(error, response, body){
+      if(error) {
+          console.log("UGH");
+          errs.push("1: Failed to register. Please try again later.");
+      }else{
+        var $ = cheerio.load(body);
+        if($(".alert-danger").length > 0){
 
-      user.save();
-      req.toJade.title="Adiutor";
-      req.toJade.info = ["You have successfully registered! Check your email to verify your account."];
+          errs.push("0: Failed to register. Please try again later.");
+        }else{
+          request({
+              url: 'http://intranet.regis.org/infocenter/default.cfm?StudentCode='+code, //URL to hit
+              jar: cookieJar,
+              method: 'GET',
+              //Lets post the following key/values as form
+          }, function(error, response, html){
+            if(error) {
+                console.log(error);
+                errs.push("1: Failed to register. Please try again later.");
+            }else{
+              var $ = cheerio.load(html);
+              info = $("#main table[width='650'][cellpadding='0'] tr:nth-child(2)").text().trim().replace(/\s\s+/g, ' ');
 
-      var message = "<p>Thank you for registering for <b>Worker</b>! <br> \
-                    Before you can start using it, please verify your account by  \
-                    clicking <a href='http://regismumble.ddns.net:3000/verify?id="+user._id.toString()+"'>here</a>.</p>"
+              var parts = info.split(" ");
+              var advisement = parts[2];
+              var firstName = parts[0].toLowerCase();
+              lastName = parts[1].toLowerCase();
 
-      try{
-        require("../modules/mailer.js")(user.email, "Welcome to Worker!", message);
-      }catch (err) {
-        console.log(err);
+              if(isNaN(advisement.charAt(0))){
+                errs.push("2: Failed to register. Please try again later.")
+              }else{
+                username = firstName.charAt(0)+lastName+(19 - parseInt(advisement.charAt(0)));
+              }
+            }
+            continues();
+          });
+        }
+
       }
-      res.render('index', req.toJade);
-    }else{
-      req.toJade.title = "Register";
-      req.toJade.errs = errs;
-      req.toJade.adv = adv;
-      res.render('users/register', req.toJade);
-    }
-
   });
 
+  function continues() {
+    req.Student.findOne({username: username}, function(err, user) {
+      if (err) console.log(err);
+
+      if(user){
+        if(user.registered == true){
+          errs.push("User already exists!");
+        }
+      }else{
+        errs.push("Please use a valid code.");
+      }
+      if(errs.length == 0){
+        user.code = code;
+        user.password = password;
+        user.loginCount = 0;
+        user.last_login_time = new Date();
+        user.last_point_login_time = new Date();
+        user.registered_date = new Date();
+        user.registered = true;
+
+        user.save();
+        req.toJade.title="Adiutor";
+        req.toJade.info = ["You have successfully registered! Check your email to verify your account."];
+
+        var message = "<p>Thank you for registering for <b>Worker</b>! <br> \
+                      Before you can start using it, please verify your account by  \
+                      clicking <a href='http://regismumble.ddns.net:3000/verify?id="+user._id.toString()+"'>here</a>.</p>"
+
+        try{
+          require("../modules/mailer.js")(user.email, "Welcome to Worker!", message);
+        }catch (err) {
+          console.log(err);
+        }
+        res.render('index', req.toJade);
+      }else{
+        req.toJade.title = "Register";
+        req.toJade.errs = errs;
+        req.toJade.adv = adv;
+        res.render('users/register', req.toJade);
+      }
+
+    });
+  }
 });
 
 router.get('/verify', function(req, res) {
