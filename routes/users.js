@@ -20,9 +20,17 @@ router.get("/profile", function(req, res) {
 router.get("/:username", function(req, res){
   req.Student.findOne({registered: true, username: req.params.username}, function(err, user) {
     if(user){
+      if(err) console.log(err);
       req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+" of "+user.advisement;
       req.toJade.user = user;
-      res.render('users/profile', req.toJade);
+
+      user.getClasses(function(err, classes){
+        if(err) console.log(err);
+        console.log(classes);
+        req.toJade.classes = classes;
+        console.log(classes[4].getTeacher());
+        res.render('users/profile', req.toJade);
+      });
     }else{
       res.redirect("/users");
     }

@@ -40,8 +40,9 @@ block content
               h1.panel-title  Classes
             .panel-body
               .user-info
-                b Advisement:
-                |  #{user.advisement}
+                ul
+                  for c in classes
+                    li #{c.title} with #{c.teacherName}
       .row
         .col-xs-12.col-sm-6.col-md-4
           .panel.panel-success
