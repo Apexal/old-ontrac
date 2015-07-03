@@ -26,9 +26,9 @@ router.get("/:username", function(req, res){
 
       user.getClasses(function(err, classes){
         if(err) console.log(err);
-        console.log(classes);
+        //console.log(classes);
         req.toJade.classes = classes;
-        console.log(classes[4].getTeacher());
+        console.log(classes[4].getTeacher().tID);
         res.render('users/profile', req.toJade);
       });
     }else{

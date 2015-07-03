@@ -38,11 +38,12 @@ block content
           .panel.panel-primary
             .panel-heading
               h1.panel-title  Classes
-            .panel-body
-              .user-info
-                ul
-                  for c in classes
-                    li #{c.title} with #{c.teacherName}
+            table.table.table-hover
+              for c in classes
+                tr
+                  td
+                    img(src="http://placehold.it/15x15")
+                  td= c.title
       .row
         .col-xs-12.col-sm-6.col-md-4
           .panel.panel-success

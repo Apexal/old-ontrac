@@ -70,22 +70,24 @@ db.once('open', function (callback) {
   var Teacher = mongoose.model('Teacher', teacherSchema);
 
   var courseSchema = new Schema(schemas.course);
-  courseSchema.methods.getTeacher = function(cb) {
-    return Teacher.findOne({tID : this.tID}, cb);
-  };
 
-  courseSchema.virtual('teacherName').get(function(){
-    Teacher.findOne({tID : this.tID}, function(err, item){
-      console.log(this.title);
-      return ( item ? item.lastName : "");
-    });
-  });
-
-  courseSchema.methods.getTeacher(function(cb){
-    return Teacher.findOne({tID : this.tID}, cb);
-  });
+  //courseSchema.methods.getTeacher = function(){
+  //  console.log("tID: "+this.tID);
+  //  Teacher.findOne({tID : this.tID}, function(err, item){return item;});
+  //};
 
   var Course = mongoose.model('Course', courseSchema);
+
+  Course.find({}, function(err, cs) {
+    cs.forEach(function(c){
+      Teacher.findOne({lastName: c.tID}, function(err, item) {
+        if(item){
+          c.tID = item.tID;
+          c.save();
+        }
+      })
+    });
+  });
 
   studentSchema.methods.getClasses = function(cb) {
     return Course.find({}).where('mID').in(this.classes).exec(cb);
