@@ -5,7 +5,7 @@ module.exports = {
     lastName: String,
     username: String,
     code: String,
-    email: { type: String, required: true, unique: true },
+    email: String,
     advisement: String,
     classes: Array,
     password: {type: String, required: true},
@@ -20,8 +20,11 @@ module.exports = {
     registered: Boolean
   },
   advisement : {
-    name: String,
-    tID: Number
+  	tID : String,
+  	grade : Number,
+  	title : String,
+  	courseType : String,
+  	mID : Number
   },
   course : {
     courseType: String,
@@ -35,5 +38,23 @@ module.exports = {
     tID: String,
     firstName: String,
     lastName: String
-  }
+  },
+  day: {
+        date: Date,
+        scheduleDay: String,
+        user: String,
+        items: {
+          homework: [
+              {
+              	courseID: Number,
+              	assignment: String,
+              	link: String,
+              	completed: Boolean
+              }
+          ],
+          tests : [],
+          quizzes: [],
+          projects: []
+        }
+    }
 }

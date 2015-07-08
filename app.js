@@ -19,7 +19,7 @@ var users = require('./routes/users');
 var advisements = require('./routes/advisements');
 var teachers = require('./routes/teachers');
 var courses = require('./routes/courses');
-
+var homework = require('./routes/services/homework');
 
 var school_years = require('./modules/years');
 
@@ -74,7 +74,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(['/users/:username', '/users/profile', '/advisements/:advisement', '/teachers'], function(req, res, next) {
+app.use(['/users/:username', '/users/profile', '/advisements/:advisement', '/teachers', '/homework'], function(req, res, next) {
   if(req.toJade.loggedIn){
     next();
   }else{
@@ -97,11 +97,22 @@ app.use('/courses', function(req, res, next) {
   next();
 });
 
+app.use('/homework', function(req, res, next) {
+  req.HWDay = mongo.HWDay;
+  next();
+});
+
+app.use('/advisements', function(req, res, next) {
+  req.Advisement = mongo.Advisement;
+  next();
+});
+
 app.use('/', routes);
 app.use('/users', users);
 app.use('/advisements', advisements);
 app.use('/teachers', teachers);
 app.use('/courses', courses);
+app.use('/homework', homework);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -117,7 +128,7 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    req.toJade.title = "Error!";
+    req.toJade.title = "Oh come on.";
     req.toJade.message = err.message;
     req.toJade.error = err;
     res.render('error', req.toJade);
@@ -133,7 +144,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
-
 
 module.exports = app;

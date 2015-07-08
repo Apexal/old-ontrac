@@ -7,23 +7,13 @@ block content
         if loggedIn == false
           small.right Login for more info.
 
-    for users, a in adv
+    for a in advisements
       .col-xs-12.col-sm-6.col-md-4
-        .panel(class=(users.length > 0 ? "panel-primary" : "panel-default"))
+        .panel(class=(loggedIn == true && "Advisement "+currentUser.advisement == a.title ? "panel-primary" : "panel-default"))
           .panel-heading
-            b= a
-            if users.length > 0
-              a.right(style="color: white;", href="/advisements/"+a) #{users.length + " "+helpers.pluralize(users.length, "User", "Users")}
+            b= a.title
+            
+            //  if users.length > 0
+            //    a.right(style="color: white;", href="/advisements/"+a) #{users.length + " "+helpers.pluralize(users.length, "User", "Users")}
           .panel-body
-            if users.length > 0
-
-              if loggedIn
-                span
-                  for u in users
-                    a(href="/users/"+u.username)= u.fullName
-                    | ,
-              else
-                span Log in to see what users in #[b= a] have registered.
-
-            else
-              span Nobody in #{a} has registered yet!
+            span Log in to see what users in #[b= a.title] have registered.

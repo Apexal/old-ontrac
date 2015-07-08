@@ -6,14 +6,13 @@ router.get('/', function(req, res){
   req.toJade.title = "Advisements";
   req.toJade.adv = {};
 
-  req.User.find({}, function(err, advs){
+  req.Advisement.find().sort({title: 1}).exec(function(err, advs){
     if(err) throw err;
+    req.toJade.advisements = [];
 
-    adv.forEach(function(a){
-      req.toJade.adv[a] = advs.filter(function (el) {
-        return el.advisement == a;
-      });
-    });
+    if (advs){
+      req.toJade.advisements = advs;
+    }
     res.render('advisements', req.toJade);
   });
 });

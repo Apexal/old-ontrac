@@ -2,24 +2,18 @@
 
 This README would normally document whatever steps are necessary to get your application up and running.
 
-### What is this repository for? ###
+### What is Adiutor? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* adiutor, adiutoris (m) - helper, assistant
+* v0.1.0
+* Make Regis eas*ier*
 
 ### How do I get set up? ###
-
-* Globally install expressJS, nodemon
-* Install MongoDB
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
+* Intall Mongo DB
+* Clone it
+* npm install
+* npm start
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Just tell me

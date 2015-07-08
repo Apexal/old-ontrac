@@ -64,8 +64,6 @@ db.once('open', function (callback) {
     return rank;
   });
 
-
-
   var teacherSchema = new Schema(schemas.teacher);
   var Teacher = mongoose.model('Teacher', teacherSchema);
 
@@ -78,7 +76,7 @@ db.once('open', function (callback) {
 
   var Course = mongoose.model('Course', courseSchema);
 
-  Course.find({}, function(err, cs) {
+  /*Course.find({}, function(err, cs) {
     cs.forEach(function(c){
       Teacher.findOne({lastName: c.tID}, function(err, item) {
         if(item){
@@ -87,7 +85,7 @@ db.once('open', function (callback) {
         }
       })
     });
-  });
+  });*/
 
   studentSchema.methods.getClasses = function(cb) {
     return Course.find({}).where('mID').in(this.classes).exec(cb);
@@ -95,7 +93,24 @@ db.once('open', function (callback) {
 
   var Student = mongoose.model('Student', studentSchema);
 
+  var daySchema = new Schema(schemas.day);
+
+  daySchema.statics.dueToday = function(username, today, cb){
+    return this.findOne({user: username, date: today.toDate()}, cb);
+  };
+
+  daySchema.statics.getClosestDate = function(username, today, cb){
+    return this.find().where('user').equals(username).where('date').gt(today.toDate()).sort({date: 1}).exec(cb);
+    //return this.find({user: username, work:  {$gt: []}, date: {$gt: today.toDate()}}).sort({date: 1}).exec(cb);
+  };
+  var Day = mongoose.model('Day', daySchema);
+
+  var advisementSchema = new Schema(schemas.advisement);
+  var Advisement = mongoose.model('Advisement', advisementSchema);
+
   module.exports.Course = Course;
   module.exports.Teacher = Teacher;
   module.exports.Student = Student;
+  module.exports.Advisement = Advisement;
+  module.exports.Day = Day;
 });
