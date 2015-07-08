@@ -8,56 +8,65 @@ block content
     if user.verified == false
       .alert.alert-danger(role="alert") This user is not verified to truly be #{user.firstName}! Therefore this account is restricted in what services it can use.
     .user-profile
-      .row
-        .col-xs-12.col-sm-6.col-md-4.center-xs
-          .holder
-            img#profile-pic(src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
-            a.profile-user-adv(href="/advisements/"+user.advisement)= user.advisement
-          br
-          blockquote
-
-            if user.bio
-              p= user.bio
-            else
-              p I haven't set my bio yet!
-        .col-xs-12.col-sm-6.col-md-4
-          .panel.panel-default
-            .panel-heading
-              h1.panel-title  Info
-            .panel-body
-              .user-info
-                b Rank:
-                |  #{user.rankName}
-                br
-                b Grade:
-                |  #{user.gradeName}
-                br
-                b Advisement:
-                |  #{user.advisement}
-        .col-xs-12.col-sm-6.col-md-4
-          .panel.panel-primary
-            .panel-heading
-              h1.panel-title  Classes
-            table.table.table-hover
-              for c in classes
-                tr
-                  td
-                    img(src="http://placehold.it/15x15")
-                  td= c.title
-      .row
-        .col-xs-12.col-sm-6.col-md-4
-          .panel.panel-success
-            .panel-heading
-              h1.panel-title  Achievements
-            .panel-body
-              .user-info
-                b Advisement:
-                a(href="/advisements/"+user.advisement)  #{user.advisement}
-        .col-xs-12.col-sm-6.col-md-4
-          .panel.panel-warning
-            .panel-heading
-              h1.panel-title  Stats
-            .panel-body
-              .user-info
-                b Advisement:
-                |  #{user.advisement}
+      .col-xs-12.col-sm-6.col-lg-8
+        .row
+          .col-xs-12.col-sm-8.col-md-6.center-xs
+            .holder
+              img#profile-pic(src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
+              a.profile-user-adv(href="/advisements/"+user.advisement)= user.advisement
+            br
+          .col-xs-12.col-sm-8.col-md-6
+            .panel.panel-default
+              .panel-heading
+                h1.panel-title  Info
+              .panel-body
+                .user-info
+                  b Rank:
+                  |  #{user.rankName}
+                  br
+                  b Grade:
+                  |  #{user.gradeName}
+                  br
+                  b Advisement:
+                  |  #{user.advisement}
+                  br
+                  b Last Logged In:
+                  |  #{moment(user.last_login_time).fromNow()}
+                  br
+                  b User Since:
+                  |  #{moment(user.registered_date).format('dddd, MMMM Do YYYY')}
+          .col-xs-12.col-sm-8.col-md-6
+            .panel.panel-success
+              .panel-heading
+                h1.panel-title  Achievements
+              .panel-body
+                .user-info
+                  b Advisement:
+                  a(href="/advisements/"+user.advisement)  #{user.advisement}
+        .row
+          .col-xs-12.col-sm-8.col-md-6
+            .panel.panel-warning
+              .panel-heading
+                h1.panel-title  Stats
+              .panel-body
+                .user-info
+                  b Advisement:
+                  |  #{user.advisement}
+          .col-xs-12.col-sm-8.col-md-6
+            .panel.panel-danger
+              .panel-heading
+                h1.panel-title  Recent Activity
+              .panel-body(style="height: 200px; overflow: auto;")
+                for s in user.statuses
+                  img(src="http://placehold.it/15x15")
+      .col-xs-12.col-sm-6.col-lg-4
+        .panel.panel-primary
+          .panel-heading
+            h1.panel-title  Classes
+          table.table.table-hover
+            for c in user.courses
+              tr
+                td
+                  img(src="http://placehold.it/15x15")
+                td= c.title
+                  i.right= c.tID

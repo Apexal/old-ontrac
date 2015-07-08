@@ -2,13 +2,14 @@
 var mongoose = require('mongoose');
 var config = require('./config');
 var Schema = mongoose.Schema;
-var schemas = require('./schemas.js');
+var schemas = require('./schemas');
 mongoose.connect('mongodb://127.0.0.1/'+config.db);
 var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'Failed to connect to database:'));
 db.once('open', function (callback) {
   console.log('Connected to database');
+
   var studentSchema = new Schema(schemas.student);
   studentSchema.virtual('fullName').get(function () {
     return this.firstName + ' ' + this.lastName;
@@ -99,9 +100,8 @@ db.once('open', function (callback) {
     return this.findOne({user: username, date: today.toDate()}, cb);
   };
 
-  daySchema.statics.getClosestDate = function(username, today, cb){
-    return this.find().where('user').equals(username).where('date').gt(today.toDate()).sort({date: 1}).exec(cb);
-    //return this.find({user: username, work:  {$gt: []}, date: {$gt: today.toDate()}}).sort({date: 1}).exec(cb);
+  daySchema.statics.getClosestHWDate = function(username, today, cb){
+    return this.find().where('user').equals(username).where('date').gt(today.toDate()).where('items.homework').gt([]).sort({date: 1}).exec(cb);
   };
   var Day = mongoose.model('Day', daySchema);
 
