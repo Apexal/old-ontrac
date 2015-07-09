@@ -10,7 +10,6 @@ module.exports = {
     code: String,
     email: String,
     advisement: String,
-    classes: Array,
     courses: [{ type: Schema.Types.ObjectId, ref: 'Course'}],
     password: {type: String, required: true},
     rank: Number,

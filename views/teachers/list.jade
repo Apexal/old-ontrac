@@ -7,9 +7,9 @@ block content
         small.right= teachers.length
       
     .teacher-list
-      .alert.alert-info.alert-dismissible(data-dismiss="alert", aria-label="Close", role="alert")
-        | You must be logged into Moodle to view the profile images.
-        button.close(data-dismiss="alert")
+      include /info
+      //form#search-teachers
+        
       table.table.table-hover
         tr
           th Profile Picture
@@ -18,7 +18,8 @@ block content
         for t in teachers
           tr
             td
-              img(src=t.image)
+              a(href="/teachers/"+t.mID)
+                img(src=t.image)
             td
               h3= t.firstName + " " + t.lastName
             td

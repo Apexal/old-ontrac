@@ -66,6 +66,9 @@ db.once('open', function (callback) {
   });
 
   var teacherSchema = new Schema(schemas.teacher);
+  teacherSchema.virtual('fullName').get(function () {
+    return this.firstName + ' ' + this.lastName;
+  });
   var Teacher = mongoose.model('Teacher', teacherSchema);
 
   var courseSchema = new Schema(schemas.course);

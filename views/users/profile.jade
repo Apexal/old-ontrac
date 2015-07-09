@@ -10,12 +10,12 @@ block content
     .user-profile
       .col-xs-12.col-sm-6.col-lg-8
         .row
-          .col-xs-12.col-sm-8.col-md-6.center-xs
+          .col-xs-12.col-sm-12.col-md-6.center-xs
             .holder
               img#profile-pic(src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
               a.profile-user-adv(href="/advisements/"+user.advisement)= user.advisement
             br
-          .col-xs-12.col-sm-8.col-md-6
+          .col-xs-12.col-sm-12.col-md-6
             .panel.panel-default
               .panel-heading
                 h1.panel-title  Info
@@ -35,7 +35,7 @@ block content
                   br
                   b User Since:
                   |  #{moment(user.registered_date).format('dddd, MMMM Do YYYY')}
-          .col-xs-12.col-sm-8.col-md-6
+          .col-xs-12.col-sm-12.col-md-6
             .panel.panel-success
               .panel-heading
                 h1.panel-title  Achievements
@@ -44,7 +44,7 @@ block content
                   b Advisement:
                   a(href="/advisements/"+user.advisement)  #{user.advisement}
         .row
-          .col-xs-12.col-sm-8.col-md-6
+          .col-xs-12.col-sm-12.col-md-6
             .panel.panel-warning
               .panel-heading
                 h1.panel-title  Stats
@@ -52,7 +52,7 @@ block content
                 .user-info
                   b Advisement:
                   |  #{user.advisement}
-          .col-xs-12.col-sm-8.col-md-6
+          .col-xs-12.col-sm-12.col-md-6
             .panel.panel-danger
               .panel-heading
                 h1.panel-title  Recent Activity

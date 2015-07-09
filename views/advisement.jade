@@ -3,11 +3,11 @@ extends layout
 block content
   .container
     .page-header
-      h1 Advisement #{advisement}
-      h3 #[b= advisement] has #[b= users.length] registered #{helpers.pluralize(users.length, "user", "users")} and is advised by #[b NAME].
+      h1 Advisement #{advisement.title}
+      h3 #[b= advisement.title] has #[b= registered.length] registered #{helpers.pluralize(registered.length, "user", "users")} and is advised by #[b NAME].
     .col-xs-12
       .row
-        for user in users
+        for user in registered
           .col-xs-12.col-sm-6.col-md-6.text-center
             .advisement-user-box
               img(alt=user.bio, src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")

@@ -24,7 +24,6 @@ router.get("/:username", function(req, res){
       req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+" of "+user.advisement;
       req.toJade.user = user;
 
-      console.log(user);
       res.render('users/profile', req.toJade);
     }else{
       res.redirect("/users");
