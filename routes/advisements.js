@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var adv = require('../modules/advisements');
 
 router.get('/', function(req, res){
   req.toJade.title = "Advisements";
@@ -13,7 +12,7 @@ router.get('/', function(req, res){
     if (advs){
       req.toJade.advisements = advs;
     }
-    res.render('advisements', req.toJade);
+    res.render('advisement/list', req.toJade);
   });
 });
 
@@ -32,7 +31,7 @@ router.get('/:advisement', function(req, res){
       })
       req.toJade.advisement = adv;
     }
-    res.render('advisement', req.toJade);
+    res.render('advisement/one', req.toJade);
   });
 });
 

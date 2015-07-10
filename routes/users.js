@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var adv = require('../modules/advisements');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {

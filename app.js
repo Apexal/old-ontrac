@@ -16,10 +16,10 @@ var mongo = require('./modules/mongodb');
 // ===========================ROUTES============================
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var advisements = require('./routes/advisements');
 var teachers = require('./routes/teachers');
 var courses = require('./routes/courses');
 var homework = require('./routes/services/homework');
+var advisements = require('./routes/advisements');
 
 var school_years = require('./modules/years');
 

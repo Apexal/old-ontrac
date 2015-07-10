@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var adv = require('../modules/advisements');
 var moment = require('moment');
 var bCrypt = require('bcrypt-nodejs');
 var request = require("request");
@@ -59,7 +58,6 @@ router.post('/login', function(req, res, next) {
 
 router.get('/register', function(req, res) {
   req.toJade.title = "Register";
-  req.toJade.adv = adv;
   res.render('users/register', req.toJade);
 });
 
@@ -166,7 +164,6 @@ router.post('/register', function(req, res) {
       }else{
         req.toJade.title = "Register";
         req.toJade.errs = errs;
-        req.toJade.adv = adv;
         res.render('users/register', req.toJade);
       }
 

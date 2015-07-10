@@ -26,7 +26,6 @@ module.exports = {
   advisement : {
     _teacher: {type: Schema.Types.ObjectId, ref: 'Teacher'},
   	tID : String,
-  	grade : Number,
   	title : String,
   	mID : Number,
     students: [{type: Schema.Types.ObjectId, ref: 'Student'}]
