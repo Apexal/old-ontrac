@@ -4,6 +4,11 @@
  * 03 - Service specific
  */
 
+a.undecorated {
+  color: inherit;
+  text-decoration: inherit;
+  font-weight: inherit;
+}
 
 .right {
   float: right;
@@ -53,6 +58,11 @@ main {
 #mobile-bottom-bar a:hover {
   background-color: #090909;
 }
+
+.center {
+  text-align: center;
+}
+
 /*** 02 - ***/
 
 

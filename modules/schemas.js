@@ -24,7 +24,7 @@ module.exports = {
     registered: Boolean
   },
   advisement : {
-    _teacher: {type: Schema.Types.ObjectId, ref: 'Teacher'},
+    teacher: {type: Schema.Types.ObjectId, ref: 'Teacher'},
   	tID : String,
   	title : String,
   	mID : Number,

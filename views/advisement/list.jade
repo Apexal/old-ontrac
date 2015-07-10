@@ -11,16 +11,20 @@ block content
       .col-xs-12.col-sm-6.col-md-4
         .panel(class=(loggedIn == true && currentUser.advisement == ad.title ? "panel-primary" : "panel-default"))
           .panel-heading
-            b= ad.title
-            i.right #{ad.students.length} total
+            b #[a.undecorated(href="/advisements/"+ad.title)= ad.title]
+            if ad.teacher
+              a.undecorated.right(href="/teachers/"+ad.teacher.mID)= "Advisor "+ad.teacher.fullName
+            else
+              span.right No Advisor Found
           .panel-body
             if loggedIn
+              
               -var found = false
               for s in ad.students
                 if s.registered
                   a(href="/users/"+s.username)
                     if s.username == currentUser.username
-                      #[b= s.fullName]
+                      b= s.fullName
                     else
                       span= s.fullName
                   -found = true

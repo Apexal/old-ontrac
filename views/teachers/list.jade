@@ -9,22 +9,30 @@ block content
     .teacher-list
       include /info
       //form#search-teachers
-        
-      table.table.table-hover
-        tr
-          th Profile Picture
-          th Full Name
-          th Department
-        for t in teachers
-          tr
-            td
-              a(href="/teachers/"+t.mID)
-                img(src=t.image)
-            td
-              h3= t.firstName + " " + t.lastName
-            td
-              h4= t.department
-          
+      .col-xs-12.center
+        a.btn.btn-default(class=(sortBy=="firstName" ? "active" : ""), href="/teachers?sortBy=firstName") Sort by First Name
+        a.btn.btn-default(class=(sortBy=="lastName" ? "active" : ""), href="/teachers?sortBy=lastName") Sort by Last Name
+        a.btn.btn-default(class=(sortBy=="department" ? "active" : ""), href="/teachers?sortBy=department") Sort by Department
+        br
+        br
+      
+      .col-xs-12
+        table.table.table-hover
+          thead
+            tr
+              th Profile Picture
+              th Full Name
+              th Department
+          for t in teachers
+            if helpers.isReach(t.department) == false
+              tr
+                td
+                  a(href="/teachers/"+t.mID)
+                    img(src=t.image)
+                td
+                  h3= t.firstName + " " + t.lastName
+                td
+                  h4= t.department
 
     .row
       .col-xs-12

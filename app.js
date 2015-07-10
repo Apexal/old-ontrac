@@ -74,7 +74,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(['/users/:username', '/users/profile', '/advisements/:advisement', '/teachers', '/homework'], function(req, res, next) {
+app.use(['/users/:username', '/users/profile', '/advisements/:advisement', '/teachers', '/courses', '/homework'], function(req, res, next) {
   if(req.toJade.loggedIn){
     next();
   }else{

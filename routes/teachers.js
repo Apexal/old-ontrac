@@ -3,9 +3,11 @@ var router = express.Router();
 
 router.get("/", function(req, res, next) {
   req.toJade.title = "Teachers";
-  req.Teacher.find({}, function(err, teachers) {
+
+  var sortBy = (req.query.sortBy ? req.query.sortBy : "");
+  req.Teacher.find({}).sort(sortBy).exec(function(err, teachers) {
     req.toJade.teachers = teachers;
-    req.toJade.info.push("To view images you must be logged into Moodle.");
+    req.toJade.sortBy = sortBy;  
     res.render('teachers/list', req.toJade);
   });
 });

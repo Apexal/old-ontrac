@@ -25,6 +25,15 @@ module.exports = {
   },
   isPage : function(word, other) {
     return (word.indexOf(other) > -1 ? "active" : "");
+  },
+  isReach: function(department) {
+    return (department.indexOf("REACH") > -1);
+  },
+  advisor: function(adv) {
+    for (var key in adv.teacher) {
+      console.log(key, adv.teacher[key]);
+    }
+    return adv.teacher.toJSON();
   }
 
 }
