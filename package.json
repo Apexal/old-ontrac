@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "watch": "nodemon bin/www",
+    "watch": "nodemon bin/www2",
     "run": "DEBUG=adiutor npm start",
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www2"
   },
   "dependencies": {
     "body-parser": "~1.12.4",
@@ -22,6 +22,8 @@
     "bcrypt-nodejs": "*",
     "nodemailer": "*",
     "request": "*",
-    "cheerio": "*"
+    "cheerio": "*",
+    "socket.io": "*",
+    "underscore": "*"
   }
 }

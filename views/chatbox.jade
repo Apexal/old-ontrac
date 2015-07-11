@@ -1,0 +1,9 @@
+.panel.panel-default.resizable#chat-box(style="overflow: auto").hidden-xs
+  .panel-heading
+    h3.panel-title Chat
+      small.right#users-online 0 users online
+  #chat-messages.col-xs-12
+    
+  form#chat-controls.form-inline(role="form")
+    input.form-control#chat-message(type="text", name="message")
+    button(type="button")#send-message.btn.btn-primary Send

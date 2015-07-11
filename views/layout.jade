@@ -84,7 +84,9 @@ html
       //.container
       //  .alert.alert-danger(role="alert") Warning! This is the development server, so I have no idea how you found your way here. Don't touch anything!
       block content
-
+      
+      if loggedIn
+        include /chatbox
     if loggedIn
       footer
         .navbar.navbar-default.navbar-fixed-bottom#real-bottom-nav(style="z-index: 50;")
@@ -103,7 +105,7 @@ html
                   a(href='#') Schedule &nbsp;
                     span.badge 2
 
-              img.right.navbar-pic(src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg")
+              img.right.navbar-pic(src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg", data-username=currentUser.username)
 
           #mobile-bottom-bar.visible-xs
             span
@@ -114,10 +116,13 @@ html
               a.fa.fa-pencil-square-o(href="/noter")
             span
               a.fa.fa-calendar(href="/scheduler")
-            img.right.navbar-pic(src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg")
-
-
-
+            img.right.navbar-pic(src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg", data-username=currentUser.username)
+    
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js")
+    
+    if loggedIn
+      script(src='/javascripts/sockets.js')
+    script(src='/socket.io/socket.io.js')
     //script(src='/javascripts/materialize.min.js')
-    //script(src='/javascripts/effects.js')
+    script(src='/javascripts/effects.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js')

@@ -63,8 +63,48 @@ main {
   text-align: center;
 }
 
-/*** 02 - ***/
+/*** 02 - Chat Box ***/
 
+#chat-box {
+  width: 400px;
+
+  position: fixed;
+  bottom: 72px;
+  right: 0;
+
+}
+
+#chat-messages {
+  height: 250;
+  overflow: auto;
+}
+
+.message .padded {
+  padding-top: 2px;
+  padding-left: 60px;
+}
+
+.message span, b, img{
+  float: left;
+}
+
+.message img {
+  width: 50px;
+}
+
+#chat-controls {
+  position: fixed;
+  bottom: 50px;
+  right: 0;
+}
+
+#chat-controls input {
+  width: 320px;
+}
+
+#chat-controls button {
+  width: 80px;
+}
 
 /*** 03 - Service specific ***/
 
