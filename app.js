@@ -15,7 +15,6 @@ var session = require('express-session');
 var bCrypt = require('bcrypt-nodejs');
 var helpers = require('./modules/helpers');
 
-
 var moment = require('moment');
 var config = require('./modules/config');
 var mongo = require('./modules/mongodb');
@@ -27,7 +26,7 @@ var teachers = require('./routes/teachers');
 var courses = require('./routes/courses');
 var homework = require('./routes/services/homework');
 var advisements = require('./routes/advisements');
-
+var chat = require('./routes/services/chat');
 var school_years = require('./modules/years');
 
 var connected = 0;
@@ -59,7 +58,7 @@ app.locals.helpers = helpers;
 
 app.use(function(req, res, next) {
   console.log(("\nRequest from "+req.connection.remoteAddress).blue.bold +(req.session.currentUser ? " by "+req.session.currentUser.username : " "));
-
+  req.session.loggedIn = (req.session.currentUser ? true : false);
   req.Student = mongo.Student;
 
   var info = school_years.getCurrent();
@@ -126,6 +125,7 @@ app.use('/advisements', advisements);
 app.use('/teachers', teachers);
 app.use('/courses', courses);
 app.use('/homework', homework);
+app.use('/chat', chat);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -181,21 +181,36 @@ function normalizePort(val) {
 
 var messages = [];
 
+var online = [];
+var server_user = {name: "Server", username: "fmatranga18", code: 1337};
+var codes = [];
+
 // SOCKET.IO
 io.sockets.on('connection', function (socket) {
-  connected++;
-  console.log('New Connection!');
+  var client = socket.request.session.currentUser;
+  var user = {name: client.firstName, username: client.username, code: client.code};
+
   socket.emit('pastMessages', {messages: messages});
-  socket.emit('message', { message: 'Welcome to the chat!', name: "Server", user: 'server', when: moment().toDate() });
+
+  console.log("CONNECTED to "+user.username);
+  online.push(user);
+  console.log(online);
+  //socket.emit('message', { user: server_user, message: 'Welcome to the chat, '+user.name+'!', when: moment().toDate() });
+
+  io.sockets.emit('online-list', {users: online});
 
   socket.on('message', function (data) {
-    var d = {name: socket.request.session.currentUser.firstName, user: socket.request.session.currentUser.username, code: socket.request.session.currentUser.code, message: data.message, when: data.when};
+    var d = {user: user, message: data.message, when: data.when};
     messages.push(d);
     io.sockets.emit('message', d);
   });
 
   socket.on('disconnect', function(socket) {
-    connected--;
+    console.log("disconnect");
+    var index = online.indexOf(user);
+    online.splice(index, 1);
+    io.sockets.emit('online-list', {users: online});
+    console.log(online);
   });
 });
 

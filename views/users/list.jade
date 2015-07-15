@@ -2,8 +2,15 @@ extends /layout
 
 block content
   .container
+    if loggedIn
+      .page-header
+        h1 Online Now
+      .row
+        .col-xs-12
+          #online-user-list
+      
     .page-header
-      h1 Users
+      h1 All Users
         if tableForm == false
           a.btn.btn-default.right(href="/users?table=1") Table Form
         else

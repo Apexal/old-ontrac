@@ -47,14 +47,14 @@ html
                 a(href="/users") Users
               li(class=(helpers.isPage(page, "advisements")))
                 a(href="/advisements") Advisements
-
+                
               if loggedIn
                 li(class=(helpers.isPage(page, "teachers")))
                   a(href="/teachers") Teachers
                 li(class=(helpers.isPage(page, "courses")))
                   a(href="/courses") Courses
-                li(class=(title=="Forum" ? "active" : ""))
-                  a(href="/forum") Forum
+                li(class=(helpers.isPage(page, "chat")))
+                  a(href="/chat") Chat
                 //
                   li
                     a(target="_blank", href="https://bitbucket.org/apexal/adiutor") Source
@@ -85,7 +85,7 @@ html
       //  .alert.alert-danger(role="alert") Warning! This is the development server, so I have no idea how you found your way here. Don't touch anything!
       block content
       
-      if loggedIn
+      if loggedIn && helpers.isPage(page, "chat") == false
         include /chatbox
     if loggedIn
       footer
