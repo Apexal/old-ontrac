@@ -1,0 +1,17 @@
+extends /layout
+
+block content
+    .container
+        .page-header
+            h1 Edit Your Profile
+        if currentUser.verified == false
+            .alert.alert-danger(role="alert") You have yet to verify your account! Your actions will be restricted until you follow the link emailed to you.
+    
+        .row
+            form(role="form", method="POST")
+                .col-xs-12.col-sm-6.col-md-4.center-xs
+                    
+                
+        .row
+            a.btn.btn-danger(href="/users/"+currentUser.username) Cancel
+            button.btn.btn-primary Save

@@ -5,6 +5,7 @@ var express = require("express")
   , io = require("socket.io").listen(http)
   , _ = require("underscore");
 
+var fs = require("fs");
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -19,15 +20,7 @@ var moment = require('moment');
 var config = require('./modules/config');
 var mongo = require('./modules/mongodb');
 
-// ===========================ROUTES============================
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var teachers = require('./routes/teachers');
-var courses = require('./routes/courses');
-var homework = require('./routes/services/homework');
-var advisements = require('./routes/advisements');
-var chat = require('./routes/services/chat');
-var school_years = require('./modules/years');
+
 
 var connected = 0;
 
@@ -119,13 +112,26 @@ app.use('/advisements', function(req, res, next) {
   next();
 });
 
-app.use('/', routes);
-app.use('/users', users);
-app.use('/advisements', advisements);
-app.use('/teachers', teachers);
-app.use('/courses', courses);
-app.use('/homework', homework);
-app.use('/chat', chat);
+
+
+var school_years = require('./modules/years');
+
+
+// ===========================ROUTES============================
+fs.readdirSync("./routes/").forEach(function(path) {
+  var name = path.replace('.js');
+  app.use('/'+name, require('./routes/'+path));
+});
+
+/*
+app.use('/', require('./routes/index'));
+app.use('/users', require('./routes/users'));
+app.use('/advisements', require('./routes/advisements'));
+app.use('/teachers', require('./routes/teachers'));
+app.use('/courses', require('./routes/courses'));
+app.use('/homework', require('./routes/services/homework'));
+app.use('/chat', require('./routes/services/chat'));
+*/
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
