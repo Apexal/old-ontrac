@@ -1,11 +1,19 @@
 {
   "name": "adiutor",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "private": true,
+  "author": "Frank Matranga <thefrankmatranga@gmail.com>",
+  "contributor": [{
+    "name": "Frank Matranga",
+    "email": "thefrankmatranga@gmail.com"
+    }],
   "scripts": {
-    "watch": "nodemon bin/www2",
     "run": "DEBUG=adiutor npm start",
-    "start": "nodemon ./bin/www2"
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/apexal/adiutor"
   },
   "dependencies": {
     "body-parser": "~1.12.4",

@@ -89,7 +89,7 @@ main {
   width: 50px;
 }
 
-.othermessage img, .othermessage b, .othermessage div{
+.othermessage img, .othermessage b, .othermessage div, .othermessage span {
   float: right;
 }
 

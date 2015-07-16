@@ -25,7 +25,7 @@ router.post('/login', function(req, res, next) {
 
   var errs = [];
   req.Student.findOne({registered: true, username: username}, function(err, user) {
-    if(err) console.log(err);
+    if(err) throw err;
 
     if(!user){
       errs.push("Incorrect username or password.")
@@ -129,7 +129,7 @@ router.post('/register', function(req, res) {
 
   function continues() {
     req.Student.findOne({username: username}, function(err, user) {
-      if (err) console.log(err);
+      if(err) throw err;
 
       if(user){
         if(user.registered == true){
@@ -174,7 +174,7 @@ router.post('/register', function(req, res) {
 router.get('/verify', function(req, res) {
   var id = req.query.id;
   req.Student.findOne({registered: true, _id: id}, function(err, user) {
-    if(err) console.log(err);
+    if(err) throw err;
     if(user){
       req.session.info.push("You have successfully verified your account.");
       user.verified = true;

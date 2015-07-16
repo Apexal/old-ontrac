@@ -2,7 +2,7 @@ var express = require("express")
   , app = express()
   , http = require("http").createServer(app)
   , bodyParser = require("body-parser")
-  , io = require("socket.io").listen(http)
+  , io = require("./modules/sockets")(http)
   , _ = require("underscore");
 
 var fs = require("fs");
@@ -15,14 +15,10 @@ var colors = require('colors');
 var session = require('express-session');
 var bCrypt = require('bcrypt-nodejs');
 var helpers = require('./modules/helpers');
-
 var moment = require('moment');
 var config = require('./modules/config');
 var mongo = require('./modules/mongodb');
-
-
-
-var connected = 0;
+var school_years = require('./modules/years');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -69,7 +65,6 @@ app.use(function(req, res, next) {
     tri: info.trimester,
     full_year: info.full,
     today: req.today,
-    connected: connected,
     currentUser: req.session.currentUser,
     loggedIn: (req.session.currentUser ? true : false)
   }
@@ -79,7 +74,9 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(['/users/:username', '/users/profile', '/advisements/:advisement', '/teachers', '/courses', '/homework'], function(req, res, next) {
+// List of paths you can only access if logged in
+var restricted = ['/users/:username', '/users/profile', '/advisements/:advisement', '/teachers', '/courses', '/homework', '/chat'];
+app.use(restricted, function(req, res, next) {
   if(req.toJade.loggedIn){
     next();
   }else{
@@ -114,27 +111,16 @@ app.use('/advisements', function(req, res, next) {
 
 
 
-var school_years = require('./modules/years');
-
-
 // ===========================ROUTES============================
 fs.readdirSync("./routes/").forEach(function(path) {
-  var name = path.replace('.js');
+  var name = ( path == "index.js" ? '' : path.replace('.js', ''));
   app.use('/'+name, require('./routes/'+path));
+  console.log(("Using ./routes/"+path+" for /"+name).cyan);
 });
-
-/*
-app.use('/', require('./routes/index'));
-app.use('/users', require('./routes/users'));
-app.use('/advisements', require('./routes/advisements'));
-app.use('/teachers', require('./routes/teachers'));
-app.use('/courses', require('./routes/courses'));
-app.use('/homework', require('./routes/services/homework'));
-app.use('/chat', require('./routes/services/chat'));
-*/
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  console.log('404 ERROR'.bold.red);
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
@@ -145,6 +131,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
+
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     req.toJade.title = "Oh come on.";
@@ -166,7 +153,7 @@ app.use(function(err, req, res, next) {
 
 var port = normalizePort(process.env.PORT || config.port);
 app.set('port', port);
-app.set("ipaddr", "");
+app.set("ipaddr", config.ip);
 
 
 function normalizePort(val) {
@@ -185,41 +172,6 @@ function normalizePort(val) {
   return false;
 }
 
-var messages = [];
-
-var online = [];
-var server_user = {name: "Server", username: "fmatranga18", code: 1337};
-var codes = [];
-
-// SOCKET.IO
-io.sockets.on('connection', function (socket) {
-  var client = socket.request.session.currentUser;
-  var user = {name: client.firstName, username: client.username, code: client.code};
-
-  socket.emit('pastMessages', {messages: messages});
-
-  console.log("CONNECTED to "+user.username);
-  online.push(user);
-  console.log(online);
-  //socket.emit('message', { user: server_user, message: 'Welcome to the chat, '+user.name+'!', when: moment().toDate() });
-
-  io.sockets.emit('online-list', {users: online});
-
-  socket.on('message', function (data) {
-    var d = {user: user, message: data.message, when: data.when};
-    messages.push(d);
-    io.sockets.emit('message', d);
-  });
-
-  socket.on('disconnect', function(socket) {
-    console.log("disconnect");
-    var index = online.indexOf(user);
-    online.splice(index, 1);
-    io.sockets.emit('online-list', {users: online});
-    console.log(online);
-  });
-});
-
 http.listen(app.get("port"), app.get("ipaddr"), function() {
-  console.log("Server up and running. Go to http://" + app.get("ipaddr") + ":" + app.get("port"));
+  console.log(("Running on port " + app.get("port")).green.bold+"\n");
 });

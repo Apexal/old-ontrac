@@ -1,4 +1,0 @@
-var app = require('../app');
-var http = require('http');
-
-var config = require('../modules/config');

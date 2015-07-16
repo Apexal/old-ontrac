@@ -8,7 +8,7 @@ var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'Failed to connect to database:'));
 db.once('open', function (callback) {
-  console.log('Connected to database');
+  console.log('Connected to database'.green.bold);
 
   var studentSchema = new Schema(schemas.student);
   studentSchema.virtual('fullName').get(function () {

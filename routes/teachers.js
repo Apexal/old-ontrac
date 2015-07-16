@@ -6,18 +6,26 @@ router.get("/", function(req, res, next) {
 
   var sortBy = (req.query.sortBy ? req.query.sortBy : "");
   req.Teacher.find({}).sort(sortBy).exec(function(err, teachers) {
-    req.toJade.teachers = teachers;
-    req.toJade.sortBy = sortBy;  
+    if(err) throw err;
+
+    req.toJade.teachers = [];
+    if(teachers){
+      req.toJade.teachers = teachers;
+    };
+
+    req.toJade.sortBy = sortBy;
     res.render('teachers/list', req.toJade);
   });
 });
 
 router.get("/:mID", function(req, res, next) {
   var mID = req.params.mID;
+  req.toJade.found = false;
 
   req.Teacher.findOne({mID: mID}, function(err, teacher) {
-    if(err) console.log(err);
-    req.toJade.found = false;
+    if(err) throw err;
+    req.toJade.teacher = {};
+
     if(teacher) {
       req.toJade.found = true;
       req.toJade.title = "Teacher "+teacher.fullName;
@@ -29,11 +37,11 @@ router.get("/:mID", function(req, res, next) {
 
 router.get("/:tID/schedule", function(req, res, next) {
   var tID = req.params.tID;
+  req.toJade.found = false;
 
   req.Teacher.findOne({tID: tID}, function(err, teacher) {
-    if(err) console.log(err);
+    if(err) throw err;
 
-    req.toJade.found = false;
     if(teacher) {
       req.toJade.found = true;
       req.toJade.title = "Teacher "+teacher.firstName.charAt(0)+". "+teacher.lastName;

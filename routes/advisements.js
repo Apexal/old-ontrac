@@ -3,17 +3,11 @@ var router = express.Router();
 
 router.get('/', function(req, res){
   req.toJade.title = "Advisements";
-  req.toJade.adv = {};
 
   req.Advisement.find({}).populate('students', 'username firstName lastName registered').populate('teacher', 'image mID firstName lastName').sort({title: 1}).exec(function(err, advs){
     if(err) throw err;
     req.toJade.advisements = [];
     if (advs){
-
-      advs.forEach(function(ad) {
-        console.log(ad.teacher);
-      });
-
       req.toJade.advisements = advs;
     }
     res.render('advisement/list', req.toJade);
