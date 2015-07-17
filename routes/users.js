@@ -19,17 +19,16 @@ router.get("/profile", function(req, res) {
 router.get("/:username", function(req, res){
   var username = req.params.username;
   req.toJade.user = false;
+  req.toJade.title = "Not a User";
 
   req.Student.findOne({registered: true, username: username}).populate('courses', 'tID title mID').exec(function(err, user) {
-    if(user){
-      if(err) throw err;
+    if(err) throw err;
 
+    if(user){
       req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+" of "+user.advisement;
       req.toJade.user = user;
-      res.render('users/profile', req.toJade);
-    }else{
-      res.redirect("/users");
     }
+    res.render('users/profile', req.toJade);
   });
 });
 

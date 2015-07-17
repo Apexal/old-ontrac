@@ -12,6 +12,7 @@ Seeing this means that you are trusted enough to be able to view the very source
 ### How do I get set up? ###
 * Clone this repository
 * Intall Mongo DB
+* ./mongod
 * npm install
 * npm run scrape (This takes a looooong time)
 * npm run populate

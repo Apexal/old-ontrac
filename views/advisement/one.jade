@@ -13,20 +13,22 @@ block content
         .col-xs-12
           .col-xs-12.col-sm-6.col-md-6
             img(src=advisement.teacher.image)
-          .row
-            for user in registered
-              .col-xs-12.col-sm-6.text-center
-                .advisement-user-box
-                  img(alt=user.bio, src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
-                  .btn-group.full-width
-                    button.full-width.btn.btn-default.dropdown-toggle(data-toggle="dropdown", ara-expanded="false", type="button")= user.fullName+" "
-                      span.caret
-                    ul.dropdown-menu(role="menu")
-                      li
-                        if loggedIn
-                          a(href="/users/"+user.username) View Profile
-                          a(href="/users/"+user.username+"/schedule") View Schedule
-                        a(href="mailto:"+user.email) Email
+          
+          if registered.length > 0
+            .row
+              for user in registered
+                .col-xs-12.col-sm-6.text-center
+                  .advisement-user-box
+                    img(alt=user.bio, src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
+                    .btn-group.full-width
+                      button.full-width.btn.btn-default.dropdown-toggle(data-toggle="dropdown", ara-expanded="false", type="button")= user.fullName+" "
+                        span.caret
+                      ul.dropdown-menu(role="menu")
+                        li
+                          if loggedIn
+                            a(href="/users/"+user.username) View Profile
+                            a(href="/users/"+user.username+"/schedule") View Schedule
+                          a(href="mailto:"+user.email) Email
           .row
             hr
       a.btn.btn-primary(href="/advisements") All Advisements

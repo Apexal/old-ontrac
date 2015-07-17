@@ -173,8 +173,9 @@ router.post('/register', function(req, res) {
 
 router.get('/verify', function(req, res) {
   var id = req.query.id;
-  req.Student.findOne({registered: true, verified: false, _id: id}, function(err, user) {
+  req.Student.findOne({registered: true, _id: id}, function(err, user) {
     if(err) throw err;
+
     if(user){
       req.session.info.push("You have successfully verified your account.");
       user.verified = true;
@@ -189,6 +190,8 @@ router.get('/verify', function(req, res) {
       }catch (err) {
         console.log(err);
       }
+    }else{
+      console.log("Failed to verify user.");
     }
     res.redirect("/");
   });

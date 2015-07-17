@@ -21,7 +21,7 @@ router.get('/:advisement', function(req, res){
   req.toJade.title = "Advisement "+advisement;
   req.toJade.advisement = false;
 
-  req.Advisement.findOne({title: advisement}).populate('students', 'username firstName lastName registered').populate('teacher', 'image mID firstName lastName').sort({title: 1}).exec(function(err, adv){
+  req.Advisement.findOne({title: advisement}).populate('students', 'username firstName lastName registered code email').populate('teacher', 'image mID firstName lastName').sort({title: 1}).exec(function(err, adv){
     if(err) throw err;
 
     if (adv){
