@@ -68,5 +68,6 @@ block content
               tr
                 td
                   img(src="http://placehold.it/15x15")
-                td= c.title
+                td
+                  a.undecorated(href="/courses/"+c.mID)= c.title
                   i.right= c.tID

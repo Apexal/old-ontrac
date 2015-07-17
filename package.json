@@ -3,13 +3,15 @@
   "version": "0.2.0",
   "private": true,
   "author": "Frank Matranga <thefrankmatranga@gmail.com>",
-  "contributor": [{
+  "contributors": [{
     "name": "Frank Matranga",
     "email": "thefrankmatranga@gmail.com"
     }],
   "scripts": {
-    "run": "DEBUG=adiutor npm start",
-    "start": "nodemon app.js"
+    "scrape": "python2 scrape.py",
+    "populate": "node populate",
+    "watch": "nodemon app",
+    "start": "node app"
   },
   "repository": {
     "type": "git",
