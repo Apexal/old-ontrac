@@ -2,16 +2,17 @@ extends /layout
 
 block content
   .container
-    if found
-      .page-header
-        h1= title
-      .row
-        .col-xs-12
-          img.teacher-profile-img(src=teacher.image)
-    else
+    if teacher == false
       .page-header
         h1 That teacher does not exist!
 
       .row
         .col-xs-12
           a.btn.btn-default(href="/teachers") Teacher Index
+    
+    else
+      .page-header
+        h1= title
+      .row
+        .col-xs-12
+          img.teacher-profile-img(src=teacher.image)

@@ -3,7 +3,7 @@ extends /layout
 block content
   .container
     .page-header
-      if course == 0
+      if course == false
         h1 No Such Course Exists
       else
         h1.left Course #{course.title}

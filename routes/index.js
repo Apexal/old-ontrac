@@ -149,7 +149,7 @@ router.post('/register', function(req, res) {
 
         user.save();
         req.toJade.title="Adiutor";
-        req.toJade.info = ["You have successfully registered! Check your email to verify your account."];
+        req.toJade.info = ["Thank you for registering, "+user.firstName+"! Check your email to verify your account."];
 
         var message = "<p>Thank you for registering for <b>Worker</b>! <br> \
                       Before you can start using it, please verify your account by  \
@@ -173,7 +173,7 @@ router.post('/register', function(req, res) {
 
 router.get('/verify', function(req, res) {
   var id = req.query.id;
-  req.Student.findOne({registered: true, _id: id}, function(err, user) {
+  req.Student.findOne({registered: true, verified: false, _id: id}, function(err, user) {
     if(err) throw err;
     if(user){
       req.session.info.push("You have successfully verified your account.");

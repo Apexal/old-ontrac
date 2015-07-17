@@ -3,10 +3,14 @@ var router = express.Router();
 
 router.get('/', function(req, res){
   req.toJade.title = "Courses";
+  req.toJade.courses = false;
 
   req.Course.find({}).populate('teacher').exec(function(err, courses){
     if(err) throw err;
-    req.toJade.courses = courses;
+
+    if(courses){
+      req.toJade.courses = courses;
+    }
     res.render('courses/list', req.toJade);
   });
 });
@@ -14,11 +18,11 @@ router.get('/', function(req, res){
 router.get('/:mID', function(req, res) {
   var mID = req.params.mID;
   req.toJade.title = "Course "+mID;
+  req.toJade.course = false;
 
   req.Course.findOne({mID: mID}).populate('teacher').exec(function(err, course){
     if(err) throw err;
-    req.toJade.course = 0;
-
+    
     if(course){
       req.toJade.course = course;
     }

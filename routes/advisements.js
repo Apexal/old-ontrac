@@ -3,10 +3,11 @@ var router = express.Router();
 
 router.get('/', function(req, res){
   req.toJade.title = "Advisements";
+  req.toJade.advisements = false;
 
   req.Advisement.find({}).populate('students', 'username firstName lastName registered').populate('teacher', 'image mID firstName lastName').sort({title: 1}).exec(function(err, advs){
     if(err) throw err;
-    req.toJade.advisements = [];
+
     if (advs){
       req.toJade.advisements = advs;
     }
@@ -18,11 +19,10 @@ router.get('/', function(req, res){
 router.get('/:advisement', function(req, res){
   var advisement = req.params.advisement;
   req.toJade.title = "Advisement "+advisement;
-  req.toJade.advisement = advisement;
+  req.toJade.advisement = false;
 
   req.Advisement.findOne({title: advisement}).populate('students', 'username firstName lastName registered').populate('teacher', 'image mID firstName lastName').sort({title: 1}).exec(function(err, adv){
     if(err) throw err;
-    req.toJade.advisement = {};
 
     if (adv){
       req.toJade.registered = adv.students.filter(function(value) {
