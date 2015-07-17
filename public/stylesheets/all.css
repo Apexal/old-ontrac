@@ -67,16 +67,15 @@ main {
 
 #chat-box {
   width: 400px;
-
+  height: 300px;
   position: fixed;
-  bottom: 72px;
+  bottom: 70px;
   right: 0;
-
 }
 
 #chat-messages {
-  height: 250;
   overflow: auto;
+  height: 90%;
 }
 
 .message .padded {

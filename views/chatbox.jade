@@ -1,6 +1,7 @@
-.panel.panel-default.resizable.hidden-xs#chat-box(style="overflow: auto", data-username=currentUser.username)
+.panel.panel-default.resizable.hidden-xs#chat-box(data-username=currentUser.username)
   .panel-heading
     h3.panel-title Global Chat
+      small#toggle-chat(data-show="true")  (toggle)
       small.right#users-online 0 users online
   #chat-messages.col-xs-12
     

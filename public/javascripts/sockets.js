@@ -117,7 +117,7 @@ $(function() {
         html += part;
     }
     $("#chat-messages").html(html);
-    $("#chat-box").scrollTop($("#chat-box")[0].scrollHeight);
+    $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
   }
 
   var messages = [];
