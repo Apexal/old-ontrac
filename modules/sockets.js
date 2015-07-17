@@ -1,7 +1,6 @@
 
 
 var messages = [];
-
 var online = [];
 var server_user = {name: "Server", username: "fmatranga18", code: 1337};
 var codes = [];
@@ -13,6 +12,7 @@ module.exports = function(http) {
   var io = require("socket.io").listen(http);
 
   io.sockets.on('connection', function (socket) {
+    messages = messages.slice(Math.max(messages.length - 100, 0))
     var client = socket.request.session.currentUser;
     var user = {name: client.firstName, username: client.username, code: client.code};
 
