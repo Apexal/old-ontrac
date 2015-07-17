@@ -19,7 +19,6 @@ router.get("/profile", function(req, res) {
 router.get("/:username", function(req, res){
   var username = req.params.username;
   req.toJade.user = false;
-<<<<<<< HEAD
   req.toJade.title = "Not a User";
 
   req.Student.findOne({registered: true, username: username}).populate('courses', 'tID title mID').exec(function(err, user) {
@@ -28,18 +27,6 @@ router.get("/:username", function(req, res){
     if(user){
       req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+" of "+user.advisement;
       req.toJade.user = user;
-=======
-
-  req.Student.findOne({registered: true, username: username}).populate('courses', 'tID title mID').exec(function(err, user) {
-    if(user){
-      if(err) throw err;
-
-      req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+" of "+user.advisement;
-      req.toJade.user = user;
-      res.render('users/profile', req.toJade);
-    }else{
-      res.redirect("/users");
->>>>>>> 9f7a143d294a73ec91df12028ee2e97f848647d8
     }
     res.render('users/profile', req.toJade);
   });
