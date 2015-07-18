@@ -4,4 +4,5 @@ var moment = require('moment');
 
 
 
-module.exports = router;
+module.exports.models = [];
+module.exports.router = router;

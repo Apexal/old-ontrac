@@ -22,7 +22,7 @@ router.get('/:mID', function(req, res) {
 
   req.Course.findOne({mID: mID}).populate('teacher').exec(function(err, course){
     if(err) throw err;
-    
+
     if(course){
       req.toJade.course = course;
     }
@@ -30,4 +30,5 @@ router.get('/:mID', function(req, res) {
   });
 });
 
-module.exports = router;
+module.exports.models = ['Course'];
+module.exports.router = router;

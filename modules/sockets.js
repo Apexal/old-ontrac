@@ -1,12 +1,6 @@
-
-
 var messages = [];
 var online = [];
 var server_user = {name: "Server", username: "fmatranga18", code: 1337};
-var codes = [];
-
-// SOCKET.IO
-
 
 module.exports = function(http) {
   var io = require("socket.io").listen(http);

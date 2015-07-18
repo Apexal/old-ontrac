@@ -34,4 +34,5 @@ router.get('/:advisement', function(req, res){
   });
 });
 
-module.exports = router;
+module.exports.models = ['Advisement'];
+module.exports.router = router;

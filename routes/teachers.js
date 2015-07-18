@@ -39,7 +39,7 @@ router.get("/:tID/schedule", function(req, res, next) {
   req.Teacher.findOne({tID: tID}, function(err, teacher) {
     if(err) throw err;
 
-    if(teacher) {    
+    if(teacher) {
       req.toJade.title = "Teacher "+teacher.firstName.charAt(0)+". "+teacher.lastName;
       req.toJade.teacher = teacher;
     }
@@ -47,4 +47,5 @@ router.get("/:tID/schedule", function(req, res, next) {
   });
 });
 
-module.exports = router;
+module.exports.models = ['Teacher'];
+module.exports.router = router;

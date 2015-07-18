@@ -7,4 +7,5 @@ router.get('/', function(req, res) {
   res.render('chatpage', req.toJade);
 });
 
-module.exports = router;
+module.exports.models = [];
+module.exports.router = router;

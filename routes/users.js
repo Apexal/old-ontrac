@@ -44,4 +44,5 @@ router.get("/:username/schedule", function(req, res){
   });
 });
 
-module.exports = router;
+module.exports.models = ['Student'];
+module.exports.router = router;

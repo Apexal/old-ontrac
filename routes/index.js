@@ -215,4 +215,5 @@ var isValidPassword = function(user, password){
   return bCrypt.compareSync(password, user.password);
 }
 
-module.exports = router;
+module.exports.models = ['Student'];
+module.exports.router = router;
