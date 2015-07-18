@@ -1,10 +1,10 @@
-.panel.panel-default.resizable.hidden-xs#chat-box(data-username=currentUser.username)
+.panel.panel-default.resizable.hidden-xs.small-box#chat-box(data-username=currentUser.username)
   .panel-heading
     h3.panel-title Global Chat
-      small#toggle-chat(data-show="true")  (toggle)
+      small#toggle-chat.small-box(data-show="true")  (toggle)
       small.right#users-online 0 users online
-  #chat-messages.col-xs-12
+  #chat-messages.col-xs-12.small-box
     
-  form#chat-controls.form-inline(role="form")
+  form#chat-controls.form-inline.small-box(role="form")
     input.form-control#chat-message(type="text", name="message")
     button(type="button")#send-message.btn.btn-primary Send

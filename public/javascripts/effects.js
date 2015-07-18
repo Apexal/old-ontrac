@@ -1,5 +1,9 @@
 $(function() {
-  //localStorage["show-chat"] = 0;
+
+    $("#chat-controls").submit(function() {
+      return false;
+    });
+
     console.log(localStorage["show-chat"]);
 
     $( "#chat-box.resizable" ).resizable({
@@ -12,15 +16,15 @@ $(function() {
 
     var set_chat = function(show) {
       if(show == 1){
-        $("#chat-controls").show();
-        $("#chat-messages").show();
+        $("#chat-controls.small-box").show();
+        $("#chat-messages.small-box").show();
         $(this).removeAttr('style');
-        $("#chat-box").height("300px").width("400px").css("bottom", "70px");
+        $("#chat-box.small-box").height("300px").width("400px").css("bottom", "70px");
         console.log("SHOW");
       }else{
-        $("#chat-controls").hide();
-        $("#chat-messages").hide();
-        $("#chat-box").css({width: "250px", height: "40px", bottom: "30px"});
+        $("#chat-controls.small-box").hide();
+        $("#chat-messages.small-box").hide();
+        $("#chat-box.small-box").css({width: "250px", height: "40px", bottom: "30px"});
         console.log("HIDE");
       }
       localStorage["show-chat"] = show;
