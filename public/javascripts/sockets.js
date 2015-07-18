@@ -1,4 +1,6 @@
 $(function() {
+  var chat_notification = new Audio('/sounds/ding.mp3');
+
   var socket = io.connect('http://'+document.domain+':3000');
   var username = $("#chat-box").data("username");
   var online = [];
@@ -124,6 +126,8 @@ $(function() {
   socket.on('message', function (data) {
     if(data.message) {
         messages.push(data);
+        if(data.user.username != username)
+          chat_notification.play();
         showMessages();
     } else {
         console.log("There is a problem:", data);
