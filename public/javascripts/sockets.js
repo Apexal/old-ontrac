@@ -114,7 +114,6 @@ $(function() {
 
         }
 
-
         part += "</div>";
         html += part;
     }
@@ -137,7 +136,6 @@ $(function() {
   function sendMessage() {
     var message = $('#chat-message').val();
     socket.emit("message", {message: message, when: moment().toDate()});
-
   }
 
   function outgoingMessageKeyDown(event) {
