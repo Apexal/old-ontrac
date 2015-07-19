@@ -30,7 +30,6 @@ var sessionMiddleware = session({
   saveUninitialized: true
 });
 
-// uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -120,7 +119,6 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     req.toJade.title = "Oh come on.";
@@ -144,20 +142,16 @@ var port = normalizePort(process.env.PORT || config.port);
 app.set('port', port);
 app.set("ipaddr", config.ip);
 
-
 function normalizePort(val) {
   var port = parseInt(val, 10);
-
   if (isNaN(port)) {
     // named pipe
     return val;
   }
-
   if (port >= 0) {
     // port number
     return port;
   }
-
   return false;
 }
 
