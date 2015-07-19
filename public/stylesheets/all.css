@@ -202,3 +202,22 @@ main {
   padding-left: 0;
   padding-right: 0;
 }
+
+/* Homework Pages */
+
+.top-progress {
+    z-index: 5;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    height: 15px;
+    width: 100%;
+}
+
+.top-progress progress{
+    width: 100%;
+    appearance: none;
+    border: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}

@@ -47,7 +47,8 @@ app.locals.helpers = helpers;
 app.use(function(req, res, next) {
   console.log(("\nRequest from "+req.connection.remoteAddress).blue.bold +(req.session.currentUser ? " by "+req.session.currentUser.username : " "));
   req.session.loggedIn = (req.session.currentUser ? true : false);
-  req.Student = mongo.Student;
+
+  req.currentUser = req.session.currentUser;
 
   var info = school_years.getCurrent();
   req.year = info.years;
@@ -64,8 +65,8 @@ app.use(function(req, res, next) {
     tri: info.trimester,
     full_year: info.full,
     today: req.today,
-    currentUser: req.session.currentUser,
-    loggedIn: (req.session.currentUser ? true : false)
+    currentUser: req.currentUser,
+    loggedIn: (req.currentUser ? true : false)
   }
 
   req.session.info = [];

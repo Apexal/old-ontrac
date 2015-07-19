@@ -54,7 +54,7 @@ module.exports = {
   day: {
         date: Date,
         scheduleDay: String,
-        user: String,
+        username: String,
         items: {
           homework: [
               {

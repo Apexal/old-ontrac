@@ -103,8 +103,8 @@ db.once('open', function (callback) {
     return this.findOne({user: username, date: today.toDate()}, cb);
   };
 
-  daySchema.statics.getClosestHWDate = function(username, today, cb){
-    return this.find().where('user').equals(username).where('date').gt(today.toDate()).where('items.homework').gt([]).sort({date: 1}).exec(cb);
+  daySchema.statics.getClosest = function(username, today, cb){
+    return this.findOne().where('username').equals(username).sort({date: 1}).where('date').gt(today.toDate()).exec(cb);
   };
   var Day = mongoose.model('Day', daySchema);
 
