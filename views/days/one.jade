@@ -18,38 +18,48 @@ block content
         .col-xs-12.text-center
           if day != false
             b#schedule-day= day.scheduleDay 
+      br
+      br.hidden-xs
       
-      br
-      hr
-      br
+      .row.hidden-xs
+        .col-xs-12.text-center
+          input.dial(type="text", value="50", data-fgcolor="#2780e3", data-readonly="true", data-width="100")
+          span.right-spacer
+          input.dial(type="text", value="50", data-fgcolor="#f0005e", data-readonly="true", data-width="100")
+          span.right-spacer
+          input.dial(type="text", value="50", data-fgcolor="#7643a8", data-readonly="true", data-width="100")
+          span.right-spacer
+          input.dial(type="text", value="50", data-fgcolor="#ff4309", data-readonly="true", data-width="100")
+      
       
       .row
         .col-xs-12.col-sm-6.col-md-4
-          .panel.panel-default
+          .panel.panel-primary
             .panel-heading
               h1.panel-title Homework
             .panel-body
               b None!
-            
+              
         
         .col-xs-12.col-sm-6.col-md-4
-          .panel.panel-default
+          .panel.panel-danger
             .panel-heading
               h1.panel-title Tests
             .panel-body
               b None!
         
         .col-xs-12.col-sm-6.col-md-4
-          .panel.panel-default
+          .panel.panel-info
             .panel-heading
               h1.panel-title Quizzes
             .panel-body
               b None!
               
         .col-xs-12.col-sm-6.col-md-4
-          .panel.panel-default
+          .panel.panel-warning
             .panel-heading
               h1.panel-title Projects
             .panel-body
               b None!
-      
+  
+  script(src="/javascripts/jquery.knob.js")

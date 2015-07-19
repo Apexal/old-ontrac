@@ -203,6 +203,12 @@ main {
   padding-right: 0;
 }
 
+/* Day Pages */
+
+.right-spacer {
+  padding-right: 30px;
+}
+
 /* Homework Pages */
 
 .top-progress {
