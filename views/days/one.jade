@@ -33,33 +33,22 @@ block content
       
       
       .row
-        .col-xs-12.col-sm-6.col-md-4
-          .panel.panel-primary
-            .panel-heading
-              h1.panel-title Homework
-            .panel-body
-              b None!
-              
+        +pane("Homework", "primary", ['Nothing'])  
         
-        .col-xs-12.col-sm-6.col-md-4
-          .panel.panel-danger
-            .panel-heading
-              h1.panel-title Tests
-            .panel-body
-              b None!
+        +pane("Tests", "danger", ['Nothing'])
         
-        .col-xs-12.col-sm-6.col-md-4
-          .panel.panel-info
-            .panel-heading
-              h1.panel-title Quizzes
-            .panel-body
-              b None!
-              
-        .col-xs-12.col-sm-6.col-md-4
-          .panel.panel-warning
-            .panel-heading
-              h1.panel-title Projects
-            .panel-body
-              b None!
+        +pane("Quizzes", "info", ['Nothing'])
+        
+        +pane("Projects", "warning", ['Nothing'])
+  
+  mixin pane(title, ptype, items)
+    .col-xs-12.col-sm-6.col-md-4
+      .panel(class="panel-"+ptype)
+        .panel-heading
+          h1.panel-title= title
+        table.table
+          for i in items
+            tr
+              td= i
   
   script(src="/javascripts/jquery.knob.js")
