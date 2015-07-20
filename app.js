@@ -91,20 +91,21 @@ app.use('/*', function(req, res, next) {
 
 // ===========================ROUTES============================
 fs.readdirSync("./routes/").forEach(function(path) {
-  var name = ( path == "index.js" ? '' : path.replace('.js', ''));
-
-  app.use('/'+name, function(req, res, next) {
-    var models = require('./routes/'+path).models;
-    if(models.length > 0){
-      models.forEach(function(m) {
-        req[m] = mongo[m];
-        //console.log("Using Model '"+m+"' for path /"+name);
-      });
-    }
-    next();
-  });
-  app.use('/'+name, require('./routes/'+path).router);
-  console.log(("Using ./routes/"+path+" for /"+name).cyan);
+  if(fs.lstatSync("./routes/"+path).isDirectory() == false){
+    var name = ( path == "index.js" ? '' : path.replace('.js', ''));
+    app.use('/'+name, function(req, res, next) {
+      var models = require('./routes/'+path).models;
+      if(models.length > 0){
+        models.forEach(function(m) {
+          req[m] = mongo[m];
+          //console.log("Using Model '"+m+"' for path /"+name);
+        });
+      }
+      next();
+    });
+    app.use('/'+name, require('./routes/'+path).router);
+    console.log(("Using ./routes/"+path+" for /"+name).cyan);
+  }
 });
 
 // catch 404 and forward to error handler

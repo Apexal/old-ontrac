@@ -3,12 +3,21 @@ var router = express.Router();
 var moment = require('moment');
 var _ = require('underscore');
 
-router.get(['/', '/closest'], function(req, res) {
+/* ----------------------------- */
+/*         GET REQUESTS          */
+/* ----------------------------- */
+
+router.get('/', function(req, res) {
+  console.log("AYY LMAO");
+});
+
+router.get(['/closest'], function(req, res) {
   req.Day.getClosest(req.currentUser.username, req.today, function(err, day) {
     if(err) throw err;
 
     if(day){
       console.log("FOUND DAY");
+      res.redirect("/days"+moment(day.date).format("YYYY-MM-DD"));
     }else{
       res.redirect("/days/today");
     }
@@ -19,15 +28,18 @@ router.get("/today", function(req, res) {
   res.redirect("/days/"+moment().format("YYYY-MM-DD"));
 });
 
-router.get("/:date", function(req, res) {
+router.get(["/:date", "/:date/*"], function(req, res, next) {
   var dateString = req.params.date;
   req.toJade.dateString = dateString;
   req.toJade.day = false;
   req.toJade.date = false;
+  req.toJade.isToday = (dateString == req.today.format("YYYY-MM-DD"));
+
+  console.log(req.toJade.isToday);
 
   if(moment(dateString, 'YYYY-MM-DD', true).isValid() == false){
     req.toJade.title = "Invalid Date";
-    res.render('homework/day', req.toJade);
+    res.render('days/one', req.toJade);
   }else{
     var date = moment(dateString, 'YYYY-MM-DD', true);
     req.toJade.date = date;
@@ -56,9 +68,19 @@ router.get("/:date", function(req, res) {
       if(day){
         req.toJade.day = day;
       }
-      res.render('days/one', req.toJade);
+      next();
     });
   }
+});
+
+router.get('/:date/homework', function(req, res) {
+  console.log(req.toJade);
+  res.render('homework/one', req.toJade);
+});
+
+// The main day page
+router.get('/:date', function(req, res) {
+  res.render('days/one', req.toJade);
 });
 
 module.exports.models = ['Day'];

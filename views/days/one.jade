@@ -11,11 +11,6 @@ block content
           small.right= fromNow
       .row
         .col-xs-12.text-center
-          a.btn.btn-default(href="/days/"+previous) Previous Day
-          a.btn.btn-default(href="/days/closest") Closest Day
-          a.btn.btn-default(href="/days/today") Today
-          a.btn.btn-default(href="/days/"+next) Next Day
-        .col-xs-12.text-center
           if day != false
             b#schedule-day= day.scheduleDay 
       br

@@ -1,10 +1,14 @@
 $(function() {
 
+  $(".nav li.disabled a").click(function() {
+     return false;
+   });
+
   $('.dial').each(function () {
     var elm = $(this);
     //var percent = elm.attr("value");
 
-    var percent = Math.floor((Math.random() * 90) + 10); 
+    var percent = Math.floor((Math.random() * 90) + 10);
 
     elm.knob({
       'value': 0,

@@ -95,15 +95,24 @@ html
               ul.nav.navbar-nav
 
                 li
-                  a(href='#') Homework &nbsp;
+                  a(href='/days') Days &nbsp;
                     span.badge 4
+                li(class=(isToday == true ? "active" : ""))
+                  a(href="/days/today") Today 
                 li
-                  a(href='#') Grades
-                li
-                  a(href='#') Notes
-                li
-                  a(href='#') Schedule &nbsp;
-                    span.badge 2
+                  a(href="/days/closest") Closest 
+                if previous
+                  li
+                    a(href='/days/'+previous) Previous Day
+                else
+                  li.disabled
+                    a(href='#') Previous Day
+                if next
+                  li
+                    a(href='/days/'+next) Next Day
+                else
+                  li.disabled
+                    a(href='#') Next Day
                     
               a(href="/users/"+currentUser.username, title="Looking good.")
                 img.right.navbar-pic(src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg", data-username=currentUser.username)
