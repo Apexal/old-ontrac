@@ -20,7 +20,9 @@ $(function() {
       update_online_list();
     }
   });
-
+  socket.on('refresh', function(data) {
+    location.reload();
+  });
 
 
 

@@ -1,6 +1,8 @@
+var moment = require("moment");
 var messages = [];
 var online = [];
 var server_user = {name: "Server", username: "fmatranga18", code: 1337};
+var codes = [];
 
 module.exports = function(http) {
   var io = require("socket.io").listen(http);
@@ -8,14 +10,28 @@ module.exports = function(http) {
   io.sockets.on('connection', function (socket) {
     messages = messages.slice(Math.max(messages.length - 100, 0))
     var client = socket.request.session.currentUser;
-    var user = {name: client.firstName, username: client.username, code: client.code};
+
+    try {
+      var user = {name: client.firstName, username: client.username, code: client.code, tabs: 1};
+    }
+    catch(err) {
+      socket.emit('refresh');
+    }
 
     socket.emit('pastMessages', {messages: messages});
 
-    console.log("CONNECTED to "+user.username);
-    online.push(user);
+    console.log(codes.indexOf(user.code));
+
+    if(codes.indexOf(user.code) > -1){
+      console.log("New tab from "+user.username);
+      online[codes.indexOf(user.code)].tabs += 1;
+    }else{
+      codes.push(user.code);
+      online.push(user);
+      console.log("New connection from "+user.username);
+    }
+    console.log(codes);
     console.log(online);
-    //socket.emit('message', { user: server_user, message: 'Welcome to the chat, '+user.name+'!', when: moment().toDate() });
 
     io.sockets.emit('online-list', {users: online});
 
@@ -26,11 +42,20 @@ module.exports = function(http) {
     });
 
     socket.on('disconnect', function(socket) {
-      console.log("disconnect");
-      var index = online.indexOf(user);
-      online.splice(index, 1);
-      io.sockets.emit('online-list', {users: online});
+      console.log("DISCONNECT from "+user.username);
+      var index = codes.indexOf(user.code);
+      console.log(index);
+      if(index == -1) throw "FAILED";
+      online[index].tabs -= 1;
+
+      if(online[index].tabs <= 0){
+        online.splice(index, 1);
+        codes.splice(index, 1);
+      }
+
+      console.log(codes);
       console.log(online);
+      io.sockets.emit('online-list', {users: online});
     });
   });
 
