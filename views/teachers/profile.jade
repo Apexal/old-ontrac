@@ -14,5 +14,12 @@ block content
       .page-header
         h1= title
       .row
-        .col-xs-12
+        .col-xs-12.col-sm-2
           img.teacher-profile-img(src=teacher.image)
+        .col-xs-12.col-sm-10
+          b Liked by _% of students.
+      .row
+        .col-xs-12
+          hr
+          button.btn.btn-success Like   
+          button.btn.btn-danger Dislike

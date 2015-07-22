@@ -38,7 +38,6 @@ db.once('open', function (callback) {
         if(classes){
           classes.forEach(function(c) {
             Course.findOne({mID: c}, function(err, cs) {
-
               if(err) console.log(err);
               if (cs){
                 courses.push(cs._id);
@@ -46,68 +45,90 @@ db.once('open', function (callback) {
                 s.save();
               }
 
+
             });
           });
         }
 
       });
     }
+    advisements();
+    console.log("advisements");
   });
 
-  // Connect advisements to students
-  Advisement.find({}, function(err, advs) {
-    if (err) console.log(err);
-    if (advs) {
-      advs.forEach(function(adv) {
-        adv.title = adv.title.replace("Advisement ", "");
-        adv.save();
-        var students = [];
 
-        Student.find({advisement: adv.title}, '_id', function(err, s) {
-          if (err) console.log(err);
-          if (s) {
-            s.forEach(function(student){
-              students.push(student._id);
-              adv.students = students;
-              adv.save();
-              console.log(student);
+  function advisements(){
+    // Connect advisements to students
+    Advisement.find({}, function(err, advs) {
+      if (err) console.log(err);
+      if (advs) {
+        advs.forEach(function(adv) {
+          adv.title = adv.title.replace("Advisement ", "");
+          adv.save();
+          var students = [];
+
+          Student.find({advisement: adv.title}, '_id', function(err, s) {
+            if (err) console.log(err);
+            if (s) {
+              s.forEach(function(student){
+                students.push(student._id);
+                adv.students = students;
+                adv.save();
+                console.log(student);
+              });
+            }
+
+
+          });
+        });
+      }
+
+      teachers();
+    });
+  } // END OF ADVISEMENTS
+
+
+  function teachers() {
+    Teacher.find({}, function(err, teachers) {
+      if (err) console.log(err);
+      if (teachers) {
+
+        for(var i=0;i<teachers.length;i++){
+          var t = teachers[i];
+          t.courses = [];
+
+          if(t.classes){
+            t.classes.forEach(function(mID) {
+
+              Advisement.findOne({mID: mID}, function(err, adv){
+                if(err) console.log(err);
+                if(adv){
+                  adv.teacher = t._id;
+                  adv.save();
+                }
+              });
+
+              Course.findOne({mID: mID}, function(err, course){
+                if(err) console.log(err);
+                if(course){
+
+                  t.courses.push(course._id);
+                  course.teacher = t._id;
+                  console.log(course.teacher);
+                  t.save(function(err) {
+                    if(err) console.log(err + " mID: "+mID);
+                  });
+
+                  course.save();
+                }
+              });
+
             });
           }
-        });
-      });
-    }
-  });
-
-  Teacher.find({}, function(err, teachers) {
-    if (err) console.log(err);
-    if (teachers) {
-      teachers.forEach(function(t){
-        var classes = [];
-        if(t.classes){
-          t.classes.forEach(function(mID) {
-
-            Advisement.findOne({mID: mID}, function(err, adv){
-              if(err) console.log(err);
-              if(adv){
-                adv.teacher = t._id;
-                adv.save();
-              }
-            });
-
-            Course.findOne({mID: mID}, function(err, course){
-              if(err) console.log(err);
-              if(course){
-                console.log(course._id);
-                classes.push(course._id);
-                course.teacher = t._id;
-                t.courses = classes;
-                t.save();
-              }
-            });
-          });
         }
 
-      });
-    }
-  });
+      }
+    });
+  } // END OF TEACHERS
+
 });

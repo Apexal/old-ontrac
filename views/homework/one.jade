@@ -3,7 +3,7 @@ extends /layout
 block content
     .top-progress
         progress#hw-progress(class="full", title="You are 0% done with homework!", value=0, data-value=0, max="100")
-                
+
     .container
       if date == false
         .page-header
@@ -14,15 +14,9 @@ block content
             small.right= fromNow
         .row
           .col-xs-12.text-center
-            a.btn.btn-default(href="/days/"+previous+"/homework") Previous Day
-            a.btn.btn-default(href="/days/closest") Closest Day
-            a.btn.btn-default(href="/days/today") Today
-            a.btn.btn-default(href="/days/"+next+"/homework") Next Day
-          .col-xs-12.text-center
             if day != false
               b#schedule-day= day.scheduleDay 
-        
-        
+
         if work != false
           .row
             for sub in workSubs
@@ -36,7 +30,7 @@ block content
                     span  &nbsp;  &nbsp;  &nbsp;
         else
           h3.text-center No work!
-          
+
         .col-xs-12.text-center
           form.form-inline(method="GET", role="form")
             br
@@ -45,11 +39,8 @@ block content
             br
             if day == false
               select.form-control(name="newDaySD")
-                option(value="A", selectme=( sd == "A" ? "true" : "false")) A-Day
-                option(value="B", selectme=( sd == "B" ? "true" : "false")) B-Day
-                option(value="C", selectme=( sd == "C" ? "true" : "false")) C-Day
-                option(value="D", selectme=( sd == "D" ? "true" : "false")) D-Day
-                option(value="E", selectme=( sd == "E" ? "true" : "false")) E-Day
+                for s in ['A', 'B', 'C', 'D', 'E']
+                  option(value=s, selectme=( sd == s ? "true" : "false")) #{s}-Day
 
             select.form-control(id="newItemSubject", name="newItemSubject", required=true)
               if currentUser.courses.length == 0
@@ -59,6 +50,5 @@ block content
                   option(value=course.title)= sub.title
             input.form-control(name="newItemDesc", type="text", placeholder="Description", required=true)
             button.btn.btn-primary.full-when-xs Add
-        
-  
+
     //script(src="/javascripts/jquery.knob.js")

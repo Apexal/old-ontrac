@@ -5,12 +5,16 @@ var Schema = mongoose.Schema;
 var schemas = require('./schemas');
 mongoose.connect('mongodb://127.0.0.1/'+config.db);
 var db = mongoose.connection;
+var deepPopulate = require('mongoose-deep-populate');
 
 db.on('error', console.error.bind(console, 'Failed to connect to database:'));
 db.once('open', function (callback) {
   console.log('Connected to database'.green.bold+'\n');
 
   var studentSchema = new Schema(schemas.student);
+
+  studentSchema.plugin(deepPopulate);
+
   studentSchema.virtual('fullName').get(function () {
     return this.firstName + ' ' + this.lastName;
   });

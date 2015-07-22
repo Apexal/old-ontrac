@@ -40,7 +40,8 @@ block content
     .col-xs-12.col-sm-6.col-md-4
       .panel(class="panel-"+ptype)
         .panel-heading
-          h1.panel-title= title
+          h1.panel-title
+            a(href="/days/"+dateString+"/"+title)= title
         table.table
           for i in items
             tr

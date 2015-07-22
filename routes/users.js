@@ -25,12 +25,17 @@ router.get("/:username", function(req, res){
     if(err) throw err;
 
     if(user){
-      req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+" of "+user.advisement;
-      req.toJade.user = user;
+      user.deepPopulate('courses.teacher', function(err, user) {
+        console.log(user);
+        req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+" of "+user.advisement;
+        req.toJade.user = user;
+
+        res.render('users/profile', req.toJade);
+      });
     }
-    res.render('users/profile', req.toJade);
+
   });
-});
+}); 
 
 router.get("/:username/schedule", function(req, res){
   req.Student.findOne({registered: true, username: req.params.username}, function(err, user) {
@@ -44,5 +49,5 @@ router.get("/:username/schedule", function(req, res){
   });
 });
 
-module.exports.models = ['Student'];
+module.exports.models = ['Student', 'Teacher'];
 module.exports.router = router;

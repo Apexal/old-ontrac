@@ -36,7 +36,7 @@ module.exports = {
     courseType: String,
     mID: Number,
     title: String,
-    tID: String,
+    //tID: String,
     grade: Number,
     students: [{ type: Schema.Types.ObjectId, ref: 'Student'}]
   },

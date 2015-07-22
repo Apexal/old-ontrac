@@ -52,22 +52,40 @@ block content
                 .user-info
                   b Advisement:
                   |  #{user.advisement}
-          .col-xs-12.col-sm-12.col-md-6
-            .panel.panel-danger
-              .panel-heading
-                h1.panel-title  Recent Activity
-              .panel-body(style="height: 200px; overflow: auto;")
-                for s in user.statuses
-                  img(src="http://placehold.it/15x15")
-      .col-xs-12.col-sm-6.col-lg-4
-        .panel.panel-primary
-          .panel-heading
-            h1.panel-title  Classes
-          table.table.table-hover
+      
+    .row
+        .col-xs-12
+          hr
+          h2 #{user.firstName}'s Classes
+          br
+          .user-classes
             for c in user.courses
-              tr
-                td
-                  img(src="http://placehold.it/15x15")
-                td
-                  a.undecorated(href="/courses/"+c.mID)= c.title
-                  i.right= c.tID
+              +class(c)
+
+
+mixin class(course)
+  .col-xs-12.col-sm-6.col-md-4
+    .panel.panel-default
+      .panel-body
+        h1.panel-title
+          a(href="/courses/"+course.mID)= course.title
+          if course.teacher
+            small.right
+              a(href="/teachers/"+course.teacher.mID)= course.teacher.lastName
+    
+      //
+        .col-xs-12.col-sm-6.col-lg-4
+          .panel.panel-primary
+            .panel-heading
+              h1.panel-title  Classes
+            table.table.table-hover
+              for c in user.courses
+                tr
+                  td
+                    img(src="http://placehold.it/15x15")
+                  td
+                    a.undecorated(href="/courses/"+c.mID)= c.title
+                    if c.teacher
+                      i.right= c.teacher.lastName
+                    else
+                      i.right= c.tID

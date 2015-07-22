@@ -55,7 +55,7 @@ def extract(ID, html):
                 "courseType": courseType,
                 "mID": ID,
                 "title": name,
-                "tID": teacher,
+                #"tID": teacher,
                 "grade": grade
             }
             print "Course " + str(ID) + ": " + str(db.courses.insert_one(out).inserted_id)

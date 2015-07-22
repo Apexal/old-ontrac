@@ -25,6 +25,7 @@ router.get('/:mID', function(req, res) {
 
     if(course){
       req.toJade.course = course;
+      console.log(course.title + ": "+course.teacher);  
     }
     res.render('courses/one', req.toJade);
   });
