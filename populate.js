@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var schemas = require('./modules/schemas.js');
-mongoose.connect('mongodb://127.0.0.1/all');
+mongoose.connect('mongodb://127.0.0.1/regis');
 var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'Failed to connect to database:'));
@@ -51,6 +51,7 @@ db.once('open', function (callback) {
                 if(err) console.log(err);
                 if (cs){
                   courses.push(cs._id);
+                  console.log("Added Course "+cs.mID+" to Student "+s.mID);
                   s.courses = courses;
                   s.save();
                 }
@@ -82,7 +83,7 @@ db.once('open', function (callback) {
                 students.push(student._id);
                 adv.students = students;
                 adv.save();
-                console.log(student);
+                console.log("Added Student "+student.mID+" to Advisement "+adv.title);
               });
             }
           });
@@ -111,7 +112,7 @@ db.once('open', function (callback) {
               Course.findOne({mID: mID}, function(err, course){
                 if(err) console.log(err);
                 if(course){
-                  console.log(course._id);
+                  console.log("Added Course "+mID+" to Teacher "+t.mID);
                   classes.push(course._id);
                   course.teacher = t._id;
                   t.courses = classes;

@@ -1,2 +1,2 @@
 mkdir -p data
-mongod --dbpath=data
+mongod --dbpath=data --smallfiles

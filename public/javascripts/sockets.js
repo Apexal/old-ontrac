@@ -1,7 +1,8 @@
 $(function() {
   var chat_notification = new Audio('/sounds/ding.mp3');
-
-  var socket = io.connect('http://'+document.domain+':3000');
+  
+  var full = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
+  var socket = io.connect(full);
   var username = $("#chat-box").data("username");
   var online = [];
   var list = $("#online-user-list");
