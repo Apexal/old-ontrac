@@ -7,15 +7,18 @@ block content
         h1 No Such Course Exists
       else
         h1.left Course #{course.title}
-          small.right Teacher #[a(href="/teachers/"+course.teacher.mID)= course.teacher.fullName}
+          if course.teacher
+            small.right Teacher #[a(href="/teachers/"+course.teacher.mID)= course.teacher.fullName}
       include /info
 
     .row
       .col-xs-12
-        if course != 0
-          img(src=course.teacher.image, style="width: 150px")
-        else
+        if course != false
+          if course.teacher
+            img(src=course.teacher.image, style="width: 150px")
+        
     .row
       .col-xs-12
         hr
+        a.btn.btn-default(href="http://moodle.regis.org/course/view.php?id="+course.mID, target="_blank") Moodle Page
         a.btn.btn-primary(href="/courses") Back to Courses

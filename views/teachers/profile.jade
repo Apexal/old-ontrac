@@ -23,3 +23,10 @@ block content
           hr
           button.btn.btn-success Like   
           button.btn.btn-danger Dislike
+    
+    .row
+      .col-xs-12
+        hr
+        if teacher != false
+          a.btn.btn-default(href="http://moodle.regis.org/user/profile.php?id="+teacher.mID, target="_blank") Moodle Page
+        a.btn.btn-primary(href="/teachers") Back to Teachers
