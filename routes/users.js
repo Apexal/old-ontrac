@@ -25,17 +25,17 @@ router.get("/:username", function(req, res){
     if(err) throw err;
 
     if(user){
-      user.deepPopulate('courses.teacher', function(err, user) {
-        console.log(user);
+      user.deepPopulate('courses.teacher', function(err, u) {
+        console.log(u.courses);
         req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+" of "+user.advisement;
-        req.toJade.user = user;
+        req.toJade.user = u;
 
         res.render('users/profile', req.toJade);
       });
     }
 
   });
-}); 
+});
 
 router.get("/:username/schedule", function(req, res){
   req.Student.findOne({registered: true, username: req.params.username}, function(err, user) {

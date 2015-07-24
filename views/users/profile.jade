@@ -72,20 +72,3 @@ mixin class(course)
           if course.teacher
             small.right
               a(href="/teachers/"+course.teacher.mID)= course.teacher.lastName
-    
-      //
-        .col-xs-12.col-sm-6.col-lg-4
-          .panel.panel-primary
-            .panel-heading
-              h1.panel-title  Classes
-            table.table.table-hover
-              for c in user.courses
-                tr
-                  td
-                    img(src="http://placehold.it/15x15")
-                  td
-                    a.undecorated(href="/courses/"+c.mID)= c.title
-                    if c.teacher
-                      i.right= c.teacher.lastName
-                    else
-                      i.right= c.tID

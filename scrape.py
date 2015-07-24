@@ -100,7 +100,7 @@ def extract(ID, html):
                     "code": "Uknown",
                     "email": username + "@regis.org",
                     "advisement": department,
-                    "classes": classes,
+                    "sclasses": classes,
                     "password": "Unknown",
                     "rank": 0,
                     "points": 0,
@@ -123,7 +123,7 @@ def extract(ID, html):
                     "lastName": name_parts[0],
                     "email": name_parts[1].lower()[0].replace(" ", "") + name_parts[0].lower().replace(" ",
                                                                                                        "") + "@regis.org",
-                    "classes": classes
+                    "sclasses": classes
                 }
                 print "Teacher " + str(ID) + ": " + str(db.teachers.insert_one(out).inserted_id)
         except Exception as e:

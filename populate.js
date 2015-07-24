@@ -15,6 +15,11 @@ db.once('open', function (callback) {
 
   var courseSchema = new Schema(schemas.course);
 
+  //courseSchema.methods.getTeacher = function(){
+  //  console.log("tID: "+this.tID);
+  //  Teacher.findOne({tID : this.tID}, function(err, item){return item;});
+  //};
+
   Course = mongoose.model('Course', courseSchema);
 
   Student = mongoose.model('Student', studentSchema);
@@ -26,39 +31,42 @@ db.once('open', function (callback) {
   var advisementSchema = new Schema(schemas.advisement);
   Advisement = mongoose.model('Advisement', advisementSchema);
 
+
+
+  // DO STUFF
+
   // Connect courses to students
+  if (true){
+    var advs = {};
+    Student.find({}, function(err, students) {
+      if (err) console.log(err);
+      if (students) {
+        students.forEach(function(s){
+          var classes = s.sclasses;
+          var courses = [];
+          if(classes){
+            classes.forEach(function(c) {
+              Course.findOne({mID: c}, function(err, cs) {
 
-  var advs = {};
-  Student.find({}, function(err, students) {
-    if (err) console.log(err);
-    if (students) {
-      students.forEach(function(s){
-        var classes = s.classes;
-        var courses = [];
-        if(classes){
-          classes.forEach(function(c) {
-            Course.findOne({mID: c}, function(err, cs) {
-              if(err) console.log(err);
-              if (cs){
-                courses.push(cs._id);
-                s.courses = courses;
-                s.save();
-              }
+                if(err) console.log(err);
+                if (cs){
+                  courses.push(cs._id);
+                  s.courses = courses;
+                  s.save();
+                }
 
-
+              });
             });
-          });
-        }
+          }
 
-      });
-    }
-    advisements();
-    console.log("advisements");
-  });
+        });
+      }
+    });
+  }
 
 
-  function advisements(){
-    // Connect advisements to students
+  // Connect advisements to students
+  if(true){
     Advisement.find({}, function(err, advs) {
       if (err) console.log(err);
       if (advs) {
@@ -77,28 +85,20 @@ db.once('open', function (callback) {
                 console.log(student);
               });
             }
-
-
           });
         });
       }
-
-      teachers();
     });
-  } // END OF ADVISEMENTS
+  }
 
-
-  function teachers() {
+  if (true){
     Teacher.find({}, function(err, teachers) {
       if (err) console.log(err);
       if (teachers) {
-
-        for(var i=0;i<teachers.length;i++){
-          var t = teachers[i];
-          t.courses = [];
-
-          if(t.classes){
-            t.classes.forEach(function(mID) {
+        teachers.forEach(function(t){
+          var classes = [];
+          if(t.sclasses){
+            t.sclasses.forEach(function(mID) {
 
               Advisement.findOne({mID: mID}, function(err, adv){
                 if(err) console.log(err);
@@ -111,24 +111,19 @@ db.once('open', function (callback) {
               Course.findOne({mID: mID}, function(err, course){
                 if(err) console.log(err);
                 if(course){
-
-                  t.courses.push(course._id);
+                  console.log(course._id);
+                  classes.push(course._id);
                   course.teacher = t._id;
-                  console.log(course.teacher);
-                  t.save(function(err) {
-                    if(err) console.log(err + " mID: "+mID);
-                  });
-
-                  course.save();
+                  t.courses = classes;
+                  t.save();
                 }
               });
-
             });
           }
-        }
 
+        });
       }
     });
-  } // END OF TEACHERS
+  }
 
 });

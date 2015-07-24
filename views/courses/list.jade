@@ -9,3 +9,9 @@ block content
 
     .row
       .col-xs-12
+        for c in courses
+          .panel.panel-default
+            .panel-body
+              h3= c.title
+                if c.teacher
+                  small.right= c.teacher.lastName
