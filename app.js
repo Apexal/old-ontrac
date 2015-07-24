@@ -45,7 +45,7 @@ app.locals.moment = moment;
 app.locals.helpers = helpers;
 
 app.use(function(req, res, next) {
-  console.log(("\nRequest from "+req.connection.remoteAddress).blue.bold +(req.session.currentUser ? " by "+req.session.currentUser.username : " "));
+  console.log(("\nRequest from "+req.connection.remoteAddress).blue.bold +(req.session.currentUser ? " by "+req.session.currentUser.username : " ")+" at "+(moment().format("dddd, MMMM Do YYYY, h:mm:ss a")).green.bold);
   req.session.loggedIn = (req.session.currentUser ? true : false);
 
   req.currentUser = req.session.currentUser;

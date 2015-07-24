@@ -35,6 +35,7 @@
     "cheerio": "*",
     "socket.io": "*",
     "underscore": "*",
-    "mongoose-deep-populate": "*"
+    "mongoose-deep-populate": "*",
+    "crypto": "*"
   }
 }

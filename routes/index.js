@@ -4,6 +4,7 @@ var moment = require('moment');
 var bCrypt = require('bcrypt-nodejs');
 var request = require("request");
 var cheerio = require("cheerio");
+var secrets = require("../modules/secrets");
 
 var redir = "/";
 
@@ -84,7 +85,7 @@ router.post('/register', function(req, res) {
       //Lets post the following key/values as form
       form: {
           username: 'fmatranga18',
-          password: '1hope1havenotusedthisbefore!'
+          password: secrets.regis
       }
   }, function(error, response, body){
       if(error) {
