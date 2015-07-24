@@ -49,7 +49,9 @@ module.exports = {
     firstName: String,
     lastName: String,
     mID: Number,
-    department: String
+    department: String,
+    likes: { type: Number, default: 0 },
+    dislikes: { type: Number, default: 0 }
   },
   day: {
         date: Date,

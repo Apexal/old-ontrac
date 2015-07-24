@@ -2,66 +2,76 @@ extends /layout
 
 block content
   .container
-    .page-header
-      h1.center-xs #[b= user.gradeName+" "+user.rankName] #[br.visible-xs] #{user.fullName}
-        small.right.hidden-xs.hidden-sm #{user.points} points
-    if user.verified == false
-      .alert.alert-danger(role="alert") This user is not verified to truly be #{user.firstName}! Therefore this account is restricted in what services it can use.
-    .user-profile
-      .col-xs-12.col-sm-6.col-lg-8
-        .row
-          .col-xs-12.col-sm-12.col-md-6.center-xs
-            .holder
-              img#profile-pic(src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
-              a.profile-user-adv(href="/advisements/"+user.advisement)= user.advisement
+    if user == false
+      .page-header
+        h1 That User Does Not Exist!
+      
+      span You have either entered an invalid username or the user has not registered yet.
+    else
+      .page-header
+        h1.center-xs #[b= user.gradeName+" "+user.rankName] #[br.visible-xs] #{user.fullName}
+          small.right.hidden-xs.hidden-sm #{user.points} points
+      if user.verified == false
+        .alert.alert-danger(role="alert") This user is not verified to truly be #{user.firstName}! Therefore this account is restricted in what services it can use.
+      .user-profile
+        .col-xs-12.col-sm-6.col-lg-8
+          .row
+            .col-xs-12.col-sm-12.col-md-6.center-xs
+              .holder
+                img#profile-pic(src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
+                a.profile-user-adv(href="/advisements/"+user.advisement)= user.advisement
+              br
+            .col-xs-12.col-sm-12.col-md-6
+              .panel.panel-default
+                .panel-heading
+                  h1.panel-title  Info
+                .panel-body
+                  .user-info
+                    b Rank:
+                    |  #{user.rankName}
+                    br
+                    b Grade:
+                    |  #{user.gradeName}
+                    br
+                    b Advisement:
+                    |  #{user.advisement}
+                    br
+                    b Last Logged In:
+                    |  #{moment(user.last_login_time).fromNow()}
+                    br
+                    b User Since:
+                    |  #{moment(user.registered_date).format('dddd, MMMM Do YYYY')}
+            .col-xs-12.col-sm-12.col-md-6
+              .panel.panel-success
+                .panel-heading
+                  h1.panel-title  Achievements
+                .panel-body
+                  .user-info
+                    b Advisement:
+                    a(href="/advisements/"+user.advisement)  #{user.advisement}
+          .row
+            .col-xs-12.col-sm-12.col-md-6
+              .panel.panel-warning
+                .panel-heading
+                  h1.panel-title  Stats
+                .panel-body
+                  .user-info
+                    b Advisement:
+                    |  #{user.advisement}
+        
+      .row
+          .col-xs-12
+            hr
+            h2 #{user.firstName}'s Classes
             br
-          .col-xs-12.col-sm-12.col-md-6
-            .panel.panel-default
-              .panel-heading
-                h1.panel-title  Info
-              .panel-body
-                .user-info
-                  b Rank:
-                  |  #{user.rankName}
-                  br
-                  b Grade:
-                  |  #{user.gradeName}
-                  br
-                  b Advisement:
-                  |  #{user.advisement}
-                  br
-                  b Last Logged In:
-                  |  #{moment(user.last_login_time).fromNow()}
-                  br
-                  b User Since:
-                  |  #{moment(user.registered_date).format('dddd, MMMM Do YYYY')}
-          .col-xs-12.col-sm-12.col-md-6
-            .panel.panel-success
-              .panel-heading
-                h1.panel-title  Achievements
-              .panel-body
-                .user-info
-                  b Advisement:
-                  a(href="/advisements/"+user.advisement)  #{user.advisement}
-        .row
-          .col-xs-12.col-sm-12.col-md-6
-            .panel.panel-warning
-              .panel-heading
-                h1.panel-title  Stats
-              .panel-body
-                .user-info
-                  b Advisement:
-                  |  #{user.advisement}
+            .user-classes
+              for c in user.courses
+                +class(c)
       
     .row
-        .col-xs-12
-          hr
-          h2 #{user.firstName}'s Classes
-          br
-          .user-classes
-            for c in user.courses
-              +class(c)
-
+      .col-xs-12
+        hr
+        a.btn.btn-primary(href="/users") Back to User List
 
 mixin class(course)
   .col-xs-12.col-sm-6.col-md-4

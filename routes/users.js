@@ -32,6 +32,8 @@ router.get("/:username", function(req, res){
 
         res.render('users/profile', req.toJade);
       });
+    }else{
+      res.render('users/profile', req.toJade);
     }
 
   });
