@@ -27,11 +27,12 @@ block content
     if tableForm
       .row
         table.table.table-hover.table-striped.user-table
-          tr
-            th Picture
-            th Advisement
-            th Name
-            th Rank
+          thead
+            tr
+              th Picture
+              th Advisement
+              th Name
+              th Rank
           for user in users
             tr
               td(style="vertical-align: middle;")
@@ -49,11 +50,7 @@ block content
               img(alt=user.bio, src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
               .btn-group.full-width
                 a.user-adv(href=(loggedIn ? "/advisements/"+user.advisement : "#"))= user.advisement
-                button.full-width.btn.btn-default.dropdown-toggle(data-toggle="dropdown", ara-expanded="false", type="button")
-                  if user.verified
-                    img(src="/images/verified.png", style="width: 15px")
-                    |  
-                  | #{user.fullName+" "}
+                button.full-width.btn.btn-default.dropdown-toggle(data-toggle="dropdown", ara-expanded="false", type="button")= user.fullName+" "
                   if loggedIn
                     span.caret
                 if loggedIn

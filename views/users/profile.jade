@@ -11,8 +11,6 @@ block content
       .page-header
         h1.center-xs #[b= user.gradeName+" "+user.rankName] #[br.visible-xs] #{user.fullName}
           small.right.hidden-xs.hidden-sm #{user.points} points
-      if user.verified == false
-        .alert.alert-danger(role="alert") This user is not verified to truly be #{user.firstName}! Therefore this account is restricted in what services it can use.
       .user-profile
         .col-xs-12.col-sm-6.col-lg-8
           .row

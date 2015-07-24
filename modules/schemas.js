@@ -12,7 +12,6 @@ module.exports = {
     advisement: String,
     sclasses: Array,
     courses: [{ type: Schema.Types.ObjectId, ref: 'Course'}],
-    password: {type: String, required: true},
     rank: Number,
     statuses: [{when: Date, text: String}],
     points: Number,
@@ -20,7 +19,6 @@ module.exports = {
     last_login_time: Date,
     last_point_login_time: Date,
     preferences: Object,
-    verified: Boolean,
     registered_date: Date,
     registered: Boolean
   },

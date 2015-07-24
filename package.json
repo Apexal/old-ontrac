@@ -29,7 +29,6 @@
     "mongoose": "*",
     "express-session": "*",
     "moment": "*",
-    "bcrypt-nodejs": "*",
     "nodemailer": "*",
     "request": "*",
     "cheerio": "*",

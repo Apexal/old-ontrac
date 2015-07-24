@@ -8,12 +8,17 @@ block content
     .row
       .col-xs-12
         form(method="POST", action="/login?redir="+redir)
-          .form-group
-            label(for="username") Username
+          .form-group.col-xs-12.col-sm-6
+            label(for="username") Regis Username
             input.form-control#username(required=true, name="username", placeholder="Username", type="text")
-          .form-group
-            label(for="password") Password
+          .form-group.col-xs-12.col-sm-6
+            label(for="password") Regis Password #[a(href="#", title="Yes.") *]
             input.form-control#password(required=true, name="password", placeholder="Password", type="password")
-          a.left.btn.btn-default(href="/register") Not Yet Registered?
+          //a.left.btn.btn-default(href="/register") Not Yet Registered?
           button.btn.right.btn-primary Login
-          a.btn.right.btn-danger(href="/forgot") Forgot
+          //a.btn.right.btn-danger(href="/forgot") Forgot
+    
+    .row
+      .col-xs-12
+        hr
+        span * I do not store any passwords at all. This way just makes it easier as there is no need for making a new account for this service.

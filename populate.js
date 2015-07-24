@@ -34,7 +34,21 @@ db.once('open', function (callback) {
 
 
   // DO STUFF
-
+  
+  if(true){
+    Student.find({registered: true}, function(err, students) {
+      students.forEach(function(s) {
+        s.code = undefined;
+        s.password = undefined;
+        s.registered = false;
+        s.verified = false;
+        s.points = 0;
+        s.login_count = 0;
+        s.save();
+      });
+    });
+  }
+  
   // Connect courses to students
   if (true){
     var advs = {};

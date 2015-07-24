@@ -108,7 +108,6 @@ def extract(ID, html):
                     "last_login_time": datetime.datetime(2000, 1, 1, 0, 0, 0),
                     "last_point_login_time": datetime.datetime(2000, 1, 1, 0, 0, 0),
                     "preferences": {},
-                    "verified": False,
                     "registered_date": datetime.datetime(2000, 1, 1, 0, 0, 0),
                     "registered": False
                 }
