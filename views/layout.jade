@@ -59,26 +59,24 @@ html
                   li
                     a(target="_blank", href="https://bitbucket.org/apexal/adiutor") Source
             ul.nav.navbar-nav.navbar-right
-              li.dropdown
-                  if loggedIn
-                      a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')= currentUser.firstName + " "+currentUser.lastName
-                          span.caret
-                  else
-                      a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Not Logged In
-                          span.caret
+              
+              if loggedIn
+                li.dropdown
+                  a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')= currentUser.firstName + " "+currentUser.lastName
+                      span.caret
                   ul.dropdown-menu(role='menu')
-                      if loggedIn
-                        li
-                          a(href="/users/"+currentUser.username) View Profile
-                        li
-                          a(href="/users/profile") Edit Profile
-                        li
-                            a(href='/logout') Logout
-                      else
-                        li
-                            a(href='/login') Login
-                        li
-                            a(href='/register') Register
+                    if loggedIn
+                      li
+                        a(href="/users/"+currentUser.username) View Profile
+                      li
+                        a(href="/users/profile") Edit Profile
+                      li
+                          a(href='/logout') Logout
+              else
+                li
+                  a(href="/login") Not Logged In
+                  
+                    
 
     main
       //.container

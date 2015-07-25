@@ -3,7 +3,9 @@ $(function() {
   $(".nav li.disabled a").click(function() {
      return false;
    });
-
+  
+  $(".tooltip").tooltip();
+  
   $('.dial').each(function () {
     var elm = $(this);
     //var percent = elm.attr("value");
