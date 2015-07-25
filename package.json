@@ -1,12 +1,14 @@
 {
   "name": "adiutor",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "author": "Frank Matranga <thefrankmatranga@gmail.com>",
-  "contributors": [{
-    "name": "Frank Matranga",
-    "email": "thefrankmatranga@gmail.com"
-    }],
+  "contributors": [
+    {
+      "name": "Frank Matranga",
+      "email": "thefrankmatranga@gmail.com"
+    }
+  ],
   "scripts": {
     "scrape": "python2 scrape.py",
     "populate": "node populate",
