@@ -13,12 +13,12 @@ module.exports = function(http) {
 
     try {
       var user = {name: client.firstName, username: client.username, code: client.code, tabs: 1};
-      
-  
+
+
       socket.emit('pastMessages', {messages: messages});
-  
-      console.log(codes.indexOf(user.code));
-  
+
+      //console.log(codes.indexOf(user.code));
+
       if(codes.indexOf(user.code) > -1){
         console.log("New tab from "+user.username);
         online[codes.indexOf(user.code)].tabs += 1;
@@ -27,31 +27,31 @@ module.exports = function(http) {
         online.push(user);
         console.log("New connection from "+user.username);
       }
-      console.log(codes);
-      console.log(online);
-  
+      //console.log(codes);
+      //console.log(online);
+
       io.sockets.emit('online-list', {users: online});
-  
+
       socket.on('message', function (data) {
         var d = {user: user, message: data.message, when: data.when};
         messages.push(d);
         io.sockets.emit('message', d);
       });
-  
+
       socket.on('disconnect', function(socket) {
         console.log("DISCONNECT from "+user.username);
         var index = codes.indexOf(user.code);
-        console.log(index);
+        //console.log(index);
         if(index == -1) throw "FAILED";
         online[index].tabs -= 1;
-  
+
         if(online[index].tabs <= 0){
           online.splice(index, 1);
           codes.splice(index, 1);
         }
-  
-        console.log(codes);
-        console.log(online);
+
+        //console.log(codes);
+        //console.log(online);
         io.sockets.emit('online-list', {users: online});
       });
     }catch(err) {

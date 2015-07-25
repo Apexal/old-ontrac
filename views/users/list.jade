@@ -10,7 +10,7 @@ block content
           #online-user-list
       
     .page-header
-      h1 All Users
+      h1 Registered Users
         if tableForm == false
           a.btn.btn-default.right(href="/users?table=1") Table Form
         else
@@ -26,25 +26,26 @@ block content
     
     if tableForm
       .row
-        table.table.table-hover.table-striped.user-table
-          thead
-            tr
-              th Picture
-              th Advisement
-              th Name
-              th Rank
-          for user in users
-            tr
-              td(style="vertical-align: middle;")
-                img.table-pic(src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
-              td.larger(style="vertical-align: middle;")
-                a(href="/advisements/"+user.advisement)= user.advisement
-              td.larger(style="vertical-align: middle;")
-                a(href="/users/"+user.username)= user.fullName
-              td.larger(style="vertical-align: middle;")= user.rankName
+        .col-xs-12
+          table.table.table-hover.table-striped.user-table
+            thead
+              tr
+                th Picture
+                th Advisement
+                th Name
+                th Rank
+            for user in registered
+              tr
+                td(style="vertical-align: middle;")
+                  img.table-pic(src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
+                td.larger(style="vertical-align: middle;")
+                  a(href="/advisements/"+user.advisement)= user.advisement
+                td.larger(style="vertical-align: middle;")
+                  a(href="/users/"+user.username)= user.fullName
+                td.larger(style="vertical-align: middle;")= user.rankName
     else
       .row
-        for user in users
+        for user in registered
           .col-xs-12.col-sm-6.col-md-4.col-lg-3.text-center
             .user-box
               img(alt=user.bio, src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
@@ -65,5 +66,25 @@ block content
                       a(href="mailto:"+user.email) Email
                     li
                       a(href="http://moodle.regis.org/user/profile.php?id="+user.mID) Moodle Profile
+    
+    .row
+      .col-xs-12
+        .page-header
+          h2 All Users
+    
+    .row
+      .col-xs-12
+        table.table.user-table
+          thead
+            th Advisement
+            th Grade
+            th Name
+          for user in users
+            tr(class=(currentUser && user.username == currentUser.username ? "success" : ""))
+              td.larger(style="vertical-align: middle;")
+                a.undecorated(href="/advisements/"+user.advisement)= user.advisement
+              td.larger(style="vertical-align: middle")= user.gradeName
+              td.larger(style="vertical-align: middle;")= user.fullName
+            
     .row
       br.bottom-spacer

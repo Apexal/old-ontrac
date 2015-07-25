@@ -11,9 +11,9 @@ module.exports = {
     email: String,
     advisement: String,
     sclasses: Array,
-    courses: [{ type: Schema.Types.ObjectId, ref: 'Course'}],
-    rank: Number,
-    statuses: [{when: Date, text: String}],
+    courses: [{ type: Schema.Types.ObjectId, ref: 'Course', default: []}],
+    rank: {type: Number, default: 0},
+    statuses: [{when: Date, text: String, default: []}],
     points: Number,
     login_count: Number,
     last_login_time: Date,
@@ -27,7 +27,7 @@ module.exports = {
   	tID : String,
   	title : String,
   	mID : Number,
-    students: [{type: Schema.Types.ObjectId, ref: 'Student'}]
+    students: [{type: Schema.Types.ObjectId, ref: 'Student', default: []}]
   },
   course : {
     teacher: { type: Schema.Types.ObjectId, ref: 'Teacher'},
@@ -36,10 +36,10 @@ module.exports = {
     title: String,
     //tID: String,
     grade: Number,
-    students: [{ type: Schema.Types.ObjectId, ref: 'Student'}]
+    students: [{ type: Schema.Types.ObjectId, ref: 'Student', default: []}]
   },
   teacher : {
-    courses: [{ type: Schema.Types.ObjectId, ref: 'Course'}],
+    courses: [{ type: Schema.Types.ObjectId, ref: 'Course', default: []}],
     email: String,
     tID: String,
     sclasses: Array,
@@ -58,7 +58,8 @@ module.exports = {
         items: {
           homework: [
               {
-              	courseID: Number,
+              	course: { type: Schema.Types.ObjectId, ref: 'Course' },
+                priority: { type: Number , default: 2 },
               	assignment: String,
               	link: String,
               	completed: Boolean

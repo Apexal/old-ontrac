@@ -5,7 +5,7 @@ router.get('/', function(req, res){
   req.toJade.title = "Courses";
   req.toJade.courses = false;
 
-  req.Course.find({}).populate('teacher').exec(function(err, courses){
+  req.Course.find({}).populate('teacher').populate('students', 'mID username firstName lastName registered').exec(function(err, courses){
     if(err) throw err;
 
     if(courses){
@@ -20,12 +20,11 @@ router.get('/:mID', function(req, res) {
   req.toJade.title = "Course "+mID;
   req.toJade.course = false;
 
-  req.Course.findOne({mID: mID}).populate('teacher').exec(function(err, course){
+  req.Course.findOne({mID: mID}).populate('teacher').populate('students', 'mID username advisement firstName lastName rank registered grade').exec(function(err, course){
     if(err) throw err;
 
     if(course){
       req.toJade.course = course;
-      console.log(course.title + ": "+course.teacher);  
     }
     res.render('courses/one', req.toJade);
   });

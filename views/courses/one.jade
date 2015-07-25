@@ -6,7 +6,7 @@ block content
       if course == false
         h1 No Such Course Exists
       else
-        h1.left Course #{course.title}
+        h1 Course #{course.title}
           if course.teacher
             small.right Teacher #[a(href="/teachers/"+course.teacher.mID)= course.teacher.fullName}
       include /info
@@ -16,7 +16,26 @@ block content
         if course != false
           if course.teacher
             img(src=course.teacher.image, style="width: 150px")
-        
+
+    .row
+      .col-xs-12
+        .page-header
+          h2 Enrolled Students
+    
+    .row
+      .col-xs-12
+        table.table.table-striped.user-table
+          thead
+            th Advisement
+            th Grade
+            th Name
+          for user in course.students
+            tr(class=(currentUser && user.username == currentUser.username ? "success" : ""))
+              td.larger(style="vertical-align: middle;")
+                a.undecorated(href="/advisements/"+user.advisement)= user.advisement
+              td.larger(style="vertical-align: middle")= user.gradeName
+              td.larger(style="vertical-align: middle;")= user.fullName
+    
     .row
       .col-xs-12
         hr

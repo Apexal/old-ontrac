@@ -12,6 +12,9 @@ block content
         for c in courses
           .panel.panel-default
             .panel-body
-              h3= c.title
+              h3
+                a.undecorated(href="/courses/"+c.mID)= c.title
                 if c.teacher
                   small.right= c.teacher.lastName
+              if c.students
+                span This course has #[b= c.students.length] students enrolled.

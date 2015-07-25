@@ -5,9 +5,13 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   req.toJade.title = "Users";
   req.toJade.tableForm = (req.query.table == "1" ? true : false);
-  req.Student.find({registered: true}, 'firstName lastName advisement code username', function(err, users){
+  req.Student.find({}, 'registered firstName lastName advisement code username rank').sort({advisement: 1}).exec(function(err, users){
     if(err) console.log(err);
     req.toJade.users = users;
+    req.toJade.registered = users.filter(function(user) {
+      console.log((user.registered == true ? user.username : ""));
+      return (user.registered == true);
+    });
     res.render('users/list', req.toJade);
   });
 });

@@ -34,7 +34,13 @@ db.once('open', function (callback) {
 
 
   // DO STUFF
-  
+
+  if(true){
+    Course.find({}, function(err, courses){
+      courses.forEach(function(c){c.students = []; c.save();});
+    });
+  }
+
   if(true){
     Student.find({registered: true}, function(err, students) {
       students.forEach(function(s) {
@@ -48,7 +54,7 @@ db.once('open', function (callback) {
       });
     });
   }
-  
+
   // Connect courses to students
   if (true){
     var advs = {};
@@ -61,10 +67,15 @@ db.once('open', function (callback) {
           if(classes){
             classes.forEach(function(c) {
               Course.findOne({mID: c}, function(err, cs) {
-
                 if(err) console.log(err);
                 if (cs){
                   courses.push(cs._id);
+                  cs.students.push(s._id);
+                  //console.log(cs.students);
+                  cs.save(function(err) {
+                    if(err) console.log(err);
+                    else console.log("Added Student "+s.mID + " to Course "+cs.mID);
+                  })
                   console.log("Added Course "+cs.mID+" to Student "+s.mID);
                   s.courses = courses;
                   s.save();
