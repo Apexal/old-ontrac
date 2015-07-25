@@ -30,9 +30,9 @@ router.post('/login', function(req, res, next) {
       errs.push("0: Incorrect username or password.");
       done();
     }else{
-      
+
       // ATTEMPT REGIS LOGIN
-      
+
       var cookieJar = request.jar();
       request({
           url: 'https://intranet.regis.org/login/submit.cfm', //URL to hit
@@ -67,10 +67,10 @@ router.post('/login', function(req, res, next) {
                     errs.push("1: Failed to register. Please try again later.");
                 }else{
                   var $ = cheerio.load(html);
-                  
+
                   // SUCCESSFULLY LOGGED IN, IS THIS USER REGISTERED?
-                  
-                  
+
+
                   if(user.registered == false){
                     // NO, get his Student ID and register him!
                     var id = $("td:contains('Student ID #:')").next().text().trim();
@@ -80,9 +80,10 @@ router.post('/login', function(req, res, next) {
                     user.last_point_login_time = new Date();
                     user.registered_date = new Date();
                     user.registered = true;
+                    new req.Log({who: user._id, what: "Registration."}).save();
                   }
                     // REGISTER THIS USER
-                  
+
                   user.login_count +=1;
                   user.last_login_time = new Date();
                   var fiveMinAgo = moment().subtract(5, 'minutes');
@@ -94,15 +95,16 @@ router.post('/login', function(req, res, next) {
                   req.user = user;
                   req.session.currentUser = user;
                   user.save();
+                  new req.Log({who: user._id, what: "Login."}).save();
                 }
                 done();
               });
             }
-    
+
           }
       });
     }
-    
+
     function done(){
       req.session.errs = errs;
       if(errs.length > 0)
@@ -110,12 +112,14 @@ router.post('/login', function(req, res, next) {
       else
         res.redirect(req.query.redir);
     }
-      
+
   });
 });
 
 router.get('/logout', function(req, res) {
+  new req.Log({who: req.currentUser._id, what: "Logout."}).save();
   delete req.session.currentUser;
+  delete req.currentUser;
   req.session.info.push("You have successfully logged out.");
   res.redirect('/');
 });

@@ -68,5 +68,10 @@ module.exports = {
           quizzes: [],
           projects: []
         }
-    }
+    },
+  log_item: {
+    who: { type: Schema.Types.ObjectId, ref: 'Student'},
+    what: String,
+    when: {type: Date, default: Date.now}
+  }
 }

@@ -115,9 +115,13 @@ db.once('open', function (callback) {
   var advisementSchema = new Schema(schemas.advisement);
   var Advisement = mongoose.model('Advisement', advisementSchema);
 
+  var logItemSchema = new Schema(schemas.log_item);
+  var Log = mongoose.model('Log', logItemSchema);
+
   module.exports.Course = Course;
   module.exports.Teacher = Teacher;
   module.exports.Student = Student;
   module.exports.Advisement = Advisement;
+  module.exports.Log = Log;
   module.exports.Day = Day;
 });

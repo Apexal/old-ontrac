@@ -101,7 +101,6 @@ def extract(ID, html):
                     "email": username + "@regis.org",
                     "advisement": department,
                     "sclasses": classes,
-                    "password": "Unknown",
                     "rank": 0,
                     "points": 0,
                     "login_count": 0,
