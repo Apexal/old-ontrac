@@ -3,9 +3,32 @@ $(function() {
   $(".nav li.disabled a").click(function() {
      return false;
    });
-  
-  $(".tooltip").tooltip();
-  
+
+
+  $('.user-badge').tooltipster({
+    content: 'Loading...',
+    interactive: true,
+    theme: 'tooltipster-shadow',
+    functionBefore: function(origin, continueTooltip) {
+      continueTooltip();
+      var username = origin.text();
+      if (origin.data('ajax') !== 'cached') {
+        $.ajax({
+          type: 'GET',
+          url: "/api/user/"+username,
+          success: function(data) {
+            var content = "";
+            if(data.code != "Uknown")
+              content+="<img src='https://webeim.regis.org/photos/regis/Student/"+data.code+".jpg'>";
+            content += "<b>"+data.firstName+" "+data.lastName+"</b> of <b>"+data.advisement+"</b>";// update our tooltip content with our returned data and cache it
+            origin.tooltipster('content', $(content)).data('ajax', 'cached');
+          },
+          dataType: "json"
+        });
+      }
+    }
+  });
+
   $('.dial').each(function () {
     var elm = $(this);
     //var percent = elm.attr("value");
