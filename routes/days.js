@@ -8,7 +8,7 @@ var _ = require('underscore');
 /* ----------------------------- */
 
 router.get('/', function(req, res) {
-  console.log("AYY LMAO");
+  res.render('days/index', req.toJade);
 });
 
 router.get(['/closest'], function(req, res) {

@@ -24,10 +24,14 @@ html
     link(rel="stylesheet", href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css")
 
     // My own
-    link(rel="stylesheet", href="/stylesheets/all.css")
-    script(src='http://code.jquery.com/jquery-2.1.4.min.js')
-    script(src='http://code.jquery.com/ui/1.11.4/jquery-ui.min.js')
+    link(rel="stylesheet", href="/css/all.css")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js")
+    script(src="javascripts/jquery.tooltipster.min.js")
 
+    link(rel="stylesheet", href="/css/tooltipster.css")
+    link(rel="stylesheet", href="/css/themes/tooltipster-shadow.css")
+    
   body
     header
       nav.navbar.navbar-default.navbar-fixed-top#real-nav
@@ -79,8 +83,6 @@ html
                     
 
     main
-      //.container
-      //  .alert.alert-danger(role="alert") Warning! This is the development server, so I have no idea how you found your way here. Don't touch anything!
       block content
       
       if loggedIn && helpers.isPage(page, "chat") == false
