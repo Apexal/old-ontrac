@@ -4,7 +4,6 @@ $(function() {
      return false;
    });
 
-
   if($('.user-badge').length){
     $('.user-badge').tooltipster({
       content: 'Loading...',
@@ -30,6 +29,7 @@ $(function() {
       }
     });
   }
+
   $('.dial').each(function () {
     var elm = $(this);
     //var percent = elm.attr("value");
