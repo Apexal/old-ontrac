@@ -9,7 +9,7 @@ var deepPopulate = require('mongoose-deep-populate');
 
 db.on('error', console.error.bind(console, 'Failed to connect to database:'));
 db.once('open', function (callback) {
-  console.log('Connected to database'.green.bold+'\n');
+  console.log('Connected to database\n');
 
   var studentSchema = new Schema(schemas.student);
 
@@ -110,6 +110,7 @@ db.once('open', function (callback) {
   daySchema.statics.getClosest = function(username, today, cb){
     return this.findOne().where('username').equals(username).sort({date: 1}).where('date').gt(today.toDate()).exec(cb);
   };
+  daySchema.plugin(deepPopulate);
   var Day = mongoose.model('Day', daySchema);
 
   var advisementSchema = new Schema(schemas.advisement);
@@ -119,6 +120,7 @@ db.once('open', function (callback) {
   var Log = mongoose.model('Log', logItemSchema);
 
   var hwItemSchema = new Schema(schemas.hwItem);
+
   var HWItem = mongoose.model('HWItem', hwItemSchema);
 
   module.exports.HWItem = HWItem;

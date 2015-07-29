@@ -1,39 +1,13 @@
-// Database stuff
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var schemas = require('./modules/schemas.js');
-mongoose.connect('mongodb://127.0.0.1/regis');
-var db = mongoose.connection;
+var mongo = require("./modules/mongodb");
 
-db.on('error', console.error.bind(console, 'Failed to connect to database:'));
-db.once('open', function (callback) {
-  console.log('Connected to database');
-  var studentSchema = new Schema(schemas.student);
+setTimeout(function() {
+  Course = mongo.Course;
+  Student = mongo.Student;
+  Advisement = mongo.Advisement;
+  Teacher = mongo.Teacher;
+  Day = mongo.Day;
 
-  var teacherSchema = new Schema(schemas.teacher);
-  Teacher = mongoose.model('Teacher', teacherSchema);
-
-  var courseSchema = new Schema(schemas.course);
-
-  //courseSchema.methods.getTeacher = function(){
-  //  console.log("tID: "+this.tID);
-  //  Teacher.findOne({tID : this.tID}, function(err, item){return item;});
-  //};
-
-  Course = mongoose.model('Course', courseSchema);
-
-  Student = mongoose.model('Student', studentSchema);
-
-  var daySchema = new Schema(schemas.day);
-
-  Day = mongoose.model('Day', daySchema);
-
-  var advisementSchema = new Schema(schemas.advisement);
-  Advisement = mongoose.model('Advisement', advisementSchema);
-
-
-
-  // DO STUFF
+    // DO STUFF
 
   if(true){
     Course.find({}, function(err, courses){
@@ -152,4 +126,4 @@ db.once('open', function (callback) {
     });
   }
 
-});
+}, 1000);

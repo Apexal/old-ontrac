@@ -215,6 +215,10 @@ main {
 
 /* Homework Pages */
 
+#schedule-day {
+  font-size: 1.5em;
+}
+
 #hw-info {
   font-size: 1.1em;
 }
@@ -227,11 +231,23 @@ main {
   text-decoration: none;
 }
 
-#newItemSubject{
+.hw-item .title{
+  text-decoration: none;
+  color: inherit;
+  font-weight: 500;
+  font-size: 1.4em;
+}
+
+.remove-assignment {
+  font-size: 0.8em;
+  cursor: pointer;
+}
+
+#newHWItemCourse{
   max-width: 30%;
 }
 
-#newItemDesc {
+#newHWItemDesc {
   width: 60%;
 }
 
