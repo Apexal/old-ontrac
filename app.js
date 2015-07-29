@@ -76,7 +76,7 @@ app.use(function(req, res, next) {
 });
 
 // List of paths you can only access if logged in
-var restricted = ['/users/:username', '/users/profile', '/advisements/:advisement', '/teachers', '/courses', '/days', '/chat'];
+var restricted = ['/users/:username', '/users/profile', '/advisements/:advisement', '/teachers', '/courses', '/days', '/chat', '/api', '/game'];
 app.use(restricted, function(req, res, next) {
   if(req.toJade.loggedIn){
     next();
@@ -91,7 +91,9 @@ app.use('/*', function(req, res, next) {
 });
 
 // ===========================ROUTES============================
-fs.readdirSync("./routes/").forEach(function(path) {
+fs.readdirSync("./routes/").filter(function(p) {
+  return (p.charAt(0) != '_');
+}).forEach(function(path) {
   if(fs.lstatSync("./routes/"+path).isDirectory() == false){
     var name = ( path == "index.js" ? '' : path.replace('.js', ''));
     app.use('/'+name, function(req, res, next) {
@@ -99,7 +101,6 @@ fs.readdirSync("./routes/").forEach(function(path) {
       if(models.length > 0){
         models.forEach(function(m) {
           req[m] = mongo[m];
-          //console.log("Using Model '"+m+"' for path /"+name);
         });
       }
       next();
@@ -108,6 +109,8 @@ fs.readdirSync("./routes/").forEach(function(path) {
     console.log(("Using ./routes/"+path+" for /"+name).cyan);
   }
 });
+
+app.use('/game', require('./routes/_game')(io));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

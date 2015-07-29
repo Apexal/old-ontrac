@@ -1,9 +1,9 @@
 $(function() {
   var chat_notification = new Audio('/sounds/ding.mp3');
-  
+
   var full = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
   var socket = io.connect(full);
-  var username = $("#chat-box").data("username");
+  var username = $('#send-message').data("username");
   var online = [];
   var list = $("#online-user-list");
 
@@ -32,16 +32,46 @@ $(function() {
   function update_online_list() {
     list.html("");
     online.forEach(function(user) {
-      list.append("<div class=\"col-xs-12 col-sm-6 col-md-4 col-lg-3 text-center\"> <div class=\"user-box\"> <img src=\"https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg\" title=\"\"> <div class=\"btn-group full-width\"> <button class=\"full-width btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" type=\"button\">"+user.name+" <span class=\"caret\"></span></button> <ul class=\"dropdown-menu\"> <li> <a href=\"/users/"+user.username+"\">View Profile</a> </li> <li> <a href=\"/users/"+user.username+"/schedule\">View Schedule</a> </li> <li> <a href=\"mailto:"+user.username+"\">Email</a> </li> </ul> </div> </div> </div>");
+      list.append("<span class='user-badge'>"+user.username+"</span>");
+      //list.append("<div class=\"col-xs-12 col-sm-6 col-md-4 col-lg-3 text-center\"> <div class=\"user-box\"> <img src=\"https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg\" title=\"\"> <div class=\"btn-group full-width\"> <button class=\"full-width btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" type=\"button\">"+user.name+" <span class=\"caret\"></span></button> <ul class=\"dropdown-menu\"> <li> <a href=\"/users/"+user.username+"\">View Profile</a> </li> <li> <a href=\"/users/"+user.username+"/schedule\">View Schedule</a> </li> <li> <a href=\"mailto:"+user.username+"\">Email</a> </li> </ul> </div> </div> </div>");
     });
+
+
+    $('.user-badge').tooltipster({
+      content: 'Loading...',
+      interactive: true,
+      theme: 'tooltipster-shadow',
+      functionBefore: function(origin, continueTooltip) {
+        continueTooltip();
+        var username = origin.text();
+        if (origin.data('ajax') !== 'cached') {
+          $.ajax({
+            type: 'GET',
+            url: "/api/user/"+username,
+            success: function(data) {
+              var content = "";
+              if(data.code != "Uknown")
+                content+="<img src='https://webeim.regis.org/photos/regis/Student/"+data.code+".jpg'>";
+              content += "<b>"+data.firstName+" "+data.lastName+"</b> of <b>"+data.advisement+"</b>";// update our tooltip content with our returned data and cache it
+              origin.tooltipster('content', $(content)).data('ajax', 'cached');
+            },
+            dataType: "json"
+          });
+        }
+      }
+    });
+
   }
 
 
 
-
-
-
-
+  // Game
+  if($("#canvas").length){
+    socket.emit('game-get-playerlist');
+    socket.on('game-playerlist', function(data) {
+      setPlayers(data.players);
+    });
+  }
 
 
 

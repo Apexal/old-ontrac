@@ -3,11 +3,8 @@ extends /layout
 block content
   .container
     if loggedIn
-      .page-header
-        h1 Online Now
-      .row
-        .col-xs-12
-          #online-user-list
+      h3 Online Now: 
+        small#online-user-list
       
     .page-header
       h1 Registered Users

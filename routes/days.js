@@ -35,7 +35,7 @@ router.get(["/:date", "/:date/*"], function(req, res, next) {
   req.toJade.date = false;
   req.toJade.isToday = (dateString == req.today.format("YYYY-MM-DD"));
 
-  console.log(req.toJade.isToday);
+  console.log(req.currentUser.courses);
 
   if(moment(dateString, 'YYYY-MM-DD', true).isValid() == false){
     req.toJade.title = "Invalid Date";
@@ -67,6 +67,8 @@ router.get(["/:date", "/:date/*"], function(req, res, next) {
 
       if(day){
         req.toJade.day = day;
+        if(day.work)
+          req.toJade.work = day.work;
       }
       next();
     });

@@ -30,6 +30,7 @@ $(function() {
     });
   }
 
+
   $('.dial').each(function () {
     var elm = $(this);
     //var percent = elm.attr("value");
@@ -62,7 +63,7 @@ $(function() {
     return false;
   });
 
-  console.log(localStorage["show-chat"]);
+  //console.log(localStorage["show-chat"]);
 
   $( "#chat-box.resizable" ).resizable({
     maxHeight: 550,
@@ -78,15 +79,15 @@ $(function() {
       $("#chat-messages.small-box").show();
       $(this).removeAttr('style');
       $("#chat-box.small-box").height("300px").width("400px").css("bottom", "70px");
-      console.log("SHOW");
+      //console.log("SHOW");
     }else{
       $("#chat-controls.small-box").hide();
       $("#chat-messages.small-box").hide();
       $("#chat-box.small-box").css({width: "250px", height: "40px", bottom: "30px"});
-      console.log("HIDE");
+      //console.log("HIDE");
     }
     localStorage["show-chat"] = show;
-    console.log(localStorage["show-chat"]);
+    //console.log(localStorage["show-chat"]);
   };
 
   if(localStorage['show-chat'] == false){

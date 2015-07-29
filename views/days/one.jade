@@ -28,13 +28,39 @@ block content
       
       
       .row
-        +pane("Homework", "primary", ['Nothing'])  
+        .col-xs-12
+          .page-header
+            h2.text-center Homework
+          .col-xs-12.text-center
+            //b Items
         
-        +pane("Tests", "danger", ['Nothing'])
+        .col-xs-12.text-center
+          if !work.homework
+            h4 No homework!
+            -for(var i=0;i<4;i++)
+              br
+          form.form-inline#homework-form(method="POST", role="form")
+            select.form-control(id="newItemSubject", name="newItemSubject", required=true)
+              for course in currentUser.courses
+                option(value=course.mID)= course.title
+            input.form-control(id="newItemDesc", name="newItemDesc", type="text", placeholder="Description", required=true)
+            button.btn.btn-primary.full-when-xs#homework-button Add
+          hr
+          br
         
-        +pane("Quizzes", "info", ['Nothing'])
+        .col-xs-12
+          .page-header
+            h2 Tests
+              small.right 0 items
         
-        +pane("Projects", "warning", ['Nothing'])
+          hr
+        //+pane("Homework", "primary", ['Nothing'])  
+        
+        //+pane("Tests", "danger", ['Nothing'])
+        
+        //+pane("Quizzes", "info", ['Nothing'])
+        
+        //+pane("Projects", "warning", ['Nothing'])
   
   mixin pane(title, ptype, items)
     .col-xs-12.col-sm-6.col-md-4

@@ -23,7 +23,7 @@ router.post('/login', function(req, res, next) {
   var password = req.body.password;
 
   var errs = [];
-  req.Student.findOne({username: username}, function(err, user) {
+  req.Student.findOne({username: username}).populate('courses', 'mID title').exec(function(err, user) {
     if(err) throw err;
 
     if(!user){

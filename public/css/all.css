@@ -215,19 +215,21 @@ main {
 
 /* Homework Pages */
 
-.top-progress {
-    z-index: 5;
-    position: fixed;
-    top: 50px;
-    left: 0;
-    height: 15px;
-    width: 100%;
+#newItemSubject{
+  max-width: 30%;
 }
 
-.top-progress progress{
+#newItemDesc {
+  width: 60%;
+}
+
+#homework-button {
+  width: 10%
+}
+
+@media (max-width: 757px) {
+  #homework-form *{
     width: 100%;
-    appearance: none;
-    border: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
+    max-width: 100%;
+  }
 }

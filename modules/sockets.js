@@ -13,12 +13,9 @@ module.exports = function(http) {
 
     try {
       var user = {name: client.firstName, username: client.username, code: client.code, tabs: 1};
-
-
       socket.emit('pastMessages', {messages: messages});
 
       //console.log(codes.indexOf(user.code));
-
       if(codes.indexOf(user.code) > -1){
         console.log("New tab from "+user.username);
         online[codes.indexOf(user.code)].tabs += 1;

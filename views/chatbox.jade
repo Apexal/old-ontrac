@@ -1,4 +1,4 @@
-.panel.panel-default.resizable.hidden-xs.small-box#chat-box(data-username=currentUser.username)
+.panel.panel-default.resizable.hidden-xs.small-box#chat-box
   .panel-heading
     h3.panel-title Global Chat
       small#toggle-chat.small-box(data-show="true")  (toggle)
@@ -7,4 +7,4 @@
     
   form#chat-controls.form-inline.small-box(role="form")
     input.form-control#chat-message(type="text", name="message")
-    button(type="button")#send-message.btn.btn-primary Send
+    button#send-message.btn.btn-primary(type="button", data-username=currentUser.username) Send
