@@ -118,6 +118,10 @@ db.once('open', function (callback) {
   var logItemSchema = new Schema(schemas.log_item);
   var Log = mongoose.model('Log', logItemSchema);
 
+  var hwItemSchema = new Schema(schemas.hwItem);
+  var HWItem = mongoose.model('HWItem', hwItemSchema);
+
+  module.exports.HWItem = HWItem;
   module.exports.Course = Course;
   module.exports.Teacher = Teacher;
   module.exports.Student = Student;

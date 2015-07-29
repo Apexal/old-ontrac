@@ -215,6 +215,18 @@ main {
 
 /* Homework Pages */
 
+#hw-info {
+  font-size: 1.1em;
+}
+
+#hw-info a {
+  font-weight: 570;
+}
+
+#hw-info a:hover {
+  text-decoration: none;
+}
+
 #newItemSubject{
   max-width: 30%;
 }

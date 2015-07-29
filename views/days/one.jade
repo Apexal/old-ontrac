@@ -13,9 +13,14 @@ block content
         .col-xs-12.text-center
           if day != false
             b#schedule-day= day.scheduleDay 
+      
+      p#hw-info.text-center
+        | On this #[b= date.format("dddd")], you have #[a(href="#homework", style="color: #2780e3;") 0 homework] assignments 
+        | to complete, #[a(href="#tests", style="color: #f0005e;") 0 tests] to take, #[a(href="#quizzes", style="color: #7643a8;") 0 quizzes] to take, and 
+        | #[a(href="#projects", style="color: #ff4309;") 0 projects] due.
+      
       br
       br.hidden-xs
-      
       .row.hidden-xs
         .col-xs-12.text-center
           input.dial(type="text", value="50", data-fgcolor="#2780e3", data-readonly="true", data-width="100")
@@ -26,8 +31,8 @@ block content
           span.right-spacer
           input.dial(type="text", value="50", data-fgcolor="#ff4309", data-readonly="true", data-width="100")
       
-      
-      .row
+      // HOMEWORK
+      .row#homework
         .col-xs-12
           .page-header
             h2.text-center Homework
@@ -37,40 +42,38 @@ block content
         .col-xs-12.text-center
           if !work.homework
             h4 No homework!
-            -for(var i=0;i<4;i++)
+            -for(var i=0;i<2;i++)
               br
-          form.form-inline#homework-form(method="POST", role="form")
+          form.form-inline#homework-form(method="GET", role="form")
             select.form-control(id="newItemSubject", name="newItemSubject", required=true)
               for course in currentUser.courses
                 option(value=course.mID)= course.title
             input.form-control(id="newItemDesc", name="newItemDesc", type="text", placeholder="Description", required=true)
             button.btn.btn-primary.full-when-xs#homework-button Add
-          hr
-          br
         
+      -for(var i=0;i<6;i++)
+        br
+      
+      // TESTS
+      .row#tests
         .col-xs-12
           .page-header
-            h2 Tests
-              small.right 0 items
+            h2.text-center Tests
+          .col-xs-12.text-center
+            //b Items
         
-          hr
-        //+pane("Homework", "primary", ['Nothing'])  
-        
-        //+pane("Tests", "danger", ['Nothing'])
-        
-        //+pane("Quizzes", "info", ['Nothing'])
-        
-        //+pane("Projects", "warning", ['Nothing'])
-  
-  mixin pane(title, ptype, items)
-    .col-xs-12.col-sm-6.col-md-4
-      .panel(class="panel-"+ptype)
-        .panel-heading
-          h1.panel-title
-            a(href="/days/"+dateString+"/"+title)= title
-        table.table
-          for i in items
-            tr
-              td= i
-  
+        .col-xs-12.text-center
+          if !work.tests
+            h4 No tests!
+            -for(var i=0;i<4;i++)
+              br
+          form.form-inline#tests-form(method="POST", role="form")
+            select.form-control(id="newTestSubject", name="newTestSubject", required=true)
+              for course in currentUser.courses
+                option(value=course.mID)= course.title
+            input.form-control(id="newTestDesc", name="newTestDesc", type="text", placeholder="Description", required=true)
+            button.btn.btn-primary.full-when-xs#test-button Add
+          br
+          br
+          br
   script(src="/javascripts/jquery.knob.js")

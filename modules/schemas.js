@@ -56,15 +56,7 @@ module.exports = {
         scheduleDay: String,
         username: String,
         items: {
-          homework: [
-              {
-              	course: { type: Schema.Types.ObjectId, ref: 'Course' },
-                priority: { type: Number , default: 2 },
-              	assignment: String,
-              	link: String,
-              	completed: Boolean
-              }
-          ],
+          homework: [{ type: Schema.Types.ObjectId, ref: 'HWItem' }],
           tests : [],
           quizzes: [],
           projects: []
@@ -74,5 +66,11 @@ module.exports = {
     who: { type: Schema.Types.ObjectId, ref: 'Student'},
     what: String,
     when: {type: Date, default: Date.now}
+  },
+  hwItem: {
+    course: { type: Schema.Types.ObjectId, ref: 'Course' },
+    desc: String,
+    link: String,
+    completed: Boolean
   }
 }
