@@ -12,9 +12,9 @@ block content
       .row
         .col-xs-12.text-center
           if day != false
-            b#schedule-day #{day.scheduleDay}-Day 
+            b#schedule-day(title="Click to change!") #{day.scheduleDay}-Day 
           else
-            b#schedule-day Click to set a Schedule Day!
+            b#schedule-day(title="Click to set!") No Schedule Day!
             
       p#hw-info.text-center
         | On this #[b= date.format("dddd")], you have #[a(href="#homework", style="color: #2780e3;")= (items.homework ? items.homework.length : 0) + " homework"] assignments 
@@ -25,7 +25,7 @@ block content
       br.hidden-xs
       .row.hidden-xs
         .col-xs-12.text-center
-          input.dial(type="text", value="50", data-fgcolor="#2780e3", data-readonly="true", data-width="100")
+          input#hw-dial(type="text", value="50", data-fgcolor="#2780e3", data-readonly="true", data-width="100")
           span.right-spacer
           input.dial(type="text", value="50", data-fgcolor="#f0005e", data-readonly="true", data-width="100")
           span.right-spacer
@@ -34,32 +34,7 @@ block content
           input.dial(type="text", value="50", data-fgcolor="#ff4309", data-readonly="true", data-width="100")
       
       // HOMEWORK
-      .row#homework
-        .col-xs-12
-          .page-header
-            h2.text-center Homework
-          .col-xs-12.text-center
-            //b Items
-        
-        .row
-          for title in hwTitles
-            .col-xs-12.col-md-6.hw-item.text-center
-              a.title(href="/courses/"+homework[title][0].course.mID)= title
-              ol
-                for item in homework[title]
-                  li
-                    span(class="assignment"+(item.completed == true ? " completed" : ""))= item.desc+" "
-                    i.fa.fa-close.remove-assignment
-                    span  &nbsp;  &nbsp;  &nbsp;
-              br
-        br
-        .row
-          form.form-inline#homework-form(method="POST", action="/days/"+date.format('YYYY-MM-DD')+"/homework?sd=B", role="form")
-            select.form-control(id="newHWItemCourse", name="newHWItemCourse", required=true)
-              for course in currentUser.courses
-                option(value=course.mID)= course.title
-            input.form-control(id="newHWItemDesc", name="newHWItemDesc", type="text", placeholder="Description", required=true)
-            button.btn.btn-primary.full-when-xs#homework-button Add
+      include homework
         
       -for(var i=0;i<6;i++)
         br
@@ -86,4 +61,6 @@ block content
           br
           br
           br
+
+  script(src="/javascripts/days.js")
   script(src="/javascripts/jquery.knob.js")

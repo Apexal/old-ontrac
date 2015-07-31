@@ -76,24 +76,7 @@ db.once('open', function (callback) {
   var Teacher = mongoose.model('Teacher', teacherSchema);
 
   var courseSchema = new Schema(schemas.course);
-
-  //courseSchema.methods.getTeacher = function(){
-  //  console.log("tID: "+this.tID);
-  //  Teacher.findOne({tID : this.tID}, function(err, item){return item;});
-  //};
-
   var Course = mongoose.model('Course', courseSchema);
-
-  /*Course.find({}, function(err, cs) {
-    cs.forEach(function(c){
-      Teacher.findOne({lastName: c.tID}, function(err, item) {
-        if(item){
-          c.tID = item.tID;
-          c.save();
-        }
-      })
-    });
-  });*/
 
   studentSchema.methods.getClasses = function(cb) {
     return Course.find({}).where('mID').in(this.classes).exec(cb);
@@ -117,6 +100,13 @@ db.once('open', function (callback) {
   var Advisement = mongoose.model('Advisement', advisementSchema);
 
   var logItemSchema = new Schema(schemas.log_item);
+  logItemSchema.pre('save', function(next) {
+    var thing = this;
+    Student.findOne({_id: this.who}, 'username',function(err, student) {
+      console.log("NEW ACTION BY ".bold + student.username+": " + thing.what);
+      next();
+    });
+  });
   var Log = mongoose.model('Log', logItemSchema);
 
   var hwItemSchema = new Schema(schemas.hwItem);

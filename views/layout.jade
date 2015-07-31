@@ -119,13 +119,25 @@ html
 
           #mobile-bottom-bar.visible-xs
             span
-              a.fa.fa-th-list
+              a.fa.fa-calendar(href="/days")
             span
-              a.fa.fa-line-chart(href="/grader")
+              a(href="/days/today") T
             span
-              a.fa.fa-pencil-square-o(href="/noter")
-            span
-              a.fa.fa-calendar(href="/scheduler")
+              a(href="/days/closest") C
+            
+            if previous
+              span
+                a.fa.fa-arrow-left(href='/days/'+previous)
+            else
+              span.disabled
+                a.fa.fa-arrow-left(href='#')
+            if next
+              span
+                a.fa.fa-arrow-right(href='/days/'+next)
+            else
+              span.disabled
+                a.fa.fa-arrow-right(href='#')
+            
             a(href="/users/"+currentUser.username)
               img.right.navbar-pic(src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg", data-username=currentUser.username)
     

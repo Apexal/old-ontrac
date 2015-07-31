@@ -217,6 +217,7 @@ main {
 
 #schedule-day {
   font-size: 1.5em;
+  cursor: pointer;
 }
 
 #hw-info {
@@ -236,6 +237,10 @@ main {
   color: inherit;
   font-weight: 500;
   font-size: 1.4em;
+}
+
+.assignment.completed {
+  text-decoration: line-through;
 }
 
 .remove-assignment {

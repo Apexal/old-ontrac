@@ -16,7 +16,6 @@ router.get(['/closest'], function(req, res) {
     if(err) throw err;
 
     if(day){
-      console.log("FOUND DAY");
       res.redirect("/days"+moment(day.date).format("YYYY-MM-DD"));
     }else{
       res.redirect("/days/today");
@@ -82,7 +81,7 @@ router.get("/:date", function(req, res, next) {
           });
           req.toJade.hwTitles = cTitles;
           req.toJade.homework = organized;
-          
+
           console.log(req.toJade.hwcourses);
           req.toJade.items = d.items;
           next();
@@ -100,6 +99,55 @@ router.get('/:date', function(req, res) {
   res.render('days/one', req.toJade);
 });
 
+
+
+
+router.post('/toggle', function(req, res) {
+  var id = req.body.id;
+  req.HWItem.findOne({_id: id}, function(err, item) {
+    if(err) throw err;
+    if(item){
+      item.completed = !item.completed;
+      item.save();
+      res.json({message: "All good!"});
+    }else{
+      res.json({message: "Couldn't find and HWItem with ID "+id});
+    }
+  });
+});
+
+
+
+router.post('/remove', function(req, res) {
+  var date = req.body.date;
+  if(moment(date, 'YYYY-MM-DD', true).isValid()){
+    if(req.body.removeHWItemID){
+      var id = req.body.removeHWItemID;
+      req.HWItem.findOne({_id: id}).remove(function(err) {
+        if(err) throw err;
+        req.Day.findOne({date: moment(date, 'YYYY-MM-DD', true).toDate()}, function(err, day) {
+          if(err) throw err;
+          if(day){
+            var hw = day.items.homework;
+            var index = hw.indexOf(id);
+            day.items.homework.splice(index, 1);
+            day.save(function(err) {
+              if(err) throw err;
+              res.json({message: "Deleted!"});
+              new req.Log({who: req.currentUser._id, what: "Deleted a HW Item."});
+            });
+          }else{
+            res.json({message: "Couldn't find day."});
+          }
+        })
+      });
+    }
+  }else{
+    res.json({message: "Bad date."});
+  }
+});
+
+
 router.post('/:date/*', function(req, res, next) {
   var dateString = req.toJade.dateString = req.params.date;
 
@@ -107,13 +155,9 @@ router.post('/:date/*', function(req, res, next) {
     var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true);
     req.Day.findOne({username: req.currentUser.username, date: date.toDate()}, function(err, day) {
       if(err) throw err;
-      console.log(date.toDate());
       if(day){
         req.toJade.day = day;
-        // all good
-        console.log("Found day");
       }else{
-        console.log("Must make day");
         var sd = req.query.sd;
         var newDay = new req.Day();
         newDay.date = date.toDate();
@@ -130,7 +174,6 @@ router.post('/:date/*', function(req, res, next) {
       next();
     });
   }else{
-    console.log("Bad dateString");
     new req.Log({what: "Homework POST to invalid date", who: req.currentUser._id});
   }
 });
@@ -157,19 +200,18 @@ router.post('/:date/homework', function(req, res) {
         req.toJade.day.items.homework.push(newHWItem._id);
         newHWItem.save(function(err) {
           if(err) throw err;
-          console.log("SAVED HWITEM");
+          req.toJade.day.save(function(err) {
+            if(err) throw err;
+            new req.Log({what: "Added HW Item", who: req.currentUser._id});
+          });
         });
-        req.toJade.day.save(function(err) {
-          if(err) throw err;
-          console.log("SAVED");
-        });
+
       }
       res.redirect('/days/'+req.toJade.dateString);
     });
-  }else{
-    res.redirect('/days/'+req.toJade.dateString);
   }
 });
+
 
 module.exports.models = ['Day', 'HWItem', 'Course'];
 module.exports.router = router;
