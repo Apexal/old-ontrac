@@ -1,4 +1,6 @@
 $(function() {
+
+  var date = window.location.pathname.split("/")[2];
   var scheduleDay = $("#schedule-day");
   scheduleDay.click(function() {
     var newSD = prompt("Set the schedule day: ");
@@ -50,7 +52,7 @@ $(function() {
       type: 'POST',
       url: "/days/remove",
       data: {
-        date: "2015-07-29",
+        date: date,
         removeHWItemID: id.replace("\"", "").replace("\"", "")
       },
       success: function(data) {
