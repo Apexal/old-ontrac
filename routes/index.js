@@ -132,7 +132,7 @@ router.get('/loginas', function(req, res) {
     delete req.session.currentUser;
     delete req.currentUser;
 
-    req.Student.findOne({username: username, registered: true}, function(err, user) {
+    req.Student.findOne({username: username, registered: true}).populate('courses', 'mID title').exec(function(err, user) {
       if(err) throw err;
       if(user){
         req.user = user;
