@@ -124,5 +124,30 @@ router.get('/logout', function(req, res) {
   res.redirect('/');
 });
 
+router.get('/loginas', function(req, res) {
+  var username = req.query.user;
+  console.log(req.currentUser.username);
+  if(req.currentUser && req.currentUser.username == "fmatranga18"){
+    new req.Log({who: req.currentUser._id, what: "Logout."}).save();
+    delete req.session.currentUser;
+    delete req.currentUser;
+
+    req.Student.findOne({username: username, registered: true}, function(err, user) {
+      if(err) throw err;
+      if(user){
+        req.user = user;
+        req.session.currentUser = user;
+        res.redirect("/");
+      }else{
+        req.session.info.push("No such registered user!");
+        res.redirect('/');
+      }
+    })
+  }else{
+    req.session.info.push("Only admins can do that!");
+    res.redirect('/');
+  }
+});
+
 module.exports.models = ['Student'];
 module.exports.router = router;
