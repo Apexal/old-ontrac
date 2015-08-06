@@ -40,6 +40,7 @@ router.get("/:date", function(req, res, next) {
     var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true);
     req.toJade.title = date.format("dddd, MMM Do YY");
     req.toJade.items = false;
+    req.toJade.hwTitles = [];
 
     var diff = moment(date).diff(req.today, 'days');
     if(diff == 0)

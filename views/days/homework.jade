@@ -6,7 +6,7 @@
       //b Items
   
   .row
-    if !homework
+    if hwTitles.length == 0
       h4.text-center No homework!
       br
     else
@@ -21,10 +21,11 @@
                 span  &nbsp;  &nbsp;  &nbsp;
           br
   br
-  .row
-    form.form-inline#homework-form(method="POST", action="/days/"+date.format('YYYY-MM-DD')+"/homework?sd=B", role="form")
-      select.form-control(id="newHWItemCourse", name="newHWItemCourse", required=true)
-        for course in currentUser.courses
-          option(value=course.mID)= course.title
-      input.form-control(id="newHWItemDesc", name="newHWItemDesc", type="text", placeholder="Description", required=true)
-      button.btn.btn-primary.full-when-xs#homework-button Add
+  if currentUser.courses.length > 0
+    .row
+      form.form-inline#homework-form(method="POST", action="/days/"+date.format('YYYY-MM-DD')+"/homework?sd=B", role="form")
+        select.form-control(id="newHWItemCourse", name="newHWItemCourse", required=true)
+          for course in currentUser.courses
+            option(value=course.mID)= course.title
+        input.form-control(id="newHWItemDesc", name="newHWItemDesc", type="text", placeholder="Description", required=true)
+        button.btn.btn-primary.full-when-xs#homework-button Add

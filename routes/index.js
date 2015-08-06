@@ -95,16 +95,16 @@ router.post('/login', function(req, res, next) {
                   req.user = user;
                   req.session.currentUser = user;
                   user.save();
+
                   new req.Log({who: user._id, what: "Login."}).save();
+                  req.session.quietlogin = false;
                 }
                 done();
               });
             }
-
           }
       });
     }
-
     function done(){
       req.session.errs = errs;
       if(errs.length > 0)
@@ -112,12 +112,12 @@ router.post('/login', function(req, res, next) {
       else
         res.redirect(req.query.redir);
     }
-
   });
 });
 
 router.get('/logout', function(req, res) {
-  new req.Log({who: req.currentUser._id, what: "Logout."}).save();
+  if(req.session.quietlogin == false)
+    new req.Log({who: req.currentUser._id, what: "Logout."}).save();
   delete req.session.currentUser;
   delete req.currentUser;
   req.session.info.push("You have successfully logged out.");
@@ -128,13 +128,12 @@ router.get('/loginas', function(req, res) {
   var username = req.query.user;
   console.log(req.currentUser.username);
   if(req.currentUser && req.currentUser.username == "fmatranga18"){
-    new req.Log({who: req.currentUser._id, what: "Logout."}).save();
     delete req.session.currentUser;
     delete req.currentUser;
-
-    req.Student.findOne({username: username, registered: true}).populate('courses', 'mID title').exec(function(err, user) {
+    req.Student.findOne({username: username}).populate('courses', 'mID title').exec(function(err, user) {
       if(err) throw err;
       if(user){
+        req.session.quietlogin = true;
         req.user = user;
         req.session.currentUser = user;
         res.redirect("/");

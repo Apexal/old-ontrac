@@ -266,3 +266,13 @@ main {
     max-width: 100%;
   }
 }
+
+// Tweet
+
+.timeline {
+  max-with: 320px;
+}
+
+.timeline .stream {
+  max-height: 400px;
+}

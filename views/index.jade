@@ -24,6 +24,11 @@ block content
           .progress-bar.progress-bar-striped.active(role="progressbar", aria-valuenow="20", aria-valuemin="0", aria-valuemax="100", style="width: 20%")
             span.sr-only 20% ready
     
+    .row
+      .col-xs-12
+        a(class="twitter-timeline", data-widget-id="268815703732260864", href="https://twitter.com/regisalerts", data-tweet-limit="10") Tweets by @regisalerts
+        
+    
     hr
     .row
       .col-xs-12.text-center
@@ -33,3 +38,22 @@ block content
         a.btn.btn-default(target="_blank", href="http://moodle.regis.org/my/") Moodle
         a.btn.btn-default(target="_blank", href="https://owa.regis.org/") OWA
         a.btn.btn-default(target="_blank", href="https://myfiles.regis.org/") MyFiles
+    
+    #tweet
+      script.
+        window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+          t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+
+        return t;
+        }(document, "script", "twitter-wjs"));</script>
