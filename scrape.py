@@ -9,8 +9,9 @@ import datetime
 import pymongo
 from pymongo import MongoClient
 
-username = "fmatranga18"
-password = "1hope1havenotusedthisbefore!"
+secrets = json.loads(open("./modules/secrets.json").read())
+username = secrets['regis_username']
+password = secrets['regis_password']
 
 client = MongoClient('mongodb://localhost:27017/')
 db = client['regis']
