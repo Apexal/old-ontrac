@@ -1,13 +1,18 @@
 # README #
 
-Seeing this means that you are trusted enough to be able to view the very source of this totally amazing project. Do me a favor and don't steal my pass words B)
+Making Regis even better. 
 
 ### What is Adiutor? ###
 
+Adiutor is a free, online Web service created specifically to 
+allow Regis students to get a better grasp on their academic 
+life while at the same time providing an easy, customized 
+platform for organization and collaboration. 
+
 * adiutor, adiutoris (m) - helper, assistant
-* v0.1.0
+* v0.5.0
 * Make Regis eas*ier*
-* Track homework, tests, quizzes, grades, notes, tasks, reminders, schedules, meetings, clubs, groups, and more all in one place at the same time.
+* Track homework, projects, tests, quizzes, grades, notes, tasks, reminders, schedules, meetings, clubs, groups, and more all in one place at the same time.
 
 ### How do I get set up? ###
 * Clone this repository
