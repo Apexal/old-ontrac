@@ -9,7 +9,10 @@ var redir = "/";
 /* GET home page. */
 router.get('/', function(req, res, next) {
   req.toJade.title = "Adiutor";
-  res.render('index', req.toJade);
+  if(req.currentUser)
+    res.render('index', req.toJade);
+  else
+    res.render('index', req.toJade);
 });
 
 router.get('/login', function(req, res, next) {

@@ -30,10 +30,20 @@ html {
   width: 100%;
   height: 100%;
 }
-body { padding-bottom: 70px; }
+body { height: 100%;}
 
 main {
+
   margin-top: 70px;
+  padding-bottom: 70px;
+}
+
+main.pushed {
+  padding-left: 100px;
+}
+
+main.pushed > .container {
+    width: 70%;
 }
 
 @media (max-width: 768px) {
@@ -67,13 +77,67 @@ main {
   text-align: center;
 }
 
+#sidebar {
+  overflow: auto;
+  z-index: 100;
+  padding: 20px;
+  padding-top: 50px;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;
+  background: #333333;
+  height: 100%;
+}
+
+#sidebar a {
+  text-decoration: none;
+  color: white;
+}
+
+#sidebar-pic {
+  border: 2px solid #222222;
+  width: 40%;
+  min-width: 100px;
+}
+
+#online-now-sidebar {
+  vertical-align: bottom;
+}
+
+@media (max-width: 768px) {
+  #sidebar {
+    display: none;
+  }
+  main.pushed {
+    padding: initial
+  }
+  main.pushed > .container {
+      width: initial;
+  }
+}
+
+#day-controls {
+  font-weight: bold;
+  width: 70%;
+  margin: 0 auto;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+#day-controls .disabled > a {
+  cursor: not-allowed;
+}
+
 /*** 02 - Chat Box ***/
 
 #chat-box {
   width: 400px;
   height: 300px;
   position: fixed;
-  bottom: 70px;
+  bottom: 50px;
   right: 0;
 }
 
@@ -104,8 +168,8 @@ main {
 
 #chat-controls {
   position: fixed;
-  bottom: 50px;
   right: 0;
+  bottom: 0;
 }
 
 #chat-controls input {
@@ -128,6 +192,7 @@ main {
   margin: 0;
 }
 
+/* Home-page */
 
 /* User List Page */
 

@@ -79,67 +79,90 @@ html
               else
                 li
                   a(href="/login") Not Logged In
-                  
-                    
+    if loggedIn
+      aside#sidebar
+        section.center
+          h3 Hello, #{currentUser.firstName}
+        section.center
+          a(href="/users/"+currentUser.username)
+            img#sidebar-pic(src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg")
+          br
+          br
+          span Last login was 52 years ago.
+          hr
+          
+          
+        section
+          ul.nav
+            li.active
+              a(href="#") Work
+            li
+              a(href="#") Grades
+            li
+              a(href="#") Friends
+            li
+              a(href="#") Test
+            li
+              a(href="#") Test
+            li
+              a(href="#") Test
+          hr
+          
+          
+        section#day-controls
+          span
+            a.fa.fa-calendar(href="/days")
+          span
+            a(href="/days/today") T
+          span
+            a(href="/days/closest") C
+          
+          if previous
+            span
+              a.fa.fa-arrow-left(href='/days/'+previous)
+          else
+            span.disabled
+              a.fa.fa-arrow-left(href='#')
+          if next
+            span
+              a.fa.fa-arrow-right(href='/days/'+next)
+          else
+            span.disabled
+              a.fa.fa-arrow-right(href='#')        
+        hr
 
-    main
+    main(class=(loggedIn ? "pushed" : ""))
       block content
       
       if loggedIn && helpers.isPage(page, "chat") == false
         include /chatbox
-    if loggedIn
-      footer
-        .navbar.navbar-default.navbar-fixed-bottom#real-bottom-nav(style="z-index: 50;")
-          .container
-            #navbar.navbar-collapse.collapse
-              ul.nav.navbar-nav
-
-                li
-                  a(href='/days') Days &nbsp;
-                    span.badge 4
-                li(class=(isToday == true ? "active" : ""))
-                  a(href="/days/today") Today 
-                li
-                  a(href="/days/closest") Closest 
-                if previous
-                  li
-                    a(href='/days/'+previous) Previous Day
-                else
-                  li.disabled
-                    a(href='#') Previous Day
-                if next
-                  li
-                    a(href='/days/'+next) Next Day
-                else
-                  li.disabled
-                    a(href='#') Next Day
-                    
-              a(href="/users/"+currentUser.username, title="Looking good.")
+    
+      if loggedIn
+        footer
+          .navbar.navbar-default.navbar-fixed-bottom#real-bottom-nav(style="z-index: 50;").visible-xs
+            #mobile-bottom-bar
+              span
+                a.fa.fa-calendar(href="/days")
+              span
+                a(href="/days/today") T
+              span
+                a(href="/days/closest") C
+              
+              if previous
+                span
+                  a.fa.fa-arrow-left(href='/days/'+previous)
+              else
+                span.disabled
+                  a.fa.fa-arrow-left(href='#')
+              if next
+                span
+                  a.fa.fa-arrow-right(href='/days/'+next)
+              else
+                span.disabled
+                  a.fa.fa-arrow-right(href='#')
+              
+              a(href="/users/"+currentUser.username)
                 img.right.navbar-pic(src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg", data-username=currentUser.username)
-
-          #mobile-bottom-bar.visible-xs
-            span
-              a.fa.fa-calendar(href="/days")
-            span
-              a(href="/days/today") T
-            span
-              a(href="/days/closest") C
-            
-            if previous
-              span
-                a.fa.fa-arrow-left(href='/days/'+previous)
-            else
-              span.disabled
-                a.fa.fa-arrow-left(href='#')
-            if next
-              span
-                a.fa.fa-arrow-right(href='/days/'+next)
-            else
-              span.disabled
-                a.fa.fa-arrow-right(href='#')
-            
-            a(href="/users/"+currentUser.username)
-              img.right.navbar-pic(src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg", data-username=currentUser.username)
     
     script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js")
     

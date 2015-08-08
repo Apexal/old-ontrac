@@ -78,12 +78,12 @@ $(function() {
       $("#chat-controls.small-box").show();
       $("#chat-messages.small-box").show();
       $(this).removeAttr('style');
-      $("#chat-box.small-box").height("300px").width("400px").css("bottom", "70px");
+      $("#chat-box.small-box").height("300px").width("400px").css("bottom", "20px");
       //console.log("SHOW");
     }else{
       $("#chat-controls.small-box").hide();
       $("#chat-messages.small-box").hide();
-      $("#chat-box.small-box").css({width: "250px", height: "40px", bottom: "30px"});
+      $("#chat-box.small-box").css({width: "250px", height: "40px", bottom: "0px"});
       //console.log("HIDE");
     }
     localStorage["show-chat"] = show;

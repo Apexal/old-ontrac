@@ -1,0 +1,21 @@
+extends /layout
+
+block content
+  .col-xs-6.col-sm-3
+    img.center#homepage-pic(src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg")
+    b Hello, #{currentUser.firstName}
+    span Last login was ____
+    #links 
+      ul.nav
+        li.active
+          a(href="#") Test
+        li
+          a(href="#") Test
+        li
+          a(href="#") Test
+        li
+          a(href="#") Test
+        li
+          a(href="#") Test
+        li
+          a(href="#") Test
