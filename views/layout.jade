@@ -95,40 +95,34 @@ html
         section
           ul.nav
             li.active
-              a(href="#") Work
+              a(href="/days") Reminders
+                span.badge.right 0
             li
               a(href="#") Grades
+                
             li
               a(href="#") Friends
+                span.badge.right 0
             li
-              a(href="#") Test
-            li
-              a(href="#") Test
-            li
-              a(href="#") Test
+              a(href="#") Meetings
+                span.badge.right 0
           hr
           
           
-        section#day-controls
+        section#day-controls(class=(helpers.isShort(previous, next)))
           span
-            a.fa.fa-calendar(href="/days")
+            a.fa.fa-calendar(href="/days", title="View all upcoming and past days!")
           span
-            a(href="/days/today") T
+            a(href="/days/today", title="View the work due today!") T
           span
-            a(href="/days/closest") C
+            a(href="/days/closest", title="Find the closest day from today that you have work!") C
           
           if previous
             span
-              a.fa.fa-arrow-left(href='/days/'+previous)
-          else
-            span.disabled
-              a.fa.fa-arrow-left(href='#')
+              a.fa.fa-arrow-left(href='/days/'+previous, title="View the previous day!")
           if next
             span
-              a.fa.fa-arrow-right(href='/days/'+next)
-          else
-            span.disabled
-              a.fa.fa-arrow-right(href='#')        
+              a.fa.fa-arrow-right(href='/days/'+next, title="View the next day!")     
         hr
 
     main(class=(loggedIn ? "pushed" : ""))

@@ -33,18 +33,18 @@ html {
 body { height: 100%;}
 
 main {
-
   margin-top: 70px;
   padding-bottom: 70px;
 }
 
 main.pushed {
-  padding-left: 100px;
+  margin-left: 220px;
 }
 
-main.pushed > .container {
+/*main.pushed > .container {
     width: 70%;
 }
+*/
 
 @media (max-width: 768px) {
   navbar.navbar-fixed-bottom > container{
@@ -111,10 +111,7 @@ main.pushed > .container {
     display: none;
   }
   main.pushed {
-    padding: initial
-  }
-  main.pushed > .container {
-      width: initial;
+    margin-left: initial;
   }
 }
 
@@ -127,10 +124,14 @@ main.pushed > .container {
   justify-content: space-between;
 }
 
-#day-controls .disabled > a {
-  cursor: not-allowed;
+#day-controls.short {
+  width: 40%;
 }
 
+
+span.badge {
+  margin-left: 5px;
+}
 /*** 02 - Chat Box ***/
 
 #chat-box {
