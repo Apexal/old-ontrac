@@ -1,9 +1,10 @@
+// Core stuff
 var express = require("express")
   , app = express()
   , http = require("http").createServer(app)
   , bodyParser = require("body-parser")
   , io = require("./modules/sockets")(http)
-  , _ = require("underscore");
+  , _ = require("underscore"); // Except this
 
 var fs = require("fs");
 var path = require('path');
@@ -24,11 +25,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 var sessionMiddleware = session({
-  secret: 'oh mr savage',
+  secret: 'oh mr savage', // ayy l m a o
   resave: false,
   saveUninitialized: true
 });
 
+// Soon
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -45,9 +47,8 @@ app.locals.helpers = helpers;
 
 app.use(function(req, res, next) {
   console.log(("\nRequest from "+req.connection.remoteAddress).blue.bold +(req.session.currentUser ? " by "+req.session.currentUser.username : "")+" at "+(moment().format("dddd, MMMM Do YYYY, h:mm:ss a")).green.bold);
-  req.session.loggedIn = (req.session.currentUser ? true : false);
-
   req.currentUser = req.session.currentUser;
+  req.session.loggedIn = (req.session.currentUser ? true : false);
 
   req.Log = mongo.Log;
 
@@ -58,16 +59,17 @@ app.use(function(req, res, next) {
 
   req.today = moment().startOf('day');
 
+  // This object is passed to Jade every request.
   req.toJade = {
     info: (req.session.info ? req.session.info : []),
     errs: (req.session.errs ? req.session.errs : []),
-    title: "Page",
+    title: "Page", // default title for a page
     year: info.years,
     tri: info.trimester,
     full_year: info.full,
     today: req.today,
     currentUser: req.currentUser,
-    loggedIn: (req.currentUser ? true : false)
+    loggedIn: req.session.loggedIn
   }
 
   req.session.info = [];
@@ -75,7 +77,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-// List of paths you can only access if logged in
+// List of paths users can only access if logged in
 var restricted = ['/users/:username', '/users/profile', '/advisements/:advisement', '/teachers', '/courses', '/days', '/chat', '/api', '/game'];
 app.use(restricted, function(req, res, next) {
   if(req.toJade.loggedIn){
@@ -85,12 +87,15 @@ app.use(restricted, function(req, res, next) {
   }
 });
 
+// So Jade knows what nav links to set as active
 app.use('/*', function(req, res, next) {
   req.toJade.page = req.baseUrl;
   next();
 });
 
-// ===========================ROUTES============================
+// =================================ROUTES=================================
+// This dynamicaly (if that's spelled right) adds all routes in the routes folder
+// and gives them access to whatever Mongo collections they need
 fs.readdirSync("./routes/").filter(function(p) {
   return (p.charAt(0) != '_');
 }).forEach(function(path) {
@@ -110,6 +115,7 @@ fs.readdirSync("./routes/").filter(function(p) {
   }
 });
 
+// This is crap
 app.use('/game', require('./routes/_game')(io));
 
 // catch 404 and forward to error handler

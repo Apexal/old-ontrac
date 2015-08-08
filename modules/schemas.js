@@ -1,3 +1,5 @@
+// All schemas used in the project are defined here.
+
 var mongoose = require('mongoose')
   , Schema = mongoose.Schema;
 
