@@ -1,9 +1,11 @@
 $(function() {
 
+  // Prevent disabled nav links from being clicked
   $(".nav li.disabled a").click(function() {
      return false;
    });
 
+  // Use the API to get user info for each user badge present on the page
   if($('.user-badge').length){
     $('.user-badge').tooltipster({
       content: 'Loading...',
@@ -31,19 +33,18 @@ $(function() {
   }
 
 
+  // Animate the knobs to random percentages (for now)
+  // TODO: remove this when I finish the view
   $('.dial').each(function () {
     var elm = $(this);
     //var percent = elm.attr("value");
-
     var percent = Math.floor((Math.random() * 90) + 10);
-
     elm.knob({
       'value': 0,
       'format': function (value) {
         return value + '%';
       }
     });
-
     $({value: 0}).animate({ value: percent }, {
       duration: 1000,
       easing: 'swing',
@@ -54,17 +55,12 @@ $(function() {
     });
 
 
-
-
-
-
-
+  // Prevent the chat form from sending data and refreshing the page
   $("#chat-controls").submit(function() {
     return false;
   });
 
-  //console.log(localStorage["show-chat"]);
-
+  // Make the  small chat box resizable with default values
   $( "#chat-box.resizable" ).resizable({
     maxHeight: 550,
     maxWidth: 650,
@@ -73,23 +69,25 @@ $(function() {
     handles: 'n'
   });
 
+
+  // Toggle the small chat box
+  var chat_box = $("#chat-box.small-box");
+  var small_box = $("#chat-controls.small-box");
+  var small_box2 = $("#chat-messages.small-box");
   var set_chat = function(show) {
     if(show == 1){
-      $("#chat-controls.small-box").show();
-      $("#chat-messages.small-box").show();
+      small_box.show();
+      small_box2.show();
       $(this).removeAttr('style');
-      $("#chat-box.small-box").height("300px").width("400px").css("bottom", "20px");
-      //console.log("SHOW");
+      chat_box.height("300px").width("400px").css("bottom", "20px");
     }else{
-      $("#chat-controls.small-box").hide();
-      $("#chat-messages.small-box").hide();
-      $("#chat-box.small-box").css({width: "250px", height: "40px", bottom: "0px"});
-      //console.log("HIDE");
+      small_box.hide();
+      small_box2.hide();
+      chat_box.css({width: "250px", height: "40px", bottom: "0px"});
     }
     localStorage["show-chat"] = show;
-    //console.log(localStorage["show-chat"]);
   };
-
+  
   if(localStorage['show-chat'] == false){
     set_chat(0);
   }
