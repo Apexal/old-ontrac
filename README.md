@@ -19,3 +19,9 @@ platform for organization and collaboration with their classmates and schoolmate
 * Intall Mongo DB
 * npm install, npm scrape, npm populate, npm run
 * Go to http://localhost:3000
+
+### How can I help? ###
+
+I am looking to assemble a team of students, no prior experience needed, to learn JS and work together to improve this project. The idea of this project started out quite small and simple (a one-page homework manager for my advisement) and has become much more than one guy can handle alone.
+
+If you are interested in helping, contact me in school or at my [Regis email](mailto:fmatranga18@regis.org) or my [personal email](mailto:thefrankmatranga@gmail.com).
