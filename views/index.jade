@@ -4,7 +4,7 @@ block content
   .container
     include /info
     .jumbotron
-      h1(style="text-transform: capitalize") In Just #{moment("2015-09-11").fromNow(true)}
+      h1(style="text-transform: capitalize") In Just #{moment("2015-09-09").fromNow(true)}
       p.
         It will begin again.
 
@@ -17,7 +17,7 @@ block content
           .panel-heading
             h1.panel-title Statistics
           .panel-body
-            span The 2016 school year will start in #{full_year} days.
+            span The 2016 school year will start in #{moment("2015-09-09").diff(moment(), 'days')} days.
     .row
       .col-xs-12
         .progress
@@ -32,7 +32,7 @@ block content
     hr
     .row
       .col-xs-12.text-center
-        a.btn.btn-primary(target="_blank", href="https://bitbucket.org/apexal/adiutor") Source Code
+        a.btn.btn-primary(target="_blank", href="https://github.com/Apexal/adiutor") Source Code
         a.btn.btn-default(target="_blank", href="http://www.regis.org/") Regis Site
         a.btn.btn-default(target="_blank", href="http://intranet.regis.org/") Intranet
         a.btn.btn-default(target="_blank", href="http://moodle.regis.org/my/") Moodle

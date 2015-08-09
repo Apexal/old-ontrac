@@ -1,0 +1,46 @@
+header
+  nav.navbar.navbar-default.navbar-fixed-top#real-nav
+    .container
+      .navbar-header
+        button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href=(title=="Worker" ? "#": "/")) Worker
+      #navbar.navbar-collapse.collapse
+        ul.nav.navbar-nav
+          li(class=(title=="Adiutor" || title=="Your Home" ? "active" : ""))
+            a(href="/") Home
+          li(class=(helpers.isPage(page, "users")))
+            a(href="/users") Users
+          li(class=(helpers.isPage(page, "advisements")))
+            a(href="/advisements") Advisements
+            
+          if loggedIn
+            li(class=(helpers.isPage(page, "teachers")))
+              a(href="/teachers") Teachers
+            li(class=(helpers.isPage(page, "courses")))
+              a(href="/courses") Courses
+            li(class=(helpers.isPage(page, "chat")))
+              a(href="/chat") Chat
+            //
+              li
+                a(target="_blank", href="https://bitbucket.org/apexal/adiutor") Source
+        ul.nav.navbar-nav.navbar-right
+          
+          if loggedIn
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')= currentUser.firstName + " "+currentUser.lastName
+                  span.caret
+              ul.dropdown-menu(role='menu')
+                if loggedIn
+                  li
+                    a(href="/users/"+currentUser.username) View Profile
+                  li
+                    a(href="/users/profile") Edit Profile
+                  li
+                      a(href='/logout') Logout
+          else
+            li
+              a(href="/login") Not Logged In
