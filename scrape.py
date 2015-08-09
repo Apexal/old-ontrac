@@ -3,7 +3,6 @@
 import requests, sys
 from lxml import html
 from time import sleep
-import getpass
 import json
 import datetime
 import pymongo
@@ -98,7 +97,8 @@ def extract(ID, html):
                     "firstName": name_parts[1],
                     "lastName": name_parts[0],
                     "username": username,
-                    "code": "Uknown",
+                    "code": "Unknown",
+                    "mpicture": picsrc,
                     "email": username + "@regis.org",
                     "advisement": department,
                     "sclasses": classes,
