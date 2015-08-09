@@ -7,7 +7,7 @@ Making Regis even better.
 Adiutor is a free, online Web service created specifically to
 allow Regis students to get a better grasp on their academic
 life while at the same time providing an easy, customized
-platform for organization and collaboration.
+platform for organization and collaboration with their classmates and schoolmates.
 
 * adiutor, adiutoris (m) - helper, assistant
 * v0.6.0
