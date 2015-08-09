@@ -91,9 +91,14 @@ main.pushed {
   height: 100%;
 }
 
-#sidebar a {
+#sidebar ul.nav a{
   text-decoration: none;
   color: white;
+}
+
+#sidebar ul.nav li a:hover, #sidebar ul.nav li.active a {
+  color: #222222;
+  background-color: #e6e6e6;
 }
 
 #sidebar-pic {
@@ -125,7 +130,7 @@ main.pushed {
 }
 
 #day-controls.short {
-  width: 40%;
+  width: 20%;
 }
 
 
