@@ -96,7 +96,11 @@ main.pushed {
   color: white;
 }
 
+<<<<<<< HEAD
 #sidebar ul.nav li a:hover, #sidebar ul.nav li.active a {
+=======
+#sidebar ul.nav li a:hover, #sidebar li.active a {
+>>>>>>> e73b362d247bfae5ea0226f8a9f1222e3ba78362
   color: #222222;
   background-color: #e6e6e6;
 }
