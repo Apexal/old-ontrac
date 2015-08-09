@@ -2,6 +2,7 @@
 
 Making Regis even better.
 
+
 ### What is Adiutor? ###
 
 Adiutor is a free, online Web service created specifically to
@@ -14,11 +15,21 @@ platform for organization and collaboration with their classmates and schoolmate
 * Make Regis eas*ier*
 * Track homework, projects, tests, quizzes, grades, notes, tasks, reminders, schedules, meetings, clubs, groups, and more all in one place at the same time.
 
+
 ### How do I run it myself? ###
+
 * Clone this repository
 * Intall Mongo DB
+* Install Python2.7 with
+    * requests
+    * pymongo
+    * lxml
+    * json
 * npm install, npm scrape, npm populate, npm run
 * Go to http://localhost:3000
+* ???
+* Profit
+
 
 ### How can I help? ###
 
