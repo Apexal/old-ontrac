@@ -1,3 +1,6 @@
 node_modules/
 data
 *secrets.json
+public/game/
+views/game.jade
+routes/_game.js
