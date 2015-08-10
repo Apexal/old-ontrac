@@ -91,6 +91,10 @@ main.pushed {
   height: 100%;
 }
 
+#user-status {
+  cursor: pointer;
+}
+
 #sidebar ul.nav a, #day-controls a{
   text-decoration: none;
   color: white;

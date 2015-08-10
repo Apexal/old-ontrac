@@ -14,25 +14,38 @@ module.exports = function(http) {
     try {
       var user = {name: client.firstName, username: client.username, code: client.code, tabs: 1};
       socket.emit('pastMessages', {messages: messages});
+      var status = "online";
 
       //console.log(codes.indexOf(user.code));
       if(codes.indexOf(user.code) > -1){
-        console.log("New tab from "+user.username);
+        console.log("New tab from "+user.username + " with status "+online[codes.indexOf(user.code)].status);
         online[codes.indexOf(user.code)].tabs += 1;
       }else{
         codes.push(user.code);
         online.push(user);
         console.log("New connection from "+user.username);
       }
+
       //console.log(codes);
       //console.log(online);
-
       io.sockets.emit('online-list', {users: online});
 
       socket.on('message', function (data) {
         var d = {user: user, message: data.message, when: data.when};
         messages.push(d);
         io.sockets.emit('message', d);
+      });
+
+      socket.on('setstatus', function (data) {
+        var index = codes.indexOf(user.code);
+        if(codes.indexOf(user.code) > -1){
+          online[index].status = data.status;
+          //console.log("Found!");
+        }else{
+          console.log("Couldn't find");
+        }
+        //console.log(online);
+        io.sockets.emit('online-list', {users: online});
       });
 
       socket.on('disconnect', function(socket) {

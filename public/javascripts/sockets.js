@@ -7,6 +7,15 @@ $(function() {
   var online = [];
   var list = $("#online-user-list");
 
+
+  if (!localStorage['user-status']){
+    localStorage['user-status'] = "online";
+  }
+  var status = localStorage['user-status'];
+
+  $("#user-status b").text(status.charAt(0).toUpperCase() + status.substring(1));
+  socket.emit('setstatus', {status: status});
+
   socket.on('connect', function () {
     sessionId = socket.io.engine.id;
     console.log('Connected ' + sessionId);
@@ -16,6 +25,7 @@ $(function() {
   });
   socket.on('online-list', function(data) {
     online = data.users;
+    console.log(data.users);
     $("#users-online").text(online.length+" users online");
     if(list.length){
       update_online_list();
@@ -35,7 +45,6 @@ $(function() {
       list.append("<span class='user-badge'>"+user.username+"</span>");
       //list.append("<div class=\"col-xs-12 col-sm-6 col-md-4 col-lg-3 text-center\"> <div class=\"user-box\"> <img src=\"https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg\" title=\"\"> <div class=\"btn-group full-width\"> <button class=\"full-width btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" type=\"button\">"+user.name+" <span class=\"caret\"></span></button> <ul class=\"dropdown-menu\"> <li> <a href=\"/users/"+user.username+"\">View Profile</a> </li> <li> <a href=\"/users/"+user.username+"/schedule\">View Schedule</a> </li> <li> <a href=\"mailto:"+user.username+"\">Email</a> </li> </ul> </div> </div> </div>");
     });
-
 
     $('.user-badge').tooltipster({
       content: 'Loading...',
@@ -60,7 +69,6 @@ $(function() {
         }
       }
     });
-
   }
 
 
@@ -89,6 +97,14 @@ $(function() {
 
 
 
+  // USER STATUS BUTTONS
+  $("#user-status li a").click(function() {
+    var status = $(this).text().toLowerCase();
+    //alert(status);
+    localStorage['user-status'] = status;
+    socket.emit('setstatus', {status: status});
+    $("#user-status b").text($(this).text());
+  });
 
 
 

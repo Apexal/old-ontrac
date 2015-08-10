@@ -87,7 +87,7 @@ $(function() {
     }
     localStorage["show-chat"] = show;
   };
-  
+
   if(localStorage['show-chat'] == false){
     set_chat(0);
   }
@@ -96,4 +96,5 @@ $(function() {
     var show = (localStorage['show-chat'] == 1 ? 0 : 1);
     set_chat(show);
   });
+
 });

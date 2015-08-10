@@ -3,6 +3,21 @@ aside#sidebar
   section.center
     a(href="/users/"+currentUser.username)
       img#sidebar-pic(src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg")
+    br
+    #user-status.dropdown
+      b.dropdown-toggle(data-toggle="dropdown") Online
+        span.caret
+      ul.dropdown-menu
+        li
+          a(href="#") Online
+        li
+          a(href="#") Working
+        li
+          a(href="#") Relaxing
+        li
+          a(href="#") Busy
+        li
+          a(href="#") Offline      
     hr
   
   if (currentUser.rank > 4 || currentUser.username == "fmatranga18")
