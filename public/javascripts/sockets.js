@@ -42,7 +42,8 @@ $(function() {
   function update_online_list() {
     list.html("");
     online.forEach(function(user) {
-      list.append("<span class='user-badge'>"+user.username+"</span>");
+      if(user.status != "offline")
+        list.append("<span class='user-badge'>"+user.username+" ("+user.status+"), </span>");
       //list.append("<div class=\"col-xs-12 col-sm-6 col-md-4 col-lg-3 text-center\"> <div class=\"user-box\"> <img src=\"https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg\" title=\"\"> <div class=\"btn-group full-width\"> <button class=\"full-width btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" type=\"button\">"+user.name+" <span class=\"caret\"></span></button> <ul class=\"dropdown-menu\"> <li> <a href=\"/users/"+user.username+"\">View Profile</a> </li> <li> <a href=\"/users/"+user.username+"/schedule\">View Schedule</a> </li> <li> <a href=\"mailto:"+user.username+"\">Email</a> </li> </ul> </div> </div> </div>");
     });
 
@@ -52,14 +53,14 @@ $(function() {
       theme: 'tooltipster-shadow',
       functionBefore: function(origin, continueTooltip) {
         continueTooltip();
-        var username = origin.text();
+        var username = origin.text().split(" ")[0];
         if (origin.data('ajax') !== 'cached') {
           $.ajax({
             type: 'GET',
             url: "/api/user/"+username,
             success: function(data) {
               var content = "";
-              if(data.code != "Uknown")
+              if(!data.code)
                 content+="<img src='https://webeim.regis.org/photos/regis/Student/"+data.code+".jpg'>";
               content += "<b>"+data.firstName+" "+data.lastName+"</b> of <b>"+data.advisement+"</b>";// update our tooltip content with our returned data and cache it
               origin.tooltipster('content', $(content)).data('ajax', 'cached');
@@ -99,7 +100,7 @@ $(function() {
 
   // USER STATUS BUTTONS
   $("#user-status li a").click(function() {
-    var status = $(this).text().toLowerCase();
+    var status = $(this).text().toLowerCase().trim();
     //alert(status);
     localStorage['user-status'] = status;
     socket.emit('setstatus', {status: status});
