@@ -47,5 +47,6 @@ router.get("/:tID/schedule", function(req, res, next) {
   });
 });
 
-module.exports.models = ['Teacher'];
-module.exports.router = router;
+module.exports = function(io) {
+  return {router: router, models: ['Teacher']}
+};

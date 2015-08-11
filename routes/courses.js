@@ -30,5 +30,6 @@ router.get('/:mID', function(req, res) {
   });
 });
 
-module.exports.models = ['Course'];
-module.exports.router = router;
+module.exports = function(io) {
+  return {router: router, models: ['Course']}
+};

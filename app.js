@@ -102,7 +102,7 @@ fs.readdirSync("./routes/").filter(function(p) {
   if(fs.lstatSync("./routes/"+path).isDirectory() == false){
     var name = ( path == "index.js" ? '' : path.replace('.js', ''));
     app.use('/'+name, function(req, res, next) {
-      var models = require('./routes/'+path).models;
+      var models = require('./routes/'+path)(io).models;
       if(models.length > 0){
         models.forEach(function(m) {
           req[m] = mongo[m];
@@ -110,13 +110,13 @@ fs.readdirSync("./routes/").filter(function(p) {
       }
       next();
     });
-    app.use('/'+name, require('./routes/'+path).router);
+    app.use('/'+name, require('./routes/'+path)(io).router);
     console.log(("Using ./routes/"+path+" for /"+name).cyan);
   }
 });
 
 // This is crap
-app.use('/game', require('./routes/_game')(io));
+//app.use('/game', require('./routes/_game')(io));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

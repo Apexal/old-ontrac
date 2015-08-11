@@ -1,5 +1,5 @@
 var express = require('express');
-var route = express.Router();
+var router = express.Router();
 
 var players = [];
 
@@ -14,10 +14,10 @@ module.exports = function(io) {
 
   });
 
-  route.get('/', function(req, res) {
+  router.get('/', function(req, res) {
     req.toJade.title = "Game";
     res.render('game', req.toJade);
   });
 
-  return route;
+  return {models: [], router: router};
 }

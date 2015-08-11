@@ -55,5 +55,7 @@ router.get("/:username/schedule", function(req, res){
   });
 });
 
-module.exports.models = ['Student', 'Teacher'];
-module.exports.router = router;
+
+module.exports = function(io) {
+  return {router: router, models: ['Student', 'Teacher']}
+};

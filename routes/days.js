@@ -213,6 +213,6 @@ router.post('/:date/homework', function(req, res) {
   }
 });
 
-
-module.exports.models = ['Day', 'HWItem', 'Course'];
-module.exports.router = router;
+module.exports = function(io) {
+  return {router: router, models: ['Day', 'HWItem', 'Course']}
+};
