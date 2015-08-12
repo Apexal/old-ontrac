@@ -12,23 +12,43 @@ header
         ul.nav.navbar-nav
           li(class=(title=="Adiutor" || title=="Your Home" ? "active" : ""))
             a(href="/") Home
-          li(class=(helpers.isPage(page, "users")))
-            a(href="/users") Users
-          li(class=(helpers.isPage(page, "advisements")))
-            a(href="/advisements") Advisements
-            
+          li.dropdown
+            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') View
+                span.caret
+            ul.dropdown-menu(role='menu')
+              
+              li(class=(helpers.isPage(page, "users")))
+                a(href="/users") Users
+              li(class=(helpers.isPage(page, "advisements")))
+                a(href="/advisements") Advisements
+                
+              if loggedIn
+                li(class=(helpers.isPage(page, "teachers")))
+                  a(href="/teachers") Teachers
+                li(class=(helpers.isPage(page, "courses")))
+                  a(href="/courses") Courses
+              
           if loggedIn
-            li(class=(helpers.isPage(page, "teachers")))
-              a(href="/teachers") Teachers
-            li(class=(helpers.isPage(page, "courses")))
-              a(href="/courses") Courses
             li(class=(helpers.isPage(page, "chat")))
               a(href="/chat") Chat
+                
+                
+          li.dropdown
+            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Regis Services
+                span.caret
+            ul.dropdown-menu(role='menu')
+              li
+                a(href="http://www.regis.org/", target="_blank") Home Page
+              li
+                a(href="http://intranet.regis.org/", target="_blank") Intranet
+              li
+                a(href="http://moodle.regis.org/my/", target="_blank") Moodle
+              li
+                  a(href="https://owa.regis.org/owa/", target="_blank") Email
             //
               li
                 a(target="_blank", href="https://bitbucket.org/apexal/adiutor") Source
         ul.nav.navbar-nav.navbar-right
-          
           if loggedIn
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')= currentUser.firstName + " "+currentUser.lastName
