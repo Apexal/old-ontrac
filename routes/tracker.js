@@ -5,5 +5,6 @@ router.get('/', function(req, res) {
   console.log("tracker");
 });
 
-module.exports.models = [];
-module.exports.router = router;
+module.exports = function(io) {
+  return {router: router, models: []}
+};

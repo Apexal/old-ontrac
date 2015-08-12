@@ -151,5 +151,6 @@ router.get('/loginas', function(req, res) {
   }
 });
 
-module.exports.models = ['Student'];
-module.exports.router = router;
+module.exports = function(io) {
+  return {router: router, models: ['Student']}
+};
