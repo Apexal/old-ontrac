@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
+
 router.get('/*', function(req, res, next) {
   if(req.currentUser.rank > 4 || req.currentUser.username == "fmatranga18"){
     next();
@@ -23,5 +24,6 @@ router.get('/logs', function(req, res) {
   });
 });
 
-module.exports.models = [];
-module.exports.router = router;
+module.exports = function(io) {
+  return {router: router, models: []}
+};
