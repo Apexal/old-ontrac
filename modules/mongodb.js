@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var schemas = require('./schemas');
 mongoose.connect('mongodb://127.0.0.1/'+config.db);
 var db = mongoose.connection;
-var deepPopulate = require('mongoose-deep-populate');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 db.on('error', console.error.bind(console, 'Failed to connect to database:'));
 db.once('open', function (callback) {
@@ -115,7 +115,7 @@ db.once('open', function (callback) {
 
   var gradedItemSchema = new Schema(schemas.gradedItem);
   var GradedItem = mongoose.model('gradedItem', gradedItemSchema);
-  
+
   module.exports.HWItem = HWItem;
   module.exports.Course = Course;
   module.exports.Teacher = Teacher;
