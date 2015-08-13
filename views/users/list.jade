@@ -37,8 +37,7 @@ block content
                   img.table-pic(src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
                 td.larger(style="vertical-align: middle;")
                   a(href="/advisements/"+user.advisement)= user.advisement
-                td.larger(style="vertical-align: middle;")
-                  a(href="/users/"+user.username)= user.fullName
+                td.larger.user-badge(style="vertical-align: middle;", data-username=user.username)= user.fullName
                 td.larger(style="vertical-align: middle;")= user.rankName
     else
       .row
@@ -48,22 +47,7 @@ block content
               img(alt=user.bio, src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
               .btn-group.full-width
                 a.user-adv(href=(loggedIn ? "/advisements/"+user.advisement : "#"))= user.advisement
-                button.full-width.btn.btn-default.dropdown-toggle(data-toggle="dropdown", ara-expanded="false", type="button")= user.fullName+" "
-                  if loggedIn
-                    span.caret
-                if loggedIn
-                  ul.dropdown-menu(role="menu")
-                    li
-                      a(href="/users/"+user.username) View Profile
-                    li
-                      a(href="/users/"+user.username+"/schedule") View Schedule
-                    li
-                      a(href="/advisements/"+user.advisement) View Advisement
-                    li
-                      a(href="mailto:"+user.email) Email
-                    li
-                      a(href="http://moodle.regis.org/user/profile.php?id="+user.mID) Moodle Profile
-    
+                button.btn.btn-default.full-width(data-username=user.username, class=(loggedIn ? "user-badge" : ""), type="button")= user.fullName
     .row
       .col-xs-12
         .page-header

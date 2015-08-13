@@ -287,6 +287,13 @@ span.badge {
   max-width: 200px;
 }
 
+.user-modal .modal-pic{
+  max-width: 150px;
+}
+
+.user-badge {
+  cursor: pointer;
+}
 
 /* Teacher Pages */
 
@@ -360,10 +367,8 @@ span.badge {
   }
 }
 
-// Tweet
-
 .timeline {
-  max-with: 320px;
+  max-width: 320px;
 }
 
 .timeline .stream {

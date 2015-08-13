@@ -1,0 +1,21 @@
+.modal.fade#feedback-modal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h4.modal-title Feedback
+      .modal-body
+        .container-fluid
+          .row
+            .col-xs-12
+              form
+                .form-group
+                  label.control-label(for='recipient-name') Recipient:
+                  input#recipient-name.form-control(type='text')
+                .form-group
+                  label.control-label(for='message-text') Message:
+                  textarea#message-text.form-control
+      .modal-footer
+        button.btn.btn-default(type='button', data-dismiss='modal') Close
+        button.btn.btn-primary(type='button') Send

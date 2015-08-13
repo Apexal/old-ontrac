@@ -6,8 +6,8 @@ $(function() {
    });
 
   // Use the API to get user info for each user badge present on the page
-  if($('.user-badge').length){
-    $('.user-badge').tooltipster({
+
+    /*$('.user-badge').tooltipster({
       content: 'Loading...',
       interactive: true,
       theme: 'tooltipster-shadow',
@@ -29,8 +29,75 @@ $(function() {
           });
         }
       }
+    });*/
+
+  (function user_badges(){
+    $(".user-badge").click(function() {
+      var username = $(this).data("username");
+
+      if($("#"+username+"-modal").length == 0){
+        $.ajax({
+          type: 'GET',
+          url: "/api/user/"+username,
+          success: function(data) {
+            if(data){
+              var title = data.firstName + " " + data.lastName;
+
+              // TODO: this thing...
+              var content = $("<div class='modal fade' id='"+username+"-modal' tabindex='-1'>" +
+                    "        <div class='modal-dialog'>" +
+                    "            <div class='modal-content'>" +
+                    "                <div class='modal-header'>" +
+                    "                    <button class='close' data-dismiss='modal' type=" +
+                    "                    'button'><span>&times;</span></button>" +
+                    "                    <h4 class='modal-title'>User" +
+                    "                    Summary</h4>" +
+                    "                </div>" +
+                    "                <div class='modal-body'>" +
+                                      "<div class='container-fluid'>" +
+                                      "    <div class='row'>" +
+                                      "        <div class='col-md-4'>" +
+                                      "            .col-md-4" +
+                                      "        </div>" +
+                                      "        <div class='col-md-4 col-md-offset-4'>" +
+                                      "            .col-md-4 .col-md-offset-4" +
+                                      "        </div>" +
+                                      "    </div>" +
+                                      "    <div class='row'>" +
+                                      "        <div class='col-sm-9'>" +
+                                      "            Level 1: .col-sm-9" +
+                                      "            <div class='row'>" +
+                                      "                <div class='col-xs-8 col-sm-6'>" +
+                                      "                    Level 2: .col-xs-8 .col-sm-6" +
+                                      "                </div>" +
+                                      "                <div class='col-xs-4 col-sm-6'>" +
+                                      "                    Level 2: .col-xs-4 .col-sm-6" +
+                                      "                </div>" +
+                                      "            </div>" +
+                                      "        </div>" +
+                                      "    </div>" +
+                                      "</div>"+
+                    "                </div>" +
+                    "                <div class='modal-footer'>" +
+                    "                    <button class='btn btn-default' data-dismiss='modal' type=" +
+                    "                    'button'>Close</button> <a class='btn btn-primary'" +
+                    "                    href='/users/"+username+"'>View Full Profile</a>" +
+                    "                </div>" +
+                    "            </div>" +
+                    "        </div>" +
+                    "    </div>");
+
+              $("body").append(content);
+              $("#"+username+"-modal").modal();
+            }
+          }
+        });
+      }else{
+        $("#"+username+"-modal").modal();
+      }
     });
-  }
+
+  })();
 
 
   // Animate the knobs to random percentages (for now)
@@ -100,6 +167,6 @@ $(function() {
 
   $("#add-reminder").click(function() {
     var reminder = prompt("New reminder: ");
-    
+
   });
 });
