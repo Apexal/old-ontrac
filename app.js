@@ -3,8 +3,7 @@ var express = require("express")
   , app = express()
   , http = require("http").createServer(app)
   , bodyParser = require("body-parser")
-  , io = require("./modules/sockets")(http)
-  , _ = require("underscore"); // Except this
+  , io = require("./modules/sockets")(http);
 
 var fs = require("fs");
 var path = require('path');
@@ -99,8 +98,9 @@ app.use('/*', function(req, res, next) {
 fs.readdirSync("./routes/").forEach(function(path) {
   if(fs.lstatSync("./routes/"+path).isDirectory() == false){
     var name = ( path == "index.js" ? '' : path.replace('.js', ''));
+    var current = require('./routes/'+path)(io);
     app.use('/'+name, function(req, res, next) {
-      var models = require('./routes/'+path)(io).models;
+      var models = current.models;
       if(models.length > 0){
         models.forEach(function(m) {
           req[m] = mongo[m];
@@ -108,7 +108,7 @@ fs.readdirSync("./routes/").forEach(function(path) {
       }
       next();
     });
-    app.use('/'+name, require('./routes/'+path)(io).router);
+    app.use('/'+name, current.router);
     console.log(("Using ./routes/"+path+" for /"+name).cyan);
   }
 });
