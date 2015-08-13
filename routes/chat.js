@@ -4,7 +4,7 @@ var router = express.Router();
 router.get('/', function(req, res) {
   req.toJade.title = "Regis Chat";
 
-  res.render('chatpage', req.toJade);
+  res.render('chat/chatpage', req.toJade);
 });
 
 module.exports = function(io) {

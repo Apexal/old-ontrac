@@ -7,10 +7,11 @@ var cheerio = require("cheerio");
 var redir = "/";
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get(['/', '/home'], function(req, res, next) {
   req.toJade.title = "Adiutor";
-  if(req.currentUser)
-    res.render('index', req.toJade);
+  console.log(req.loggedIn);
+  if(req.loggedIn)
+    res.render('homepage', req.toJade);
   else
     res.render('index', req.toJade);
 });
@@ -83,12 +84,13 @@ router.post('/login', function(req, res, next) {
                     user.last_point_login_time = new Date();
                     user.registered_date = new Date();
                     user.registered = true;
+
                     new req.Log({who: user._id, what: "Registration."}).save();
                   }
                     // REGISTER THIS USER
 
                   user.login_count +=1;
-                  user.last_login_time = new Date();
+
                   var fiveMinAgo = moment().subtract(5, 'minutes');
                   if(moment(user.last_point_login_time).isBefore(fiveMinAgo)){
                     user.points += 10;
@@ -97,6 +99,7 @@ router.post('/login', function(req, res, next) {
                   }
                   req.user = user;
                   req.session.currentUser = user;
+                  req.session.currentUser.login_time = new Date();
                   user.save();
 
                   new req.Log({who: user._id, what: "Login."}).save();
@@ -119,8 +122,10 @@ router.post('/login', function(req, res, next) {
 });
 
 router.get('/logout', function(req, res) {
+
   if(req.session.quietlogin == false)
     new req.Log({who: req.currentUser._id, what: "Logout."}).save();
+
   delete req.session.currentUser;
   delete req.currentUser;
   req.session.info.push("You have successfully logged out.");

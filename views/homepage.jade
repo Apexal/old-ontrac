@@ -1,21 +1,42 @@
 extends /layout
 
 block content
-  .col-xs-6.col-sm-3
-    img.center#homepage-pic(src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg")
-    b Hello, #{currentUser.firstName}
-    span Last login was ____
-    #links 
-      ul.nav
-        li.active
-          a(href="#") Test
-        li
-          a(href="#") Test
-        li
-          a(href="#") Test
-        li
-          a(href="#") Test
-        li
-          a(href="#") Test
-        li
-          a(href="#") Test
+  .container
+    include /info
+    .jumbotron
+      h1(style="text-transform: capitalize") Hello, #{currentUser.firstName}
+      p.
+        You have #[b 5 tests], #[b 6 homework assignments], 2 friend requests
+    
+    .row
+      .col-xs-12.col-sm-6.col-md-3
+        .panel.panel-default#reminders-panel
+          .panel-heading
+            h1.panel-title Reminders
+              span.right.fa.fa-plus#add-reminder
+
+          table.table.table-hover
+            tr
+              td Reminder1
+              td Reminder1
+            tr
+              td Reminder1
+              td Reminder1
+      
+      .col-xs-12.col-sm-6.col-md-3
+        .panel.panel-default#reminders-panel
+          .panel-heading
+            h1.panel-title Friend Requests
+
+          table.table.table-hover
+            tr
+              td Reminder1
+              td Reminder1
+            tr
+              td Reminder1
+              td Reminder1
+      
+    hr
+    
+    .row
+      

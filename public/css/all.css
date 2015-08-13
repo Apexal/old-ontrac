@@ -4,19 +4,7 @@
  * 03 - Service specific
  */
 
-a.undecorated {
-  color: inherit;
-  text-decoration: inherit;
-  font-weight: inherit;
-}
 
-.right {
-  float: right;
-}
-
-.left {
-  float: left;
-}
 
 /*** 01 - Layout ***/
 
@@ -39,6 +27,28 @@ main {
 
 main.pushed {
   margin-left: 220px;
+}
+
+a.undecorated {
+  color: inherit;
+  text-decoration: inherit;
+  font-weight: inherit;
+}
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+.jumbotron p b {
+  font-weight: 400;
+}
+
+h1.no-margin, h2.no-margin, h3.no-margin, h4.no-margin, h5.no-margin, h6.no-margin {
+  margin: 0;
 }
 
 /*main.pushed > .container {
@@ -147,8 +157,9 @@ span.badge {
   width: 400px;
   height: 300px;
   position: fixed;
-  bottom: 50px;
+  bottom: 43px;
   right: 0;
+  margin-bottom: 0;
 }
 
 #chat-messages {
@@ -202,7 +213,14 @@ span.badge {
   margin: 0;
 }
 
-/* Home-page */
+/* Homepage */
+
+#reminders-panel span.fa.fa-plus {
+  font-size: 0.8em;
+  margin-top: 3px;
+  cursor: pointer;
+  color: #606060;
+}
 
 /* User List Page */
 

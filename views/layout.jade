@@ -9,39 +9,28 @@ html
     meta(name="author", content="Frank Matranga")
 
     title= title
-
-    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css')
-    link(rel='stylesheet', href='https://bootswatch.com/cosmo/bootstrap.min.css')
-    link(rel="stylesheet", href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css")
-    link(rel="stylesheet", href="/css/tooltipster.css")
-    link(rel="stylesheet", href="/css/themes/tooltipster-shadow.css")
-    link(rel="stylesheet", href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/black-tie/jquery-ui.css")
-    link(rel="stylesheet", href="/css/all.css")
-    // My own ^^^
     
-    script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
-    script(src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js")
-    script(src="/javascripts/jquery.tooltipster.min.js")
+    include /parts/css
+    include /parts/js
 
   body
-    include /header
+    include /parts/header
     
     if loggedIn
-      include /sidebar
+      include /parts/sidebar
 
     main(class=(loggedIn ? "pushed" : ""))
       block content      
       if loggedIn && helpers.isPage(page, "chat") == false
-        include /chatbox
+        include /chat/chatbox
     
     if loggedIn
-      include /footer
+      include /parts/footer
     
     script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js")
     
     if loggedIn
       script(src='/javascripts/sockets.js')
     script(src='/socket.io/socket.io.js')
-    //script(src='/javascripts/materialize.min.js')
     script(src='/javascripts/effects.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js')

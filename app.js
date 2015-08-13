@@ -48,7 +48,7 @@ app.locals.helpers = helpers;
 app.use(function(req, res, next) {
   console.log(("\nRequest from "+req.connection.remoteAddress).blue.bold +(req.session.currentUser ? " by "+req.session.currentUser.username : "")+" at "+(moment().format("dddd, MMMM Do YYYY, h:mm:ss a")).green.bold);
   req.currentUser = req.session.currentUser;
-  req.session.loggedIn = (req.session.currentUser ? true : false);
+  req.loggedIn = (req.currentUser != undefined ? true : false);
 
   req.Log = mongo.Log;
 
@@ -69,7 +69,7 @@ app.use(function(req, res, next) {
     full_year: info.full,
     today: req.today,
     currentUser: req.currentUser,
-    loggedIn: req.session.loggedIn
+    loggedIn: req.loggedIn
   }
 
   req.session.info = [];

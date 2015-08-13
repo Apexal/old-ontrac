@@ -79,7 +79,7 @@ $(function() {
       small_box.show();
       small_box2.show();
       $(this).removeAttr('style');
-      chat_box.height("300px").width("400px").css("bottom", "20px");
+      chat_box.height("300px").width("400px").css("bottom", "43px");
     }else{
       small_box.hide();
       small_box2.hide();
@@ -97,4 +97,9 @@ $(function() {
     set_chat(show);
   });
 
+
+  $("#add-reminder").click(function() {
+    var reminder = prompt("New reminder: ");
+    
+  });
 });
