@@ -52,7 +52,6 @@ block content
       .col-xs-12
         .page-header
           h2 All Users
-    
     .row
       .col-xs-12
         table.table.user-table
@@ -65,7 +64,7 @@ block content
               td.larger(style="vertical-align: middle;")
                 a.undecorated(href="/advisements/"+user.advisement)= user.advisement
               td.larger(style="vertical-align: middle")= user.gradeName
-              td.larger(style="vertical-align: middle;")= user.fullName
+              td.larger.user-badge(data-username=user.username, style="vertical-align: middle;")= user.fullName
             
     .row
       br.bottom-spacer

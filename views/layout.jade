@@ -21,6 +21,7 @@ html
 
     main(class=(loggedIn ? "pushed" : ""))
       include /parts/feedback
+      include /parts/reminders
       block content      
       if loggedIn && helpers.isPage(page, "chat") == false
         include /chat/chatbox

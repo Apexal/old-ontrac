@@ -42,9 +42,37 @@ $(function() {
           success: function(data) {
             if(data){
               var title = data.firstName + " " + data.lastName;
+              console.log(data);
+              var coursenames = ['None!'];
+              if(data.courses.length > 0){
+                coursenames=[];
+                for(c in data.courses){
+                  coursenames.push(data.courses[c].title);
+                }
+              }
+              var imgsrc = (data.registered ? "https://webeim.regis.org/photos/regis/Student/"+data.code+".jpg" : data.mpicture);
+
+              var bio = (data.bio ? data.bio : "Not set yet!");
+
+              var adv = data.advisement.charAt(0);
+              var grade = "";
+              switch(adv) {
+                case "1":
+                  grade = "Freshman";
+                  break;
+                case "2":
+                  grade = "Sophmore";
+                  break;
+                case "3":
+                  grade = "Junior";
+                  break;
+                case "4":
+                  grade = "Senior";
+                  break;
+              }
 
               // TODO: this thing...
-              var content = $("<div class='modal fade' id='"+username+"-modal' tabindex='-1'>" +
+              var content = $("<div class='modal fade user-modal' id='"+username+"-modal' tabindex='-1'>" +
                     "        <div class='modal-dialog'>" +
                     "            <div class='modal-content'>" +
                     "                <div class='modal-header'>" +
@@ -56,24 +84,16 @@ $(function() {
                     "                <div class='modal-body'>" +
                                       "<div class='container-fluid'>" +
                                       "    <div class='row'>" +
-                                      "        <div class='col-md-4'>" +
-                                      "            .col-md-4" +
+                                      "        <div class='col-xs-12 col-sm-3 center'>" +
+                                      "            <img class='modal-pic' title='Looking good!' src='"+imgsrc+"'>" +
+                                      "            <br><b>"+data.points+" points</b>" +
                                       "        </div>" +
-                                      "        <div class='col-md-4 col-md-offset-4'>" +
-                                      "            .col-md-4 .col-md-offset-4" +
-                                      "        </div>" +
-                                      "    </div>" +
-                                      "    <div class='row'>" +
-                                      "        <div class='col-sm-9'>" +
-                                      "            Level 1: .col-sm-9" +
-                                      "            <div class='row'>" +
-                                      "                <div class='col-xs-8 col-sm-6'>" +
-                                      "                    Level 2: .col-xs-8 .col-sm-6" +
-                                      "                </div>" +
-                                      "                <div class='col-xs-4 col-sm-6'>" +
-                                      "                    Level 2: .col-xs-4 .col-sm-6" +
-                                      "                </div>" +
-                                      "            </div>" +
+                                      "        <div class='col-xs-12 col-sm-9'>" +
+                                      "             <h3 class='no-margin'><b>"+grade+"</b> "+data.firstName + " " +data.lastName+"</h3><br>" +
+                                      "             <div class='well well-sm'>" +
+                                      "                 <b>Bio: </b><span>"+bio + "</span><br>" +
+                                      "                 <b>Classes: </b><span>"+coursenames.join(',  ')+"</span>" +
+                                      "             </div>" +
                                       "        </div>" +
                                       "    </div>" +
                                       "</div>"+
@@ -162,11 +182,5 @@ $(function() {
   $("#toggle-chat").click(function() {
     var show = (localStorage['show-chat'] == 1 ? 0 : 1);
     set_chat(show);
-  });
-
-
-  $("#add-reminder").click(function() {
-    var reminder = prompt("New reminder: ");
-
   });
 });
