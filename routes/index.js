@@ -9,7 +9,6 @@ var redir = "/";
 /* GET home page. */
 router.get(['/', '/home'], function(req, res, next) {
   req.toJade.title = "Adiutor";
-  console.log(req.loggedIn);
   if(req.loggedIn)
     res.render('homepage', req.toJade);
   else

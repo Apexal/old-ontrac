@@ -89,6 +89,10 @@ app.use(restricted, function(req, res, next) {
 // So Jade knows what nav links to set as active
 app.use('/*', function(req, res, next) {
   req.toJade.page = req.baseUrl;
+  var cssName = "index.css";
+  if(req.baseUrl.split("/")[1])
+    cssName = req.baseUrl.split("/")[1].replace("/", "") + ".css";
+  req.toJade.cssName = cssName;
   next();
 });
 

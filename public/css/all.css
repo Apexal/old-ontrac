@@ -1,12 +1,4 @@
-/* Sections
- * 01 - Layout
- * 02 -
- * 03 - Service specific
- */
-
-
-
-/*** 01 - Layout ***/
+/*** SHARED CSS ***/
 
 @media (min-width: 790px) {
   ul.nav li.dropdown:hover > ul.dropdown-menu {
@@ -43,18 +35,13 @@ a.undecorated {
   float: left;
 }
 
-.jumbotron p b {
-  font-weight: 400;
+.larger {
+  font-size: 120%;
 }
 
-h1.no-margin, h2.no-margin, h3.no-margin, h4.no-margin, h5.no-margin, h6.no-margin {
+.no-margin {
   margin: 0;
 }
-
-/*main.pushed > .container {
-    width: 70%;
-}
-*/
 
 @media (max-width: 768px) {
   navbar.navbar-fixed-bottom > container{
@@ -185,8 +172,6 @@ span.badge {
   float: left;
 }
 
-
-
 #chat-controls {
   position: fixed;
   right: 0;
@@ -201,195 +186,6 @@ span.badge {
   width: 80px;
 }
 
-/*** 03 - Service specific ***/
-
-/* Intro-page */
-
-.larger {
-  font-size: 120%;
-}
-
-.no-margin {
-  margin: 0;
-}
-
-/* Homepage */
-
-#reminders-panel span.fa.fa-plus {
-  font-size: 0.8em;
-  margin-top: 3px;
-  cursor: pointer;
-  color: #606060;
-}
-
-#reminder-form input {
-  width: 80%;
-}
-#reminder-form button {
-  width: 20%;
-}
-
-@media (max-width: 768px) {
-  #reminder-form input {
-    width: 100%;
-  }
-  #reminder-form button {
-    width: 100%;
-  }
-}
-
-/* User List Page */
-
-@media (max-width: 768px) {
-  #bottom-bar {
-    max-height: none;
-  }
-
-  .center-xs {
-    text-align: center;
-  }
-}
-
-.table-pic {
-  width: 50px;
-}
-
-.user-box, .advisement-user-box {
-  margin: 0 auto;
-}
-
-.user-box, .user-box img {
-  width: 160px;
-}
-
-.advisement-user-box, .advisement-user-box img {
-  width: 100px;
-}
-
-.advisement-user-box button {
-  font-size: 80%;
-}
-
-.user-adv {
-  position: absolute;
-  bottom: 45px;
-  font-size: 1.7em;
-  font-weight: bold;
-  color: #222;
-  left: 105px;
-}
-
-.profile-user-adv {
-  position: absolute;
-  bottom: 95px;
-  font-size: 1.8em;
-  font-weight: bold;
-  color: #222;
-  left: 135px;
-}
-
-.user-verified {
-  padding-right: 5px;
-}
-
-.full-width {
-  width: 100%;
-}
-
-/* User Profile Page */
-
-#profile-pic, .holder {
-  margin: 0 auto;
-  max-width: 200px;
-}
-
-.user-modal .modal-pic{
-  max-width: 100px;
-}
-
-.user-badge {
-  cursor: pointer;
-}
-
-/* Teacher Pages */
-
-.teacher-profile-img {
-  max-width: 200px;
-}
-
-/* Advisement Pages */
-.advisement-user-box button {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-/* Day Pages */
-
-.right-spacer {
-  padding-right: 30px;
-}
-
-/* Homework Pages */
-
-#schedule-day {
-  font-size: 1.5em;
-  cursor: pointer;
-}
-
-#hw-info {
-  font-size: 1.1em;
-}
-
-#hw-info a {
-  font-weight: 570;
-}
-
-#hw-info a:hover {
-  text-decoration: none;
-}
-
-.hw-item .title{
-  text-decoration: none;
-  color: inherit;
-  font-weight: 500;
-  font-size: 1.4em;
-}
-
-.assignment.completed {
-  text-decoration: line-through;
-}
-
-.remove-assignment {
-  font-size: 0.8em;
-  cursor: pointer;
-}
-
-#newHWItemCourse{
-  max-width: 30%;
-}
-
-#newHWItemDesc {
-  width: 60%;
-}
-
-#homework-button {
-  width: 10%
-}
-
-@media (max-width: 757px) {
-  #homework-form *{
-    width: 100%;
-    max-width: 100%;
-  }
-}
-
-.timeline {
-  max-width: 320px;
-}
-
-.timeline .stream {
-  max-height: 400px;
-}
 
 /* FEEDBACK MODAL */
 

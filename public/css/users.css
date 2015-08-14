@@ -1,0 +1,72 @@
+/* User List Page */
+
+@media (max-width: 768px) {
+  #bottom-bar {
+    max-height: none;
+  }
+
+  .center-xs {
+    text-align: center;
+  }
+}
+
+.table-pic {
+  width: 50px;
+}
+
+.user-box, .advisement-user-box {
+  margin: 0 auto;
+}
+
+.user-box, .user-box img {
+  width: 160px;
+}
+
+.advisement-user-box, .advisement-user-box img {
+  width: 100px;
+}
+
+.advisement-user-box button {
+  font-size: 80%;
+}
+
+.user-adv {
+  position: absolute;
+  bottom: 45px;
+  font-size: 1.7em;
+  font-weight: bold;
+  color: #222;
+  left: 105px;
+}
+
+.profile-user-adv {
+  position: absolute;
+  bottom: 95px;
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #222;
+  left: 135px;
+}
+
+.user-verified {
+  padding-right: 5px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* User Profile Page */
+
+#profile-pic, .holder {
+  margin: 0 auto;
+  max-width: 200px;
+}
+
+.user-modal .modal-pic{
+  max-width: 100px;
+}
+
+.user-badge {
+  cursor: pointer;
+}

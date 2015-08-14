@@ -1,0 +1,67 @@
+/* Day Pages */
+
+.right-spacer {
+  padding-right: 30px;
+}
+
+/* Homework Pages */
+
+#schedule-day {
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+#hw-info {
+  font-size: 1.1em;
+}
+
+#hw-info a {
+  font-weight: 570;
+}
+
+#hw-info a:hover {
+  text-decoration: none;
+}
+
+.hw-item .title{
+  text-decoration: none;
+  color: inherit;
+  font-weight: 500;
+  font-size: 1.4em;
+}
+
+.assignment.completed {
+  text-decoration: line-through;
+}
+
+.remove-assignment {
+  font-size: 0.8em;
+  cursor: pointer;
+}
+
+#newHWItemCourse{
+  max-width: 30%;
+}
+
+#newHWItemDesc {
+  width: 60%;
+}
+
+#homework-button {
+  width: 10%
+}
+
+@media (max-width: 757px) {
+  #homework-form *{
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+.timeline {
+  max-width: 320px;
+}
+
+.timeline .stream {
+  max-height: 400px;
+}

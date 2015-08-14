@@ -1,0 +1,30 @@
+/* Intro-page */
+
+.jumbotron p b {
+  font-weight: 400;
+}
+
+/* Homepage */
+
+#reminders-panel span.fa.fa-plus {
+  font-size: 0.8em;
+  margin-top: 3px;
+  cursor: pointer;
+  color: #606060;
+}
+
+#reminder-form input {
+  width: 80%;
+}
+#reminder-form button {
+  width: 20%;
+}
+
+@media (max-width: 768px) {
+  #reminder-form input {
+    width: 100%;
+  }
+  #reminder-form button {
+    width: 100%;
+  }
+}
