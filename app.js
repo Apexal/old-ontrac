@@ -58,7 +58,7 @@ app.use(function(req, res, next) {
 
   req.today = moment().startOf('day');
 
-  // This object is passed to Jade every request.
+  // This object is passed to Jade on every request.
   req.toJade = {
     info: (req.session.info ? req.session.info : []),
     errs: (req.session.errs ? req.session.errs : []),
@@ -69,13 +69,13 @@ app.use(function(req, res, next) {
     today: req.today,
     currentUser: req.currentUser,
     loggedIn: req.loggedIn,
-    redir: (req.query.redir ? req.query.redir : req._parsedUrl.pathname),
-
+    redir: (req.query.redir ? req.query.redir : req._parsedUrl.pathname)
   }
   req.toJade.openLogin = (req.toJade.redir == req._parsedUrl.pathname ? false : true);
 
   if(req.loggedIn == false)
     console.log("On login will redirect to "+req.toJade.redir);
+
   req.session.info = [];
   req.session.errs = [];
   next();
@@ -102,8 +102,8 @@ app.use('/*', function(req, res, next) {
 });
 
 // =================================ROUTES=================================
-// This dynamicaly (if that's spelled right) adds all routes in the routes folder
-// and gives them access to whatever Mongo collections they need
+// This dynamicaly (if that's spelled right) adds all routes in the routes
+// folder and gives them access to whatever Mongo collections they ask for
 fs.readdirSync("./routes/").forEach(function(path) {
   if(fs.lstatSync("./routes/"+path).isDirectory() == false){
     var name = ( path == "index.js" ? '' : path.replace('.js', ''));
@@ -118,7 +118,7 @@ fs.readdirSync("./routes/").forEach(function(path) {
       next();
     });
     app.use('/'+name, current.router);
-    console.log(("Using ./routes/"+path+" for /"+name).cyan);
+    //console.log(("Using ./routes/"+path+" for /"+name).cyan);
   }
 });
 

@@ -44,6 +44,7 @@ module.exports = {
   teacher : {
     courses: [{ type: Schema.Types.ObjectId, ref: 'Course', default: []}],
     email: String,
+    username: String,
     tID: String,
     sclasses: Array,
     image: String,
