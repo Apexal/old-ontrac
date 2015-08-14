@@ -52,6 +52,15 @@ block content
       .col-xs-12
         .page-header
           h2 All Users
+            small.right
+              nav
+                ul.pagination.pagination-sm
+                  li
+                    a(href='#', aria-label='Previous')
+                      span(aria-hidden='true') «
+                  li
+                    a(href='#', aria-label='Next')
+                      span(aria-hidden='true') »
     .row
       .col-xs-12
         table.table.user-table

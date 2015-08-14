@@ -112,8 +112,10 @@ db.once('open', function (callback) {
   var reminderSchema = new Schema(schemas.reminder);
   var Reminder = mongoose.model('Reminder', reminderSchema);
 
-  var hwItemSchema = new Schema(schemas.hwItem);
+  var feedbackSchema = new Schema(schemas.feedback);
+  var Feedback = mongoose.model('Feedback', feedbackSchema);
 
+  var hwItemSchema = new Schema(schemas.hwItem);
   var HWItem = mongoose.model('HWItem', hwItemSchema);
 
   var gradedItemSchema = new Schema(schemas.gradedItem);
@@ -127,4 +129,5 @@ db.once('open', function (callback) {
   module.exports.Log = Log;
   module.exports.Day = Day;
   module.exports.Reminder = Reminder;
+  module.exports.Feedback = Feedback;
 });

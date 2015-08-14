@@ -27,21 +27,23 @@ aside#sidebar
         ul.dropdown-menu
           li(class=( helpers.isPage(page, "admin/logs")? "active" : ""))
             a(href="/admin/logs") User Logs
+          li
+            a(href="#") User Feedback
     hr
     
   section
     ul.nav
       li
-        a(href="#", data-target="#reminders-modal", data-toggle="modal") Reminders
+        a(title="Manage your reminders.", href="#", data-target="#reminders-modal", data-toggle="modal") Reminders
           span.badge.right#reminders-count 0 
       li
-        a(href="#") Grades
+        a(title="Manage your grades.", href="#") Grades
           span.badge.right 0
       li(class=(helpers.isPage(page, "days") ? "active" : ""))
         a(href="/days", title="View all days that you have work (homework, tests, etc).") Work
           span.badge.right 0
       li
-        a(href="#") Friends
+        a(title="View and manage your friend list.", href="#") Friends
           span.badge.right 0
       li
         a(href="#") Meetings

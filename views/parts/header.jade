@@ -46,8 +46,9 @@ header
               li
                   a(href="https://owa.regis.org/owa/", target="_blank") Email
           
-          li
-            a(href="#", data-toggle="modal", data-target="#feedback-modal") Offer Feedback
+          if loggedIn
+            li
+              a(href="#", data-toggle="modal", data-target="#feedback-modal") Offer Feedback
           
         ul.nav.navbar-nav.navbar-right
           if loggedIn

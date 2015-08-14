@@ -84,5 +84,10 @@ module.exports = {
     username: String,
     desc: String,
     added_date: {type: Date, default: Date.now}
+  },
+  feedback: {
+    feedbackType: String,
+    text: String,
+    date_sent: {type: Date, default: Date.now}
   }
 }

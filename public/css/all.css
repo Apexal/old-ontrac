@@ -390,3 +390,12 @@ span.badge {
 .timeline .stream {
   max-height: 400px;
 }
+
+/* FEEDBACK MODAL */
+
+#feedback-text {
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 80px;
+  max-height: 200px;
+}

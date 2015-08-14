@@ -20,8 +20,10 @@ html
       include /parts/sidebar
 
     main(class=(loggedIn ? "pushed" : ""))
-      include /parts/feedback
-      include /parts/reminders
+      if loggedIn
+        include /parts/feedback-modal
+        include /parts/reminders
+      
       block content      
       if loggedIn && helpers.isPage(page, "chat") == false
         include /chat/chatbox

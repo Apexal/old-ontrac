@@ -5,6 +5,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   req.toJade.title = "Users";
   req.toJade.tableForm = (req.query.table == "1" ? true : false);
+  
   req.Student.find({}, 'registered firstName lastName advisement code username rank').sort({advisement: 1}).exec(function(err, users){
     if(err) console.log(err);
     req.toJade.users = users;
@@ -33,13 +34,11 @@ router.get("/:username", function(req, res){
         console.log(u.courses);
         req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+" of "+user.advisement;
         req.toJade.user = u;
-
         res.render('users/profile', req.toJade);
       });
     }else{
       res.render('users/profile', req.toJade);
     }
-
   });
 });
 

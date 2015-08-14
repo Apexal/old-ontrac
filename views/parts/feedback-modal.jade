@@ -9,13 +9,15 @@
         .container-fluid
           .row
             .col-xs-12
-              form
+              form#feedback-form
                 .form-group
-                  label.control-label(for='recipient-name') Recipient:
-                  input#recipient-name.form-control(type='text')
+                  label.control-label(for='feedback-type') Type:
+                  select.form-control#feedback-type
+                    option Problem
+                    option Idea
                 .form-group
-                  label.control-label(for='message-text') Message:
-                  textarea#message-text.form-control
+                  label.control-label(for='feedback-text') Message: (totally anonymous)
+                  textarea#feedback-text.form-control(required=true)
       .modal-footer
         button.btn.btn-default(type='button', data-dismiss='modal') Close
-        button.btn.btn-primary(type='button') Send
+        button.btn.btn-primary#send-feedback(type='button') Send
