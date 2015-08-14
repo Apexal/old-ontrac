@@ -1,6 +1,19 @@
 extends /layout
 
 block content
+  .modal.fade#login-modal
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+          h4.modal-title Is this safe?
+        .modal-body
+          p.
+            I do not store any passwords at all. I just pass what you enter here to the Regis login page to 
+            determine whether correct credentials are entered or not. This is just to remove the need for
+            registration and make logging in simpler.
+          
   .container
     .page-header
       h1 Login
@@ -12,13 +25,10 @@ block content
             label(for="username") Regis Username
             input.form-control#username(required=true, name="username", placeholder="Username", type="text")
           .form-group.col-xs-12.col-sm-6
-            label(for="password") Regis Password #[a(href="#", title="Yes.") *]
+            label(for="password") Regis Password #[a(href="#", data-toggle="modal", data-target="#login-modal") ?]
             input.form-control#password(required=true, name="password", placeholder="Password", type="password")
           //a.left.btn.btn-default(href="/register") Not Yet Registered?
           button.btn.right.btn-primary Login
           //a.btn.right.btn-danger(href="/forgot") Forgot
-    
-    .row
-      .col-xs-12
-        hr
-        span * I do not store any passwords at all. This way just makes it easier as there is no need for making a new account for this service.
+
+        
