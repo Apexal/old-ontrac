@@ -196,23 +196,26 @@ $(function() {
   function reminders(){
     var reminders = [];
     if(username){
-      $.ajax({
-        type: 'GET',
-        url: "/reminders/all",
-        success: function(data) {
-          if(data.reminders && data.reminders.length != 0){
-            reminders = data.reminders;
-            $("#reminders-count").text(reminders.length);
-            $("#reminder-table tr").remove();
-            for(reminder in reminders){
-              $("#reminder-table").append("<tr class='reminder' data-id='"+reminders[reminder]._id+"'><td title='Added "+moment(reminders[reminder].date_added).fromNow()+"'>"+reminders[reminder].desc+"</td></tr>");
-            }
-          }else{
-            $("#reminder-table tr").remove();
-            $("#reminder-table").append("<tr><td class='center'>No reminders!</td></tr>");
+      $.get("/reminders/all", function(data){
+        if(data.reminders && data.reminders.length != 0){
+          reminders = data.reminders;
+
+          $("#reminder-table tr").remove();
+          for(reminder in reminders){
+            $("#reminder-table").append("<tr class='reminder' data-id='"+reminders[reminder]._id+"'><td title='Added "+moment(reminders[reminder].date_added).fromNow()+"'>"+reminders[reminder].desc+"</td></tr>");
           }
-          $(".reminder").click(removeReminder);
+        }else{
+          $("#reminder-table tr").remove();
+          $("#reminder-table").append("<tr><td class='center'>No reminders!</td></tr>");
         }
+        if(reminders.length == 0){
+          $("#reminders-count").hide();
+        }else{
+          $("#reminders-count").show();
+          $("#reminders-count").text(reminders.length);
+        }
+
+        $(".reminder").click(removeReminder);
       });
     }
   }
