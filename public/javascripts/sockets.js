@@ -44,33 +44,8 @@ $(function() {
     online.forEach(function(user) {
       if(user.status != "offline")
         list.append("<span class='user-badge' data-username='"+user.username+"'>"+user.username+" ("+user.status+"), </span>");
-      //list.append("<div class=\"col-xs-12 col-sm-6 col-md-4 col-lg-3 text-center\"> <div class=\"user-box\"> <img src=\"https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg\" title=\"\"> <div class=\"btn-group full-width\"> <button class=\"full-width btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" type=\"button\">"+user.name+" <span class=\"caret\"></span></button> <ul class=\"dropdown-menu\"> <li> <a href=\"/users/"+user.username+"\">View Profile</a> </li> <li> <a href=\"/users/"+user.username+"/schedule\">View Schedule</a> </li> <li> <a href=\"mailto:"+user.username+"\">Email</a> </li> </ul> </div> </div> </div>");
     });
-    //user_badges();
-    /*$('.user-badge').tooltipster({
-      content: 'Loading...',
-      interactive: true,
-      theme: 'tooltipster-shadow',
-      functionBefore: function(origin, continueTooltip) {
-        continueTooltip();
-        var username = origin.text().split(" ")[0];
-        if (origin.data('ajax') !== 'cached') {
-          $.ajax({
-            type: 'GET',
-            url: "/api/user/"+username,
-            success: function(data) {
-              var content = "";
-              if(!data.code)
-                content+="<img src='https://webeim.regis.org/photos/regis/Student/"+data.code+".jpg'>";
-              content += "<b>"+data.firstName+" "+data.lastName+"</b> of <b>"+data.advisement+"</b>";// update our tooltip content with our returned data and cache it
-              origin.tooltipster('content', $(content)).data('ajax', 'cached');
-            },
-            dataType: "json"
-          });
-        }
-      }
-    });*/
-
+    userbadges();
   }
 
 
