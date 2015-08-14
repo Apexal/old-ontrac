@@ -41,10 +41,13 @@ $(function() {
 
   function update_online_list() {
     list.html("");
+    var names = [];
     online.forEach(function(user) {
+
       if(user.status != "offline")
-        list.append("<span class='user-badge' data-username='"+user.username+"'>"+user.username+" ("+user.status+"), </span>");
+        names.push("<span class='user-badge' data-username='"+user.username+"'>"+user.username+" ("+user.status+")</span>");
     });
+    list.html(names.join(', '));
     userbadges();
   }
 

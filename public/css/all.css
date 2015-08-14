@@ -39,6 +39,10 @@ a.undecorated {
   font-size: 120%;
 }
 
+.full-width {
+  width: 100%;
+}
+
 .no-margin {
   margin: 0;
 }
@@ -185,6 +189,25 @@ span.badge {
 #chat-controls button {
   width: 80px;
 }
+
+/* REMINDER MODAL */
+
+#reminder-form input {
+  width: 80%;
+}
+#reminder-form button {
+  width: 20%;
+}
+
+@media (max-width: 768px) {
+  #reminder-form input {
+    width: 100%;
+  }
+  #reminder-form button {
+    width: 100%;
+  }
+}
+
 
 
 /* FEEDBACK MODAL */

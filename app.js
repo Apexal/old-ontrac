@@ -119,7 +119,6 @@ fs.readdirSync("./routes/").forEach(function(path) {
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  console.log('404 ERROR'.bold.red);
   var err = new Error('Not Found');
   err.status = 404;
   next(err);

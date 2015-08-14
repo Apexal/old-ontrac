@@ -11,12 +11,11 @@ header
       #navbar.navbar-collapse.collapse
         ul.nav.navbar-nav
           li(class=(title=="Adiutor" || title=="Your Home" ? "active" : ""))
-            a(href="/", title="The homepage.") Home
+            a(href=(title=="Adiutor" || title=="Your Home" ? "#" : "/"), title="The homepage.") Home
           li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') View 
                 span.caret
             ul.dropdown-menu(role='menu')
-              
               li(class=(helpers.isPage(page, "users")))
                 a(href="/users", title="View and search through list of all students, registered and unregistered.") Users
               li(class=(helpers.isPage(page, "advisements")))
