@@ -21,6 +21,15 @@ if openLogin
                   label(for="username") Regis Username
                   input.form-control#username(required=true, name="username", placeholder="Username", type="text")
                 .form-group.col-xs-12.col-sm-6
-                  label(for="password") Regis Password #[a(href="#", data-toggle="modal", data-target="#login-modal") ?]
+                  label(for="password") Regis Password #[a(href="#", onclick="$('#login-info').toggle();") ?]
                   input.form-control#password(required=true, name="password", placeholder="Password", type="password")
+                
+                #login-info
+                  p.
+                    I do not store any passwords at all. I just pass what you enter here to the Regis login page to 
+                    determine whether correct credentials are entered or not. This is just to remove the need for
+                    registration and make logging in simpler.
+                  br
+                  span Don't believe me? See #[a(target="_blank", href="https://github.com/Apexal/adiutor/blob/master/routes/index.js") for yourself].
+
                 button.btn.right.btn-primary Login

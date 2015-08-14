@@ -230,3 +230,8 @@ span.badge {
   min-height: 80px;
   max-height: 200px;
 }
+
+/* LOGIN MODAL */
+#login-info {
+  display: none;
+}
