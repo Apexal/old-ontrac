@@ -19,7 +19,6 @@ router.get(['/', '/home'], function(req, res, next) {
 
 router.get('/login', function(req, res, next) {
   req.toJade.title = "Login";
-  req.toJade.redir = (req.query.redir ? req.query.redir : "/")
   res.render('users/login', req.toJade);
 });
 
@@ -113,11 +112,13 @@ router.post('/login', function(req, res, next) {
       });
     }
     function done(){
-      req.session.errs = errs;
+      //req.session.errs = errs;
       if(errs.length > 0)
-        res.redirect("/login");
+        res.json({errors: errs});
+        //res.redirect("/login");
       else
-        res.redirect(req.query.redir);
+        res.json({success: true});
+        //res.redirect(req.query.redir);
     }
   });
 });

@@ -23,6 +23,8 @@ html
       if loggedIn
         include /parts/feedback-modal
         include /parts/reminders
+      else
+        include /users/login-modal
       
       block content      
       if loggedIn && helpers.isPage(page, "chat") == false

@@ -68,9 +68,14 @@ app.use(function(req, res, next) {
     full_year: info.full,
     today: req.today,
     currentUser: req.currentUser,
-    loggedIn: req.loggedIn
-  }
+    loggedIn: req.loggedIn,
+    redir: (req.query.redir ? req.query.redir : req._parsedUrl.pathname),
 
+  }
+  req.toJade.openLogin = (req.toJade.redir == req._parsedUrl.pathname ? false : true);
+
+  if(req.loggedIn == false)
+    console.log("On login will redirect to "+req.toJade.redir);
   req.session.info = [];
   req.session.errs = [];
   next();
@@ -82,7 +87,7 @@ app.use(restricted, function(req, res, next) {
   if(req.toJade.loggedIn){
     next();
   }else{
-    res.redirect("/login?redir="+req._parsedUrl.pathname);
+    res.redirect("/home?redir="+req._parsedUrl.pathname);
   }
 });
 
