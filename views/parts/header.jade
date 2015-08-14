@@ -11,26 +11,26 @@ header
       #navbar.navbar-collapse.collapse
         ul.nav.navbar-nav
           li(class=(title=="Adiutor" || title=="Your Home" ? "active" : ""))
-            a(href="/") Home
+            a(href="/", title="The homepage.") Home
           li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') View 
                 span.caret
             ul.dropdown-menu(role='menu')
               
               li(class=(helpers.isPage(page, "users")))
-                a(href="/users") Users
+                a(href="/users", title="View and search through list of all students, registered and unregistered.") Users
               li(class=(helpers.isPage(page, "advisements")))
-                a(href="/advisements") Advisements
+                a(href="/advisements", title="View and search through all advisements at Regis.") Advisements
                 
               if loggedIn
                 li(class=(helpers.isPage(page, "teachers")))
-                  a(href="/teachers") Teachers
+                  a(href="/teachers", title="View, search, and rate a list of all teachers at Regis.") Teachers
                 li(class=(helpers.isPage(page, "courses")))
-                  a(href="/courses") Courses
+                  a(href="/courses", title="View, search, and rate a list of all classes, clubs, or otherwise at Regis.") Courses
               
           if loggedIn
             li(class=(helpers.isPage(page, "chat")))
-              a(href="/chat") Chat
+              a(href="/chat", title="Text chat with users currently online!") Chat
                 
                 
           li.dropdown
@@ -57,7 +57,7 @@ header
               ul.dropdown-menu(role='menu')
                 if loggedIn
                   li
-                    a(href="/users/"+currentUser.username) View Profile
+                    a(href="/users/"+currentUser.username, title="View your public profile as other users see it.") View Profile
                   li
                     a(href="/users/profile") Edit Profile
                   li

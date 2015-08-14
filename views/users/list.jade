@@ -7,7 +7,7 @@ block content
         small#online-user-list
       
     .page-header
-      h1 Registered Users
+      h1(title="The cool guys.") Registered Users
         if tableForm == false
           a.btn.btn-default.right(href="/users?table=1") Table Form
         else
@@ -37,7 +37,7 @@ block content
                   img.table-pic(src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
                 td.larger(style="vertical-align: middle;")
                   a(href="/advisements/"+user.advisement)= user.advisement
-                td.larger.user-badge(style="vertical-align: middle;", data-username=user.username)= user.fullName
+                td.larger(class=(loggedIn ? "user-badge" : ""), style="vertical-align: middle;", data-username=user.username)= user.fullName
                 td.larger(style="vertical-align: middle;")= user.rankName
     else
       .row
@@ -64,7 +64,7 @@ block content
               td.larger(style="vertical-align: middle;")
                 a.undecorated(href="/advisements/"+user.advisement)= user.advisement
               td.larger(style="vertical-align: middle")= user.gradeName
-              td.larger.user-badge(data-username=user.username, style="vertical-align: middle;")= user.fullName
+              td.larger(class=(loggedIn ? "user-badge" : ""), data-username=user.username, style="vertical-align: middle;")= user.fullName
             
     .row
       br.bottom-spacer

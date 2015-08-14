@@ -5,5 +5,10 @@
         button.close(type='button', data-dismiss='modal', aria-label='Close')
           span(aria-hidden='true') ×
         h3.modal-title Reminders
-      .modal-body
-        p One fine body…
+      table.table.table-hover#reminder-table
+        tr
+          td.center No reminders!
+      form.form-inline#reminder-form(role="form")
+        .form-group.full-width
+          input.form-control#reminder-desc(type="text", placeholder="Description", max="100")
+          button.btn.btn-primary#add-reminder Add

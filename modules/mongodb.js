@@ -109,6 +109,9 @@ db.once('open', function (callback) {
   });
   var Log = mongoose.model('Log', logItemSchema);
 
+  var reminderSchema = new Schema(schemas.reminder);
+  var Reminder = mongoose.model('Reminder', reminderSchema);
+
   var hwItemSchema = new Schema(schemas.hwItem);
 
   var HWItem = mongoose.model('HWItem', hwItemSchema);
@@ -123,4 +126,5 @@ db.once('open', function (callback) {
   module.exports.Advisement = Advisement;
   module.exports.Log = Log;
   module.exports.Day = Day;
+  module.exports.Reminder = Reminder;
 });

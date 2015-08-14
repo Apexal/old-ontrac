@@ -37,7 +37,6 @@ module.exports = {
     courseType: String,
     mID: Number,
     title: String,
-    //tID: String,
     grade: Number,
     students: [{ type: Schema.Types.ObjectId, ref: 'Student', default: []}]
   },
@@ -80,5 +79,10 @@ module.exports = {
     course: { type: Schema.Types.ObjectId, ref: 'Course' },
     num_grade: {type: Number, min: 0, max: 100},
     string_grade: {type: String, enum: ['F', 'U', 'S', 'M', 'H', 'HH']}
+  },
+  reminder: {
+    username: String,
+    desc: String,
+    added_date: {type: Date, default: Date.now}
   }
 }

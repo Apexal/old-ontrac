@@ -1,7 +1,7 @@
 aside#sidebar
   br
   section.center  
-    img#sidebar-pic.user-badge(src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg", data-username=currentUser.username)
+    img#sidebar-pic.user-badge(title="Looking good!", src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg", data-username=currentUser.username)
     br
     #user-status.dropdown
       b.dropdown-toggle(data-toggle="dropdown") Online
@@ -33,7 +33,7 @@ aside#sidebar
     ul.nav
       li
         a(href="#", data-target="#reminders-modal", data-toggle="modal") Reminders
-          span.badge.right 0
+          span.badge.right#reminders-count 0 
       li
         a(href="#") Grades
           span.badge.right 0

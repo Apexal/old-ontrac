@@ -222,6 +222,22 @@ span.badge {
   color: #606060;
 }
 
+#reminder-form input {
+  width: 80%;
+}
+#reminder-form button {
+  width: 20%;
+}
+
+@media (max-width: 768px) {
+  #reminder-form input {
+    width: 100%;
+  }
+  #reminder-form button {
+    width: 100%;
+  }
+}
+
 /* User List Page */
 
 @media (max-width: 768px) {

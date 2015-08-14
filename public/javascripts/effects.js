@@ -1,5 +1,5 @@
 $(function() {
-
+  var username = $('#send-message').data("username");
   // Prevent disabled nav links from being clicked
   $(".nav li.disabled a").click(function() {
      return false;
@@ -40,7 +40,7 @@ $(function() {
           type: 'GET',
           url: "/api/user/"+username,
           success: function(data) {
-            if(data){
+            if(data != "Not authorized."){
               var title = data.firstName + " " + data.lastName;
               console.log(data);
               var coursenames = ['None!'];
@@ -58,10 +58,10 @@ $(function() {
               var grade = "";
               switch(adv) {
                 case "1":
-                  grade = "Freshman";
+                  grade = "Frosh";
                   break;
                 case "2":
-                  grade = "Sophmore";
+                  grade = "Soph.";
                   break;
                 case "3":
                   grade = "Junior";
@@ -89,7 +89,7 @@ $(function() {
                                       "            <br><b>"+data.points+" points</b>" +
                                       "        </div>" +
                                       "        <div class='col-xs-12 col-sm-9'>" +
-                                      "             <h3 class='no-margin'><b>"+grade+"</b> "+data.firstName + " " +data.lastName+"</h3><br>" +
+                                      "             <h3 class='no-margin'><b>"+grade+"</b> "+data.firstName + " " +data.lastName+" of <b>"+data.advisement+"</b></h3><br>" +
                                       "             <div class='well well-sm'>" +
                                       "                 <b>Bio: </b><span>"+bio + "</span><br>" +
                                       "                 <b>Classes: </b><span>"+coursenames.join(',  ')+"</span>" +
@@ -183,4 +183,66 @@ $(function() {
     var show = (localStorage['show-chat'] == 1 ? 0 : 1);
     set_chat(show);
   });
+
+
+
+
+
+
+
+
+
+  // REMINDERS
+  function reminders(){
+    var reminders = [];
+    if(username){
+      $.ajax({
+        type: 'GET',
+        url: "/reminders/all",
+        success: function(data) {
+          if(data.reminders && data.reminders.length != 0){
+            reminders = data.reminders;
+            $("#reminders-count").text(reminders.length);
+            $("#reminder-table tr").remove();
+            for(reminder in reminders){
+              $("#reminder-table").append("<tr class='reminder' data-id='"+reminders[reminder]._id+"'><td title='Added "+moment(reminders[reminder].date_added).fromNow()+"'>"+reminders[reminder].desc+"</td></tr>");
+            }
+          }else{
+            $("#reminder-table tr").remove();
+            $("#reminder-table").append("<tr><td class='center'>No reminders!</td></tr>");
+          }
+          $(".reminder").click(removeReminder);
+        }
+      });
+    }
+  }
+  reminders();
+
+
+  var removeReminder = function() {
+    console.log("click");
+    if(confirm("Remove this reminder?")){
+      var id = $(this).data("id");
+      $.post("/reminders/remove", {id: id}, function(data) {
+        if(data.success == true){
+          reminders();
+        }
+      });
+    }
+  }
+
+  $("#reminder-form").submit(function(){return false;});
+  $("#add-reminder").click(function() {
+    if($("#reminder-desc").val()){
+      $.post("/reminders/add", {desc: $("#reminder-desc").val()}, function(data) {
+        if(data.success == true){
+          reminders();
+          $("#reminder-desc").val("");
+        }
+      });
+    }
+  });
+
+
+
 });
