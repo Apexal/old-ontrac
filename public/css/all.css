@@ -190,6 +190,18 @@ span.badge {
   width: 80px;
 }
 
+
+/* USER MODAL */
+
+.user-modal .modal-pic{
+  max-width: 100px;
+}
+
+.user-badge {
+  cursor: pointer;
+}
+
+
 /* REMINDER MODAL */
 
 #reminder-form input {

@@ -10,6 +10,7 @@ module.exports = {
     lastName: String,
     username: String,
     code: String,
+    mpicture: String,
     email: String,
     friends: [{ type: Schema.Types.ObjectId, ref: 'Student'}],
     advisement: String,

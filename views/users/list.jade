@@ -8,11 +8,12 @@ block content
       
     .page-header
       h1(title="The cool guys.") Registered Users
+        
         if tableForm == false
           a.btn.btn-default.right(href="/users?table=1") Table Form
         else
           a.btn.btn-default.right(href="/users") Regular Form
-
+        
     .row
       .col-xs-12
         form.form-inline#search.hidden
@@ -52,15 +53,7 @@ block content
       .col-xs-12
         .page-header
           h2 All Users
-            small.right
-              nav
-                ul.pagination.pagination-sm
-                  li
-                    a(href='#', aria-label='Previous')
-                      span(aria-hidden='true') «
-                  li
-                    a(href='#', aria-label='Next')
-                      span(aria-hidden='true') »
+            small.right #{users.length} total
     .row
       .col-xs-12
         table.table.user-table
@@ -70,6 +63,8 @@ block content
             th Name
           for user in users
             tr(class=(currentUser && user.username == currentUser.username ? "success" : ""))
+              td
+                img.table-pic(class=(loggedIn ? "user-badge" : ""), data-username=user.username, src=user.mpicture)
               td.larger(style="vertical-align: middle;")
                 a.undecorated(href="/advisements/"+user.advisement)= user.advisement
               td.larger(style="vertical-align: middle")= user.gradeName

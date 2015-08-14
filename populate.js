@@ -38,6 +38,10 @@ setTimeout(function() {
         students.forEach(function(s){
           var classes = s.sclasses;
           var courses = [];
+          if(!s.mpicture){
+            s.mpicture = "/images/person-placeholder.jpg";
+            s.save();
+          }
           if(classes){
             classes.forEach(function(c) {
               Course.findOne({mID: c}, function(err, cs) {

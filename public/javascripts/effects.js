@@ -93,32 +93,6 @@ $(function() {
      return false;
    });
 
-  // Use the API to get user info for each user badge present on the page
-
-    /*$('.user-badge').tooltipster({
-      content: 'Loading...',
-      interactive: true,
-      theme: 'tooltipster-shadow',
-      functionBefore: function(origin, continueTooltip) {
-        continueTooltip();
-        var username = origin.text();
-        if (origin.data('ajax') !== 'cached') {
-          $.ajax({
-            type: 'GET',
-            url: "/api/user/"+username,
-            success: function(data) {
-              var content = "";
-              if(data.code != "Uknown")
-                content+="<img src='https://webeim.regis.org/photos/regis/Student/"+data.code+".jpg'>";
-              content += "<b>"+data.firstName+" "+data.lastName+"</b> of <b>"+data.advisement+"</b>";// update our tooltip content with our returned data and cache it
-              origin.tooltipster('content', $(content)).data('ajax', 'cached');
-            },
-            dataType: "json"
-          });
-        }
-      }
-    });*/
-
   userbadges();
 
 

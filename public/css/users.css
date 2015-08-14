@@ -60,11 +60,3 @@
   margin: 0 auto;
   max-width: 200px;
 }
-
-.user-modal .modal-pic{
-  max-width: 100px;
-}
-
-.user-badge {
-  cursor: pointer;
-}
