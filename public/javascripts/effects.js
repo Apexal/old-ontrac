@@ -5,8 +5,11 @@ $(function() {
      return false;
    });
 
-  userbadges();
-  teacherbadges();
+  if(username){
+    userbadges();
+    teacherbadges();
+  }
+
 
   // Animate the knobs to random percentages (for now)
   // TODO: remove this when I finish the view

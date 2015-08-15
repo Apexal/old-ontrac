@@ -120,6 +120,7 @@ def extract(ID, html):
                     "department": department,
                     "firstName": name_parts[1],
                     "lastName": name_parts[0],
+                    "username": name_parts[1].lower()[0].replace(" ", "") + name_parts[0].lower().replace(" ", ""),
                     "email": name_parts[1].lower()[0].replace(" ", "") + name_parts[0].lower().replace(" ",
                                                                                                        "") + "@regis.org",
                     "sclasses": classes

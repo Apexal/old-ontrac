@@ -19,7 +19,7 @@ router.get('/user/:username', function(req, res) {
 
 router.get('/teacher/:username', function(req, res) {
   var username = req.params.username;
-  req.Teacher.findOne({email: username+"@regis.org"}).populate('courses', 'title mID').exec(function(err, teacher) {
+  req.Teacher.findOne({username: username}).populate('courses', 'title mID').exec(function(err, teacher) {
     if (err)
       res.send(err);
     res.json(teacher);

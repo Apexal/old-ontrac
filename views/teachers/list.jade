@@ -27,12 +27,8 @@ block content
             if helpers.isReach(t.department) == false
               tr
                 td
-                  a(href="/teachers/"+t.mID)
-                    img(src=t.image)
+                  img(class=(loggedIn ? "teacher-badge" : ""), data-username=t.username, src=t.image)
                 td
-                  h3= t.firstName + " " + t.lastName
+                  h3(class=(loggedIn ? "teacher-badge" : ""), data-username=t.username)= t.firstName + " " + t.lastName
                 td
                   h4= t.department
-
-    .row
-      .col-xs-12

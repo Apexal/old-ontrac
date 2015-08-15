@@ -17,8 +17,12 @@ function userbadges(){
                 coursenames.push(data.courses[c].title);
               }
             }
-            var imgsrc = (data.registered ? "https://webeim.regis.org/photos/regis/Student/"+data.code+".jpg" : data.mpicture);
 
+            var points = "Not registered";
+            if(data.registered)
+              points = data.points + " points";
+
+            var imgsrc = (data.registered ? "https://webeim.regis.org/photos/regis/Student/"+data.code+".jpg" : data.mpicture);
             var bio = (data.bio ? data.bio : "Not set yet!");
 
             var adv = data.advisement.charAt(0);
@@ -51,12 +55,12 @@ function userbadges(){
                   "                <div class='modal-body'>" +
                                     "<div class='container-fluid'>" +
                                     "    <div class='row'>" +
-                                    "        <div class='col-xs-12 col-sm-3 center'>" +
+                                    "        <div class='col-xs-12 col-sm-3 center-xs'>" +
                                     "            <img class='modal-pic' title='Looking good!' src='"+imgsrc+"'>" +
-                                    "            <br><b>"+data.points+" points</b>" +
+                                    "            <br><b>"+points+"</b>" +
                                     "        </div>" +
                                     "        <div class='col-xs-12 col-sm-9'>" +
-                                    "             <h3 class='no-margin'><b>"+grade+"</b> "+data.firstName + " " +data.lastName+" of <b>"+data.advisement+"</b></h3><br>" +
+                                    "             <h3 class='no-margin center'><b>"+grade+"</b> "+data.firstName + " " +data.lastName+" of <b>"+data.advisement+"</b></h3><br>" +
                                     "             <div class='well well-sm'>" +
                                     "                 <b>Bio: </b><span>"+bio + "</span><br>" +
                                     "                 <b>Classes: </b><span>"+coursenames.join(',  ')+"</span>" +

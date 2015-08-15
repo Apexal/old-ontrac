@@ -87,7 +87,7 @@ app.use(restricted, function(req, res, next) {
   if(req.toJade.loggedIn){
     next();
   }else{
-    res.redirect("/home?redir="+req._parsedUrl.pathname);
+    res.redirect("/?redir="+req._parsedUrl.pathname);
   }
 });
 
@@ -97,6 +97,8 @@ app.use('/*', function(req, res, next) {
   var cssName = "index.css";
   if(req.baseUrl.split("/")[1])
     cssName = req.baseUrl.split("/")[1].replace("/", "") + ".css";
+  if(req.baseUrl == "/home")
+    cssName = "index.css";
   req.toJade.cssName = cssName;
   next();
 });

@@ -88,5 +88,4 @@ mixin class(course)
         h1.panel-title
           a(href="/courses/"+course.mID)= course.title
           if course.teacher
-            small.right
-              a(href="/teachers/"+course.teacher.mID)= course.teacher.lastName
+            small.right.teacher-badge(data-username=course.teacher.username)= course.teacher.lastName
