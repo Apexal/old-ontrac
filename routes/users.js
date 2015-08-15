@@ -5,16 +5,28 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   req.toJade.title = "Users";
   req.toJade.tableForm = (req.query.table == "1" ? true : false);
+  req.toJade.registered = false;
 
-  req.Student.find({}, 'registered firstName lastName advisement code username rank mpicture').sort({advisement: 1}).exec(function(err, users){
+  var perPage = 10;
+  var pages = (530/10);
+  var pageNum = (req.query.page ? parseInt(req.query.page) : 1);
+
+  req.Student.find({registered: true}, function(err, registered){
     if(err) console.log(err);
-    req.toJade.users = users;
-    req.toJade.registered = users.filter(function(user) {
-      //console.log((user.registered == true ? user.username : ""));
-      return (user.registered == true);
+    req.toJade.registered = registered;
+    req.Student.find({}, 'registered firstName lastName advisement code username rank mpicture').sort({advisement: 1}).skip(perPage*(pageNum-1)).limit(perPage).exec(function(err, users){
+      if(err) console.log(err);
+      req.toJade.users = users;
+      req.toJade.pageNum = pageNum;
+      req.toJade.prev = ((pageNum-1) <= 0 ? pages : (pageNum-1));
+      req.toJade.next = ((pageNum+1) > pages ? 1 : (pageNum+1));
+      req.toJade.pages = pages;
+      console.log(req.toJade);
+      res.render('users/list', req.toJade);
     });
-    res.render('users/list', req.toJade);
   });
+
+
 });
 
 router.get("/profile", function(req, res) {
@@ -25,7 +37,6 @@ router.get("/:username", function(req, res){
   var username = req.params.username;
   req.toJade.user = false;
   req.toJade.title = "Not a User";
-
   req.Student.findOne({registered: true, username: username}).populate('courses', 'tID title mID').exec(function(err, user) {
     if(err) throw err;
 
@@ -53,7 +64,6 @@ router.get("/:username/schedule", function(req, res){
     }
   });
 });
-
 
 module.exports = function(io) {
   return {router: router, models: ['Student', 'Teacher']}

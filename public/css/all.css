@@ -201,6 +201,11 @@ span.badge {
   cursor: pointer;
 }
 
+/* TEACHER MODAL */
+.teacher-badge {
+  cursor: pointer;
+}
+
 
 /* REMINDER MODAL */
 

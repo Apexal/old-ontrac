@@ -18,12 +18,12 @@ module.exports = {
     courses: [{ type: Schema.Types.ObjectId, ref: 'Course'}],
     rank: {type: Number, default: 0},
     statuses: [{when: Date, text: String, default: []}],
-    points: Number,
-    login_count: Number,
-    last_login_time: Date,
-    last_point_login_time: Date,
+    points: {type: Number, default: 0},
+    login_count: {type: Number, default: 0},
+    last_login_time: {type: Date, default: Date.now},
+    last_point_login_time: {type: Date, default: Date.now},
     preferences: Object,
-    registered_date: Date,
+    registered_date: {type: Date, default: Date.now},
     registered: Boolean
   },
   advisement : {
@@ -80,7 +80,8 @@ module.exports = {
   gradedItem: {
     course: { type: Schema.Types.ObjectId, ref: 'Course' },
     num_grade: {type: Number, min: 0, max: 100},
-    string_grade: {type: String, enum: ['F', 'U', 'S', 'M', 'H', 'HH']}
+    string_grade: {type: String, enum: ['F', 'U', 'S', 'M', 'H', 'HH']},
+    comments: {type: String, default: "No comment."}
   },
   reminder: {
     username: String,

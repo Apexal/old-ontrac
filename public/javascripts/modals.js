@@ -18,9 +18,13 @@ function userbadges(){
               }
             }
 
+            var button = "";
+
             var points = "Not registered";
-            if(data.registered)
+            if(data.registered){
               points = data.points + " points";
+              button = "<a class='btn btn-primary' href='/users/"+username+"'>View Full Profile</a>";
+            }
 
             var imgsrc = (data.registered ? "https://webeim.regis.org/photos/regis/Student/"+data.code+".jpg" : data.mpicture);
             var bio = (data.bio ? data.bio : "Not set yet!");
@@ -71,8 +75,7 @@ function userbadges(){
                   "                </div>" +
                   "                <div class='modal-footer'>" +
                   "                    <button class='btn btn-default' data-dismiss='modal' type=" +
-                  "                    'button'>Close</button> <a class='btn btn-primary'" +
-                  "                    href='/users/"+username+"'>View Full Profile</a>" +
+                  "                    'button'>Close</button>" + button +
                   "                </div>" +
                   "            </div>" +
                   "        </div>" +

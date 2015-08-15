@@ -103,12 +103,6 @@ def extract(ID, html):
                     "advisement": department,
                     "sclasses": classes,
                     "rank": 0,
-                    "points": 0,
-                    "login_count": 0,
-                    "last_login_time": datetime.datetime(2000, 1, 1, 0, 0, 0),
-                    "last_point_login_time": datetime.datetime(2000, 1, 1, 0, 0, 0),
-                    "preferences": {},
-                    "registered_date": datetime.datetime(2000, 1, 1, 0, 0, 0),
                     "registered": False
                 }
                 print "Student " + str(ID) + ": " + str(db.students.insert_one(out).inserted_id)
