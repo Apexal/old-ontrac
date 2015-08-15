@@ -5,11 +5,19 @@ router.get("/", function(req, res, next) {
   req.toJade.title = "Teachers";
   req.toJade.teachers = false;
 
-  var sortBy = (req.query.sortBy ? req.query.sortBy : "");
-  req.Teacher.find({}).sort(sortBy).exec(function(err, teachers) {
-    if(err) throw err;
+  var perPage = 10;
+  var pages = (270/10);
+  var pageNum = (req.query.page ? parseInt(req.query.page) : 1);
 
+  var sortBy = (req.query.sortBy ? req.query.sortBy : "");
+  req.Teacher.find({}).skip(perPage*(pageNum-1)).limit(perPage).exec(function(err, teachers) {
+    if(err) throw err;
     if(teachers){
+      req.toJade.pageNum = pageNum;
+      req.toJade.prev = ((pageNum-1) <= 0 ? pages : (pageNum-1));
+      req.toJade.next = ((pageNum+1) > pages ? 1 : (pageNum+1));
+      req.toJade.pages = pages;
+
       req.toJade.teachers = teachers;
     };
     req.toJade.sortBy = sortBy;

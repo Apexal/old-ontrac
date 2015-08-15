@@ -6,6 +6,7 @@ router.get('/', function(req, res, next) {
   req.toJade.title = "Users";
   req.toJade.tableForm = (req.query.table == "1" ? true : false);
   req.toJade.registered = false;
+  req.toJade.users = false;
 
   var perPage = 10;
   var pages = (530/10);
@@ -13,15 +14,17 @@ router.get('/', function(req, res, next) {
 
   req.Student.find({registered: true}, function(err, registered){
     if(err) console.log(err);
-    req.toJade.registered = registered;
+    if(registered)
+      req.toJade.registered = registered;
     req.Student.find({}, 'registered firstName lastName advisement code username rank mpicture').sort({advisement: 1}).skip(perPage*(pageNum-1)).limit(perPage).exec(function(err, users){
       if(err) console.log(err);
-      req.toJade.users = users;
-      req.toJade.pageNum = pageNum;
-      req.toJade.prev = ((pageNum-1) <= 0 ? pages : (pageNum-1));
-      req.toJade.next = ((pageNum+1) > pages ? 1 : (pageNum+1));
-      req.toJade.pages = pages;
-      console.log(req.toJade);
+      if(users){
+        req.toJade.users = users;
+        req.toJade.pageNum = pageNum;
+        req.toJade.prev = ((pageNum-1) <= 0 ? pages : (pageNum-1));
+        req.toJade.next = ((pageNum+1) > pages ? 1 : (pageNum+1));
+        req.toJade.pages = pages;
+      }
       res.render('users/list', req.toJade);
     });
   });
