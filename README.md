@@ -11,7 +11,7 @@ life while at the same time providing an easy, customized
 platform for organization and collaboration with their classmates and schoolmates.
 
 * adiutor, adiutoris (m) - helper, assistant
-* v0.7.0
+* Alpha v0.8.5
 * Make Regis eas*ier*
 * Track homework, projects, tests, quizzes, grades, notes, tasks, reminders, friends, schedules, meetings, clubs, groups, and more all in one place at the same time.
 
@@ -25,7 +25,7 @@ platform for organization and collaboration with their classmates and schoolmate
     * pymongo
     * lxml
     * json
-* npm install, npm scrape, npm populate, npm run
+* npm install, npm setup, npm run
 * Go to http://localhost:3000
 * ???
 * Profit

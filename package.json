@@ -1,6 +1,6 @@
 {
   "name": "adiutor",
-  "version": "0.8.1",
+  "version": "0.8.5",
   "private": true,
   "author": "Frank Matranga <thefrankmatranga@gmail.com>",
   "contributors": [
@@ -10,8 +10,7 @@
     }
   ],
   "scripts": {
-    "scrape": "python2 scrape.py",
-    "populate": "node populate",
+    "setup": "python2 connect.py",
     "watch": "nodemon app",
     "start": "node app"
   },
