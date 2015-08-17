@@ -36,7 +36,7 @@ def extract(ID, html):
         if "Advisement " in name:
             out = {
                 "tID": teacher,
-                "title": name,
+                "title": name.replace("Advisement ", ""),
                 "mID": ID
             }
             print "Advisement " + str(ID) + ": " + str(db.advisements.insert_one(out).inserted_id)
@@ -59,6 +59,7 @@ def extract(ID, html):
                 courseType = "reach"
 
             out = {
+                "full": title,
                 "courseType": courseType,
                 "mID": ID,
                 "title": name,
@@ -101,7 +102,7 @@ def extract(ID, html):
 
         try:
             if userType == "student":
-                username = name_parts[1][0].lower() + name_parts[0].lower() + str(19 - int(f))
+                username = name_parts[1].lower()[0].replace(" ", "").replace("\'", "") + name_parts[0].lower().replace("\'", "").replace(" ", "") + str(19 - int(f))
                 out = {
                     "mID": ID,
                     "firstName": name_parts[1],
@@ -116,21 +117,25 @@ def extract(ID, html):
                     "rank": 0,
                     "registered": False
                 }
+                newID = db.students.insert_one(out).inserted_id
+                print "Student " + str(ID) + ": " + str(newID)
+                db.advisements.update_one({title: department}, {"$push": {"students": newID}})
 
-                print "Student " + str(ID) + ": " + str(db.students.insert_one(out).inserted_id)
-                for c in classes:
-                    course = collect.find_one({"mID": c})
-                    if course:
-                        print "COURSE:", course.title
-                        collect.update_one({
-                          '_id': course['_id']
-                        },{
-                          '$push': {
-                            'students': newID
-                          }
-                        }, upsert=False)
-                        db.students.update_one({"_id": newID}, {"$push": {"courses": course['_id']}})
+                if classes:
+                    for c in classes:
+                        course = collect.find_one({"mID": c})
+                        if course:
+                            print "COURSE:", course['title']
+                            collect.update_one({
+                              '_id': course['_id']
+                            },{
+                              '$push': {
+                                'students': newID
+                              }
+                            }, upsert=False)
+                            db.students.update_one({"_id": newID}, {"$push": {"courses": course['_id']}})
             else:
+                username = name_parts[1].lower()[0].replace(" ", "").replace("\'", "") + name_parts[0].lower().replace("\'", "").replace(" ", "")
                 out = {
                     "userType": userType,
                     "mID": ID,
@@ -138,7 +143,7 @@ def extract(ID, html):
                     "department": department,
                     "firstName": name_parts[1],
                     "lastName": name_parts[0],
-                    "username": name_parts[1].lower()[0].replace(" ", "") + name_parts[0].lower().replace(" ", ""),
+                    "username": username,
                     "email": name_parts[1].lower()[0].replace(" ", "") + name_parts[0].lower().replace(" ",
                                                                                                        "") + "@regis.org",
                     "sclasses": classes,
@@ -148,22 +153,23 @@ def extract(ID, html):
                 print "Teacher " + str(ID) + ": " + str(newID)
                 for c in classes:
                     course = collect.find_one({"mID": c})
-                    if course and (not "Club" in course.title) and (not "Department" in course.title):
-                        print "COURSE:", course.title
-                        collect.update_one({
-                          '_id': course['_id']
-                        },{
-                          '$set': {
-                            'teacher': newID
-                          }
-                        }, upsert=False)
-                    db.teachers.update_one({"_id": newID}, {"$push": {"courses": course['_id']}})
+                    if course:
+                        if name_parts[0] in course["full"]:
+                            print "COURSE:", course['title']
+                            collect.update_one({
+                              '_id': course['_id']
+                            },{
+                              '$set': {
+                                'teacher': newID
+                              }
+                            }, upsert=False)
+                        db.teachers.update_one({"_id": newID}, {"$push": {"courses": course['_id']}})
 
 
-            raw_input("Continue?")
+        #raw_input("Continue?")
 
         except Exception as e:
-            print "ERROR: " + str(e)
+            print e
 
 
 def main():
@@ -187,7 +193,7 @@ def main():
     print "Removed ", db.courses.delete_many({}).deleted_count, "courses"
     print "Removed ", db.advisements.delete_many({}).deleted_count, "advisements"
 
-    #scrape(1, 700, "http://moodle.regis.org/course/view.php?id=", session)
+    scrape(1, 600, "http://moodle.regis.org/course/view.php?id=", session)
     scrape(1, 2500, "http://moodle.regis.org/user/profile.php?id=", session)
 
 
