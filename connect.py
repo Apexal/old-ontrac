@@ -20,7 +20,7 @@ username = secrets['regis_username']
 password = secrets['regis_password']
 
 client = MongoClient('mongodb://localhost:27017/')
-db = client['registest']
+db = client['regis']
 
 
 def extract(ID, html):
