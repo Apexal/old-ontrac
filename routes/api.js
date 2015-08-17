@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var moment = require('moment');
 
 router.get("/*", function(req, res, next) {
   if(req.loggedIn)
@@ -26,6 +27,31 @@ router.get('/teacher/:username', function(req, res) {
   });
 });
 
+
+router.get('/work/:date', function(req, res) {
+  var dateString = req.params.date;
+
+  if(moment(dateString, 'YYYY-MM-DD', true).isValid() == false){
+    res.json({error: "Invalid date!"});
+  }else{
+    var date = moment(dateString, 'YYYY-MM-DD', true);
+    req.Day.findOne({username: req.currentUser.username, date: date.toDate()})
+      .deepPopulate('items.homework items.tests items.quizzes items.essays')
+      .exec(function(err, day) {
+        if (err) throw err;
+        if(day){
+          if(day.work)
+            res.json({work: day.items});
+          else
+            res.json({work: []});
+        }else{
+          res.json({error: "No such day!"});
+        }
+      });
+  }
+
+});
+
 module.exports = function(io) {
-  return {router: router, models: ['Student', 'Teacher']}
+  return {router: router, models: ['Student', 'Teacher', 'Day', 'GradedItem']}
 };

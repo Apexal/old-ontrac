@@ -119,7 +119,7 @@ db.once('open', function (callback) {
   var HWItem = mongoose.model('HWItem', hwItemSchema);
 
   var gradedItemSchema = new Schema(schemas.gradedItem);
-  var GradedItem = mongoose.model('gradedItem', gradedItemSchema);
+  var GradedItem = mongoose.model('GradedItem', gradedItemSchema);
 
   module.exports.HWItem = HWItem;
   module.exports.Course = Course;

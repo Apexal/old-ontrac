@@ -13,7 +13,7 @@ block content
       .row
         .col-xs-12.text-center
           if day != false
-            b#schedule-day(title="Click to change!") #{day.scheduleDay}-Day 
+            b#schedule-day.set(title="Click to change!") #{day.scheduleDay}-Day 
           else
             b#schedule-day(title="Click to set!") No Schedule Day!
             

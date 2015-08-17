@@ -29,7 +29,7 @@ router.get("/:mID", function(req, res, next) {
   var mID = req.params.mID;
   req.toJade.teacher = false;
 
-  req.Teacher.findOne({mID: mID}, function(err, teacher) {
+  req.Teacher.findOne({mID: mID}).populate('courses', 'mID title').exec(function(err, teacher) {
     if(err) throw err;
 
     if(teacher) {

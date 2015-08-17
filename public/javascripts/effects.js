@@ -145,8 +145,8 @@ $(function() {
     $.post("/login", {username: username, password: password}, function(data) {
       $("#login-errors b").remove();
       if(data.errors){
-        for (err in errors){
-          $("#login-errors").append("<b class='text-danger'>"+err+"</b><br>");
+        for (err in data.errors){
+          $("#login-errors").append("<b class='text-danger'>"+data.errors[err]+"</b><br>");
         }
       }else{
         window.location.href=$("#login-form").data("redirect");

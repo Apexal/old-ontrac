@@ -17,7 +17,6 @@ router.get('/logs', function(req, res) {
     if(err) throw err;
 
     if(logs){
-      console.log(logs[0]);
       req.toJade.logs = logs;
       res.render('admin/logs', req.toJade);
     }

@@ -24,6 +24,7 @@ router.get('/:mID', function(req, res) {
     if(err) throw err;
 
     if(course){
+      console.log(course.teacher);
       req.toJade.course = course;
     }
     res.render('courses/one', req.toJade);

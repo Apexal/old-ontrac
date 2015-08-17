@@ -7,12 +7,24 @@ block content
       h1(style="text-transform: capitalize") Welcome to Adiutor
       p.
         In just #[b= moment("2015-09-09").fromNow(true)] it will begin again. The work, the stress, the responsibilities. If only there
-        was a way to make it all easier. What if you could alleviate some of the stress of Regis High School by using a service that
-        allows you to track your academic career while also providing other useful social utilities at the same time?
-
+        was a way to make it all easier.
+    
     .row
-      //.col-xs-12.col-sm-6.col-md-5.center
-      //  img.panel.panel-default(style="width: 100%; max-width: 300px;", src="http://www.xavierhs.org/s/81/images/editor/tom/regis.jpg")
+      .col-xs-12.col-sm-6.col-md-5.center
+        img.panel.panel-default(style="width: 100%; max-width: 300px;", src="http://www.xavierhs.org/s/81/images/editor/tom/regis.jpg")
+      .col-xs-12.col-sm-6.col-md-7.no-margin
+        .page-header.no-margin
+          h3.no-margin What is it?
+        br
+        p.
+          #[b Adiutor] is a free, online Web service created specifically to allow Regis
+          students to get a better grasp on their academic life while at the same 
+          time providing an easy, customized platform for organization and collaboration
+          with their classmates and schoolmates.
+        
+        p No
+    .row
+      
       .col-xs-12.col-sm-6
         .panel.panel-primary
           .panel-heading
@@ -37,26 +49,22 @@ block content
     .row
       .col-xs-12.center
           h3 Sign in to Adiutor #[b(style="cursor: pointer;",data-toggle="modal", data-target="#login-modal") here] with your Regis credentials and get started. It's that easy!
-    .row
-      .col-xs-12
-        .progress
-          .progress-bar.progress-bar-striped.active(role="progressbar", aria-valuenow="40", aria-valuemin="0", aria-valuemax="100", style="width: 40%")
-            span.sr-only 40% ready
+    
     .row
       .col-xs-12
         
     .row
       .col-xs-12
         a(class="twitter-timeline", data-widget-id="268815703732260864", href="https://twitter.com/regisalerts", data-tweet-limit="10") Tweets by @regisalerts
-    hr
+    .row
+      .col-xs-12
+        hr
+        .progress
+          .progress-bar.progress-bar-striped.active(role="progressbar", aria-valuenow="40", aria-valuemin="0", aria-valuemax="100", style="width: 40%")
+            span.sr-only 40% ready
     .row
       .col-xs-12.text-center
         a.btn.btn-primary(target="_blank", href="https://github.com/Apexal/adiutor") Source Code
-        a.btn.btn-default(target="_blank", href="http://www.regis.org/") Regis Site
-        a.btn.btn-default(target="_blank", href="http://intranet.regis.org/") Intranet
-        a.btn.btn-default(target="_blank", href="http://moodle.regis.org/my/") Moodle
-        a.btn.btn-default(target="_blank", href="https://owa.regis.org/") OWA
-        a.btn.btn-default(target="_blank", href="https://myfiles.regis.org/") MyFiles
     
     #tweet
       script.

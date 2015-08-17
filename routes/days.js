@@ -148,17 +148,21 @@ router.post('/remove', function(req, res) {
 });
 
 
+// Every post request to a date passes thrpugh here first.
+// If a Day does not exist for the date, it creates one and passes it on
 router.post('/:date/*', function(req, res, next) {
   var dateString = req.toJade.dateString = req.params.date;
 
   if(moment(dateString, 'YYYY-MM-DD', true).isValid()){
     var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true);
+    req.makeNewDay = false;
     req.Day.findOne({username: req.currentUser.username, date: date.toDate()}, function(err, day) {
       if(err) throw err;
       if(day){
         req.toJade.day = day;
       }else{
-        var sd = req.query.sd;
+        req.makeNewDay = true;
+        var sd = req.body.scheduleDay;
         var newDay = new req.Day();
         newDay.date = date.toDate();
         newDay.scheduleDay = sd;
@@ -169,6 +173,7 @@ router.post('/:date/*', function(req, res, next) {
           quizzes: [],
           projects: []
         };
+        newDay.save();
         req.toJade.day = newDay;
       }
       next();
@@ -176,6 +181,25 @@ router.post('/:date/*', function(req, res, next) {
   }else{
     new req.Log({what: "Homework POST to invalid date", who: req.currentUser._id});
   }
+});
+
+router.post('/:date/create', function(req, res) {
+  if(req.makeNewDay){
+    res.json({success: true});
+    new req.Log({who: req.currentUser._id, what: "Created day for "+req.toJade.dateString}).save();
+  }else{
+    res.json({error: 'Day already exists!'});
+  }
+});
+
+router.post('/:date/setsd', function(req, res) {
+  console.log("SET SD TO "+req.body.scheduleDay);
+  req.toJade.day.scheduleDay = req.body.scheduleDay;
+  req.toJade.day.save(function(err) {
+    if(err) throw err;
+    res.json({success: true});
+    new req.Log({who: req.currentUser._id, what: "Changed scheduleDay for "+req.toJade.dateString}).save();
+  });
 });
 
 router.post('/:date/homework', function(req, res) {

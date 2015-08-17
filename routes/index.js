@@ -64,7 +64,7 @@ router.post('/login', function(req, res, next) {
               request({
                   url: 'http://intranet.regis.org/functions/view_profile.cfm', //URL to hit
                   jar: cookieJar,
-                  method: 'GET',
+                  method: 'GET'
               }, function(error, response, html){
                 if(error) {
                     console.log(error);
@@ -73,7 +73,6 @@ router.post('/login', function(req, res, next) {
                   var $ = cheerio.load(html);
 
                   // SUCCESSFULLY LOGGED IN, IS THIS USER REGISTERED?
-
 
                   if(user.registered == false){
                     // NO, get his Student ID and register him!
@@ -87,10 +86,10 @@ router.post('/login', function(req, res, next) {
 
                     new req.Log({who: user._id, what: "Registration."}).save();
                   }
-                    // REGISTER THIS USER
 
                   user.login_count +=1;
 
+                  // Give points if last time points were given was over 5 minutes ago
                   var fiveMinAgo = moment().subtract(5, 'minutes');
                   if(moment(user.last_point_login_time).isBefore(fiveMinAgo)){
                     user.points += 10;
@@ -103,7 +102,7 @@ router.post('/login', function(req, res, next) {
                   user.save();
 
                   new req.Log({who: user._id, what: "Login."}).save();
-                  req.session.quietlogin = false;
+                  req.session.quietlogin = false; // The actual user logged in, not an admin
                 }
                 done();
               });
@@ -112,13 +111,10 @@ router.post('/login', function(req, res, next) {
       });
     }
     function done(){
-      //req.session.errs = errs;
       if(errs.length > 0)
         res.json({errors: errs});
-        //res.redirect("/login");
       else
         res.json({success: true});
-        //res.redirect(req.query.redir);
     }
   });
 });

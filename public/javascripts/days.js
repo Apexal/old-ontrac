@@ -4,6 +4,19 @@ $(function() {
   var scheduleDay = $("#schedule-day");
   scheduleDay.click(function() {
     var newSD = prompt("Set the schedule day: ");
+    if(['A', 'B', 'C', 'D', 'E'].indexOf(newSD) > -1){
+      var path = ($(this).hasClass("set") ? "setsd" : "create" );
+      $.post("/days/"+date+"/"+path, {scheduleDay: newSD}, function(data) {
+        if(data.error){ alert(data.error);}
+        if(data.success == true){
+          //alert("Successfully set schedule-day!");
+          $("#schedule-day").text(newSD+"-Day");
+          $("#schedule-day").addClass("set");
+        }else {
+          alert("Failed to set schedule-day.");
+        }
+      });
+    }
   });
 
   var hwdial = $("#hw-dial");
