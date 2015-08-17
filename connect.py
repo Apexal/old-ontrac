@@ -20,7 +20,7 @@ username = secrets['regis_username']
 password = secrets['regis_password']
 
 client = MongoClient('mongodb://localhost:27017/')
-db = client['regis']
+db = client['registest']
 
 
 def extract(ID, html):
@@ -62,7 +62,7 @@ def extract(ID, html):
                 "courseType": courseType,
                 "mID": ID,
                 "title": name,
-                #"tID": teacher,
+                "students": [],
                 "grade": grade
             }
             print "Course " + str(ID) + ": " + str(db.courses.insert_one(out).inserted_id)
@@ -91,10 +91,13 @@ def extract(ID, html):
         if department.startswith("REACH"):
             userType = "other"
 
-        picsrc = ""
+        picsrc = "/images/person-placeholder.jpg"
 
         for img in html.xpath('//img[@class=\'userpicture\']'):
             picsrc = img.get("src")
+
+        collect = db.courses
+        courses = []
 
         try:
             if userType == "student":
@@ -108,11 +111,25 @@ def extract(ID, html):
                     "mpicture": picsrc,
                     "email": username + "@regis.org",
                     "advisement": department,
+                    "courses": courses,
                     "sclasses": classes,
                     "rank": 0,
                     "registered": False
                 }
+
                 print "Student " + str(ID) + ": " + str(db.students.insert_one(out).inserted_id)
+                for c in classes:
+                    course = collect.find_one({"mID": c})
+                    if course:
+                        print "COURSE:", course.title
+                        collect.update_one({
+                          '_id': course['_id']
+                        },{
+                          '$push': {
+                            'students': newID
+                          }
+                        }, upsert=False)
+                        db.students.update_one({"_id": newID}, {"$push": {"courses": course['_id']}})
             else:
                 out = {
                     "userType": userType,
@@ -124,11 +141,30 @@ def extract(ID, html):
                     "username": name_parts[1].lower()[0].replace(" ", "") + name_parts[0].lower().replace(" ", ""),
                     "email": name_parts[1].lower()[0].replace(" ", "") + name_parts[0].lower().replace(" ",
                                                                                                        "") + "@regis.org",
-                    "sclasses": classes
+                    "sclasses": classes,
+                    "courses": courses
                 }
-                print "Teacher " + str(ID) + ": " + str(db.teachers.insert_one(out).inserted_id)
+                newID = db.teachers.insert_one(out).inserted_id
+                print "Teacher " + str(ID) + ": " + str(newID)
+                for c in classes:
+                    course = collect.find_one({"mID": c})
+                    if course and (not "Club" in course.title) and (not "Department" in course.title):
+                        print "COURSE:", course.title
+                        collect.update_one({
+                          '_id': course['_id']
+                        },{
+                          '$set': {
+                            'teacher': newID
+                          }
+                        }, upsert=False)
+                    db.teachers.update_one({"_id": newID}, {"$push": {"courses": course['_id']}})
+
+
+            raw_input("Continue?")
+
         except Exception as e:
             print "ERROR: " + str(e)
+
 
 def main():
     print "Logging in... ",
@@ -151,7 +187,7 @@ def main():
     print "Removed ", db.courses.delete_many({}).deleted_count, "courses"
     print "Removed ", db.advisements.delete_many({}).deleted_count, "advisements"
 
-    scrape(1, 700, "http://moodle.regis.org/course/view.php?id=", session)
+    #scrape(1, 700, "http://moodle.regis.org/course/view.php?id=", session)
     scrape(1, 2500, "http://moodle.regis.org/user/profile.php?id=", session)
 
 

@@ -117,7 +117,10 @@ setTimeout(function() {
                 if(course){
                   console.log("Added Course "+mID+" to Teacher "+t.mID);
                   classes.push(course._id);
-                  course.teacher = t._id;
+                  if(course.title.indexOf("Club") == -1 && course.title.indexOf("Department") == -1){
+                    course.teacher = t._id;
+                    course.save();
+                  }
                   t.courses = classes;
                   t.save();
                 }
