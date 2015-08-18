@@ -68,7 +68,7 @@ function effects() {
         }
         localStorage["show-chat"] = show;
     };
-    if (localStorage['show-chat'] === false) {
+    if (localStorage['show-chat'] == false) {
         set_chat(0);
     }
     $("#toggle-chat").click(function() {

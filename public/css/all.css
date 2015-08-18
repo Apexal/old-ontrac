@@ -194,12 +194,11 @@ span.badge {
   width: 80px;
 }
 
-
-/* USER MODAL */
-
-.user-modal .modal-pic{
+.modal-pic{
   max-width: 100px;
 }
+
+/* USER MODAL */
 
 .user-badge {
   cursor: pointer;

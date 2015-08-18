@@ -10,7 +10,7 @@ router.get("/", function(req, res, next) {
   var pageNum = (req.query.page ? parseInt(req.query.page) : 1);
 
   var sortBy = (req.query.sortBy ? req.query.sortBy : "");
-  req.Teacher.find({}).skip(perPage*(pageNum-1)).limit(perPage).exec(function(err, teachers) {
+  req.Teacher.find({}).sort({sortBy: -1}).skip(perPage*(pageNum-1)).limit(perPage).exec(function(err, teachers) {
     if(err) throw err;
     if(teachers){
       req.toJade.pageNum = pageNum;
