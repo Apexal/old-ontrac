@@ -7,7 +7,29 @@ var moment = require('moment');
 /* ----------------------------- */
 
 router.get('/', function(req, res) {
-  res.render('days/index', req.toJade);
+  req.toJade.title = "Days";
+  var perPage = 10;
+  var pageNum = (req.query.page ? parseInt(req.query.page) : 1);
+  req.toJade.days = false;
+
+  req.Day.count({username: req.currentUser.username, date: {$lt: moment(req.today).add(5, 'days').toDate()}}, function(err, count) {
+    req.toJade.pages = pages = (count/perPage);
+    req.Day.find({username: req.currentUser.username, date: {$lt: moment(req.today).add(5, 'days').toDate()}})
+      .sort({date: -1})
+      .skip(perPage*(pageNum-1))
+      .limit(perPage)
+      .exec(function(err, days) {
+        console.log(days);
+        if(err) console.log(err);
+        if(days){
+          req.toJade.days = days;
+          req.toJade.pageNum = pageNum;
+          req.toJade.prevP = ((pageNum-1) <= 0 ? pages : (pageNum-1));
+          req.toJade.nextP = ((pageNum+1) > pages ? 1 : (pageNum+1));
+        }
+        res.render('days/index', req.toJade);
+      });
+  });
 });
 
 router.get(['/closest'], function(req, res) {
@@ -15,7 +37,7 @@ router.get(['/closest'], function(req, res) {
     if(err) throw err;
 
     if(day){
-      res.redirect("/days"+moment(day.date).format("YYYY-MM-DD"));
+      res.redirect("/days/"+moment(day.date).format("YYYY-MM-DD"));
     }else{
       res.redirect("/days/today");
     }

@@ -4,6 +4,17 @@
   padding-right: 30px;
 }
 
+.day-list-info {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.day-list-info .has {
+  font-weight: bold;
+}
+
 /* Homework Pages */
 
 #schedule-day {

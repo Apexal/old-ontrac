@@ -26,11 +26,11 @@ block content
               th Full Name
               th Department
           for t in teachers
-            if helpers.isReach(t.department) == false
-              tr
-                td
-                  img(class=(loggedIn ? "teacher-badge" : ""), data-username=t.username, src=t.image)
-                td
-                  h3(class=(loggedIn ? "teacher-badge" : ""), data-username=t.username)= t.firstName + " " + t.lastName
-                td
-                  h4= t.department
+            //if helpers.isReach(t.department) == false
+            tr
+              td
+                img.table-pic(class=(loggedIn ? "teacher-badge" : ""), data-username=t.username, src=t.image)
+              td
+                h3(class=(loggedIn ? "teacher-badge" : ""), data-username=t.username)= t.firstName + " " + t.lastName
+              td
+                h4= t.department

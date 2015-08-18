@@ -27,6 +27,10 @@ a.undecorated {
   font-weight: inherit;
 }
 
+.table-pic {
+  width: 50px;
+}
+
 .right {
   float: right;
 }

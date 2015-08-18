@@ -16,17 +16,21 @@ router.get('/', function(req, res, next) {
     if(err) console.log(err);
     if(registered)
       req.toJade.registered = registered;
-    req.Student.find({}, 'registered firstName lastName advisement code username rank mpicture').sort({advisement: 1}).skip(perPage*(pageNum-1)).limit(perPage).exec(function(err, users){
-      if(err) console.log(err);
-      if(users){
-        req.toJade.users = users;
-        req.toJade.pageNum = pageNum;
-        req.toJade.prev = ((pageNum-1) <= 0 ? pages : (pageNum-1));
-        req.toJade.next = ((pageNum+1) > pages ? 1 : (pageNum+1));
-        req.toJade.pages = pages;
-      }
-      res.render('users/list', req.toJade);
-    });
+    req.Student.find({}, 'registered firstName lastName advisement code username rank mpicture')
+      .sort({advisement: 1})
+      .skip(perPage*(pageNum-1))
+      .limit(perPage)
+      .exec(function(err, users){
+        if(err) console.log(err);
+        if(users){
+          req.toJade.users = users;
+          req.toJade.pageNum = pageNum;
+          req.toJade.prev = ((pageNum-1) <= 0 ? pages : (pageNum-1));
+          req.toJade.next = ((pageNum+1) > pages ? 1 : (pageNum+1));
+          req.toJade.pages = pages;
+        }
+        res.render('users/list', req.toJade);
+      });
   });
 
 
