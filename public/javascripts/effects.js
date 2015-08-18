@@ -143,6 +143,7 @@ function effects() {
     $("#login-form").submit(function() {
         var username = $("#username").val();
         var password = $("#password").val();
+        $("#login-button").text("Logging in...");
         $.post("/login", {
             username: username,
             password: password
@@ -154,6 +155,7 @@ function effects() {
                         "<b class='text-danger'>" +
                         data.errors[err] + "</b><br>");
                 }
+                $("#login-button").text("Login");
             } else {
                 window.location.href = $("#login-form").data(
                     "redirect");
