@@ -9,7 +9,7 @@ var autoprefix = require('gulp-autoprefixer');
 var minifyCSS = require('gulp-minify-css');
 
 gulp.task('jshint', function() {
-  gulp.src(['./public/javascripts/*.js', '!./public/javascripts/jquery.knob.js'])
+  return gulp.src(['./public/javascripts/*.js', '!./public/javascripts/jquery.knob.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
 });
@@ -17,7 +17,7 @@ gulp.task('jshint', function() {
 // JS concat, strip debugging and minify
 
 gulp.task('scripts', function() {
-  gulp.src(['./public/javascripts/modals.js', './public/javascripts/effects.js', './public/javascripts/sockets.js', './public/javascripts/lib.js'])
+  return gulp.src(['./public/javascripts/modals.js', './public/javascripts/effects.js', './public/javascripts/sockets.js', './public/javascripts/lib.js'])
     .pipe(concat('script.js'))
     .pipe(stripDebug())
     .pipe(uglify())
@@ -28,7 +28,7 @@ gulp.task('scripts', function() {
 
 // CSS concat, auto-prefix and minify
 gulp.task('styles', function() {
-  gulp.src(['./public/css/*.css'])
+  return gulp.src(['./public/css/*.css'])
     .pipe(concat('styles.css'))
     .pipe(autoprefix('last 2 versions'))
     .pipe(minifyCSS())
@@ -37,12 +37,8 @@ gulp.task('styles', function() {
 
 gulp.task('default', ['scripts', 'styles'], function() {
   // watch for JS changes
-  gulp.watch('./public/javascripts/*.js', function() {
-    gulp.run('jshint', 'scripts');
-  });
+  gulp.watch('./public/javascripts/*.js', ['jshint', 'scripts']);
 
   // watch for CSS changes
-  gulp.watch('./public/css/*.css', function() {
-    gulp.run('styles');
-  });
+  gulp.watch('./public/css/*.css', ['styles']);
 });
