@@ -8,7 +8,7 @@ $(function() {
       var path = ($(this).hasClass("set") ? "setsd" : "create" );
       $.post("/days/"+date+"/"+path, {scheduleDay: newSD}, function(data) {
         if(data.error){ alert(data.error);}
-        if(data.success == true){
+        if(data.success === true){
           //alert("Successfully set schedule-day!");
           $("#schedule-day").text(newSD+"-Day");
           $("#schedule-day").addClass("set");
@@ -37,10 +37,11 @@ $(function() {
       duration: 1000,
       easing: 'swing',
       progress: function () {
-        hwdial.val(Math.ceil(this.value)).trigger('change')
+        hwdial.val(Math.ceil(this.value)).trigger('change');
       }
     });
-  }
+  };
+  
   percentsAndDials();
 
   $(".assignment").click(function() {

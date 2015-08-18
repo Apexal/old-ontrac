@@ -34,10 +34,14 @@ html
       include /parts/footer
     
     script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js")
-    if loggedIn
-      script(src='/javascripts/modals.js')
-    script(src='/javascripts/effects.js')
-    if loggedIn
-      script(src='/socket.io/socket.io.js')
+    script(src='/socket.io/socket.io.js')
+    script(src="/build/js/script.js")
+    //
+      if loggedIn
+        script(src='/javascripts/modals.js')
+      script(src='/javascripts/effects.js')
+      if loggedIn
+        
       script(src='/javascripts/sockets.js')
+    
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js')

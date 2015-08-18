@@ -1,4 +1,4 @@
-$(function() {
+function sockets() {
   var chat_notification = new Audio('/sounds/ding.mp3');
 
   var full = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
@@ -122,7 +122,7 @@ $(function() {
             part += "<img src='https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg'>";
           part += "<small title='"+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'class='left padded'>"+when.fromNow()+"</small>";
 
-          part += "<div class='padded clearfix'>"
+          part += "<div class='padded clearfix'>";
           part += "<b><a class='undecorated' title='"+user.username+"'href='/users/"+user.username+"'>"+user.name+"</a></b><br>";
           part += "<span>"+message+"</span>";
           part += "</div>";
@@ -134,7 +134,7 @@ $(function() {
           else
             part += "<img src='https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg'>";
 
-          part += "<div class='padded clearfix'>"
+          part += "<div class='padded clearfix'>";
           part += "<b><a class='undecorated' title='"+user.username+"'href='/users/"+user.username+"'>"+user.name+"</a></b><br>";
           part += "<span>"+message+"</span>";
           part += "</div>";
@@ -148,9 +148,8 @@ $(function() {
     }
     $("#chat-messages").html(html);
     $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
-  }
+  };
 
-  var messages = [];
   socket.on('message', function (data) {
     if(data.message) {
         messages.push(data);
@@ -185,5 +184,4 @@ $(function() {
   $('#chat-message').on('keydown', outgoingMessageKeyDown);
   $('#chat-message').on('keyup', outgoingMessageKeyUp);
   $('#send-message').on('click', sendMessage);
-
-});
+}

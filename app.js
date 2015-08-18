@@ -5,11 +5,12 @@ var express = require("express")
   , bodyParser = require("body-parser")
   , io = require("./modules/sockets")(http);
 
+var compression = require('compression');
 var fs = require("fs");
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
+//var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var colors = require('colors');
 var session = require('express-session');
@@ -31,10 +32,11 @@ var sessionMiddleware = session({
 
 // Soon
 //app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(compression());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+//app.use(cookieParser());
 io.use(function(socket, next) {
     sessionMiddleware(socket.request, socket.request.res, next);
 });
@@ -149,10 +151,10 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+  req.toJade.title = "Oh come on.";
+  req.toJade.message = err.message;
+  req.toJade.error = "There was an error! Please try again later.";
+  res.render('error', req.toJade);
 });
 
 var port = normalizePort(process.env.PORT || config.port);

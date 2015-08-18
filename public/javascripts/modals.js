@@ -2,7 +2,7 @@ function userbadges(){
   $(".user-badge").click(function() {
     var username = $(this).data("username");
 
-    if($("#"+username+"-modal").length == 0){
+    if($("#"+username+"-modal").length === 0){
       $.ajax({
         type: 'GET',
         url: "/api/user/"+username,
@@ -13,7 +13,7 @@ function userbadges(){
             var coursenames = ['None!'];
             if(data.courses.length > 0){
               coursenames=[];
-              for(c in data.courses){
+              for(var c in data.courses){
                 coursenames.push(data.courses[c].title);
               }
             }
@@ -98,7 +98,7 @@ function teacherbadges(){
   $(".teacher-badge").click(function() {
     var username = $(this).data("username");
 
-    if($("#"+username+"-modal").length == 0){
+    if($("#"+username+"-modal").length === 0){
       $.ajax({
         type: 'GET',
         url: "/api/teacher/"+username,
@@ -109,7 +109,7 @@ function teacherbadges(){
             var coursenames = ['None!'];
             if(data.courses.length > 0){
               coursenames=[];
-              for(c in data.courses){
+              for(var c in data.courses){
                 coursenames.push(data.courses[c].title);
               }
             }
