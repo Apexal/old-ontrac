@@ -10,7 +10,7 @@
     }
   ],
   "scripts": {
-    "setup": "python2 connect.py",
+    "setup": "python2 connect.py; bower install; gulp;",
     "watch": "nodemon app.js",
     "debug": "DEBUG=express:* node ./app.js",
     "start": "NODE_ENV=production node ./app.js"

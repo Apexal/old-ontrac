@@ -11,10 +11,17 @@
     "school"
   ],
   "license": "MIT",
+  "dependencies": {
+    "bootstrap": "latest",
+    "fontawesome": "latest",
+    "jquery": "latest",
+    "jquery-ui": "latest",
+    "moment": "latest"
+  },
   "ignore": [
     "**/.*",
     "node_modules",
-    "bower_components",
+    "public/components",
     "test",
     "tests"
   ]

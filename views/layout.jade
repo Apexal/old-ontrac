@@ -10,7 +10,7 @@ html
 
     title= title
     
-    link(rel="stylesheet", href="/build/css/styles.css")
+    link(rel="stylesheet", href="/css/styles.css")
     link(rel="stylesheet", href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/black-tie/jquery-ui.css")
     link(rel='stylesheet', href='//bootswatch.com/cosmo/bootstrap.min.css')
     
@@ -34,8 +34,5 @@ html
     if loggedIn
       include /parts/footer
     
-    //script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js")
     script(src='/socket.io/socket.io.js')
-    script(src="/build/js/script.js")
-    
-    //script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js')
+    script(src="/js/script.js")
