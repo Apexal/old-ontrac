@@ -16,7 +16,6 @@ var files = {
 }
 
 // JS concat, strip debugging and minify
-
 gulp.task('scripts', function() {
   return gulp.src(files.js)
     .pipe(concat('script.js'))
@@ -26,6 +25,12 @@ gulp.task('scripts', function() {
 });
 
 
+// JS hint task
+gulp.task('jshint', function() {
+  gulp.src(['./assets/js/*.js', '!./assets/js/jquery.knob.js'])
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'));
+});
 
 // CSS concat, auto-prefix and minify
 gulp.task('styles', function() {
@@ -36,9 +41,9 @@ gulp.task('styles', function() {
     .pipe(gulp.dest('./public/css/'));
 });
 
-gulp.task('default', ['scripts', 'styles'], function() {
+gulp.task('default', ['jshint', 'scripts', 'styles'], function() {
   // watch for JS changes
-  gulp.watch('./assets/js/*.js', ['scripts']);
+  gulp.watch('./assets/js/*.js', ['jshint', 'scripts']);
 
   // watch for CSS changes
   gulp.watch('./assets/css/*.css', ['styles']);

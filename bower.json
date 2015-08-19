@@ -16,7 +16,8 @@
     "fontawesome": "latest",
     "jquery": "latest",
     "jquery-ui": "latest",
-    "moment": "latest"
+    "moment": "latest",
+    "d3": "latest"
   },
   "ignore": [
     "**/.*",

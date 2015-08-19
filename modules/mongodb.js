@@ -7,9 +7,9 @@ mongoose.connect('mongodb://127.0.0.1/'+config.db);
 var db = mongoose.connection;
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
-db.on('error', console.error.bind(console, 'Failed to connect to database:'));
+db.on('error', function(err) {console.error("Failed to connect to Database: "); throw err;});/*console.error.bind(console, 'Failed to connect to database:'));*/
 db.once('open', function (callback) {
-  console.log('Connected to database\n');
+  console.log('Connected to database "'+config.db+'"\n');
 
   var studentSchema = new Schema(schemas.student);
 

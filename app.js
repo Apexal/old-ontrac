@@ -2,23 +2,22 @@
 var express = require("express")
   , app = express()
   , http = require("http").createServer(app)
+  , Promise = require("bluebird")
   , bodyParser = require("body-parser")
-  , io = require("./modules/sockets")(http);
-
-var compression = require('compression');
-var fs = require("fs");
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-//var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var colors = require('colors');
-var session = require('express-session');
-var helpers = require('./modules/helpers');
-var moment = require('moment');
-var config = require('./modules/config');
-var mongo = require('./modules/mongodb');
-var school_years = require('./modules/years');
+  , io = require("./modules/sockets")(http)
+  , compression = require('compression')
+  , fs = require("fs")
+  , path = require('path')
+  , favicon = require('serve-favicon')
+  , logger = require('morgan')
+  , bodyParser = require('body-parser')
+  , colors = require('colors')
+  , session = require('express-session')
+  , helpers = require('./modules/helpers')
+  , moment = require('moment')
+  , config = require('./modules/config')
+  , mongo = require('./modules/mongodb')
+  , school_years = require('./modules/years');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -96,17 +95,11 @@ app.use(restricted, function(req, res, next) {
 // So Jade knows what nav links to set as active
 app.use('/*', function(req, res, next) {
   req.toJade.page = req.baseUrl;
-  var cssName = "index.css";
-  if(req.baseUrl.split("/")[1])
-    cssName = req.baseUrl.split("/")[1].replace("/", "") + ".css";
-  if(req.baseUrl == "/home")
-    cssName = "index.css";
-  req.toJade.cssName = cssName;
   next();
 });
 
 // =================================ROUTES=================================
-// This dynamicaly (if that's spelled right) adds all routes in the routes
+// This dynamically adds all routes in the routes
 // folder and gives them access to whatever Mongo collections they ask for
 fs.readdirSync("./routes/").forEach(function(path) {
   if(fs.lstatSync("./routes/"+path).isDirectory() == false){
@@ -157,8 +150,7 @@ app.use(function(err, req, res, next) {
   res.render('error', req.toJade);
 });
 
-var port = normalizePort(process.env.PORT || config.port);
-app.set('port', port);
+app.set('port', normalizePort(config.port));
 app.set("ipaddr", config.ip);
 
 function normalizePort(val) {
