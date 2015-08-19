@@ -1,6 +1,6 @@
 {
   "name": "adiutor",
-  "version": "0.8.7",
+  "version": "0.9.0",
   "private": true,
   "author": "Frank Matranga <thefrankmatranga@gmail.com>",
   "contributors": [
@@ -10,7 +10,7 @@
     }
   ],
   "scripts": {
-    "setup": "python2 connect.py; bower install; gulp;",
+    "setup": "python2 connect.py",
     "watch": "nodemon app.js",
     "debug": "DEBUG=express:* node ./app.js",
     "start": "NODE_ENV=production node ./app.js"
