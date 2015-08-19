@@ -8,16 +8,17 @@ var uglify = require('gulp-uglify');
 var autoprefix = require('gulp-autoprefixer');
 var minifyCSS = require('gulp-minify-css');
 
-gulp.task('jshint', function() {
-  return gulp.src(['./public/javascripts/*.js', '!./public/javascripts/jquery.knob.js'])
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'));
-});
+var bowerPath = "./public/components";
+
+var files = {
+  js: [bowerPath+'/jquery/dist/jquery.min.js', bowerPath+'/jquery-ui/jquery-ui.min.js', bowerPath+'/moment/moment.js', bowerPath+'/bootstrap/dist/js/bootstrap.min.js','./public/javascripts/*.js', './public/javascripts/jquery.knob.js'],
+  css: [bowerPath+'/bootstrap/dist/css/bootstrap.min.css', bowerPath+'/fontawesome/css/font-awesome.min.css', './public/css/*.css']
+}
 
 // JS concat, strip debugging and minify
 
 gulp.task('scripts', function() {
-  return gulp.src(['./public/javascripts/modals.js', './public/javascripts/effects.js', './public/javascripts/sockets.js', './public/javascripts/lib.js'])
+  return gulp.src(files.js)
     .pipe(concat('script.js'))
     .pipe(stripDebug())
     .pipe(uglify())
@@ -28,7 +29,7 @@ gulp.task('scripts', function() {
 
 // CSS concat, auto-prefix and minify
 gulp.task('styles', function() {
-  return gulp.src(['./public/css/*.css'])
+  return gulp.src(files.css)
     .pipe(concat('styles.css'))
     .pipe(autoprefix('last 2 versions'))
     .pipe(minifyCSS())
@@ -37,7 +38,7 @@ gulp.task('styles', function() {
 
 gulp.task('default', ['scripts', 'styles'], function() {
   // watch for JS changes
-  gulp.watch('./public/javascripts/*.js', ['jshint', 'scripts']);
+  gulp.watch('./public/javascripts/*.js', ['scripts']);
 
   // watch for CSS changes
   gulp.watch('./public/css/*.css', ['styles']);

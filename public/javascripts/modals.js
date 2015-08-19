@@ -1,5 +1,5 @@
 function userbadges(){
-  $(".user-badge").click(function() {
+  $(".user-badge").off("click").click(function() {
     var username = $(this).data("username");
 
     if($("#"+username+"-modal").length === 0){
@@ -95,7 +95,7 @@ function userbadges(){
 
 
 function teacherbadges(){
-  $(".teacher-badge").click(function() {
+  $(".teacher-badge").off("click").click(function() {
     var username = $(this).data("username");
 
     if($("#"+username+"-modal").length === 0){

@@ -1,0 +1,21 @@
+{
+  "name": "adiutor",
+  "version": "0.8.7",
+  "homepage": "https://github.com/Apexal/adiutor",
+  "authors": [
+    "Frank Matranga <thefrankmatranga@gmail.com>"
+  ],
+  "description": "Making Regis a little easier.",
+  "main": "app.js",
+  "keywords": [
+    "school"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
