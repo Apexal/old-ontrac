@@ -5,3 +5,4 @@ components
 public/game/
 views/game.jade
 routes/_game.js
+npm-debug.log
