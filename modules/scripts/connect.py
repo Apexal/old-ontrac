@@ -6,7 +6,7 @@
 # Loop through advisements to remove 'Advisement ' from title and add its students
 
 
-
+import os
 import requests, sys
 from lxml import html
 from time import sleep
@@ -15,7 +15,8 @@ import datetime
 import pymongo
 from pymongo import MongoClient
 
-secrets = json.loads(open("./modules/secrets.json").read())
+path = os.path.abspath(os.path.join(os.path.dirname(__file__),"..")) + "/secrets.json"
+secrets = json.loads(open(path).read())
 username = secrets['regis_username']
 password = secrets['regis_password']
 
@@ -173,7 +174,7 @@ def extract(ID, html):
 
 
 def main():
-    print "Logging in... ",
+    print "Logging in... "
     url = "https://moodle.regis.org/login/index.php"
     values = {'username': username, 'password': password}
     session = requests.Session()

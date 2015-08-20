@@ -25,10 +25,11 @@ platform for organization and collaboration with their classmates and schoolmate
     * pymongo
     * lxml
     * json
-* npm install, npm setup
+* Copy secrets-example.json to secrets.json with your info
+* npm install, npm run setup
 * bower install
 * gulp
-* npm run
+* npm start
 * Go to http://localhost:3000
 
 ### How can I help? ###

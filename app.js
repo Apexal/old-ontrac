@@ -101,8 +101,8 @@ app.use('/*', function(req, res, next) {
 // =================================ROUTES=================================
 // This dynamically adds all routes in the routes
 // folder and gives them access to whatever Mongo collections they ask for
-fs.readdirSync("./routes/").forEach(function(path) {
-  if(fs.lstatSync("./routes/"+path).isDirectory() == false){
+fs.readdirSync("./modules/routes/").forEach(function(path) {
+  if(fs.lstatSync("./modules/routes/"+path).isDirectory() == false){
     var name = ( path == "index.js" ? '' : path.replace('.js', ''));
     var current = require('./routes/'+path)(io);
     app.use('/'+name, function(req, res, next) {

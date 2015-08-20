@@ -10,7 +10,7 @@
     }
   ],
   "scripts": {
-    "setup": "python2 /modules/scripts/connect.py",
+    "setup": "python2 ./modules/scripts/connect.py",
     "watch": "nodemon app.js",
     "debug": "DEBUG=express:* node ./app.js",
     "start": "NODE_ENV=production node ./app.js"
