@@ -104,7 +104,7 @@ app.use('/*', function(req, res, next) {
 fs.readdirSync("./modules/routes/").forEach(function(path) {
   if(fs.lstatSync("./modules/routes/"+path).isDirectory() == false){
     var name = ( path == "index.js" ? '' : path.replace('.js', ''));
-    var current = require('./routes/'+path)(io);
+    var current = require('./modules/routes/'+path)(io);
     app.use('/'+name, function(req, res, next) {
       var models = current.models;
       if(models.length > 0){

@@ -10,6 +10,7 @@
     }
   ],
   "scripts": {
+    "db": "./modules/scripts/mongod",
     "setup": "python2 ./modules/scripts/connect.py",
     "watch": "nodemon app.js",
     "debug": "DEBUG=express:* node ./app.js",
