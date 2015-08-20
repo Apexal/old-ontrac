@@ -1,6 +1,6 @@
 {
   "name": "adiutor",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "private": true,
   "author": "Frank Matranga <thefrankmatranga@gmail.com>",
   "contributors": [
@@ -10,7 +10,7 @@
     }
   ],
   "scripts": {
-    "setup": "python2 connect.py",
+    "setup": "python2 /modules/scripts/connect.py",
     "watch": "nodemon app.js",
     "debug": "DEBUG=express:* node ./app.js",
     "start": "NODE_ENV=production node ./app.js"
