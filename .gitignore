@@ -1,6 +1,6 @@
 node_modules/
-data
-components
+data/
+vendor/
 *secrets.json
 public/game/
 views/game.jade

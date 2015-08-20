@@ -1,0 +1,15 @@
+div
+  ul.nav.nav-tabs(role='tablist')
+    li.active(role='presentation')
+      a(href='#home', aria-controls='home', role='tab', data-toggle='tab') Home
+    li(role='presentation')
+      a(href='#profile', aria-controls='profile', role='tab', data-toggle='tab') Profile
+    li(role='presentation')
+      a(href='#messages', aria-controls='messages', role='tab', data-toggle='tab') Messages
+    li(role='presentation')
+      a(href='#settings', aria-controls='settings', role='tab', data-toggle='tab') Settings
+  .tab-content
+    #home.tab-pane.active(role='tabpanel') tab1
+    #profile.tab-pane(role='tabpanel') tab2
+    #messages.tab-pane(role='tabpanel') tab3
+    #settings.tab-pane(role='tabpanel') tab4

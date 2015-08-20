@@ -8,7 +8,7 @@ var uglify = require('gulp-uglify');
 var autoprefix = require('gulp-autoprefixer');
 var minifyCSS = require('gulp-minify-css');
 
-var bowerPath = "./components";
+var bowerPath = "./vendor";
 
 var files = {
   js: [bowerPath+'/jquery/dist/jquery.min.js', bowerPath+'/jquery-ui/jquery-ui.min.js', bowerPath+'/moment/moment.js', bowerPath+'/bootstrap/dist/js/bootstrap.min.js','./assets/js/*.js'],
