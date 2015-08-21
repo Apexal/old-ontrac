@@ -9,10 +9,14 @@ var autoprefix = require('gulp-autoprefixer');
 var minifyCSS = require('gulp-minify-css');
 
 var bowerPath = "./vendor";
+var jsPath = "./assets/js";
 
 var files = {
-  js: [bowerPath+'/jquery/dist/jquery.min.js', bowerPath+'/jquery-ui/jquery-ui.min.js', bowerPath+'/moment/moment.js', bowerPath+'/bootstrap/dist/js/bootstrap.min.js','./assets/js/*.js'],
-  css: [bowerPath+'/bootstrap/dist/css/bootstrap.min.css', bowerPath+'/fontawesome/css/font-awesome.min.css', './assets/css/*.css']
+  js: [bowerPath+'/jquery/dist/jquery.min.js', bowerPath+'/jquery-ui/jquery-ui.min.js',
+    bowerPath+'/moment/moment.js', bowerPath+'/bootstrap/dist/js/bootstrap.min.js',
+    jsPath+'/*.js'],
+  css: [bowerPath+'/bootstrap/dist/css/bootstrap.min.css',
+    bowerPath+'/fontawesome/css/font-awesome.min.css', './assets/css/*.css']
 }
 
 // JS concat, strip debugging and minify

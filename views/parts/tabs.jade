@@ -1,7 +1,7 @@
 div
   ul.nav.nav-tabs(role='tablist')
     li.active(role='presentation')
-      a(href='#home', aria-controls='home', role='tab', data-toggle='tab') Home
+      a(href='#work-tab', aria-controls='work', role='tab', data-toggle='tab') Upcoming Work
     li(role='presentation')
       a(href='#profile', aria-controls='profile', role='tab', data-toggle='tab') Profile
     li(role='presentation')
@@ -9,7 +9,20 @@ div
     li(role='presentation')
       a(href='#settings', aria-controls='settings', role='tab', data-toggle='tab') Settings
   .tab-content
-    #home.tab-pane.active(role='tabpanel') tab1
+    #work-tab.tab-pane.active(role='tabpanel')
+      .row
+        .col-xs-12.col-sm-6
+          p test ste ts etst etse tste
     #profile.tab-pane(role='tabpanel') tab2
+      .col-xs-12.col-sm-6
+        .panel.panel-default
+          .panel-body
+            h3.no-margin Upcoming
+            br
+            p test ste ts etst etse tste
     #messages.tab-pane(role='tabpanel') tab3
     #settings.tab-pane(role='tabpanel') tab4
+
+
+    
+  

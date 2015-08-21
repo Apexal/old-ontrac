@@ -5,30 +5,15 @@ block content
     include /info
     .jumbotron
       h1(style="text-transform: capitalize") Hello, #{currentUser.firstName}
-      p.
+      p.magictime.swashIn.
         You have #[b 5 tests], #[b 6 homework assignments], 2 friend requests
-    
     .row
-      .col-xs-12.col-sm-6
-        .panel.panel-default
-          .panel-body
-            h3.no-margin Today
-            br
-            p test ste ts etst etse tste
-      .col-xs-12.col-sm-6
-        .panel.panel-default
-          .panel-body
-            h3.no-margin Upcoming
-            br
-            p test ste ts etst etse tste
+      .col-xs-12
+        include /parts/tabs
     .row
       .col-xs-12.center
         img(style="height: 100%; max-height: 500px;", src="/images/graph.png")
     hr
-    .row
-      .col-xs-12
-        include /parts/tabs
-    hrs
     .row
       .col-xs-12.col-sm-6.col-md-4
         .panel.panel-default#reminders-panel

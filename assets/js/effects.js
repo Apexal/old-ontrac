@@ -9,6 +9,11 @@ function effects() {
         userbadges();
         teacherbadges();
     }
+
+    $("#sidebar-pic").hover(function() {
+      alert("GOO");
+      $(this).addClass("swashOut");
+    });
     // Animate the knobs to random percentages (for now)
     // TODO: remove this when I finish the view
     $('.dial').each(function() {

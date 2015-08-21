@@ -13,7 +13,7 @@ var express = require("express")
   , bodyParser = require('body-parser')
   , colors = require('colors')
   , session = require('express-session')
-  , helpers = require('./modules/helpers')
+  , utils = require('./modules/utils')
   , moment = require('moment')
   , config = require('./modules/config')
   , mongo = require('./modules/mongodb')
@@ -43,7 +43,7 @@ app.use(sessionMiddleware);
 app.use(express.static(path.join(__dirname, 'public')));
 app.locals.basedir = path.join(__dirname, 'views');
 app.locals.moment = moment;
-app.locals.helpers = helpers;
+app.locals.helpers = utils;
 
 app.use(function(req, res, next) {
   console.log(("\nRequest from "+req.connection.remoteAddress).blue.bold +(req.session.currentUser ? " by "+req.session.currentUser.username : "")+" at "+(moment().format("dddd, MMMM Do YYYY, h:mm:ss a")).green.bold);
