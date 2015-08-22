@@ -36,7 +36,6 @@ function sockets() {
   });
 
 
-
   // Online User List
 
   function update_online_list() {

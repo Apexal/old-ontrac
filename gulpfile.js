@@ -28,6 +28,10 @@ gulp.task('scripts', function() {
     .pipe(gulp.dest('public/'));
 });
 
+gulp.task('fonts', function() {
+  gulp.src([bowerPath+'/fontawesome/fonts/*'])
+    .pipe(gulp.dest('public/fonts'))
+});
 
 // JS hint task
 gulp.task('jshint', function() {
@@ -45,7 +49,7 @@ gulp.task('styles', function() {
     .pipe(gulp.dest('./public/'));
 });
 
-gulp.task('default', ['jshint', 'scripts', 'styles'], function() {
+gulp.task('default', ['jshint', 'scripts', 'styles', 'fonts'], function() {
   // watch for JS changes
   gulp.watch(jsPath+'/*.js', ['jshint', 'scripts']);
 

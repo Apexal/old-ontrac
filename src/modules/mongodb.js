@@ -1,6 +1,6 @@
 // Database stuff
 var mongoose = require('mongoose');
-var config = require('./config');
+var config = require('../config');
 var Schema = mongoose.Schema;
 var schemas = require('./schemas');
 mongoose.connect('mongodb://127.0.0.1/'+config.db);

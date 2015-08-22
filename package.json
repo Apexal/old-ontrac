@@ -12,9 +12,9 @@
   "scripts": {
     "db": "src/scripts/mongod",
     "setup": "python2 src/scripts/connect.py",
-    "watch": "nodemon src/app.js",
-    "debug": "DEBUG=express:* node src/app.js",
-    "start": "NODE_ENV=production node src/app.js"
+    "watch": "nodemon app.js",
+    "debug": "DEBUG=express:* node app.js",
+    "start": "NODE_ENV=production node app.js"
   },
   "repository": {
     "type": "git",

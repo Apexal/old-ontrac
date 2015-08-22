@@ -4,7 +4,7 @@ var express = require("express")
   , http = require("http").createServer(app)
   , Promise = require("bluebird")
   , bodyParser = require("body-parser")
-  , io = require("./src/sockets")(http)
+  , io = require("./src/modules/sockets")(http)
   , compression = require('compression')
   , fs = require("fs")
   , path = require('path')
@@ -13,11 +13,11 @@ var express = require("express")
   , bodyParser = require('body-parser')
   , colors = require('colors')
   , session = require('express-session')
-  , utils = require('./src/utils')
+  , utils = require('./src/modules/utils')
   , moment = require('moment')
   , config = require('./src/config')
-  , mongo = require('./src/mongodb')
-  , school_years = require('./src/years');
+  , mongo = require('./src/modules/mongodb')
+  , school_years = require('./src/modules/years');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
