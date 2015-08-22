@@ -1,6 +1,6 @@
 {
   "name": "adiutor",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "private": true,
   "author": "Frank Matranga <thefrankmatranga@gmail.com>",
   "contributors": [
@@ -10,11 +10,11 @@
     }
   ],
   "scripts": {
-    "db": "./modules/scripts/mongod",
-    "setup": "python2 ./modules/scripts/connect.py",
-    "watch": "nodemon app.js",
-    "debug": "DEBUG=express:* node ./app.js",
-    "start": "NODE_ENV=production node ./app.js"
+    "db": "src/scripts/mongod",
+    "setup": "python2 src/scripts/connect.py",
+    "watch": "nodemon src/app.js",
+    "debug": "DEBUG=express:* node src/app.js",
+    "start": "NODE_ENV=production node src/app.js"
   },
   "repository": {
     "type": "git",

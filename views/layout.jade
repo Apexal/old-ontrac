@@ -10,9 +10,8 @@ html
 
     title= title
     
-    link(rel="stylesheet", href="/css/styles.css")
+    link(rel="stylesheet", href="/style.css")
     link(rel="stylesheet", href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/black-tie/jquery-ui.css")
-    link(rel='stylesheet', href='//bootswatch.com/cosmo/bootstrap.min.css')
     link(rel="stylesheet", href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css")
 
   body
@@ -36,6 +35,6 @@ html
       include /parts/footer
     
     script(src='/socket.io/socket.io.js')
-    script(src="/js/script.js")
+    script(src="/script.js?9999")
     if openLogin
       script $(function(){$("#login-modal").modal()})

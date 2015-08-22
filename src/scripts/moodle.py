@@ -6,7 +6,8 @@ from time import sleep
 import json
 import datetime
 
-secrets = json.loads(open("./modules/secrets.json").read())
+path = os.path.abspath(os.path.join(os.path.dirname(__file__),"..")) + "/secrets.json"
+secrets = json.loads(open(path).read())
 username = secrets['regis_username']
 password = secrets['regis_password']
 

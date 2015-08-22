@@ -4,7 +4,7 @@ var express = require("express")
   , http = require("http").createServer(app)
   , Promise = require("bluebird")
   , bodyParser = require("body-parser")
-  , io = require("./modules/sockets")(http)
+  , io = require("./src/sockets")(http)
   , compression = require('compression')
   , fs = require("fs")
   , path = require('path')
@@ -13,11 +13,11 @@ var express = require("express")
   , bodyParser = require('body-parser')
   , colors = require('colors')
   , session = require('express-session')
-  , utils = require('./modules/utils')
+  , utils = require('./src/utils')
   , moment = require('moment')
-  , config = require('./modules/config')
-  , mongo = require('./modules/mongodb')
-  , school_years = require('./modules/years');
+  , config = require('./src/config')
+  , mongo = require('./src/mongodb')
+  , school_years = require('./src/years');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -101,10 +101,10 @@ app.use('/*', function(req, res, next) {
 // =================================ROUTES=================================
 // This dynamically adds all routes in the routes
 // folder and gives them access to whatever Mongo collections they ask for
-fs.readdirSync("./modules/routes/").forEach(function(path) {
-  if(fs.lstatSync("./modules/routes/"+path).isDirectory() == false){
+fs.readdirSync("./src/routes/").forEach(function(path) {
+  if(fs.lstatSync("./src/routes/"+path).isDirectory() == false){
     var name = ( path == "index.js" ? '' : path.replace('.js', ''));
-    var current = require('./modules/routes/'+path)(io);
+    var current = require('./src/routes/'+path)(io);
     app.use('/'+name, function(req, res, next) {
       var models = current.models;
       if(models.length > 0){

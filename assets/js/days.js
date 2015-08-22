@@ -1,13 +1,5 @@
 function days(){
 
-  alert("HEUU!");
-  $(".day-mixin").each(function() {
-
-    setTimeout(function() {
-      $(this).addClass("vanishIn");
-    }, Math.floor((Math.random() * 3) + 1));
-  });
-   
   var date = window.location.pathname.split("/")[2];
   var scheduleDay = $("#schedule-day");
   scheduleDay.click(function() {
