@@ -24,7 +24,6 @@ platform for organization and collaboration with their classmates and schoolmate
     * requests
     * pymongo
     * lxml
-    * json
 * Copy secrets-example.json to secrets.json with your info
 * npm install, npm run setup
 * bower install
