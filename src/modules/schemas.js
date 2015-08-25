@@ -46,14 +46,15 @@ module.exports = {
     email: String,
     username: String,
     tID: String,
-    sclasses: Array,
     image: String,
     firstName: String,
     lastName: String,
     mID: Number,
     department: String,
-    likes: { type: Number, default: 0 },
-    dislikes: { type: Number, default: 0 }
+    ratingCount: {type: Number, default: 0},
+    ratings: [{username: String, rating: Number}],
+    averageRating: Number,
+    ratingStringJSON: String
   },
   day: {
         date: Date,

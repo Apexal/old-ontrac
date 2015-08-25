@@ -83,7 +83,7 @@ app.use(function(req, res, next) {
 });
 
 // List of paths users can only access if logged in
-var restricted = ['/users/:username', '/users/profile', '/advisements/:advisement', '/teachers', '/courses', '/days', '/chat', '/reminders', '/game', '/admin'];
+var restricted = ['/users/:username', '/users/profile', '/advisements/:advisement', '/teachers', '/courses', '/days', '/chat', '/reminders', '/game', '/admin', '/rating'];
 app.use(restricted, function(req, res, next) {
   if(req.toJade.loggedIn){
     next();

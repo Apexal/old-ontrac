@@ -38,7 +38,9 @@
     "nodemailer": "*",
     "request": "*",
     "serve-favicon": "~2.2.1",
-    "socket.io": "*"
+    "socket.io": "*",
+    "promisified-request": "*",
+    "underscore": "*"
   },
   "devDependencies": {
     "bower": "*",

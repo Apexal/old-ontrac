@@ -113,6 +113,10 @@ function teacherbadges(){
                 coursenames.push(data.courses[c].title);
               }
             }
+            if(data.ratingCount > 0)
+              var rating = "Going by <b>"+data.ratingCount+"</b> unique ratings, this teacher is <b>"+data.ratingStringJSON+"</b> by his students";
+            else
+              var rating = "None of this teacher's students has yet rated them";
 
             var imgsrc = data.image;
             var dep = data.department;
@@ -141,7 +145,7 @@ function teacherbadges(){
                                     "        </div>" +
                                     "    </div>" +
                                     "    <div class='row'>" +
-                                    "       <h4>This teacher is mostly ____ by their students.</h4>" +
+                                    "       <h4>"+rating+"</h4>" +
                                     "    </div>" +
                                     "</div>"+
                   "                </div>" +

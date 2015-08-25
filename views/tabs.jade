@@ -2,6 +2,7 @@ div
   ul.nav.nav-tabs(role='tablist')
     li.active(role='presentation')
       a(href='#work-tab', aria-controls='work', role='tab', data-toggle='tab') Upcoming Work
+        span.badge 0
     li(role='presentation')
       a(href='#profile', aria-controls='profile', role='tab', data-toggle='tab') Profile
     li(role='presentation')
@@ -12,7 +13,13 @@ div
     #work-tab.tab-pane.active(role='tabpanel')
       .row
         .col-xs-12.col-sm-6
-          p test ste ts etst etse tste
+          h3.no-margin For Today
+          #todays-work
+            b Homework
+            ol#homework-tab-list
+        .col-xs-12.col-sm-6
+          h3.no-margin For Tomorrow
+          #tomorrows-work
     #profile.tab-pane(role='tabpanel') tab2
       .col-xs-12.col-sm-6
         .panel.panel-default

@@ -3,3 +3,13 @@
 .jumbotron p b {
   font-weight: 400;
 }
+
+.tab-pane {
+  border: 1px solid #ddd;
+  border-top: none;
+  padding: 10px;
+}
+
+.tab-pane p {
+  margin: 0;
+}

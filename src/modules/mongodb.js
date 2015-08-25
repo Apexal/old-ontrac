@@ -70,8 +70,24 @@ db.once('open', function (callback) {
   });
 
   var teacherSchema = new Schema(schemas.teacher);
-  teacherSchema.virtual('fullName').get(function () {
+  teacherSchema.virtual('fullName').get(function() {
     return this.firstName + ' ' + this.lastName;
+  });
+  teacherSchema.virtual('ratingString').get(function() {
+    var r = this.averageRating;
+    if(r > 9)
+      return "very strongly liked";
+    if(r > 8)
+      return "very liked";
+    if(r > 7)
+      return "liked";
+    if(r > 6)
+      return "mostly liked";
+    if(r > 5)
+      return "neutrally liked";
+    if(r > 4)
+      return "slightly disliked";
+    return "disliked";
   });
   var Teacher = mongoose.model('Teacher', teacherSchema);
 
