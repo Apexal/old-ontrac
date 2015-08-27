@@ -10,6 +10,12 @@ function effects() {
         teacherbadges();
     }
 
+    var clock = $("#clock");
+    clock.text(moment().format('MMMM Do YYYY, h:mm:ss a'));
+    setInterval(function() {
+      clock.text(moment().format('MMMM Do YYYY, h:mm:ss a'));
+    }, 1000);
+
     var today = moment().format("YYYY-MM-DD");
     if($("#work-tab").length > 0){
       //alert("AYY");

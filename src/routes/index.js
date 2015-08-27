@@ -11,9 +11,9 @@ router.get(['/', '/home'], function(req, res, next) {
   req.toJade.title = "Adiutor";
   if(req.loggedIn){
     req.toJade.title = "Your Home";
-    res.render('homepage', req.toJade);
+    res.render('home/homepage', req.toJade);
   }else{
-    res.render('index', req.toJade);
+    res.render('home/index', req.toJade);
   }
 });
 

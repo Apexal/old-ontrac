@@ -14,7 +14,10 @@ block content
         .col-xs-12.col-sm-2
           img.teacher-profile-img(src=teacher.image)
         .col-xs-12.col-sm-10
-          b Going by #{teacher.ratingCount} unique ratings, this teacher is #{teacher.ratingString}.
+          if teacher.ratingCount > 0
+            b Going by #{teacher.ratingCount} unique ratings, this teacher is #{teacher.ratingString}.
+          else
+            b Not enough students have rated this teacher to display an average.
       
       hr
       .col-xs-12.col-sm-6
