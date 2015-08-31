@@ -8,7 +8,7 @@ var redir = "/";
 
 /* GET home page. */
 router.get(['/', '/home'], function(req, res, next) {
-  req.toJade.title = "Adiutor";
+  req.toJade.title = "OnTrac";
   if(req.loggedIn){
     req.toJade.title = "Your Home";
     res.render('home/homepage', req.toJade);

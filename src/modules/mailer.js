@@ -12,7 +12,7 @@ var smtpTransport = nodemailer.createTransport({
 
 module.exports = function(to, title, message){
   var mailOptions = {
-      from: "Adiutor <"+secrets.gmail_username+">", // sender address
+      from: "OnTrac <"+secrets.gmail_username+">", // sender address
       to: to, // list of receivers
       subject: title, // Subject line
       text: message, // plaintext body
