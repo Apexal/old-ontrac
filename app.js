@@ -15,7 +15,7 @@ var express = require("express")
   , session = require('express-session')
   , utils = require('./src/modules/utils')
   , moment = require('moment')
-  , config = require('./src/config')
+  , config = require('./package').config
   , mongo = require('./src/modules/mongodb')
   , school_years = require('./src/modules/years');
 

@@ -1,7 +1,8 @@
 {
   "name": "ontrac",
-  "version": "0.9.2",
-  "private": true,
+  "version": "0.9.4",
+  "description": "Online academic assitant for Regis High School.",
+  "private": false,
   "author": "Frank Matranga <thefrankmatranga@gmail.com>",
   "contributors": [
     {
@@ -9,12 +10,18 @@
       "email": "thefrankmatranga@gmail.com"
     }
   ],
+  "config" : {
+	"ip" : "",
+	"port" : "3000",
+	"db" : "regis"
+  },
   "scripts": {
+	"postinstall": "bower install; gulp pre; echo \"Almost ready! Make sure you have MongoDB running with 'npm run db' and then run 'npm run setup'\"",
     "db": "src/scripts/mongod",
-    "setup": "python2 src/scripts/connect.py",
+    "setup": "python2 src/scripts/connect.py; echo \"Now run 'npm start'!\"",
     "watch": "nodemon app.js",
     "debug": "DEBUG=express:* node app.js",
-    "start": "NODE_ENV=production node app.js"
+    "start": "gulp pre; NODE_ENV=production node app.js"
   },
   "repository": {
     "type": "git",
@@ -51,5 +58,7 @@
     "gulp-minify-css": "^1.2.0",
     "gulp-strip-debug": "^1.0.2",
     "gulp-uglify": "^1.2.0"
-  }
+  },
+  "keywords": ["school", "regis", "academics", "tracker", "helper"],
+  "license": "MIT"
 }

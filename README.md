@@ -33,8 +33,6 @@ classmates and schoolmates.
     * lxml
 * Copy secrets-example.json to secrets.json with your info
 * npm install, npm run setup
-* bower install
-* gulp
 * npm start
 * Go to [http://localhost:3000](http://localhost:3000)
 

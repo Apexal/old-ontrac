@@ -49,6 +49,8 @@ gulp.task('styles', function() {
     .pipe(gulp.dest('./public/'));
 });
 
+gulp.task('pre', ['scripts', 'styles', 'fonts']);
+
 gulp.task('default', ['jshint', 'scripts', 'styles', 'fonts'], function() {
   // watch for JS changes
   gulp.watch(jsPath+'/*.js', ['jshint', 'scripts']);
