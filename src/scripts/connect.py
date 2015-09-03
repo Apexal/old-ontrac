@@ -135,6 +135,7 @@ def extract(ID, html):
                               }
                             }, upsert=False)
                             db.students.update_one({"_id": newID}, {"$push": {"courses": course['_id']}})
+						db.advisements.update_one({"_id": c, {"$push": {"students": newID}})
             else:
                 username = name_parts[1].lower()[0].replace(" ", "").replace("\'", "") + name_parts[0].lower().replace("\'", "").replace(" ", "")
                 out = {
@@ -165,13 +166,11 @@ def extract(ID, html):
                               }
                             }, upsert=False)
                         db.teachers.update_one({"_id": newID}, {"$push": {"courses": course['_id']}})
-
-
+					
         #raw_input("Continue?")
 
         except Exception as e:
             print e
-
 
 def main():
     print "Logging in... "
