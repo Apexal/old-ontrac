@@ -18,7 +18,7 @@ life while at the same time providing an easy, customized
 platform for organization and collaboration with their 
 classmates and schoolmates.
 
-* Alpha v0.9.0
+* Alpha v0.9.x
 * Make Regis eas*ier*
 * Track homework, projects, tests, quizzes, grades, notes, tasks, reminders, friends, schedules, meetings, clubs, groups, and more all in one place at the same time.
 
