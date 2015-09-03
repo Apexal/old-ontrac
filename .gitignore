@@ -6,5 +6,5 @@ public/game/
 views/game.jade
 routes/_game.js
 npm-debug.log
-public/script.js
-public/style.css
+public/*.js
+public/*.css
