@@ -2,7 +2,10 @@ function days(){
 
   var date = window.location.pathname.split("/")[2];
   var scheduleDay = $("#schedule-day");
-  scheduleDay.click(function() {
+  
+  var hasSD = $("#schedule-day").hasClass("set");
+  
+  var setSD = function() {
     var newSD = prompt("Set the schedule day: ");
     if(['A', 'B', 'C', 'D', 'E'].indexOf(newSD) > -1){
       var path = ($(this).hasClass("set") ? "setsd" : "create" );
@@ -12,13 +15,28 @@ function days(){
           //alert("Successfully set schedule-day!");
           $("#schedule-day").text(newSD+"-Day");
           $("#schedule-day").addClass("set");
+          
+          return true;
         }else {
           alert("Failed to set schedule-day.");
+          return false;
         }
       });
     }
+  };
+  
+  scheduleDay.click(setSD);
+  var hwForm = $("#homework-form");
+  
+  hwForm.submit(function(e) {
+    if(!hasSD){
+      if(setSD() === false){
+        e.preventDefault();
+        return;
+      }
+    }
   });
-
+  
   var hwdial = $("#hw-dial");
 
   var percentsAndDials = function() {
