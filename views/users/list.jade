@@ -17,11 +17,14 @@ block content
         
     .row
       .col-xs-12
-        form.form-inline#search.hidden
-          .form-group
-            label(for="name") Name
-            input.form-control(type="text", name="name")
-          button.btn.btn-primary Search
+        if registered == false
+          h3.center No users have registered yet!
+        else 
+          form.form-inline#search.hidden
+            .form-group
+              label(for="name") Name
+              input.form-control(type="text", name="name")
+            button.btn.btn-primary Search
     
     if tableForm
       .row
