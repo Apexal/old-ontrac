@@ -134,8 +134,8 @@ def extract(ID, html):
                                 'students': newID
                               }
                             }, upsert=False)
-                            db.students.update_one({"_id": newID}, {"$push": {"courses": course['_id']}})
-						db.advisements.update_one({"_id": c, {"$push": {"students": newID}})
+                            db.students.update_one({"_id": newID}, {"$push": {"courses": course['_id']} } )
+                            db.advisements.update_one({"_id": c}, {"$push": {"students": newID} } )
             else:
                 username = name_parts[1].lower()[0].replace(" ", "").replace("\'", "") + name_parts[0].lower().replace("\'", "").replace(" ", "")
                 out = {

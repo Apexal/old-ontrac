@@ -150,7 +150,7 @@ app.use(function(err, req, res, next) {
   res.render('error', req.toJade);
 });
 
-app.set('port', normalizePort(config.port));
+app.set('port', normalizePort(process.env.PORT || config.port));
 app.set("ipaddr", config.ip);
 
 function normalizePort(val) {
