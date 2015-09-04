@@ -111,38 +111,10 @@ function sockets() {
         var when = moment(messages[i].when);
 
         var part = "";
-
-        if(user.username == username){
-          part += "<div class='panel panel-default message clearfix othermessage'>";
-
-          if(user.username == "testuser")
-            part += "<img src='http://placehold.it/50x62'>";
-          else
-            part += "<img src='https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg'>";
-          part += "<small title='"+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'class='left padded'>"+when.fromNow()+"</small>";
-
-          part += "<div class='padded clearfix'>";
-          part += "<b><a class='undecorated' title='"+user.username+"'href='/users/"+user.username+"'>"+user.name+"</a></b><br>";
-          part += "<span>"+message+"</span>";
-          part += "</div>";
-        }else{
-          part += "<div class='panel panel-default message clearfix mymessage'>";
-
-          if(user.username == "testuser")
-            part += "<img src='http://placehold.it/50x62'>";
-          else
-            part += "<img src='https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg'>";
-
-          part += "<div class='padded clearfix'>";
-          part += "<b><a class='undecorated' title='"+user.username+"'href='/users/"+user.username+"'>"+user.name+"</a></b><br>";
-          part += "<span>"+message+"</span>";
-          part += "</div>";
-
-          part += "<small title='"+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'class='right padded'>"+when.fromNow()+"</small>";
-
-        }
-
-        part += "</div>";
+        
+        part += "<b class='user-badge' data-username='"+user.username+"'>"+user.username+":</b>";
+        part += "<span>"+message+"<span class='right'>";
+        part += "<small title='"+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'class='right'>"+when.fromNow()+"</small></span><br>";
         html += part;
     }
     $("#chat-messages").html(html);
