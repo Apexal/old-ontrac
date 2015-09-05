@@ -106,25 +106,23 @@ function sockets() {
   var showMessages = function() {
     var html = '<br>';
     for(var i=0; i<messages.length; i++) {
-        var user = messages[i].user;
+        var user = messages[i].username;
         var message = messages[i].message;
         var when = moment(messages[i].when);
 
-        var part = "";
-        
-        part += "<b class='user-badge' data-username='"+user.username+"'>"+user.username+":</b>";
-        part += "<span>"+message+"<span class='right'>";
-        part += "<small title='"+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'class='right'>"+when.fromNow()+"</small></span><br>";
+        var part = "<b class='user-badge' data-username='"+user+"'>"+user+": </b>";
+        part += "<span title='"+when.fromNow()+" | "+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'>"+message+"</span><br>";
         html += part;
     }
     $("#chat-messages").html(html);
     $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
+    userbadges();
   };
 
   socket.on('message', function (data) {
     if(data.message) {
         messages.push(data);
-        if(data.user.username != username)
+        if(data.username != username)
           chat_notification.play();
         showMessages();
     } else {
