@@ -5,7 +5,6 @@
 # Loop through students to add courses to students and students to courses
 # Loop through advisements to remove 'Advisement ' from title and add its students
 
-
 import os
 import requests, sys
 from lxml import html
@@ -19,14 +18,37 @@ path = os.path.abspath(os.path.join(os.path.dirname(__file__),"..")) + "/secrets
 secrets = json.loads(open(path).read())
 username = secrets['regis_username']
 password = secrets['regis_password']
-
+DB_NAME = sys.argv[1] if len(sys.argv) > 1 else 'regis'
 client = MongoClient('mongodb://localhost:27017/')
-db = client['regis']
+db = client[DB_NAME]
+print "Connected to Database '"+DB_NAME+"'"
 
+def extract(ID, category, session):
+    base_url = "http://moodle.regis.org/user/profile.php?id="
+    if category is "course":
+        base_url = "http://moodle.regis.org/course/view.php?id="
+    # Get the page
+    r = session.get(base_url + str(ID))  # The url is created by appending the current ID to the base url
+    # Parse the html returned so we can find the title
+    #print r.text
+    parsed_body = html.fromstring(r.text)
+    # Get the page title
+    title = parsed_body.xpath('//title/text()')
+    # Check if page is useful
+    if len(title) == 0:
+        print "Bad title"
+        return
 
-def extract(ID, html):
+    if "Test" in title:
+        print "Skipped test entry"
+        return
+
+    if ("Error" in title[0].strip()) or ("Notice" in title[0].strip()):
+        #print "Error or Notice skipped"
+        return
+
     # COURSE
-    title = html.xpath('//title/text()')[0]
+    title = parsed_body.xpath('//title/text()')[0]
     parts = title.split(": ")
     if parts[0] == "Course":
         name = parts[1]
@@ -70,14 +92,14 @@ def extract(ID, html):
             print "Course " + str(ID) + ": " + str(db.courses.insert_one(out).inserted_id)
     else:
         # USER
-        name_parts = html.xpath('//title/text()')[0].split(":")[0].split(", ") if len(
-            html.xpath('//title/text()')) > 0 else ['Unknown']
-        department = html.xpath('//dl/dd[1]/text()')
+        name_parts = parsed_body.xpath('//title/text()')[0].split(":")[0].split(", ") if len(
+            parsed_body.xpath('//title/text()')) > 0 else ['Unknown']
+        department = parsed_body.xpath('//dl/dd[1]/text()')
         if len(department) == 0:
             return
         else:
             department = department[0]
-        class_as = html.xpath('//dl/dd[2]/a')
+        class_as = parsed_body.xpath('//dl/dd[2]/a')
 
         classes = []
         for a in class_as:
@@ -95,7 +117,7 @@ def extract(ID, html):
 
         picsrc = "/images/person-placeholder.jpg"
 
-        for img in html.xpath('//img[@class=\'userpicture\']'):
+        for img in parsed_body.xpath('//img[@class=\'userpicture\']'):
             picsrc = img.get("src")
 
         collect = db.courses
@@ -120,22 +142,17 @@ def extract(ID, html):
                 }
                 newID = db.students.insert_one(out).inserted_id
                 print "Student " + str(ID) + ": " + str(newID)
-                db.advisements.update_one({title: department}, {"$push": {"students": newID}})
+                db.advisements.update_one({"title": department}, {"$push": {"students": newID} } )
+                print "Added Student "+str(ID)+" to Advisement "+department
 
                 if classes:
-                    for c in classes:
+                    for c in classes: # C IS A MOODLE ID
                         course = collect.find_one({"mID": c})
                         if course:
-                            print "COURSE:", course['title']
-                            collect.update_one({
-                              '_id': course['_id']
-                            },{
-                              '$push': {
-                                'students': newID
-                              }
-                            }, upsert=False)
-                            db.students.update_one({"_id": newID}, {"$push": {"courses": course['_id']} } )
-                            db.advisements.update_one({"_id": c}, {"$push": {"students": newID} } )
+                            cID = course['_id']
+                            collect.update_one({"mID": c}, {"$push": {"students": newID}})
+                            db.students.update_one({"_id": newID}, {"$push": {"courses": cID}})
+
             else:
                 username = name_parts[1].lower()[0].replace(" ", "").replace("\'", "") + name_parts[0].lower().replace("\'", "").replace(" ", "")
                 out = {
@@ -166,13 +183,22 @@ def extract(ID, html):
                               }
                             }, upsert=False)
                         db.teachers.update_one({"_id": newID}, {"$push": {"courses": course['_id']}})
-					
-        #raw_input("Continue?")
+                    adv = db.advisements.find_one({"mID": c})
+                    if adv:
+                        db.advisements.update_one({
+                          'mID': c
+                        },{
+                          '$set': {
+                            'teacher': newID
+                          }
+                        })
+                        print "Set Teacher "+str(ID)+" as Advisor of "+adv['title']
 
+        #raw_input("Continue?")
         except Exception as e:
             print e
 
-def main():
+def login(path):
     print "Logging in... "
     url = "https://moodle.regis.org/login/index.php"
     values = {'username': username, 'password': password}
@@ -185,30 +211,24 @@ def main():
     if not "My home" in title:
         print "Failed to login, check your credentials."
         quit()
-
     print "DONE"
+    return session
 
+
+def main():
+    session = login(path)
     print "Removed ", db.students.delete_many({}).deleted_count, "students"
     print "Removed ", db.teachers.delete_many({}).deleted_count, "teachers"
     print "Removed ", db.courses.delete_many({}).deleted_count, "courses"
     print "Removed ", db.advisements.delete_many({}).deleted_count, "advisements"
+    scrape(1, 600, "course", session)
+    scrape(1, 2500, "person", session)
+    client.close()
 
-    scrape(1, 600, "http://moodle.regis.org/course/view.php?id=", session)
-    scrape(1, 2500, "http://moodle.regis.org/user/profile.php?id=", session)
 
-
-def scrape(from_id, to_id, base_url, session):
+def scrape(from_id, to_id, category, session):
     for i in range(from_id, to_id + 1):
-        # Get the page
-        r = session.get(base_url + str(i))  # The url is created by appending the current ID to the base url
-        # Parse the html returned so we can find the title
-        parsed_body = html.fromstring(r.text)
-        # Get the page title
-        title = parsed_body.xpath('//title/text()')
-        # Check if page is useful
-        if len(title) != 0:
-            if title[0].strip() != "Error" and title[0].strip() != "Notice":
-                extract(i, parsed_body)
+        extract(i, category, session)
 
 
 if __name__ == "__main__":
