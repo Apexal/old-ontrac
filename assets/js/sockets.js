@@ -106,53 +106,23 @@ function sockets() {
   var showMessages = function() {
     var html = '<br>';
     for(var i=0; i<messages.length; i++) {
-        var user = messages[i].user;
+        var user = messages[i].username;
         var message = messages[i].message;
         var when = moment(messages[i].when);
 
-        var part = "";
-
-        if(user.username == username){
-          part += "<div class='panel panel-default message clearfix othermessage'>";
-
-          if(user.username == "testuser")
-            part += "<img src='http://placehold.it/50x62'>";
-          else
-            part += "<img src='https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg'>";
-          part += "<small title='"+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'class='left padded'>"+when.fromNow()+"</small>";
-
-          part += "<div class='padded clearfix'>";
-          part += "<b><a class='undecorated' title='"+user.username+"'href='/users/"+user.username+"'>"+user.name+"</a></b><br>";
-          part += "<span>"+message+"</span>";
-          part += "</div>";
-        }else{
-          part += "<div class='panel panel-default message clearfix mymessage'>";
-
-          if(user.username == "testuser")
-            part += "<img src='http://placehold.it/50x62'>";
-          else
-            part += "<img src='https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg'>";
-
-          part += "<div class='padded clearfix'>";
-          part += "<b><a class='undecorated' title='"+user.username+"'href='/users/"+user.username+"'>"+user.name+"</a></b><br>";
-          part += "<span>"+message+"</span>";
-          part += "</div>";
-
-          part += "<small title='"+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'class='right padded'>"+when.fromNow()+"</small>";
-
-        }
-
-        part += "</div>";
+        var part = "<b class='user-badge' data-username='"+user+"'>"+user+": </b>";
+        part += "<span title='"+when.fromNow()+" | "+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'>"+message+"</span><br>";
         html += part;
     }
     $("#chat-messages").html(html);
     $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
+    userbadges();
   };
 
   socket.on('message', function (data) {
     if(data.message) {
         messages.push(data);
-        if(data.user.username != username)
+        if(data.username != username)
           chat_notification.play();
         showMessages();
     } else {

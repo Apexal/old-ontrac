@@ -1,0 +1,47 @@
+#chat-box {
+  width: 400px;
+  height: 300px;
+  position: fixed;
+  bottom: 43px;
+  right: 0;
+  margin-bottom: 0;
+}
+
+#chat-messages {
+  overflow: auto;
+  height: 90%;
+  word-wrap: break-word;
+  display: inline-block;
+}
+
+.message .padded {
+  padding-top: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.message img {
+  width: 50px;
+}
+
+.othermessage img, .othermessage b, .othermessage div, .othermessage span {
+  float: right;
+}
+
+.mymessage img, .mymessage b, .mymessage div{
+  float: left;
+}
+
+#chat-controls {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+}
+
+#chat-controls input {
+  width: 320px;
+}
+
+#chat-controls button {
+  width: 80px;
+}
