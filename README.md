@@ -27,6 +27,7 @@ classmates and schoolmates.
 
 * Intall Mongo DB
 * npm run db
+* pip install trp
 * Install Python2.7 with
     * requests
     * pymongo
