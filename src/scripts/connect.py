@@ -5,7 +5,6 @@
 # Loop through students to add courses to students and students to courses
 # Loop through advisements to remove 'Advisement ' from title and add its students
 
-
 import os
 import requests, sys
 from lxml import html
@@ -19,7 +18,7 @@ path = os.path.abspath(os.path.join(os.path.dirname(__file__),"..")) + "/secrets
 secrets = json.loads(open(path).read())
 username = secrets['regis_username']
 password = secrets['regis_password']
-DB_NAME = 'testing'
+DB_NAME = sys.argv[1] if len(sys.argv) > 1 else 'regis'
 client = MongoClient('mongodb://localhost:27017/')
 db = client[DB_NAME]
 print "Connected to Database '"+DB_NAME+"'"
@@ -224,6 +223,7 @@ def main():
     print "Removed ", db.advisements.delete_many({}).deleted_count, "advisements"
     scrape(1, 600, "course", session)
     scrape(1, 2500, "person", session)
+    client.close()
 
 
 def scrape(from_id, to_id, category, session):
