@@ -1,11 +1,11 @@
 # README #
 
-O - Open-source
-N - Networked
-T - Third-party
-R - Regis High School
-A - Academic
-C - Connector
+**O** - Open-source <br>
+**N** - Networked <br>
+**T** - Third-party <br>
+**R** - Regis High School <br>
+**A** - Academic <br>
+**C** - Connector <br>
 
 Making Regis even better.
 
@@ -15,7 +15,7 @@ Making Regis even better.
 OnTrac is a free, online Web service created specifically to
 allow Regis students to get a better grasp on their academic
 life while at the same time providing an easy, customized
-platform for organization and collaboration with their 
+platform for organization and collaboration with their
 classmates and schoolmates.
 
 * Alpha v0.9.x
