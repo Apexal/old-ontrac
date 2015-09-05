@@ -31,11 +31,12 @@ You'll need:
 * NodeJS
 
 Then:
-1. npm run db
-2. pip install trp
-3. Copy secrets-example.json to secrets.json with your info
-4. npm install, npm run setup
-5. npm start
+
+1. ```$ npm run db```
+2. ```$ pip2 install trp```
+3. Copy ```secrets-example.json``` to ```secrets.json``` with your info
+4. ```$ npm run setup```
+5. ```$ npm start```
 6. Go to [http://localhost:3000](http://localhost:3000)
 
 ### How can I help? ###
@@ -44,7 +45,7 @@ I am looking to assemble a team of students, no prior experience needed, to lear
 
 If you are interested in helping,
 
-1. Learn JS or ask me to (attempt) to teach it to you.
+1. Learn JS (if you ask I'll recommend some good beginner resources).
 2. Contact me at either my [Regis email](mailto:fmatranga18@regis.org) or my [personal email](mailto:thefrankmatranga@gmail.com).
 3. ???
 4. Profit
