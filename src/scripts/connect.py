@@ -120,22 +120,17 @@ def extract(ID, html):
                 }
                 newID = db.students.insert_one(out).inserted_id
                 print "Student " + str(ID) + ": " + str(newID)
-                db.advisements.update_one({title: department}, {"$push": {"students": newID}})
+                db.advisements.update_one({"title": department}, {"$push": {"students": newID} } )
+                print "Added Student "+ID+" to Advisement "+department
 
                 if classes:
-                    for c in classes:
+                    for c in classes: # C IS A MOODLE ID
                         course = collect.find_one({"mID": c})
                         if course:
-                            print "COURSE:", course['title']
-                            collect.update_one({
-                              '_id': course['_id']
-                            },{
-                              '$push': {
-                                'students': newID
-                              }
-                            }, upsert=False)
-                            db.students.update_one({"_id": newID}, {"$push": {"courses": course['_id']} } )
-                            db.advisements.update_one({"_id": c}, {"$push": {"students": newID} } )
+                            cID = course['_id']
+                            collect.update_one({"mID": c}, {"$push": {"students": newID}})
+                            db.students.update_one({"_id": newID}, {"$push": {"courses": cID}})
+
             else:
                 username = name_parts[1].lower()[0].replace(" ", "").replace("\'", "") + name_parts[0].lower().replace("\'", "").replace(" ", "")
                 out = {
@@ -166,9 +161,18 @@ def extract(ID, html):
                               }
                             }, upsert=False)
                         db.teachers.update_one({"_id": newID}, {"$push": {"courses": course['_id']}})
-					
-        #raw_input("Continue?")
+                    adv = db.advisements.find_one({"mID": c})
+                    if adv:
+                        db.advisements.update_one({
+                          'mID': c
+                        },{
+                          '$set': {
+                            'teacher': newID
+                          }
+                        })
+                        print "Set Teacher "+ID+" as Advisor of "+adv['title']
 
+        #raw_input("Continue?")
         except Exception as e:
             print e
 
