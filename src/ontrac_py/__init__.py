@@ -81,7 +81,7 @@ class OnTrac:
 
     def init_mods(self):
         self.viewer = Viewer(self.db)
-        self.scraper = Scraper(self.db)
+        self.scraper = Scraper(self.db, self.session)
         self.cli = CLI(self.db)
 
     def exit(self):
