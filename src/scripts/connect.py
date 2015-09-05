@@ -121,7 +121,7 @@ def extract(ID, html):
                 newID = db.students.insert_one(out).inserted_id
                 print "Student " + str(ID) + ": " + str(newID)
                 db.advisements.update_one({"title": department}, {"$push": {"students": newID} } )
-                print "Added Student "+ID+" to Advisement "+department
+                print "Added Student "+str(ID)+" to Advisement "+department
 
                 if classes:
                     for c in classes: # C IS A MOODLE ID
@@ -170,7 +170,7 @@ def extract(ID, html):
                             'teacher': newID
                           }
                         })
-                        print "Set Teacher "+ID+" as Advisor of "+adv['title']
+                        print "Set Teacher "+str(ID)+" as Advisor of "+adv['title']
 
         #raw_input("Continue?")
         except Exception as e:
