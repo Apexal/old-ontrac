@@ -76,10 +76,10 @@ router.post('/login', function(req, res, next) {
 
                   if(user.registered == false){
                     // NO, get his Student ID and register him!
-                    var id = $("td:contains('Student ID #:')").next().text().trim();
-                    console.log(id);
-                    user.code = id;
-                    user.loginCount = 0;
+                    var id = $("td:contains('Locker Number:')").next().text().trim();
+                    //console.log(id);
+                    //user.locker_number = id;
+                    user.login_count = 0;
                     user.last_point_login_time = new Date();
                     user.registered_date = new Date();
                     user.registered = true;

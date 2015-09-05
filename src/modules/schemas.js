@@ -12,19 +12,19 @@ module.exports = {
     code: String,
     mpicture: String,
     email: String,
+    //locker_number: String,
     friends: [{ type: Schema.Types.ObjectId, ref: 'Student'}],
     advisement: String,
     sclasses: Array,
     courses: [{ type: Schema.Types.ObjectId, ref: 'Course'}],
     rank: {type: Number, default: 0},
-    statuses: [{when: Date, text: String, default: []}],
     points: {type: Number, default: 0},
     login_count: {type: Number, default: 0},
     last_login_time: {type: Date, default: Date.now},
     last_point_login_time: {type: Date, default: Date.now},
     preferences: Object,
     registered_date: {type: Date, default: Date.now},
-    registered: Boolean
+    registered: { type: Boolean, default: false }
   },
   advisement : {
     teacher: {type: Schema.Types.ObjectId, ref: 'Teacher'},
