@@ -25,17 +25,18 @@ classmates and schoolmates.
 
 ### How do I run it myself? ###
 
-* Intall Mongo DB
-* npm run db
-* pip install trp
-* Install Python2.7 with
-    * requests
-    * pymongo
-    * lxml
-* Copy secrets-example.json to secrets.json with your info
-* npm install, npm run setup
-* npm start
-* Go to [http://localhost:3000](http://localhost:3000)
+You'll need:
+* MongoDB
+* Python2.7
+* NodeJS
+
+Then:
+1. npm run db
+2. pip install trp
+3. Copy secrets-example.json to secrets.json with your info
+4. npm install, npm run setup
+5. npm start
+6. Go to [http://localhost:3000](http://localhost:3000)
 
 ### How can I help? ###
 
