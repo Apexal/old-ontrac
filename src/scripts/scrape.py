@@ -9,5 +9,3 @@ print "Removed ", t.db.advisements.delete_many({}).deleted_count, "advisements"
 t.scraper.loop(1, 600, "course")
 t.scraper.loop(1, 2500, "person")
 t.exit()
-
-print "Now run 'npm run start'"

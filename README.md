@@ -29,15 +29,15 @@ You'll need:
 * MongoDB
 * Python2.7
 * NodeJS
-* Gulp and Bower globally installed with npm
+* Gulp, Bower, and nodemon globally installed with npm
 
 Then:
 
-1. ```$ npm run db```
-2. ```$ pip2 install trp```
-3. Copy ```secrets-example.json``` to ```secrets.json``` with your info
-4. Copy ```config-example.js``` to ```config.js``` and edit
-5. ```$ npm run setup```
+1. ```$ npm install ```
+2. Copy ```secrets-example.json``` to ```secrets.json``` with your info
+3. Copy ```config-example.js``` to ```config.js``` and edit
+4. ```$ pip2 install trp```
+5. ```$ npm run db``` then ```$ npm run scrape```
 6. ```$ npm start```
 7. Go to [http://localhost:3000](http://localhost:3000)
 

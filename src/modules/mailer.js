@@ -1,5 +1,5 @@
 var nodemailer = require("nodemailer");
-var secrets = require("../secrets.json");
+var secrets = require("../secrets");
 
 // create reusable transport method (opens pool of SMTP connections)
 var smtpTransport = nodemailer.createTransport({
