@@ -10,15 +10,10 @@
       "email": "thefrankmatranga@gmail.com"
     }
   ],
-  "config" : {
-  	"ip" : "",
-  	"port" : "3000",
-  	"db" : "regis"
-  },
   "scripts": {
-	  "postinstall": "bower install; gulp pre; echo \"Almost ready! Make sure you have MongoDB running with 'npm run db' and then run 'npm run setup'\"",
+	  "postinstall": "bower install; gulp pre;",
     "db": "src/scripts/mongod",
-    "setup": "npm install; python2 src/setup.py; echo \"Now run 'npm start'!\"",
+    "setup": "npm run db; npm install; python2 src/setup.py;",
     "watch": "nodemon app.js",
     "debug": "DEBUG=express:* node app.js",
     "start": "gulp pre; NODE_ENV=production node app.js"

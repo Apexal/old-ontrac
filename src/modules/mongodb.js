@@ -1,9 +1,9 @@
 // Database stuff
 var mongoose = require('mongoose');
-var config = require('../../package').config;
+var config = require('../config');
 var Schema = mongoose.Schema;
 var schemas = require('./schemas');
-mongoose.connect('mongodb://127.0.0.1/'+config.db);
+mongoose.connect(config.db, config.dbauth);
 var db = mongoose.connection;
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
 

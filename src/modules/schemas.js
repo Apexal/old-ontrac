@@ -11,6 +11,7 @@ module.exports = {
     username: String,
     code: String,
     mpicture: String,
+    ipicture: String,
     email: String,
     //locker_number: String,
     friends: [{ type: Schema.Types.ObjectId, ref: 'Student'}],
