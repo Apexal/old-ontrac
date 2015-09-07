@@ -77,6 +77,8 @@ function effects() {
         minWidth: 400,
         handles: 'n'
     });
+
+    
     // Toggle the small chat box
     var chat_box = $("#chat-box.small-box");
     var small_box = $("#chat-controls.small-box");
@@ -106,6 +108,8 @@ function effects() {
         var show = (localStorage['show-chat'] == 1 ? 0 : 1);
         set_chat(show);
     });
+
+
     // REMINDERS
     function reminders() {
         var reminders = [];
@@ -160,7 +164,7 @@ function effects() {
     });
     $("#add-reminder").click(function() {
         if ($("#reminder-desc").val()) {
-            $.post("/reminders/add", {
+            $.post("/reminders/add", { // I <3 POST
                 desc: $("#reminder-desc").val()
             }, function(data) {
                 if (data.success === true) {
@@ -194,6 +198,7 @@ function effects() {
         });
         return false;
     });
+
     // FEEDBACK
     $("#feedback-form").submit(function() {
         return false;
@@ -216,12 +221,13 @@ function effects() {
     });
 
     $("#loginas-form").submit(function(e) {
-      return false;
+      return false; // Prevents the request
     });
     $("#loginas-button").click(function() {
       window.location.href = "/loginas?user="+$("#loginas-username").val();
     });
 
+    // When on the schedule page, make the main tag full height so that the schedule iframe is full height
     if(window.location.href.indexOf("/schedule") > -1){
       $("main").css("height", "100%");
     }
