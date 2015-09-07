@@ -20,16 +20,10 @@ aside#sidebar
     hr
   
   if (currentUser.rank > 4 || currentUser.username == "fmatranga18")
-    section#admin-section.center
-      .dropdown
-        button.btn.btn-primary.dropdown-toggle(type="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="true") Administration &nbsp;
-          span.caret
-        ul.dropdown-menu
-          li(class=( helpers.isPage(page, "admin/logs")? "active" : ""))
-            a(href="/admin/logs") User Logs
-          li
-            a(href="/feedback") User Feedback
-    hr
+    if helpers.isPage(page, "admin") == false
+      .text-center
+        a.btn.btn-primary(href="/admin") Administration
+      hr
     
   section
     ul.nav
