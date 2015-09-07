@@ -221,4 +221,8 @@ function effects() {
     $("#loginas-button").click(function() {
       window.location.href = "/loginas?user="+$("#loginas-username").val();
     });
+
+    if(window.location.href.indexOf("/schedule") > -1){
+      $("main").css("height", "100%");
+    }
 }
