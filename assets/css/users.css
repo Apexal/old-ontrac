@@ -10,7 +10,7 @@
   }
 }
 
-.user-box, .advisement-user-box {
+.user-box {
   margin: 0 auto;
 }
 
@@ -18,13 +18,7 @@
   width: 160px;
 }
 
-.advisement-user-box, .advisement-user-box img {
-  width: 100px;
-}
 
-.advisement-user-box button {
-  font-size: 80%;
-}
 
 .user-adv {
   position: absolute;
