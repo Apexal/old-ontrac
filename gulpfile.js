@@ -29,13 +29,13 @@ gulp.task('scripts', function() {
 });
 
 gulp.task('fonts', function() {
-  gulp.src([bowerPath+'/fontawesome/fonts/*'])
+  gulp.src([bowerPath+'/fontawesome/fonts/*', bowerPath+'/bootstrap/dist/fonts/*'])
     .pipe(gulp.dest('public/fonts'))
 });
 
 // JS hint task
 gulp.task('jshint', function() {
-  gulp.src([jsPath+'/*.js', '!'+jsPath+'/jquery.knob.js'])
+  gulp.src([jsPath+'/*.js', '!'+jsPath+'/jquery.knob.js', '!'+jsPath+'/pnotify.custom.min.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
 });

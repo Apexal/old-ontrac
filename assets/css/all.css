@@ -1,5 +1,9 @@
 /*** SHARED CSS ***/
 
+.ui-pnotify {
+  z-index: 500;
+}
+
 @media (min-width: 790px) {
   ul.nav li.dropdown:hover > ul.dropdown-menu {
     display: block;
