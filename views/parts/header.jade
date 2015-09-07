@@ -26,11 +26,7 @@ header
                   a(href="/teachers", title="View, search, and rate a list of all teachers at Regis.") Teachers
                 li(class=(helpers.isPage(page, "courses")))
                   a(href="/courses", title="View, search, and rate a list of all classes, clubs, or otherwise at Regis.") Courses
-              
-          if loggedIn
-            li(class=(helpers.isPage(page, "chat")))
-              a(href="/chat", title="Text chat with users currently online!") Chat
-                
+
                 
           li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Regis Services 
