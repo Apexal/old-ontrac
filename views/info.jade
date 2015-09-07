@@ -1,9 +1,8 @@
-if info.length > 0
-  .alert.alert-info.alert-dismissible(data-dismiss="alert", aria-label="Close", role="alert")= i
-    for i in info
-      | #{i}
-      br
-    button.close(data-dismiss="alert")
+
+
+for i in info
+  script.
+    setTimeout(function(){sendNotification('info', '', "#{i}");}, 500);
 
 if errs.length > 0
   .alert.alert-danger.alert-dismissible(data-dismiss="alert", role="alert")= err
