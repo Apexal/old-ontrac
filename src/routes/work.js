@@ -114,11 +114,13 @@ router.get("/:date", function(req, res, next) {
 
           console.log(req.toJade.hwcourses);
           req.toJade.items = d.items;
+          res.render('work/one', req.toJade);
         });
       }else{
         console.log("Did not find day");
+        res.render('work/one', req.toJade);
       }
-      res.render('work/one', req.toJade);
+
     });
   }
 });

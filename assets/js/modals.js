@@ -26,7 +26,7 @@ function userbadges(){
               button = "<a class='btn btn-primary' href='/users/"+username+"'>View Full Profile</a>";
             }
 
-            var imgsrc = (data.registered ? "https://webeim.regis.org/photos/regis/Student/"+data.code+".jpg" : data.mpicture);
+            var imgsrc = data.ipicture;
             var bio = (data.bio ? data.bio : "Not set yet!");
 
             var adv = data.advisement.charAt(0);
@@ -60,7 +60,7 @@ function userbadges(){
                                     "<div class='container-fluid'>" +
                                     "    <div class='row'>" +
                                     "        <div class='col-xs-12 col-sm-3 center-xs'>" +
-                                    "            <img class='modal-pic' title='Looking good!' src='"+imgsrc+"'>" +
+                                    "            <img class='modal-pic' title='Looking good!' alt='No profile picture yet!' src='"+imgsrc+"'>" +
                                     "            <br><b>"+points+"</b>" +
                                     "        </div>" +
                                     "        <div class='col-xs-12 col-sm-9'>" +
@@ -118,7 +118,7 @@ function teacherbadges(){
             else
               var rating = "None of this teacher's students has yet rated them";
 
-            var imgsrc = data.image;
+            var imgsrc = data.ipicture;
             var dep = data.department;
 
             // TODO: this thing too...
@@ -135,7 +135,7 @@ function teacherbadges(){
                                     "<div class='container-fluid'>" +
                                     "    <div class='row'>" +
                                     "        <div class='col-xs-12 col-sm-3 center'>" +
-                                    "            <img class='modal-pic' title='Looking good!' src='"+imgsrc+"'>" +
+                                    "            <img class='modal-pic' title='Looking good!' alt='No profile picture yet!' src='"+imgsrc+"'>" +
                                     "        </div>" +
                                     "        <div class='col-xs-12 col-sm-9'>" +
                                     "             <h3 class='no-margin'>"+data.firstName + " " +data.lastName+" from <b>"+dep+"</b></h3><br>" +

@@ -48,6 +48,8 @@ module.exports = {
     username: String,
     tID: String,
     image: String,
+    code: String,
+    ipicture: String,
     firstName: String,
     lastName: String,
     mID: Number,
