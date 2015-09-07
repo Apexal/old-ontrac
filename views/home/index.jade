@@ -4,18 +4,17 @@ block content
   .container
     include /info
     .jumbotron
+      img.right.hidden-xs(style="width: 100%; max-width: 300px;", src="http://www.xavierhs.org/s/81/images/editor/tom/regis.jpg")
       h1(style="text-transform: capitalize") Welcome to OnTrac
+      
       p.
-        In just #[b= moment("2015-09-09").fromNow(true)] it will begin again. The work, the stress, the responsibilities. If only there
-        was a way to make it all easier.
-    
+        It has begun. The work, the stress, the responsibilities of Regis High School. If only there
+        was a way to make it all easier. There isn't. #[b Yet...]
+        
 
     .row
-      
-      .col-xs-12.col-sm-6.center
-        img.panel.panel-default(style="width: 100%; max-width: 300px;", src="http://www.xavierhs.org/s/81/images/editor/tom/regis.jpg")
-        
-        hr
+      .col-xs-12.col-sm-2.center-xs
+        img.visible-xs(style="width: 100%; max-width: 300px;", src="http://www.xavierhs.org/s/81/images/editor/tom/regis.jpg")
         br
         b O
         span  - Open-source
@@ -41,7 +40,7 @@ block content
         span  - Connector
         
       
-      .col-xs-12.col-sm-6
+      .col-xs-12.col-sm-5
         .panel.panel-primary
           .panel-heading
             h1.panel-title What is OnTrac?
@@ -51,6 +50,7 @@ block content
               students to get a better grasp on their academic life while at the same 
               time providing an easy, customized platform for organization and collaboration
               with their classmates and schoolmates.
+      .col-xs-12.col-sm-5
         .panel.panel-info
           .panel-heading
             h1.panel-title What does it do?
