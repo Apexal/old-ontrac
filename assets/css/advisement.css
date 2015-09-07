@@ -5,10 +5,6 @@
   font-size: 80%;
 }
 
-.advisement-user-box {
-  margin: 30px;
-}
-
 .advisement-user-box.registered button {
   font-weight: bold;
 }
@@ -20,4 +16,9 @@
 
 .advisement-user-box, .advisement-user-box img {
   width: 100%;
+}
+
+.advisement-user-box {
+  max-width: 140px;
+  margin: 0 auto 30px;
 }
