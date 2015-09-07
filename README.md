@@ -1,4 +1,6 @@
 [![Stories in Ready](https://badge.waffle.io/Apexal/ontrac.png?label=ready&title=Ready)](https://waffle.io/Apexal/ontrac)
+[![Stories in Progress](https://badge.waffle.io/Apexal/ontrac.svg?label=In%20Progress&title=In%20Progress)](http://waffle.io/Apexal/ontrac)
+
 # README #
 
 **O** - Open-source <br>
