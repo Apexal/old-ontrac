@@ -64,9 +64,6 @@ block content
     .row
       .col-xs-12.center
           h3 Sign in to OnTrac #[b(style="cursor: pointer;",data-toggle="modal", data-target="#login-modal") here] with your Regis credentials and get started. It's that easy!
-    
-    .row
-      .col-xs-12
         
     .row
       .col-xs-12
@@ -80,23 +77,3 @@ block content
     .row
       .col-xs-12.text-center
         a.btn.btn-primary(target="_blank", href="https://github.com/Apexal/ontrac") Source Code
-
-    //
-      #tweet
-        script.
-          window.twttr = (function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0],
-            t = window.twttr || {};
-          if (d.getElementById(id)) return t;
-          js = d.createElement(s);
-          js.id = id;
-          js.src = "https://platform.twitter.com/widgets.js";
-          fjs.parentNode.insertBefore(js, fjs);
-
-          t._e = [];
-          t.ready = function(f) {
-            t._e.push(f);
-          };
-
-          return t;
-          }(document, "script", "twitter-wjs"));</script>
