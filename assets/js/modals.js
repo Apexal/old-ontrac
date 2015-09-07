@@ -23,8 +23,9 @@ function userbadges(){
             var points = "Not registered";
             if(data.registered){
               points = data.points + " points";
-              button = "<a class='btn btn-primary' href='/users/"+username+"'>View Full Profile</a>";
+
             }
+            button = "<a class='btn btn-primary' href='/users/"+username+"'>View Full Profile</a>";
 
             var imgsrc = data.ipicture;
             var bio = (data.bio ? data.bio : "Not set yet!");
@@ -36,7 +37,7 @@ function userbadges(){
                 grade = "Frosh";
                 break;
               case "2":
-                grade = "Soph.";
+                grade = "Soph";
                 break;
               case "3":
                 grade = "Junior";
