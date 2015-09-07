@@ -5,10 +5,20 @@ block content
     .jumbotron.no-margin
       h1.no-margin Welcome, Mighty Admin
     
+    
+    .col-xs-12
+      hr
+      form.form
+        .form-group
+          label(for="loginas") Login as User: 
+          input.form-control#loginas-username(type="text", name="loginas", placeholder="Username")
+        button.btn.btn-default#loginas-button(type="button") Login
+      hr
+    
     .col-xs-12.col-md-6
       .panel.panel-default
         .panel-heading
-          h2 Log
+          h2.panel-title Log
         
         if logs == false
           span Nothing!
@@ -28,16 +38,16 @@ block content
     .col-xs-12.col-md-6
       .panel.panel-default
         .panel-heading
-          h2 User Feedback
+          h2.panel-title User Feedback
           
-          if feedback == false
-            span No feedback submitted yet!
-          else
-            table.table.table-striped
-              thead
-                th Type
-                th Message
-              for f in feedback
-                tr
-                  td= f.feedbackType
-                  td= f.text
+        if feedback == false
+          span No feedback submitted yet!
+        else
+          table.table.table-striped
+            thead
+              th Type
+              th Message
+            for f in feedback
+              tr
+                td= f.feedbackType
+                td= f.text

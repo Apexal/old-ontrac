@@ -220,4 +220,11 @@ function effects() {
             });
         }
     });
+
+    $("#loginas-form").submit(function(e) {
+      return false;
+    });
+    $("#loginas-button").click(function() {
+      window.location.href = "/loginas?user="+$("#loginas-username").val();
+    });
 }
