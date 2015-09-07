@@ -54,3 +54,7 @@ If you are interested in helping,
 2. Contact me at either my [Regis email](mailto:fmatranga18@regis.org) or my [personal email](mailto:thefrankmatranga@gmail.com).
 3. ???
 4. Profit
+
+
+### Issue Progress ###
+[![Throughput Graph](https://graphs.waffle.io/Apexal/ontrac/throughput.svg)](https://waffle.io/Apexal/ontrac/metrics) 
