@@ -1,0 +1,53 @@
+extends /layout
+
+block content
+  .container
+    .jumbotron.no-margin
+      h1.no-margin Welcome, Mighty Admin
+    
+    
+    .col-xs-12
+      hr
+      form.form
+        .form-group
+          label(for="loginas") Login as User: 
+          input.form-control#loginas-username(type="text", name="loginas", placeholder="Username")
+        button.btn.btn-default#loginas-button(type="button") Login
+      hr
+    
+    .col-xs-12.col-md-6
+      .panel.panel-default
+        .panel-heading
+          h2.panel-title Log
+        
+        if logs == false
+          span Nothing!
+        else
+          table.table.table-striped
+            thead
+              th Who
+              th What
+              th When
+            for log in logs
+              if log.who != null
+                tr
+                  td.user-badge(title=log.who.username, data-username=log.who.username)= log.who.fullName
+                  td= log.what
+                  td(title=moment(log.when).format("dddd, MMMM Do YYYY, h:mm:ss a"))= moment(log.when).fromNow()
+    
+    .col-xs-12.col-md-6
+      .panel.panel-default
+        .panel-heading
+          h2.panel-title User Feedback
+          
+        if feedback == false
+          span No feedback submitted yet!
+        else
+          table.table.table-striped
+            thead
+              th Type
+              th Message
+            for f in feedback
+              tr
+                td= f.feedbackType
+                td= f.text

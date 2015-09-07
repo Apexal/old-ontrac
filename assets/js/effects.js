@@ -10,6 +10,8 @@ function effects() {
         teacherbadges();
     }
 
+    $('[data-toggle="tooltip"]').tooltip();
+
     var clock = $("#clock");
     clock.text(moment().format('MMMM Do YYYY, h:mm:ss a'));
     setInterval(function() {
@@ -139,7 +141,7 @@ function effects() {
                     $("#reminders-count").hide();
                 } else {
                     $("#reminders-count").show();
-                    $("#reminders-count").text(reminders.length);
+                    $("#reminders-count").html("&nbsp;"+reminders.length+"&nbsp;");
                 }
                 $(".reminder").click(removeReminder);
             });
@@ -207,14 +209,22 @@ function effects() {
         var text = $("#feedback-text").val();
         if (type && text) {
             //alert(type + " " + text);
-            $.post("/feedback/send", {
+            $.post("/api/feedback/send", {
                 feedbackType: type,
                 text: text
             }, function(data) {
                 if (data.success === true) {
                     console.log("Good!");
+                    $("#feedback-text").val("");
                 }
             });
         }
+    });
+
+    $("#loginas-form").submit(function(e) {
+      return false;
+    });
+    $("#loginas-button").click(function() {
+      window.location.href = "/loginas?user="+$("#loginas-username").val();
     });
 }

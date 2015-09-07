@@ -20,28 +20,22 @@ aside#sidebar
     hr
   
   if (currentUser.rank > 4 || currentUser.username == "fmatranga18")
-    section#admin-section.center
-      .dropdown
-        button.btn.btn-primary.dropdown-toggle(type="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="true") Administration &nbsp;
-          span.caret
-        ul.dropdown-menu
-          li(class=( helpers.isPage(page, "admin/logs")? "active" : ""))
-            a(href="/admin/logs") User Logs
-          li
-            a(href="/feedback") User Feedback
-    hr
+    if helpers.isPage(page, "admin") == false
+      .text-center
+        a.btn.btn-primary(href="/admin") Administration
+      hr
     
   section
     ul.nav
       li
         a(title="Manage your reminders.", href="#", data-target="#reminders-modal", data-toggle="modal") Reminders
-          span.badge.right#reminders-count 0 
-      li
-        a(title="Manage your grades.", href="#") Grades
-          //span.badge.right 0
-      li(class=(helpers.isPage(page, "days") ? "active" : ""))
-        a(href="/days", title="View all days that you have work (homework, tests, etc).") Work
-          //span.badge.right 0
+          span.label.label-primary.right#reminders-count &nbsp;
+      li(class=(helpers.isPage(page, "grades") ? "active" : ""))
+        a(title="Manage your grades.", href="/grades") Grades
+          span.label.label-success.right.fa.fa-check 
+      li(class=(helpers.isPage(page, "work") ? "active" : ""))
+        a(href="/work", title="View all days that you have work (homework, tests, etc).") Work
+          span.label.label-danger.right &nbsp;&nbsp;!&nbsp;&nbsp;
       li
         a(title="View and manage your friend list.", href="#") Friends
           //span.badge.right 0
