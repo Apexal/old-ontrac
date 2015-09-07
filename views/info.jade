@@ -1,15 +1,9 @@
-
-
 for i in info
   script.
     setTimeout(function(){sendNotification('info', '', "#{i}");}, 500);
 
-if errs.length > 0
-  .alert.alert-danger.alert-dismissible(data-dismiss="alert", role="alert")= err
-    for err in errs
-      | #{err}
-      br
-    button.close(type="button", data-dismiss="alert")
-      span &times;
-
+for i in errs
+  script.
+    setTimeout(function(){sendNotification('error', '', "#{i}");}, 500);
+  
 .alert.alert-danger OnTrac is in Alpha and should not yet be used for a reliable organization platform. Thank you for being an Alpha Tester!
