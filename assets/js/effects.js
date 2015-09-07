@@ -209,12 +209,13 @@ function effects() {
         var text = $("#feedback-text").val();
         if (type && text) {
             //alert(type + " " + text);
-            $.post("/feedback/send", {
+            $.post("/api/feedback/send", {
                 feedbackType: type,
                 text: text
             }, function(data) {
                 if (data.success === true) {
                     console.log("Good!");
+                    $("#feedback-text").val("");
                 }
             });
         }

@@ -57,6 +57,24 @@ router.get('/work/:date', function(req, res) {
 
 });
 
+router.post("/feedback/send", function(req, res) {
+  var feedbackType = req.body.feedbackType;
+  var text = req.body.text;
+  if(text && feedbackType){
+    console.log(feedbackType + " " + text);
+    new req.Feedback({
+      feedbackType: feedbackType,
+      text: text
+    }).save(function(err, fb) {
+      if(err) throw err;
+      res.json({success: true});
+      console.log(fb);
+    });
+  }else{
+    res.end("Not enough info.");
+  }
+});
+
 module.exports = function(io) {
-  return {router: router, models: ['Student', 'Teacher', 'Day', 'GradedItem']}
+  return {router: router, models: ['Student', 'Teacher', 'Day', 'GradedItem', 'Feedback']}
 };
