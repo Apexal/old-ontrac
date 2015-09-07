@@ -78,7 +78,7 @@ function effects() {
         handles: 'n'
     });
 
-    
+
     // Toggle the small chat box
     var chat_box = $("#chat-box.small-box");
     var small_box = $("#chat-controls.small-box");
@@ -215,6 +215,7 @@ function effects() {
                 if (data.success === true) {
                     console.log("Good!");
                     $("#feedback-text").val("");
+                    $("#feedback-modal").modal("hide");
                 }
             });
         }
