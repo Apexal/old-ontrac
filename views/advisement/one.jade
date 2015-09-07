@@ -10,29 +10,31 @@ block content
       .page-header
         h1 Advisement #{advisement.title}
           small.right= (registered.length/advisement.students.length)*10+"% registered"
-        h3 #[b= advisement.title] has #[b= registered.length] #{helpers.pluralize(registered.length, "user", "users")} registered out of #[b= advisement.students.length] and is advised by #[b= (advisement.teacher ? advisement.teacher.fullName : "Unknown")].
-      
+        h3 #[b= advisement.title] has #[b= registered.length] 
+          | #{helpers.pluralize(registered.length, "user", "users")} registered 
+          | out of #[b= advisement.students.length] and is advised by 
+          | #[b= (advisement.teacher ? advisement.teacher.fullName : "Unknown")].
+
       .row
         .col-xs-12.col-sm-4
           if advisement.teacher
-            img(src=advisement.teacher.image)
-
-        if registered.length > 0
-          .col-xs-12.col-sm-8
-            for user in registered
-              .col-xs-12.col-sm-6.text-center
-                .advisement-user-box
-                  img(alt=user.bio, src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
-                  .btn-group.full-width
-                    button.full-width.btn.btn-default.dropdown-toggle(data-toggle="dropdown", ara-expanded="false", type="button")= user.fullName+" "
-                      span.caret
-                    ul.dropdown-menu(role="menu")
-                      li
-                        if loggedIn
-                          a(href="/users/"+user.username) View Profile
-                          a(href="/users/"+user.username+"/schedule") View Schedule
-                          a(href="mailto:"+user.email) Email
+            img#advisement-teacher-img.teacher-badge(data-username=advisement.teacher.username, src=advisement.teacher.ipicture)
+          hr
+          .panel.panel-primary
+            .panel-heading
+              h2.panel-title Stats
+            .panel-body
+              p Info here!
+        
+        .col-xs-12.col-sm-8
+          for user in students
+            .col-xs-12.col-sm-2.text-center
+              .advisement-user-box(class=( user.registered ? 'registered' : ''))
+                img(alt=user.bio, src=user.ipicture)
+                .btn-group.full-width
+                  button.user-badge.full-width.btn.btn-default(data-username=user.username, type="button")= user.fullName
       .row
         .col-xs-12
           hr
+      a.btn.btn-default(href="mailto:"+emails) Email this Advisement
       a.btn.btn-primary(href="/advisements") All Advisements
