@@ -16,7 +16,7 @@ block content
           | #[b= (advisement.teacher ? advisement.teacher.fullName : "Unknown")].
 
       .row
-        .col-xs-12.col-sm-4
+        .col-xs-12.col-sm-4.text-center
           if advisement.teacher
             img#advisement-teacher-img.teacher-badge(data-username=advisement.teacher.username, src=advisement.teacher.ipicture)
           hr
