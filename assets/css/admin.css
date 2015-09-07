@@ -1,1 +1,4 @@
- 
+#log-panel, #feedback-panel {
+  max-height: 500px;
+  overflow: scroll;
+}

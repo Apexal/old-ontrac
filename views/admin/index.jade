@@ -16,7 +16,7 @@ block content
       hr
     
     .col-xs-12.col-md-6
-      .panel.panel-default
+      .panel.panel-default#log-panel
         .panel-heading
           h2.panel-title Log
         
@@ -34,9 +34,9 @@ block content
                   td.user-badge(title=log.who.username, data-username=log.who.username)= log.who.fullName
                   td= log.what
                   td(title=moment(log.when).format("dddd, MMMM Do YYYY, h:mm:ss a"))= moment(log.when).fromNow()
-    
+
     .col-xs-12.col-md-6
-      .panel.panel-default
+      .panel.panel-default#feedback-panel
         .panel-heading
           h2.panel-title User Feedback
           
