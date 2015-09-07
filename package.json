@@ -14,6 +14,7 @@
 	  "postinstall": "bower install; gulp pre;",
     "db": "src/scripts/mongod",
     "scrape": "python2 src/scripts/scrape.py;",
+    "clean": "python2 src/scripts/clean.py",
     "watch": "nodemon app.js",
     "debug": "DEBUG=express:* node app.js",
     "start": "gulp 'pre'; NODE_ENV=production node app.js"
