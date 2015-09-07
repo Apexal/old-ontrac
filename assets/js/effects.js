@@ -40,12 +40,6 @@ function effects() {
       });
     }
 
-    $("#sidebar-pic").hover(function() {
-      //alert("GOO");
-      $("#sidebar-pic").addClass("magictime").addClass("boingInUp");
-    }, function() {
-      $("#sidebar-pic").removeClass("magictime").removeClass("boingInUp");
-    });
     // Animate the knobs to random percentages (for now)
     // TODO: remove this when I finish the view
     $('.dial').each(function() {
