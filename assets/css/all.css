@@ -147,6 +147,9 @@ span.badge {
   margin-left: 5px;
 }
 
+#reminders-count {
+  display: none;
+}
 
 .modal-pic{
   max-width: 100px;

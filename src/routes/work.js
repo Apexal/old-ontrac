@@ -7,7 +7,25 @@ var moment = require('moment');
 /* ----------------------------- */
 
 router.get('/', function(req, res) {
-  req.toJade.title = "Days";
+
+  var adv = req.currentUser.advisement.charAt(0);
+  var grade = "";
+  switch(adv) {
+    case "1":
+      grade = "Freshman";
+      break;
+    case "2":
+      grade = "Sophmore";
+      break;
+    case "3":
+      grade = "Junior";
+      break;
+    case "4":
+      grade = "Senior";
+      break;
+  }
+
+  req.toJade.title = "Your "+grade+" Work";
   req.toJade.days = false;
 
   req.Day.find({username: req.currentUser.username, date: {$lt: moment(req.today).add(5, 'days').toDate()}})
@@ -18,7 +36,7 @@ router.get('/', function(req, res) {
       if(days){
         req.toJade.days = days;
       }
-      res.render('days/index', req.toJade);
+      res.render('work/index', req.toJade);
     });
 
 });
@@ -28,9 +46,9 @@ router.get(['/closest'], function(req, res) {
     if(err) throw err;
 
     if(day){
-      res.redirect("/days/"+moment(day.date).format("YYYY-MM-DD"));
+      res.redirect("/work/"+moment(day.date).format("YYYY-MM-DD"));
     }else{
-      res.redirect("/days/today");
+      res.redirect("/work/today");
     }
   });
 });
@@ -47,6 +65,7 @@ router.get("/:date", function(req, res, next) {
 
   if(moment(dateString, 'YYYY-MM-DD', true).isValid() == false){
     req.toJade.title = "Invalid Date";
+    res.render('work/one', req.toJade);
   }else{
     var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true);
     req.toJade.title = date.format("dddd, MMM Do YY");
@@ -95,16 +114,14 @@ router.get("/:date", function(req, res, next) {
 
           console.log(req.toJade.hwcourses);
           req.toJade.items = d.items;
-          next();
         });
       }else{
         console.log("Did not find day");
       }
-      res.render('days/one', req.toJade);
+      res.render('work/one', req.toJade);
     });
   }
 });
-
 
 module.exports = function(io) {
   return {router: router, models: ['Day', 'HWItem', 'Course']}

@@ -10,6 +10,8 @@ function effects() {
         teacherbadges();
     }
 
+    $('[data-toggle="tooltip"]').tooltip();
+
     var clock = $("#clock");
     clock.text(moment().format('MMMM Do YYYY, h:mm:ss a'));
     setInterval(function() {
@@ -139,7 +141,7 @@ function effects() {
                     $("#reminders-count").hide();
                 } else {
                     $("#reminders-count").show();
-                    $("#reminders-count").text(reminders.length);
+                    $("#reminders-count").html("&nbsp;"+reminders.length+"&nbsp;");
                 }
                 $(".reminder").click(removeReminder);
             });

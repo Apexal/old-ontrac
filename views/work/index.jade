@@ -1,0 +1,38 @@
+extends /layout
+
+block content
+  .container
+    include /info
+    
+    
+    .jumbotron.no-margin
+      h1.no-margin= title
+      br
+      #stats.larger
+        b This year's stats:
+        span(data-toggle="tooltip", title="Hooray!")  0 homework assignments, 
+        span(data-toggle="tooltip", title="Hooray!") 0 tests, 
+        span(data-toggle="tooltip", title="Hooray!") 0 quizzes, 
+        span(data-toggle="tooltip", title="Hooray!") 0 projects
+
+    .row
+      .col-xs-12.col-sm-6.col-md-3
+        .page-header
+          h2 Due Today
+            small   0 items
+        
+        .col-xs-12
+          p.text-center Nothing!
+      
+      .col-xs-12.col-sm-6.col-md-3
+        .page-header
+          h2 Upcoming
+            small   0 items
+        
+        .col-xs-12
+          p.text-center Nothing!
+      
+      .col-xs-12.col-sm-6.center
+        img(style="width: 100%; max-height: 500px;", src="/images/graph.png")
+      .col-xs-12
+        hr
