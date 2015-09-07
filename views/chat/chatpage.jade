@@ -1,9 +1,0 @@
-extends /layout
-
-block content
-  #chat-box(style="overflow: auto; position: initial; width: 100%;")
-    #chat-messages
-      
-  form#chat-controls.form-inline(role="form", style="position: fixed; left: 0; bottom: 0px;")
-    input.form-control#chat-message(type="text", name="message", style="width: 80%;")
-    button#send-message.btn.btn-primary(type="button", style="width: 20%;", data-username=currentUser.username) Send
