@@ -6,22 +6,29 @@ block content
     if date == false
       .page-header
         h1 Invalid Date
-    else    
+    else
       .page-header
         h1= date.format("dddd, MMMM Do YYYY")
           small.right= fromNow
       .row
         .col-xs-12.text-center
-          if day != false
-            b#schedule-day.set(title="Click to change!") #{day.scheduleDay}-Day 
-          else
-            b#schedule-day(title="Click to set!") No Schedule Day!
-            
+          #schedule-day-dropdown.dropdown
+            if day != false
+              b#schedule-day.dropdown-toggle.set(title="Click to change!", data-toggle="dropdown") #{day.scheduleDay}-Day
+            else
+              b#schedule-day.dropdown-toggle(title="Click to set!", data-toggle="dropdown") No Schedule Day!
+
+            ul.dropdown-menu
+              each letter in ['A', 'B', 'C', 'D', 'E']
+                li
+                  a.schedule-day-letter(href="#")= letter
+
+
       p#hw-info.text-center
-        | On this #[b= date.format("dddd")], you have #[a(href="#homework", style="color: #2780e3;")= (items.homework ? items.homework.length : 0) + " homework"] assignments 
-        | to complete, #[a(href="#tests", style="color: #f0005e;") 0 tests] to take, #[a(href="#quizzes", style="color: #7643a8;") 0 quizzes] to take, and 
+        | On this #[b= date.format("dddd")], you have #[a(href="#homework", style="color: #2780e3;")= (items.homework ? items.homework.length : 0) + " homework"] assignments
+        | to complete, #[a(href="#tests", style="color: #f0005e;") 0 tests] to take, #[a(href="#quizzes", style="color: #7643a8;") 0 quizzes] to take, and
         | #[a(href="#projects", style="color: #ff4309;") 0 projects] due.
-      
+
       br
       br.hidden-xs
       .row.hidden-xs
@@ -33,13 +40,13 @@ block content
           input.dial(type="text", value="50", data-fgcolor="#7643a8", data-readonly="true", data-width="100")
           span.right-spacer
           input.dial(type="text", value="50", data-fgcolor="#ff4309", data-readonly="true", data-width="100")
-      
+
       // HOMEWORK
       include homework
-        
+
       -for(var i=0;i<6;i++)
         br
-      
+
       // TESTS
       .row#tests
         .col-xs-12
@@ -47,7 +54,7 @@ block content
             h2.text-center Tests
           .col-xs-12.text-center
             //b Items
-        
+
         .col-xs-12.text-center
           if !items.tests
             h4 No tests!
