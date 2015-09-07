@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/Apexal/ontrac.png?label=ready&title=Ready)](https://waffle.io/Apexal/ontrac)
 # README #
 
 **O** - Open-source <br>
