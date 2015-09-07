@@ -23,10 +23,11 @@ function userbadges(){
             var points = "Not registered";
             if(data.registered){
               points = data.points + " points";
-              button = "<a class='btn btn-primary' href='/users/"+username+"'>View Full Profile</a>";
-            }
 
-            var imgsrc = (data.registered ? "https://webeim.regis.org/photos/regis/Student/"+data.code+".jpg" : data.mpicture);
+            }
+            button = "<a class='btn btn-primary' href='/users/"+username+"'>View Full Profile</a>";
+
+            var imgsrc = (data.ipicture);
             var bio = (data.bio ? data.bio : "Not set yet!");
 
             var adv = data.advisement.charAt(0);
@@ -36,7 +37,7 @@ function userbadges(){
                 grade = "Frosh";
                 break;
               case "2":
-                grade = "Soph.";
+                grade = "Soph";
                 break;
               case "3":
                 grade = "Junior";

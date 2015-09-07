@@ -44,7 +44,7 @@ router.get("/:username", function(req, res){
   var username = req.params.username;
   req.toJade.user = false;
   req.toJade.title = "Not a User";
-  req.Student.findOne({registered: true, username: username}).populate('courses', 'tID title mID').exec(function(err, user) {
+  req.Student.findOne({username: username}).populate('courses', 'tID title mID code').exec(function(err, user) {
     if(err) throw err;
 
     if(user){
@@ -61,7 +61,7 @@ router.get("/:username", function(req, res){
 });
 
 router.get("/:username/schedule", function(req, res){
-  req.Student.findOne({registered: true, username: req.params.username}, function(err, user) {
+  req.Student.findOne({username: req.params.username}, function(err, user) {
     if(user){
       req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+"'s Schedule";
       req.toJade.user = user;
