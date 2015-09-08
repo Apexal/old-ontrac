@@ -6,27 +6,32 @@ router.get("/*", function(req, res, next) {
   if(req.loggedIn)
     next();
   else
-    res.end("Not authorized.");
+    res.json({error: "Not authorized."});
 });
 
 router.get('/user/:username', function(req, res) {
   var username = req.params.username;
   req.Student.findOne({username: username}).populate('courses', 'title mID').exec(function(err, user) {
-    if (err)
-      res.send(err);
-    res.json(user);
+    if(err) res.json({error: err});
+    if(user)
+      res.json(user);
+    else
+      res.json({error: "No such user!"});
   });
 });
 
 router.get('/teacher/:username', function(req, res) {
   var username = req.params.username;
   req.Teacher.findOne({username: username}).populate('courses', 'title mID').exec(function(err, teacher) {
-    if (err)
-      res.send(err);
+    if(err) res.json({error: err});
 
-    teacher.ratingStringJSON = String(teacher.ratingString);
-    console.log("LOOK: "+teacher);
-    res.json(teacher);
+    if(teacher){
+      teacher.ratingStringJSON = String(teacher.ratingString);
+      console.log("LOOK: "+teacher);
+      res.json(teacher);
+    }else{
+      res.json({error: "No such teacher!"});
+    }
   });
 });
 
