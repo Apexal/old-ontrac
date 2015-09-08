@@ -41,7 +41,7 @@ router.get('/work/:date', function(req, res) {
     req.Day.findOne({username: req.currentUser.username, date: date.toDate()})
       .deepPopulate('items.homework items.tests items.quizzes items.essays')
       .exec(function(err, day) {
-        if (err) throw err;
+        if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
         if(day){
           day.deepPopulate('items.homework.course items.tests.course items.quizzes.course items.essays.course', {
             whitelist: ['_id', 'students']
@@ -66,7 +66,7 @@ router.post("/feedback/send", function(req, res) {
       feedbackType: feedbackType,
       text: text
     }).save(function(err, fb) {
-      if(err) throw err;
+      if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
       res.json({success: true});
       console.log(fb);
     });

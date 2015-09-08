@@ -11,7 +11,7 @@ router.get("/", function(req, res, next) {
 
   var sortBy = (req.query.sortBy ? req.query.sortBy : "");
   req.Teacher.find({}).sort({sortBy: -1}).skip(perPage*(pageNum-1)).limit(perPage).exec(function(err, teachers) {
-    if(err) throw err;
+    if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
     if(teachers){
       req.toJade.pageNum = pageNum;
       req.toJade.prev = ((pageNum-1) <= 0 ? pages : (pageNum-1));
@@ -30,7 +30,7 @@ router.get("/:mID", function(req, res, next) {
   req.toJade.teacher = false;
 
   req.Teacher.findOne({mID: mID}).populate('courses', 'mID title').exec(function(err, teacher) {
-    if(err) throw err;
+    if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
 
     if(teacher) {
       req.toJade.title = "Teacher "+teacher.fullName;
@@ -45,7 +45,7 @@ router.get("/:tID/schedule", function(req, res, next) {
   req.toJade.teacher = false;
 
   req.Teacher.findOne({tID: tID}, function(err, teacher) {
-    if(err) throw err;
+    if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
 
     if(teacher) {
       req.toJade.title = "Teacher "+teacher.firstName.charAt(0)+". "+teacher.lastName;

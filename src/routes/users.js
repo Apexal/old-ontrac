@@ -45,7 +45,7 @@ router.get("/:username", function(req, res){
   req.toJade.user = false;
   req.toJade.title = "Not a User";
   req.Student.findOne({username: username}).populate('courses', 'tID title mID code').exec(function(err, user) {
-    if(err) throw err;
+    if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
 
     if(user){
       user.deepPopulate('courses.teacher', function(err, u) {

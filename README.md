@@ -12,6 +12,7 @@
 
 Making Regis even better.
 
+[See it in action!](http://www.getontrac.info/)
 
 ### What is OnTrac? ###
 

@@ -3,7 +3,7 @@ var router = express.Router();
 
 router.get("/all", function(req, res) {
   req.Reminder.find({username: req.currentUser.username}, function(err, reminders) {
-    if(err) throw err;
+    if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
     if(reminders){
       res.json({reminders: reminders});
     }
@@ -18,7 +18,7 @@ router.post("/add", function(req, res) {
       username: req.currentUser.username,
       desc: desc
     }).save(function(err) {
-      if(err) throw err;
+      if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
       res.json({success: true});
       console.log("ALL GOOD!");
       new req.Log({who: req.currentUser._id, what: "New reminder."}).save();
@@ -32,7 +32,7 @@ router.post("/remove", function(req, res) {
   var id = req.body.id;
   if(id){
     req.Reminder.remove({_id: id}, function(err) {
-      if(err) throw err;
+      if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
       res.json({success: true});
       new req.Log({who: req.currentUser._id, what: "Deleted reminder."}).save();
     });

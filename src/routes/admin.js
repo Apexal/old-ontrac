@@ -17,14 +17,14 @@ router.get('/', function(req, res) {
   req.toJade.feedback = false;
 
   req.Log.find({}).populate('who', 'username firstName lastName').sort({when : -1}).exec(function(err, logs) {
-    if(err) throw err;
+    if(err){req.session.errs.push('An error occured, please try again.'); res.redirect('/'); return;}
 
     if(logs){
       req.toJade.logs = logs;
     }
 
     req.Feedback.find({}).sort({feedbackType: -1}).exec(function(err, feedback) {
-      if(err) throw err;
+      if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
 
       if(feedback){
         req.toJade.feedback = feedback;

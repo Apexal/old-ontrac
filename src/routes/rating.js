@@ -5,7 +5,7 @@ router.post('/teachers/:mID', function(req, res) {
   var mID = req.params.mID;
   var rating = req.body.rating;
   req.Teacher.findOne({mID: mID}, function(err, teacher) {
-    if(err) throw err;
+    if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
     if(teacher && (rating >= 0 && rating <= 10)){
       var firstRate = true; // Has the logged in user rated this teacher before?
       for(var rate in teacher.ratings){
@@ -40,7 +40,7 @@ router.post('/teachers/:mID', function(req, res) {
       teacher.averageRating = (total / teacher.ratingCount);
 
       teacher.save(function(err) {
-        if(err) throw err;
+        if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
         res.json({success: true});
       });
     }else{

@@ -8,7 +8,7 @@ router.get('/', function(req, res){
   req.Advisement.find({}).populate('students', 'username firstName lastName registered')
     .populate('teacher', 'firstName lastName username').sort({title: 1})
     .exec(function(err, advs){
-      if(err) throw err;
+      if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
 
       if (advs){
         req.toJade.advisements = advs;
@@ -26,7 +26,7 @@ router.get('/:advisement', function(req, res){
   req.Advisement.findOne({title: advisement}).populate('students', 'username firstName lastName registered ipicture email')
     .populate('teacher', 'ipicture firstName lastName username').sort({title: 1})
     .exec(function(err, adv){
-      if(err) throw err;
+      if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
 
       if (adv){
         req.toJade.registered = adv.students.filter(function(value) {

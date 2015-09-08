@@ -6,7 +6,7 @@ router.get('/', function(req, res){
   req.toJade.courses = false;
 
   req.Course.find({}).populate('teacher').populate('students', 'mID username firstName lastName registered').exec(function(err, courses){
-    if(err) throw err;
+    if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
 
     if(courses){
       req.toJade.courses = courses;
@@ -21,7 +21,7 @@ router.get('/:mID', function(req, res) {
   req.toJade.course = false;
 
   req.Course.findOne({mID: mID}).populate('teacher').populate('students', 'mID username advisement firstName lastName rank registered grade').exec(function(err, course){
-    if(err) throw err;
+    if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
 
     if(course){
       console.log(course.teacher);

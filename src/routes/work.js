@@ -43,7 +43,7 @@ router.get('/', function(req, res) {
 
 router.get(['/closest'], function(req, res) {
   req.Day.getClosest(req.currentUser.username, req.today, function(err, day) {
-    if(err) throw err;
+    if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
 
     if(day){
       res.redirect("/work/"+moment(day.date).format("YYYY-MM-DD"));
@@ -90,7 +90,7 @@ router.get("/:date", function(req, res, next) {
     req.toJade.date = date.add(1, 'days');
 
     req.Day.findOne({username: req.currentUser.username, date: date.toDate()}).deepPopulate('items.homework').exec(function(err, day) {
-      if(err) throw err;
+      if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
       console.log(date.toDate());
       if(day){
         console.log("Found day");
