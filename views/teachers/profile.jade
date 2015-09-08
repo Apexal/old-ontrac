@@ -25,19 +25,21 @@ block content
         button.btn.btn-success.disabled(title="This is not one of your teachers!") Like   
         button.btn.btn-danger.disabled(title="This is not one of your teachers!") Dislike
     
-    .row
-        .col-xs-12
-          hr
-          h2 Classes
-          br
-          .teacher-classes
-            for c in teacher.courses
-              +class(c)
+      .row
+          .col-xs-12
+            hr
+            h2 Classes
+            br
+            .teacher-classes
+              if teacher.courses
+                for c in teacher.courses
+                  +class(c)
     
-    .col-xs-12.col-sm-6
+    .col-xs-12
       if teacher != false
-        a.btn.btn-default.right(href="http://moodle.regis.org/user/profile.php?id="+teacher.mID, target="_blank") Moodle Page
-      a.btn.btn-primary.right(href="/teachers") Back to Teachers
+        hr
+        a.btn.btn-default(href="http://moodle.regis.org/user/profile.php?id="+teacher.mID, target="_blank") Moodle Page
+      a.btn.btn-primary(href="/teachers") Back to Teachers
     
 mixin class(course)
   .col-xs-12.col-sm-6.col-md-4

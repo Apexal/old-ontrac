@@ -31,8 +31,8 @@ router.get("/:mID", function(req, res, next) {
 
   req.Teacher.findOne({mID: mID}).populate('courses', 'mID title').exec(function(err, teacher) {
     if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
-
-    if(teacher) {
+    console.log(teacher);
+    if(teacher !== null) {
       req.toJade.title = "Teacher "+teacher.fullName;
       req.toJade.teacher = teacher;
     }
