@@ -68,6 +68,7 @@ app.use(function(req, res, next) {
     tri: info.trimester,
     full_year: info.full,
     today: req.today,
+    production: (process.env.NODE_ENV == 'production'),
     currentUser: req.currentUser,
     loggedIn: req.loggedIn,
     redir: (req.query.redir ? req.query.redir : req._parsedUrl.pathname)
