@@ -56,5 +56,5 @@ If you are interested in helping,
 4. Profit
 
 
-### Issue Progress ###
-[![Throughput Graph](https://graphs.waffle.io/Apexal/ontrac/throughput.svg)](https://waffle.io/Apexal/ontrac/metrics) 
+### Progress ###
+[![Throughput Graph](https://graphs.waffle.io/Apexal/ontrac/throughput.svg)](https://waffle.io/Apexal/ontrac/metrics)
