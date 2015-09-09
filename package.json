@@ -45,6 +45,7 @@
     "promisified-request": "*",
     "underscore": "*"
   },
+  "homepage": "http://www.getontrac.info",
   "devDependencies": {
     "bower": "*",
     "gulp": "^3.9.0",
