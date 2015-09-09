@@ -7,11 +7,17 @@ block content
       h1.no-margin(style="text-transform: capitalize") Hello, #{currentUser.firstName}
       p.no-margin.magictime.swashIn.
         It is #[b#clock Time & Date]. Today is a #[b#today-sd ?] Schedule Day.
-      span Only #[b= moment("2015-09-09").fromNow(true)] until school starts.
+      span Only #[b= moment("2015-09-14").fromNow(true)] until school starts.
     .row
       .col-xs-12
         include tabs
     .row
+      .col-xs-12
+        br
+        p.
+          Now remember, OnTrac is in Alpha. This means it is nowhere near done.
+          That explains this empty homepage.
       .col-xs-12.center
         img(style="height: 100%; max-height: 500px;", src="/images/graph.png")
+        
     hr

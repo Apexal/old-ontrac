@@ -18,7 +18,7 @@ block content
           .row
             .col-xs-12.col-sm-12.col-md-6.center-xs
               .holder
-                img#profile-pic(src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
+                img#profile-pic(title="Looking good!", alt=user.firstName+" missed picture day!", src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
                 #stars(title=user.firstName+" is a "+user.rankName, data-toggle="tooltip", style="color: yellow; font-size: 130%;")
                   for s in stars
                     span.fa.fa-star
@@ -47,24 +47,28 @@ block content
                     br
                     b User Since:
                     |  #{moment(user.registered_date).format('dddd, MMMM Do YYYY')}
-            .col-xs-12.col-sm-12.col-md-6
-              .panel.panel-default
-                .panel-heading
-                  h1.panel-title  Achievements
-                ol.list-group
-                  for a in allAchievements
-                    li(class="list-group-item"+( user.achievements.indexOf(a.id) > -1 ? " list-group-item-success" : "")) #{a.name}
-                      small.right= "["+a.reward+" points]"
-          .row
-            .col-xs-12.col-sm-12.col-md-6
-              .panel.panel-warning
-                .panel-heading
-                  h1.panel-title  Stats
-                .panel-body
-                  .user-info
-                    b Advisement:
-                    |  #{user.advisement}
         
+        .col-xs-12.col-sm-12.col-md-6.col-lg-4
+          .panel.panel-success
+            .panel-heading
+              h1.panel-title  Achievements
+            ol.list-group
+              if user.achievements
+                for a in user.achievements
+                  li.list-group-item #{allAchievements[a].name}
+                    small.right= "["+allAchievements[a].reward+" points]"
+                else
+                  li.list-group-item #{user.firstName} has not yet earned any achievements.
+
+        .col-xs-12.col-sm-12.col-md-4
+          .panel.panel-warning
+            .panel-heading
+              h1.panel-title  Stats
+            .panel-body
+              .user-info
+                b Advisement:
+                |  #{user.advisement}
+      
       .row
           .col-xs-12
             hr
@@ -77,19 +81,19 @@ block content
     .row
       .col-xs-12
         hr
-        
-        .btn-group.dropup
-          button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Actions &nbsp;
-            span.caret
-            span.sr-only Toggle Dropdown
-          ul.dropdown-menu
-            li
-              a(href="/users/"+user.username+"/schedule") View Schedule
-            li
-              a(href="mailto:"+user.email) Email
-            li
-              a(href="http://moodle.regis.org/user/profile.php?id="+user.mID) Moodle Profile
-              
+        if user !== false
+          .btn-group.dropup
+            button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Actions &nbsp;
+              span.caret
+              span.sr-only Toggle Dropdown
+            ul.dropdown-menu
+              li
+                a(href="/users/"+user.username+"/schedule") View Schedule
+              li
+                a(href="mailto:"+user.email) Email
+              li
+                a(href="http://moodle.regis.org/user/profile.php?id="+user.mID) Moodle Profile
+                
         a.btn.btn-primary(href="/users") Back to User List
       
 mixin class(course)
