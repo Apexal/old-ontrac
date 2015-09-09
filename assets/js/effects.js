@@ -183,12 +183,11 @@ function effects() {
             username: username,
             password: password
         }, function(data) {
-            $("#login-errors b").remove();
+            $("#login-errors .alert").remove();
             if (data.errors) {
                 for (var err in data.errors) {
-                    $("#login-errors").append(
-                        "<b class='text-danger'>" +
-                        data.errors[err] + "</b><br>");
+                    $("#login-errors").append("<div class='alert alert-danger'>"+
+                      data.errors[err]+"</div>");
                 }
                 $("#login-button").text("Login");
             } else {
@@ -238,5 +237,5 @@ function effects() {
     *                             NOTIFICATION SYSTEM
     * ========================================================================== */
 
-    
+
 }
