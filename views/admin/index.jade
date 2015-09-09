@@ -51,3 +51,13 @@ block content
               tr
                 td= f.feedbackType
                 td= f.text
+
+    if production == false
+      .col-xs-12
+        form.form(method="POST", action="/admin/clearcollection")
+          .form-group
+            label(for="collection") Collection
+            select.form-control#dropcollection(name="collection")
+              each c in ['HWItem', 'Day', 'Grade', 'Feedback', 'Log']
+                option= c
+          button.btn.btn-danger Delete

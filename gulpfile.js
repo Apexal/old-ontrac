@@ -21,7 +21,7 @@ var files = {
 
 // JS concat, strip debugging and minify
 gulp.task('scripts', function() {
-  gulp.src(files.js)
+  return gulp.src(files.js)
     .pipe(concat('script.js'))
     //.pipe(stripDebug())
     .pipe(uglify())
@@ -29,20 +29,20 @@ gulp.task('scripts', function() {
 });
 
 gulp.task('fonts', function() {
-  gulp.src([bowerPath+'/fontawesome/fonts/*', bowerPath+'/bootstrap/dist/fonts/*'])
-    .pipe(gulp.dest('public/fonts'))
+  return gulp.src([bowerPath+'/fontawesome/fonts/*', bowerPath+'/bootstrap/dist/fonts/*'])
+    .pipe(gulp.dest('public/fonts'));
 });
 
 // JS hint task
 gulp.task('jshint', function() {
-  gulp.src([jsPath+'/*.js', '!'+jsPath+'/jquery.knob.js', '!'+jsPath+'/pnotify.custom.min.js'])
+  return gulp.src([jsPath+'/*.js', '!'+jsPath+'/jquery.knob.js', '!'+jsPath+'/pnotify.custom.min.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
 });
 
 // CSS concat, auto-prefix and minify
 gulp.task('styles', function() {
-  gulp.src(files.css)
+  return gulp.src(files.css)
     .pipe(concat('style.css'))
     .pipe(autoprefix('last 2 versions'))
     .pipe(minifyCSS())

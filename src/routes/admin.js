@@ -35,11 +35,23 @@ router.get('/', function(req, res) {
   });
 });
 
-router.get('/logs', function(req, res) {
-  req.toJade.title = "Logs";
+router.post('/clearcollection', function(req,res){
+  var coll = req.body.collection;
+  if(['Feedback', 'Log', 'HWItem', 'Grade', 'Day'].indexOf(coll)>-1){
+    req[coll].remove({}, function(err) {
+      if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
+        new req.Log({who: req.currentUser.username, what: "Cleared the '"+coll+"' collection as admin."}).save();
+        done();
+    });
+  }else{
+    done();
+  }
+
+  function done(){res.redirect("/admin");}
 
 });
 
+
 module.exports = function(io) {
-  return {router: router, models: ['Feedback']}
+  return {router: router, models: ['Feedback', 'Days', 'HWItem', 'Grade']}
 };
