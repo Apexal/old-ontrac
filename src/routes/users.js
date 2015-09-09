@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
     if(err) console.log(err);
     if(registered)
       req.toJade.registered = registered;
-    req.Student.find({}, 'registered firstName lastName advisement code username rank mpicture')
+    req.Student.find({}, 'registered firstName lastName advisement username rank mpicture ipicture')
       .sort({advisement: 1})
       .skip(perPage*(pageNum-1))
       .limit(perPage)
@@ -80,7 +80,7 @@ router.get("/:username", function(req, res){
         req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+" of "+user.advisement;
         req.toJade.user = u;
         req.toJade.allAchievements = achievements;
-        req.toJade.stars = _.range(u.rank-1);
+        req.toJade.stars = _.range(u.rank+1);
         res.render('users/profile', req.toJade);
       });
     }else{

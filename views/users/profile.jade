@@ -19,7 +19,7 @@ block content
             .col-xs-12.col-sm-12.col-md-6.center-xs
               .holder
                 img#profile-pic(title="Looking good!", alt=user.firstName+" missed picture day!", src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
-                #stars(title=user.firstName+" is a "+user.rankName, data-toggle="tooltip", style="color: yellow; font-size: 130%;")
+                #stars(title=user.firstName+" is a "+user.rankName, data-toggle="tooltip", style="color: yellow; font-size: 130%; padding-left: 3px;")
                   for s in stars
                     span.fa.fa-star
                 if user.bio
