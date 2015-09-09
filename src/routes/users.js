@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var _ = require("underscore");
+var achievements = require("../modules/achievements");
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -53,6 +54,7 @@ router.get("/:username", function(req, res){
         //console.log(u.courses);
         req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+" of "+user.advisement;
         req.toJade.user = u;
+        req.toJade.allAchievements = achievements;
         req.toJade.stars = _.range(u.rank-1);
         res.render('users/profile', req.toJade);
       });

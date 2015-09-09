@@ -44,13 +44,13 @@ block content
                     b User Since:
                     |  #{moment(user.registered_date).format('dddd, MMMM Do YYYY')}
             .col-xs-12.col-sm-12.col-md-6
-              .panel.panel-success
+              .panel.panel-default
                 .panel-heading
                   h1.panel-title  Achievements
-                .panel-body
-                  .user-info
-                    b Advisement:
-                    a(href="/advisements/"+user.advisement)  #{user.advisement}
+                ol.list-group
+                  for a in allAchievements
+                    li(class="list-group-item"+( user.achievements.indexOf(a.id) > -1 ? " list-group-item-success" : "")) #{a.name}
+                      small.right= "["+a.reward+" points]"
           .row
             .col-xs-12.col-sm-12.col-md-6
               .panel.panel-warning
