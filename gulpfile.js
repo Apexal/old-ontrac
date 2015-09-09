@@ -16,7 +16,7 @@ var files = {
     bowerPath+'/moment/moment.js', bowerPath+'/bootstrap/dist/js/bootstrap.min.js',
     jsPath+'/*.js'],
   css: [bowerPath+'/bootstrap/dist/css/bootstrap.min.css', bowerPath+'/bootstrap/dist/css/cosmo-theme.min.css',
-    bowerPath+'/fontawesome/css/font-awesome.min.css', 'assets/css/*.css']
+    bowerPath+'/fontawesome/css/font-awesome.min.css', 'assets/css/cosmo.min.css', 'assets/themes/*.css', 'assets/css/*.css']
 }
 
 // JS concat, strip debugging and minify
