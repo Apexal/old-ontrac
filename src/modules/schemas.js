@@ -13,6 +13,7 @@ module.exports = {
     mpicture: String,
     ipicture: String,
     email: String,
+    achievements: Array,
     //locker_number: String,
     friends: [{ type: Schema.Types.ObjectId, ref: 'Student'}],
     advisement: String,

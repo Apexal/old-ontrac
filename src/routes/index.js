@@ -3,6 +3,7 @@ var router = express.Router();
 var moment = require('moment');
 var request = require("request");
 var cheerio = require("cheerio");
+var achievements = require("../modules/achievements");
 
 var redir = "/";
 
@@ -90,6 +91,17 @@ module.exports = function(io) {
 
                       new req.Log({who: user._id, what: "Registration."}).save();
                     }
+
+                    var uA = user.achievements;
+                    achievements.forEach(function(ach){
+                      if(uA.indexOf(ach.id) == -1){
+                        if(ach.check(user)){
+                          user.achievements.push(ach.id);
+                          user.points += ach.reward;
+                          req.session.info.push("You have been awarded "+ach.reward+" points for achieving '"+ach.name+"'!");
+                        }
+                      }
+                    });
 
                     user.login_count +=1;
 
