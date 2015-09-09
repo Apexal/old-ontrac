@@ -59,8 +59,8 @@ module.exports = function(io) {
             }else{
               var $ = cheerio.load(body);
               var title = $("title").text();
-              console.log(title);
-              if( body.indexOf("<meta http-equiv=\"REFRESH\" content=\"0; url=http://www.regis.org/login.cfm?Failed=1\">") > -1){
+              //console.log(body);
+              if(body.indexOf("url=https://www.regis.org/login.cfm?Failed=1") > -1){
                 errs.push("2: Incorrect username or password.");
                 done();
               }else{
