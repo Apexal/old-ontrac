@@ -60,6 +60,8 @@
 #advchat-messages {
   height: 90%;
   border: 1px solid red;
+  overflow: auto;
+  word-wrap: break-word;
 }
 
 #advchat form input {
@@ -81,4 +83,4 @@
   }
 }
 
-#advchat-badge { display: none; }
+.advchat-badge { display: none; }

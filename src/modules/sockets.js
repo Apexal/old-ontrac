@@ -10,7 +10,8 @@ module.exports = function(http) {
   var io = require("socket.io").listen(http);
 
   io.sockets.on('connection', function (socket) {
-    messages = messages.slice(Math.max(messages.length - 100, 0))
+    messages = messages.slice(Math.max(messages.length - 100, 0));
+
     var client = socket.request.session.currentUser;
 
     try {
@@ -66,6 +67,7 @@ module.exports = function(http) {
       socket.on('advchat-message', function(data) {
         var d = {username: user.username, message: data.message, when: data.when};
         advchatmessages[client.advisement].push(d);
+        advchatmessages[client.advisement] = advchatmessages[client.advisement].slice(Math.max(advchatmessages[client.advisement].length - 100, 0));
         io.to(client.advisement).emit('advchat-message', d);
         console.log(d);
       });

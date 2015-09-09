@@ -115,7 +115,8 @@ function sockets() {
 
   socket.on('advchat-pastmessages', function(data) {
     advchatmessages = data.messages;
-    showAdvMessages();
+    if($("#advchat-messages").length)
+      showAdvMessages();
   });
 
 
@@ -131,7 +132,7 @@ function sockets() {
         html += part;
     }
     $("#advchat-messages").html(html);
-    //$("#advchat-messages").scrollTop($("#advchat-messages")[0].scrollHeight);
+    $("#advchat-messages").scrollTop($("#advchat-messages")[0].scrollHeight);
     userbadges();
   };
 
@@ -167,9 +168,9 @@ function sockets() {
 
           $("#advchat-badge").show();
           if(sessionStorage.unread >= 50)
-            $("#advchat-badge").text("50+");
+            $(".advchat-badge").text("50+");
           else
-            $("#advchat-badge").text(sessionStorage.unread);
+            $(".advchat-badge").text(sessionStorage.unread);
       } else {
           console.log("There is a problem:", data);
       }
