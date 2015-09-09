@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
       .skip(perPage*(pageNum-1))
       .limit(perPage)
       .exec(function(err, users){
-        if(err) console.log(err);
+        if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
         if(users){
           req.toJade.users = users;
           req.toJade.pageNum = pageNum;
@@ -40,6 +40,31 @@ router.get('/', function(req, res, next) {
 
 router.get("/profile", function(req, res) {
   req.toJade.title = "Your Profile";
+  res.render('users/edit', req.toJade);
+});
+
+router.post("/profile", function(req, res) {
+  var newbio = req.body.newbio;
+  if(newbio){
+    req.session.currentUser.bio = newbio;
+    req.Student.findOne({username: req.currentUser.username}, function(err, user) {
+      if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
+
+      if(user){
+        user.bio = newbio;
+        user.save(function(err) {
+          if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
+          done();
+        });
+      }else{
+        done();
+      }
+    });
+  }else{done();}
+
+  function done(){
+    res.redirect("/users/"+req.currentUser.username);
+  }
 });
 
 router.get("/:username", function(req, res){

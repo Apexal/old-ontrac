@@ -22,6 +22,10 @@ block content
                 #stars(title=user.firstName+" is a "+user.rankName, data-toggle="tooltip", style="color: yellow; font-size: 130%;")
                   for s in stars
                     span.fa.fa-star
+                if user.bio
+                  blockquote
+                    p= user.bio
+                    footer #{user.fullName} 2015
               br
             .col-xs-12.col-sm-12.col-md-6
               .panel.panel-default

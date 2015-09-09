@@ -12,6 +12,7 @@ module.exports = {
     code: String,
     mpicture: String,
     ipicture: String,
+    bio: String,
     email: String,
     achievements: Array,
     //locker_number: String,
