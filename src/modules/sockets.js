@@ -15,7 +15,7 @@ module.exports = function(http) {
     var client = socket.request.session.currentUser;
 
     try {
-      var user = {username: client.username, tabs: 1};
+      var user = {username: client.username, tabs: 1, advisement: client.advisement};
       //var user = {name: client.firstName, username: client.username, code: client.code, tabs: 1};
       socket.emit('pastMessages', {messages: messages});
       var status = "online";

@@ -1,10 +1,11 @@
 extends /layout
 
 block content
-  .container-fluid#advchat
-    .col-xs-12.col-md-4#advchat-online
-      | Nobody else from #{currentUser.advisement} is online!
-    .col-xs-12.col-md-8#advchat-messages
+  .container-fluid#advchat(data-adv=currentUser.advisement)
+    .col-xs-12
+      b.larger Online #{currentUser.advisement} Members:
+      span#advchat-online Nobody!
+    .col-xs-12#advchat-messages
       
     .col-xs-12
       form.form-inline(role="form")

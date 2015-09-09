@@ -6,7 +6,9 @@ function sockets() {
   var username = $('#send-message').data("username");
   var online = [];
   var list = $("#online-user-list");
+  var advlist= $("#advchat-online");
 
+  var advisement = ( $("#advchat").length > 0 ? $("#advchat").data('adv') : '');
   var advchatmessages = [];
 
   if (!localStorage['user-status']){
@@ -28,9 +30,9 @@ function sockets() {
     online = data.users;
     console.log(data.users);
     $("#users-online").text(online.length+" users online");
-    if(list.length){
-      update_online_list();
-    }
+
+    update_online_lists();
+
   });
   socket.on('refresh', function(data) {
     location.reload();
@@ -48,15 +50,27 @@ function sockets() {
 
   // Online User List
 
-  function update_online_list() {
-    list.html("");
+  function update_online_lists() {
+    if(list.length)
+      list.html("");
+    if(advlist.length)
+      advlist.html("");
     var names = [];
+    var advnames = [];
     online.forEach(function(user) {
 
       if(user.status != "offline")
-        names.push("<span class='user-badge' data-username='"+user.username+"'>"+user.username+" ("+user.status+")</span>");
+        names.push("<span class='user-badge' data-username='"+user.username+"'>"+user.username+" <i>("+user.status+")</i></span>");
+
+      console.log(user.advisement +" vs "+advisement);
+      if(user.advisement == advisement){
+        advnames.push("<span class='user-badge' data-username='"+user.username+"'>"+user.username+" <i>("+user.status+")</i></span>");
+      }
     });
-    list.html(names.join(', '));
+    if(list.length)
+      list.html(names.join(', '));
+    if(advlist.length)
+      advlist.html(advnames.join(', '));
     userbadges();
   }
 
