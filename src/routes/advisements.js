@@ -18,6 +18,11 @@ router.get('/', function(req, res){
 
 });
 
+router.get('/chat', function(req, res) {
+  req.toJade.title = "Private "+req.currentUser.advisement+" Chat";
+  res.render('chat/advchat', req.toJade);
+});
+
 router.get('/:advisement', function(req, res){
   var advisement = req.params.advisement;
   req.toJade.title = "Advisement "+advisement;

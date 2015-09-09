@@ -4,6 +4,8 @@ var online = [];
 var server_user = {username: "OnTrac", tabs: 1};
 var usernames = [];
 
+var advchatmessages = {};
+
 module.exports = function(http) {
   var io = require("socket.io").listen(http);
 
@@ -48,6 +50,28 @@ module.exports = function(http) {
         //console.log(online);
         io.sockets.emit('online-list', {users: online});
       });
+
+
+      /* ADVISEMENT CHAT */
+
+      socket.on('join-advchat', function(data) {
+        socket.join(client.advisement);
+        if(!advchatmessages[client.advisement]){
+          advchatmessages[client.advisement] = [];
+        }
+        console.log(client.username + " entered the privat chatroom for "+client.advisement);
+        socket.emit('advchat-pastmessages', {messages: advchatmessages[client.advisement]})
+      });
+
+      socket.on('advchat-message', function(data) {
+        var d = {username: user.username, message: data.message, when: data.when};
+        advchatmessages[client.advisement].push(d);
+        io.to(client.advisement).emit('advchat-message', d);
+        console.log(d);
+      });
+      /*-----------------*/
+
+
 
       socket.on('disconnect', function(socket) {
         console.log("DISCONNECT from "+user.username);

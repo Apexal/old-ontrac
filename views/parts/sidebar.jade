@@ -37,8 +37,8 @@ aside#sidebar
         a(href="/work", title="View all days that you have work (homework, tests, etc).") Work
           span.label.label-danger.right &nbsp;&nbsp;!&nbsp;&nbsp;
       li
-        a(title="View and manage your friend list.", href="#") Friends
-          //span.badge.right 0
+        a(href="/advisements/chat", title="Private chat room for your advisement!") #{currentUser.advisement} Chat
+          span.badge#advchat-badge 0
       li
         a(href="#") Meetings
           //span.badge.right 0

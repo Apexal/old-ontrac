@@ -7,6 +7,7 @@ function sockets() {
   var online = [];
   var list = $("#online-user-list");
 
+  var advchatmessages = [];
 
   if (!localStorage['user-status']){
     localStorage['user-status'] = "online";
@@ -60,19 +61,6 @@ function sockets() {
   }
 
 
-
-  // Game
-  if($("#canvas").length){
-    socket.emit('game-get-playerlist');
-    socket.on('game-playerlist', function(data) {
-      setPlayers(data.players);
-    });
-  }
-
-
-
-
-
   // RECENT ACTIVITY
   if($("#recent-activity").length){
     socket.on('recent-action', function(data) {
@@ -100,7 +88,97 @@ function sockets() {
 
 
 
-  // CHAT SYSTEM
+
+  // ADVISEMENT CHAT SYSTEM
+
+  function sendAdvMessage() {
+    var message = $('#advchat-message').val();
+    socket.emit("advchat-message", {message: message, when: moment().toDate()});
+    $('#advchat-message').val('');
+  }
+
+  function outgoingAdvMessageKeyDown(event) {
+    if (event.which == 13) {
+      if ($('#advchat-message').val().trim().length <= 0) {
+        return;
+      }
+      sendAdvMessage();
+    }
+  }
+
+  function outgoingAdvMessageKeyUp() {
+    var message = $('#advchat-message').val();
+    $('#advchat-send').attr('disabled', (message.trim()).length > 0 ? false : true);
+  }
+
+  socket.emit('join-advchat');
+
+  socket.on('advchat-pastmessages', function(data) {
+    advchatmessages = data.messages;
+    showAdvMessages();
+  });
+
+
+  var showAdvMessages = function() {
+    var html = '<br>';
+    for(var i=0; i<advchatmessages.length; i++) {
+        var user = advchatmessages[i].username;
+        var message = advchatmessages[i].message;
+        var when = moment(advchatmessages[i].when);
+
+        var part = "<b class='user-badge' data-username='"+user+"'>"+user+": </b>";
+        part += "<span title='"+when.fromNow()+" | "+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'>"+message+"</span><br>";
+        html += part;
+    }
+    $("#advchat-messages").html(html);
+    //$("#advchat-messages").scrollTop($("#advchat-messages")[0].scrollHeight);
+    userbadges();
+  };
+
+  if($("#advchat").length){
+    sessionStorage.unread = 0;
+    socket.on('advchat-message', function(data) {
+      console.log("New message from "+data.username+": "+data.message);
+      if(data.message) {
+          advchatmessages.push(data);
+          if(data.username != username)
+            chat_notification.play();
+          showAdvMessages();
+      } else {
+          console.log("There is a problem:", data);
+      }
+    });
+
+    $('#advchat-message').on('keydown', outgoingAdvMessageKeyDown);
+    $('#advchat-message').on('keyup', outgoingAdvMessageKeyUp);
+    $('#advchat-send').on('click', sendAdvMessage);
+  }else{
+    socket.on('advchat-message', function(data) {
+      console.log("New message from "+data.username+": "+data.message);
+      if(data.message) {
+          advchatmessages.push(data);
+          if(data.username != username)
+            chat_notification.play();
+
+          if(!sessionStorage.unread)
+            sessionStorage.unread = 0;
+
+          sessionStorage.unread = Number(sessionStorage.unread) + 1;
+
+          $("#advchat-badge").show();
+          if(sessionStorage.unread >= 50)
+            $("#advchat-badge").text("50+");
+          else
+            $("#advchat-badge").text(sessionStorage.unread);
+      } else {
+          console.log("There is a problem:", data);
+      }
+    });
+  }
+
+
+
+  //  GLOBAL CHAT SYSTEM
 
   var messages = [];
   $("#chat-box").submit(function(e){

@@ -1,0 +1,13 @@
+extends /layout
+
+block content
+  .container-fluid#advchat
+    .col-xs-12.col-md-4#advchat-online
+      | Nobody else from #{currentUser.advisement} is online!
+    .col-xs-12.col-md-8#advchat-messages
+      
+    .col-xs-12
+      form.form-inline(role="form")
+        .form-group.full-width
+          input.form-control#advchat-message(type="text", max="100", required=true, placholder="Message")
+          button.btn.btn-primary#advchat-send(type="button") Send
