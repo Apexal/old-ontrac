@@ -18,6 +18,9 @@
   width: 160px;
 }
 
+#stars {
+  position: absolute;
+}
 
 
 .user-adv {

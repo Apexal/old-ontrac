@@ -232,10 +232,9 @@ function effects() {
       $("main").css("height", "100%");
     }
 
-
-    /* =========================================================================
-    *                             NOTIFICATION SYSTEM
-    * ========================================================================== */
-
+    if($("#stars").length){
+      $("#stars").position({my: "left bottom", at: "left bottom", of: "#profile-pic"});
+      $("#rank").position({my: "right bottom", at: "right bottom", of: "#profile-pic"});
+    }
 
 }

@@ -10,7 +10,8 @@ block content
       span You have either entered an invalid username or the user has not registered yet.
     else
       .page-header
-        h1.center-xs #[b= user.gradeName] #[br.visible-xs] #{user.fullName}
+        h1.center-xs #[b= user.gradeName] #[br.visible-xs] #{user.fullName} of 
+          | #[a.undecorated(style="font-weight: bold", href="/advisements/"+user.advisement)= user.advisement]
           small.right.hidden-xs.hidden-sm #{user.points} points
       .user-profile
         .col-xs-12.col-sm-6.col-lg-8
@@ -18,7 +19,9 @@ block content
             .col-xs-12.col-sm-12.col-md-6.center-xs
               .holder
                 img#profile-pic(src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
-                a.profile-user-adv(href="/advisements/"+user.advisement)= user.advisement
+                #stars(title=user.firstName+" is a "+user.rankName, data-toggle="tooltip", style="color: yellow; font-size: 130%;")
+                  for s in stars
+                    span.fa.fa-star
               br
             .col-xs-12.col-sm-12.col-md-6
               .panel.panel-default
