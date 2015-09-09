@@ -8,5 +8,6 @@ routes/_game.js
 npm-debug.log
 public/*.js
 public/*.css
+public/fonts/*
 *.pyc
 src/config.js
