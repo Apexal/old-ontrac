@@ -77,16 +77,19 @@ block content
     .row
       .col-xs-12
         hr
-        button.btn.btn-default.dropdown-toggle(data-toggle="dropdown", ara-expanded="false", type="button") Actions 
-          span.caret
-        ul.dropdown-menu(role="menu")
-          li
-            a(href="/users/"+user.username+"/schedule") View Schedule
-          li
-            a(href="mailto:"+user.email) Email
-          li
-            a(href="http://moodle.regis.org/user/profile.php?id="+user.mID) Moodle Profile
         
+        .btn-group.dropup
+          button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Actions &nbsp;
+            span.caret
+            span.sr-only Toggle Dropdown
+          ul.dropdown-menu
+            li
+              a(href="/users/"+user.username+"/schedule") View Schedule
+            li
+              a(href="mailto:"+user.email) Email
+            li
+              a(href="http://moodle.regis.org/user/profile.php?id="+user.mID) Moodle Profile
+              
         a.btn.btn-primary(href="/users") Back to User List
       
 mixin class(course)

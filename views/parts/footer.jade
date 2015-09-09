@@ -1,25 +1,31 @@
 footer
-  .navbar.navbar-default.navbar-fixed-bottom#real-bottom-nav(style="z-index: 50;").visible-xs
-    #mobile-bottom-bar
-      span
-        a.fa.fa-calendar(href="/days")
-      span
-        a(href="/days/today") T
-      span
-        a(href="/days/closest") C
-      
-      if previous
-        span
-          a.fa.fa-arrow-left(href='/days/'+previous)
-      else
-        span.disabled
-          a.fa.fa-arrow-left(href='#')
-      if next
-        span
-          a.fa.fa-arrow-right(href='/days/'+next)
-      else
-        span.disabled
-          a.fa.fa-arrow-right(href='#')
-      
+  nav.navbar.navbar-default.navbar-fixed-bottom
+    .container
       a(href="/users/"+currentUser.username)
-        img.right.navbar-pic(src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg", data-username=currentUser.username)
+        img.left(src=currentUser.mpicture, style="height: 40px; padding-top: 5px;")
+      
+      div.collapse.navbar-collapse#bottom-bar
+        ul.nav.navbar-nav
+          li
+            a(title="Manage your reminders.", href="#", data-target="#reminders-modal", data-toggle="modal") Reminders
+              span.label.label-primary.right#reminders-count &nbsp;
+          li(class=(helpers.isPage(page, "grades") ? "active" : ""))
+            a(title="Manage your grades.", href="/grades") Grades
+              span.label.label-success.right.fa.fa-check 
+          li(class=(helpers.isPage(page, "work") ? "active" : ""))
+            a(href="/work", title="View all days that you have work (homework, tests, etc).") Work
+              span.label.label-danger.right &nbsp;&nbsp;!&nbsp;&nbsp;
+          li
+            a(title="View and manage your friend list.", href="#") Friends
+              //span.badge.right 0
+          li
+            a(href="#") Meetings
+              //span.badge.right 0
+      
+      button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bottom-bar', aria-expanded='false')
+        span.sr-only Toggle navigation       
+        span.icon-bar
+        span.icon-bar   
+        span.icon-bar
+      
+      

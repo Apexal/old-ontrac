@@ -7,28 +7,10 @@ div
       a(href='#profile', aria-controls='profile', role='tab', data-toggle='tab') Profile
     li(role='presentation')
       a(href='#messages', aria-controls='messages', role='tab', data-toggle='tab') Messages
-    li(role='presentation')
-      a(href='#settings', aria-controls='settings', role='tab', data-toggle='tab') Settings
   .tab-content
-    #work-tab.tab-pane.active(role='tabpanel')
-      .row
-        .col-xs-12.col-sm-6
-          h3.no-margin For Today
-          #todays-work
-            b Homework
-            ol#homework-tab-list
-        .col-xs-12.col-sm-6
-          h3.no-margin For Tomorrow
-          #tomorrows-work
+    #work-tab.tab-pane.active(role='tabpanel') tab1
     #profile.tab-pane(role='tabpanel') tab2
-      .col-xs-12.col-sm-6
-        .panel.panel-default
-          .panel-body
-            h3.no-margin Upcoming
-            br
-            p test ste ts etst etse tste
     #messages.tab-pane(role='tabpanel') tab3
-    #settings.tab-pane(role='tabpanel') tab4
 
 
     
