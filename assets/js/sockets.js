@@ -29,11 +29,8 @@ function sockets() {
   });
   socket.on('online-list', function(data) {
     online = data.users;
-    console.log(data.users);
-    $("#users-online").text(online.length+" user(s)");
-
+    //console.log(data.users);
     update_online_lists();
-
   });
   socket.on('refresh', function(data) {
     location.reload();
@@ -54,22 +51,32 @@ function sockets() {
   function update_online_lists() {
     list.html("");
     if(advlist.length)
-      advlist.html("");
+      advlist.html("<span>Nobody!</span>");
+
     var names = [];
     var advnames = [];
+    var count = 0;
+
     online.forEach(function(user) {
+      if(user.status != "offline")
+        count +=1;
 
       if(user.status != "offline")
         names.push("<span class='user-badge' data-username='"+user.username+"'>"+(user.username == username ? "<b>You</b>" : user.username)+" <i class='right'>"+user.status+"</i></span><br>");
 
+      if(user.status == "offline" && user.username == username)
+        names.push("<span class='user-badge text-muted' data-username='"+username+"'><b>You</b><i class='right'>offline</i></span><br>");
+
       console.log(user.advisement +" vs "+advisement);
-      if(user.advisement == advisement){
+      if(user.advisement == advisement && user.status != "offline"){
         advnames.push("<span class='user-badge' data-username='"+user.username+"'>"+user.username+" <i>("+user.status+")</i></span>");
       }
     });
 
+    $("#users-online").text(count+" user(s)");
+
     list.html(names.join(''));
-    if(advlist.length)
+    if(advlist.length && advnames.length > 0)
       advlist.html(advnames.join(', '));
     userbadges();
   }
