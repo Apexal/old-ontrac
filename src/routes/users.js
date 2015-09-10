@@ -49,7 +49,6 @@ router.post("/profile", function(req, res) {
     req.session.currentUser.bio = newbio;
     req.Student.findOne({username: req.currentUser.username}, function(err, user) {
       if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
-
       if(user){
         user.bio = newbio;
         user.save(function(err) {
@@ -81,6 +80,9 @@ router.get("/:username", function(req, res){
         req.toJade.user = u;
         req.toJade.allAchievements = achievements;
         req.toJade.stars = _.range(u.rank+1);
+
+        
+
         res.render('users/profile', req.toJade);
       });
     }else{
