@@ -16,7 +16,7 @@ function sockets() {
   }
   var status = localStorage['user-status'];
 
-  $("#user-status b").text(status.charAt(0).toUpperCase() + status.substring(1));
+  $("#user-status b").html(status.charAt(0).toUpperCase() + status.substring(1)+"<span class='caret'></span>");
   socket.emit('setstatus', {status: status});
 
   socket.on('connect', function () {
@@ -93,7 +93,7 @@ function sockets() {
     //alert(status);
     localStorage['user-status'] = status;
     socket.emit('setstatus', {status: status});
-    $("#user-status b").text($(this).text());
+    $("#user-status b").html($(this).text()+"<span class='caret'></span>");
   });
 
 
