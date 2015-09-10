@@ -78,6 +78,14 @@
 }
 
 @media (max-width: 768px) {
+  #advchat-messages {
+    height: 80%;
+  }
+
+  #advchat-online {
+    font-size: 85%;
+  }
+
   #advchat form button, #advchat form input {
     width: 100%;
   }
