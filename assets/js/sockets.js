@@ -191,9 +191,17 @@ function sockets() {
     });
   }
 
-
-
   //  GLOBAL CHAT SYSTEM
+  if(sessionStorage.mute == "true")
+    $("#mute-toggle").text("(Unmute)");
+  else
+    $("#mute-toggle").text("(Mute)");
+
+  $("#mute-toggle").click(function() {
+    sessionStorage.mute = ($(this).text() == "(Mute)" ? "true" : "false");
+    $(this).text( ($(this).text() == "(Mute)" ? "(Unmute)" : "(Mute)"));
+    console.log("Chat volume is now: "+(sessionStorage.mute == "true" ? "Muted" : "Unmuted"));
+  });
 
   var messages = [];
   $("#chat-box").submit(function(e){
@@ -224,7 +232,7 @@ function sockets() {
   socket.on('message', function (data) {
     if(data.message) {
         messages.push(data);
-        if(data.username != username)
+        if(data.username != username && sessionStorage.mute != "true")
           chat_notification.play();
         showMessages();
     } else {
