@@ -81,7 +81,15 @@ router.get("/:username", function(req, res){
         req.toJade.allAchievements = achievements;
         req.toJade.stars = _.range(u.rank+1);
 
-        
+        if(req.loggedIn){
+          if(req.currentUser.points > u.points)
+            req.toJade.pointdiff = (req.currentUser.points - u.points)+" less";
+          else if(req.currentUser.points < u.points)
+            req.toJade.pointdiff = (u.points - req.currentUser.points)+" more";
+          else
+            req.toJade.pointdiff = "the same amount of";
+        }
+
 
         res.render('users/profile', req.toJade);
       });

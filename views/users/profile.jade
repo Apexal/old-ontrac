@@ -22,6 +22,9 @@ block content
                 #stars(title=user.firstName+" is a "+user.rankName, data-toggle="tooltip", style="color: yellow; font-size: 130%; padding-left: 3px;")
                   for s in stars
                     span.fa.fa-star
+                if loggedIn
+                  b #{user.firstName} has #{pointdiff} points than you.
+
               br
             if user.bio
               .col-xs-12.col-md-6
@@ -101,7 +104,7 @@ block content
       
 mixin class(course)
   .col-xs-12.col-sm-6.col-md-4
-    .panel(title=(currentUser.sclasses.indexOf(course.mID) > -1 ? "You share this class!" : ""), class=( currentUser.sclasses.indexOf(course.mID) > -1 ? "panel-success" : "panel-default"))
+    .panel(title=(currentUser.username !== user.username && currentUser.sclasses.indexOf(course.mID) > -1 ? "You share this class!" : ""), class=( currentUser.username !== user.username && currentUser.sclasses.indexOf(course.mID) > -1 ? "panel-success" : "panel-default"))
       .panel-body
         h1.panel-title
           a(href="/courses/"+course.mID)= course.title
