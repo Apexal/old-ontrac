@@ -68,8 +68,11 @@ function sockets() {
         names.push("<span class='user-badge text-muted' data-username='"+username+"'><b>You</b><i class='right'>offline</i></span><br>");
 
       console.log(user.advisement +" vs "+advisement);
-      if(user.advisement == advisement && user.status != "offline"){
-        advnames.push("<span class='user-badge' data-username='"+user.username+"'>"+user.username+" <i>("+user.status+")</i></span>");
+      if(user.advisement == advisement){
+        if(user.status != "offline")
+          advnames.push("<span class='user-badge' data-username='"+user.username+"'>"+(user.username == username ? "<b>You</b>" : user.username)+" <i>("+user.status+")</i></span>");
+        if(user.status == "offline" && user.username == username)
+          advnames.push("<span class='user-badge text-muted' data-username='"+username+"'><b>You</b> <i>("+user.status+")</i></span>");
       }
     });
 
