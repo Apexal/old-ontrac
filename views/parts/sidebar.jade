@@ -59,3 +59,9 @@ aside#sidebar
         span
           a.fa.fa-arrow-right(href='/days/'+next, title="View the next day!")     
     hr
+    
+  if loggedIn
+    b Online Now
+      small.right#users-online
+    section#online-list
+      p TEST

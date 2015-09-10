@@ -120,8 +120,14 @@ a.undecorated {
   min-width: 100px;
 }
 
-#online-now-sidebar {
-  vertical-align: bottom;
+#online-list {
+  color: #333;
+  padding: 10px;
+  font-size: 85%;
+  background-color: white;
+  max-height: 100px;
+  overflow: auto;
+  word-wrap: break-word;
 }
 
 @media (max-width: 768px) {
