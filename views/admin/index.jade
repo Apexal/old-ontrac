@@ -8,11 +8,11 @@ block content
     
     .col-xs-12
       hr
-      form.form
+      form.form(action="/loginas")
         .form-group
           label(for="loginas") Login as User: 
-          input.form-control#loginas-username(type="text", name="loginas", placeholder="Username")
-        button.btn.btn-default#loginas-button(type="button") Login
+          input.form-control(type="text", name="user", placeholder="Username")
+        button.btn.btn-default Login
       hr
     
     .col-xs-12.col-md-6

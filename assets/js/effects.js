@@ -226,13 +226,6 @@ function effects() {
         }
     });
 
-    $("#loginas-form").submit(function(e) {
-      return false; // Prevents the request
-    });
-    $("#loginas-button").click(function() {
-      window.location.href = "/loginas?user="+$("#loginas-username").val();
-    });
-
     // When on the schedule page, make the main tag full height so that the schedule iframe is full height
     if(window.location.href.indexOf("/schedule") > -1 || window.location.href.indexOf("/advisements/chat") > -1){
       $("main").css("height", "100%");
