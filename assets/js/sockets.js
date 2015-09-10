@@ -7,6 +7,7 @@ function sockets() {
   var online = [];
   var list = $("#online-list");
   var advlist= $("#advchat-online");
+  var title = $("title").text();
 
   var advisement = ( $("#advchat").length > 0 ? $("#advchat").data('adv') : '');
   var advchatmessages = [];
@@ -150,7 +151,7 @@ function sockets() {
   };
 
   if($("#advchat").length){
-    sessionStorage.unread = 0;
+    sessionStorage.advunread = 0;
     socket.on('advchat-message', function(data) {
       console.log("New message from "+data.username+": "+data.message);
       if(data.message) {
@@ -174,19 +175,25 @@ function sockets() {
           if(data.username != username)
             chat_notification.play();
 
-          if(!sessionStorage.unread)
-            sessionStorage.unread = 0;
+          if(!sessionStorage.advunread)
+            sessionStorage.advunread = 0;
 
-          sessionStorage.unread = Number(sessionStorage.unread) + 1;
+          sessionStorage.advunread = Number(sessionStorage.advunread) + 1;
 
           $("#advchat-badge").show();
-          if(sessionStorage.unread >= 50)
-            $(".advchat-badge").text("50+");
-          else
-            $(".advchat-badge").text(sessionStorage.unread);
+          $("#advchat-badge-mobile").show();
+          if(sessionStorage.advunread >= 50){
+            $("#advchat-badge").text("50+");
+            $("#advchat-badge-mobile").text("50+");
+          }else{
+            $("#advchat-badge").text(sessionStorage.advunread);
+            $("#advchat-badge-mobile").text(sessionStorage.advunread);
+          }
+
       } else {
           console.log("There is a problem:", data);
       }
+      updateTitle();
     });
   }
 
@@ -233,6 +240,16 @@ function sockets() {
         messages.push(data);
         if(data.username != username && sessionStorage.mute != "true")
           chat_notification.play();
+
+        if(!sessionStorage.unread)
+          sessionStorage.unread = 0;
+
+        if($("#chat-box").data("hidden") == "true"){
+          sessionStorage.unread = Number(sessionStorage.unread)+1;
+          updateTitle();
+        }else{
+          sessionStorage.unread = 0;
+        }
         showMessages();
     } else {
         console.log("There is a problem:", data);

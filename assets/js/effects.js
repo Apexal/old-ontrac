@@ -1,4 +1,5 @@
 function effects() {
+    var title = $("title");
     username = $('#send-message').data("username");
     loggedIn = (username !== undefined);
     // Prevent disabled nav links from being clicked
@@ -90,6 +91,8 @@ function effects() {
             $(this).removeAttr('style');
             chat_box.height("300px").width("400px").css("bottom",
                 "43px");
+            $("#chat-box").data("hidden", "false");
+            sessionStorage.unread = 0;
         } else {
             small_box.hide();
             small_box2.hide();
@@ -98,6 +101,8 @@ function effects() {
                 height: "40px",
                 bottom: "0px"
             });
+            $("#chat-box").data("hidden", "true");
+
         }
         localStorage["show-chat"] = show;
     };
@@ -107,6 +112,7 @@ function effects() {
     $("#toggle-chat").click(function() {
         var show = (localStorage['show-chat'] == 1 ? 0 : 1);
         set_chat(show);
+        updateTitle();
     });
 
 

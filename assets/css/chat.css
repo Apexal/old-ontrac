@@ -83,4 +83,4 @@
   }
 }
 
-.advchat-badge { display: none; }
+#advchat-badge, #advchat-badge-mobile { display: none; }
