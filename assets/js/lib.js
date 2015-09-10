@@ -2,11 +2,16 @@ var stack_bottomright = {"dir1": "up", "dir2": "left", "firstpos1": 25, "firstpo
 
 var title=$("title").text();
 function updateTitle(){
+
+  if(!sessionStorage.unread)
+    sessionStorage.unread = 0;
+  if(!sessionStorage.advunread)
+    sessionStorage.advunread = 0;
+        
   var toSet = title + " (";
+
   if(Number(sessionStorage.unread) > 0)
     toSet += sessionStorage.unread+" unread";
-
-
   if(Number(sessionStorage.advunread) > 0){
     if(Number(sessionStorage.unread > 0))
       toSet += ", ";
