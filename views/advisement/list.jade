@@ -22,17 +22,9 @@ block content
                 span.right Uknown Advisor
             .panel-body
               if loggedIn
-                
-                -var found = false
-                for s in ad.students
-                  if s.registered
-                    if s.username == currentUser.username
-                      b.user-badge(data-username=s.username) You
-                    else
-                      span.user-badge(data-username=s.username)= s.fullName
-                    
-                    -found = true
-                if found == false
-                  span No students in #[b= ad.title] have registered yet!
+                if ad.list
+                  span !{ad.list}
+                else
+                  span Nobody in #[b= ad.title] has registered yet!
               else
                 span Log in to see what users in #[b= ad.title] have registered.
