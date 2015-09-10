@@ -25,6 +25,11 @@ main.pushed {
   margin-left: 220px;
 }
 
+.jumbotron {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 a.undecorated {
   color: inherit;
   text-decoration: inherit;
@@ -53,33 +58,6 @@ a.undecorated {
 
 .no-margin {
   margin: 0;
-}
-
-@media (max-width: 768px) {
-  navbar.navbar-fixed-bottom > container{
-    height: 50px;
-  }
-}
-
-#mobile-bottom-bar {
-  height: 50px;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-}
-
-.navbar-pic {height: 50px;}
-
-#mobile-bottom-bar a{
-  flex: 1;
-  padding: 10px 10px 10px 20px;
-  font-size: 1.5em;
-  color: white;
-  text-decoration: none;
-}
-
-#mobile-bottom-bar a:hover {
-  background-color: #090909;
 }
 
 .center {
