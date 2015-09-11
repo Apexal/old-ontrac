@@ -15,7 +15,7 @@ block content
       .col-xs-12
         if course != false
           if course.teacher
-            img.teacher-badge(data-username=course.teacher.username, src=course.teacher.image, style="width: 150px")
+            img.teacher-badge(data-username=course.teacher.username, src=course.teacher.ipicture, onError="this.onerror=null;this.src='"+course.teacher.mpicture+"';", style="width: 150px")
 
     .row
       .col-xs-12

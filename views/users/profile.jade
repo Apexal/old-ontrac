@@ -18,7 +18,7 @@ block content
           .row
             .col-xs-12.col-sm-12.col-md-6.center-xs
               .holder
-                img#profile-pic(title="Looking good!", alt=user.firstName+" missed picture day!", src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
+                img#profile-pic(title="Looking good!", alt=user.firstName+" missed picture day!", src=user.ipicture, onError="this.onerror=null;this.src='"+user.mpicture+"';")
                 #stars(title=user.firstName+" is a "+user.rankName, data-toggle="tooltip", style="color: yellow; font-size: 130%; padding-left: 3px;")
                   for s in stars
                     span.fa.fa-star

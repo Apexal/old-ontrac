@@ -16,7 +16,7 @@
 }
 
 .user-box, .user-box img {
-  min-height: 200px;
+  /*min-height: 200px;*/
   width: 160px;
 }
 
@@ -54,4 +54,6 @@
 #profile-pic, .holder {
   margin: 0 auto;
   max-width: 200px;
+  min-height: 100px;
+  min-width: 150px;
 }
