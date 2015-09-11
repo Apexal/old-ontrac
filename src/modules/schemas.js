@@ -16,7 +16,7 @@ module.exports = {
     email: String,
     achievements: Array,
     //locker_number: String,
-    nickname: {type: String, default: "none"},
+    nickname: String,
     friends: [{ type: Schema.Types.ObjectId, ref: 'Student'}],
     advisement: String,
     sclasses: Array,
