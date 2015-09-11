@@ -4,7 +4,7 @@ block content
   .container-fluid
     include /info
     .jumbotron
-      h1.no-margin(style="text-transform: capitalize") Hello, #{currentUser.firstName}
+      h1.no-margin(style="text-transform: capitalize")= "Hello, " + (currentUser.nickname !== "none" ? currentUser.nickname : currentUser.fullName)
       p.no-margin.magictime.swashIn.
         It is #[b#clock Time & Date]. Today is a #[b#today-sd ?] Schedule Day.
       span Only #[b= moment("2015-09-14").fromNow(true)] until school starts.

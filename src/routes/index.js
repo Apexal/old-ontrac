@@ -16,6 +16,7 @@ module.exports = function(io) {
     req.toJade.title = "OnTrac";
     if(req.loggedIn){
       req.toJade.title = "Your Home";
+      console.log(req.currentUser.nickname);
       res.render('home/homepage', req.toJade);
     }else{
       res.render('home/index', req.toJade);
@@ -88,7 +89,7 @@ module.exports = function(io) {
                       user.last_point_login_time = new Date();
                       user.registered_date = new Date();
                       user.registered = true;
-
+                      user.nickname = user.firstName;
                       new req.Log({who: user._id, what: "Registration."}).save();
                     }
 

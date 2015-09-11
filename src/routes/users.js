@@ -45,14 +45,18 @@ router.get("/profile", function(req, res) {
 
 router.post("/profile", function(req, res) {
   var newbio = req.body.newbio;
+  var newnickname = req.body.newnickname;
   if(newbio){
     req.session.currentUser.bio = newbio;
+    req.session.currentUser.nickname = newnickname;
     req.Student.findOne({username: req.currentUser.username}, function(err, user) {
       if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
       if(user){
         user.bio = newbio;
+        user.nickname = newnickname;
         user.save(function(err) {
           if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
+          req.session.info.push("Successfully updated profile.");
           done();
         });
       }else{

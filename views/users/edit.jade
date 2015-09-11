@@ -10,6 +10,9 @@ block content
       .col-xs-12
         form.form(role="form", method="POST")
           .form-group
+            label(for="newnickname") Nickname
+            input.form-control(type="text", name="newnickname", value=currentUser.nickname)
+          .form-group
             label(for="newbio") Bio
-            textarea.form-control#newbio(name="newbio")
+            textarea.form-control#newbio(name="newbio")= currentUser.bio
           button.btn.btn-primary Save
