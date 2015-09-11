@@ -18,9 +18,12 @@ footer.visible-xs
           li
             a(href="/advisements/chat", title="Private chat room for your advisement!") #{currentUser.advisement} Chat
               span.label.label-default.right#advchat-badge-mobile 0
-          li
-            a(href="#") Meetings
-              //span.badge.right 0
+          
+          if loggedIn
+            li
+              b(style="color: white;") Online Now
+                small.right#users-online-mobile
+              section#online-list-mobile
       
       button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bottom-bar', aria-expanded='false')
         span.sr-only Toggle navigation       

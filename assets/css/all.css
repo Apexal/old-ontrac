@@ -98,14 +98,21 @@ a.undecorated {
   min-width: 100px;
 }
 
-#online-list {
+#online-list, #online-list-mobile {
   color: #333;
   padding: 10px;
   font-size: 85%;
   background-color: white;
-  max-height: 100px;
   overflow: auto;
   word-wrap: break-word;
+}
+
+#online-list {
+    max-height: 200px;
+}
+
+#online-list-mobile {
+    max-height: 100px;
 }
 
 @media (max-width: 768px) {

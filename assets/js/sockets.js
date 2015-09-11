@@ -5,7 +5,7 @@ function sockets() {
   var socket = io.connect(full);
   var username = $('#send-message').data("username");
   var online = [];
-  var list = $("#online-list");
+  var list = $("#online-list, #online-list-mobile");
   var advlist= $("#advchat-online");
   var title = $("title").text();
 
