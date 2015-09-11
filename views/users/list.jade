@@ -3,6 +3,7 @@ extends /layout
 block content
   .container
     include /info
+    .alert.alert-danger Regis blocks profile images from loading when on their network.
     //if loggedIn
     //  h3 Online Now: 
     //    small#online-user-list
@@ -49,7 +50,7 @@ block content
         for user in registered
           .col-xs-12.col-sm-6.col-md-4.col-lg-3.text-center.magictime.vanishIn
             .user-box
-              img(alt=user.bio, src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
+              img(src="https://webeim.regis.org/photos/regis/Student/"+user.code+".jpg")
               .btn-group.full-width
                 a.user-adv(href=(loggedIn ? "/advisements/"+user.advisement : "#"))= user.advisement
                 button.btn.btn-default.full-width(data-username=user.username, class=(loggedIn ? "user-badge" : ""), type="button")= user.fullName

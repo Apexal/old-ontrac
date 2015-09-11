@@ -16,6 +16,7 @@
 }
 
 .user-box, .user-box img {
+  min-height: 200px;
   width: 160px;
 }
 
