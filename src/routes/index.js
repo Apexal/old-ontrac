@@ -7,10 +7,7 @@ var achievements = require("../modules/achievements");
 
 var redir = "/";
 
-
-
 module.exports = function(io) {
-
   /* GET home page. */
   router.get(['/', '/home'], function(req, res, next) {
     req.toJade.title = "OnTrac";
@@ -22,7 +19,7 @@ module.exports = function(io) {
       res.render('home/index', req.toJade);
     }
   });
-
+  
   router.get('/login', function(req, res, next) {
     req.toJade.title = "Login";
     res.render('users/login', req.toJade);

@@ -7,13 +7,13 @@ header
           span.icon-bar
           span.icon-bar
           span.icon-bar
-        a#brand.navbar-brand(href="#")
+        a#brand.navbar-brand(href="/home")
           //img#ontrac-img(alt="Brand", src="http://i.imgur.com/edRmazN.png")
           | OnTrac
       #navbar.navbar-collapse.collapse
         ul.nav.navbar-nav
-          li(class=(title=="OnTrac" || title=="Your Home" ? "active" : ""))
-            a(href=(title=="OnTrac" || title=="Your Home" ? "#" : "/"), title="The homepage.") Home
+          li
+            a(target="_blank", href="https://github.com/Apexal/ontrac/wiki", title="What features does OnTrac provide?") About
           li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') View 
                 span.caret
