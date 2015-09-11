@@ -19,7 +19,7 @@ module.exports = function(io) {
       res.render('home/index', req.toJade);
     }
   });
-  
+
   router.get('/login', function(req, res, next) {
     req.toJade.title = "Login";
     res.render('users/login', req.toJade);
@@ -38,8 +38,7 @@ module.exports = function(io) {
         done();
       }else{
 
-        // ATTEMPT REGIS LOGIN
-
+        // ATTEMPT INTRANET LOGIN
         var cookieJar = request.jar();
         request({
             url: 'https://intranet.regis.org/login/submit.cfm', //URL to hit
@@ -88,6 +87,12 @@ module.exports = function(io) {
                       user.registered = true;
                       user.nickname = user.firstName;
                       new req.Log({who: user._id, what: "Registration."}).save();
+                      if(req.toJade.production){
+                        require("../modules/mailer")(user.email, "Welcome to OnTrac!",
+                          "Hello, "+user.firstName+". Thank you for using OnTrac. It \
+                          is currently in Alpha, meaning it has not fully been released \
+                          yet and is in active development. Thank you for being an Alpha Tester!");
+                      }
                     }
 
                     var uA = user.achievements;
@@ -148,10 +153,12 @@ module.exports = function(io) {
     res.redirect('/');
   });
 
+
+  // ADMIN ONLY: Secretly login to other users to test features
   router.get('/loginas', function(req, res) {
     var username = req.query.user;
-    console.log(req.currentUser.username);
     if(req.currentUser && req.currentUser.username == "fmatranga18"){
+      // Same as Logout basically
       delete req.session.currentUser;
       delete req.currentUser;
       req.Student.findOne({username: username}).populate('courses', 'mID title').exec(function(err, user) {
