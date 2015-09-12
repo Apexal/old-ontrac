@@ -47,6 +47,30 @@ function userbadges(){
                 break;
             }
 
+            var rank = data.rank;
+            switch(rank) {
+              case 0:
+                rank = "Guest";
+                break;
+              case 2:
+                ranl = "User";
+                break;
+              case 3:
+                rank = "Member";
+                break;
+              case 4:
+                rank = "Operator";
+                break;
+              case 5:
+                rank = "Moderator";
+                break;
+              case 6:
+                rank = "Administrator";
+              case 7:
+                rank = "Owner";
+            }
+
+
             // TODO: this thing...
             var content = $("<div class='modal fade user-modal' id='"+username+"-modal' tabindex='-1'>" +
                   "        <div class='modal-dialog'>" +
@@ -67,6 +91,7 @@ function userbadges(){
                                     "        <div class='col-xs-12 col-sm-9'>" +
                                     "             <h3 class='no-margin center'><b>"+grade+"</b> "+data.firstName + " " +data.lastName+" of <b>"+data.advisement+"</b></h3><br>" +
                                     "             <div class='well well-sm'>" +
+                                    "                 <b>Rank:</b> <span>"+rank+"</span><br>" +
                                     "                 <b>Bio: </b><span>"+bio + "</span><br>" +
                                     "                 <b>Classes: </b><span>"+coursenames.join(',  ')+"</span>" +
                                     "             </div>" +
