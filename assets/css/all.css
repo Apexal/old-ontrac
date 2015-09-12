@@ -205,9 +205,11 @@ span.badge {
 
 
 #brand {
-  /*padding: 5px;*/
+  padding: 5px;
+  padding-left: 7px;
+  padding-right: 0;
 }
 
 #ontrac-img {
-  width: 40px;
+  width: 45px;
 }
