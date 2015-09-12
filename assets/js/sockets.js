@@ -230,7 +230,7 @@ function sockets() {
   });
 
   var showMessages = function() {
-    var html = '<br>';
+    var html = '';
     for(var i=0; i<messages.length; i++) {
         var user = messages[i].username;
         var message = messages[i].message;
@@ -254,12 +254,13 @@ function sockets() {
         if(!sessionStorage.unread)
           sessionStorage.unread = 0;
 
-        if($("#chat-box").data("hidden") == "true"){
+        if($("#chat-box").hasClass("shown") == false){
           sessionStorage.unread = Number(sessionStorage.unread)+1;
-          updateTitle();
+
         }else{
           sessionStorage.unread = 0;
         }
+        updateTitle();
         showMessages();
     } else {
         console.log("There is a problem:", data);

@@ -71,6 +71,9 @@ function effects() {
         return false;
     });
     // Make the  small chat box resizable with default values
+
+
+    /*
     $("#chat-box.resizable").resizable({
         maxHeight: 550,
         maxWidth: 650,
@@ -78,8 +81,6 @@ function effects() {
         minWidth: 400,
         handles: 'n'
     });
-
-
     // Toggle the small chat box
     var chat_box = $("#chat-box.small-box");
     var small_box = $("#chat-controls.small-box");
@@ -109,12 +110,28 @@ function effects() {
     if (localStorage['show-chat'] == false) {
         set_chat(0);
     }
+
     $("#toggle-chat").click(function() {
         var show = (localStorage['show-chat'] == 1 ? 0 : 1);
         set_chat(show);
         updateTitle();
     });
+    */
 
+    if (sessionStorage['show-chat'] == "1") {
+      $("#chat-box").addClass("shown");
+    }
+
+    $("#toggle-chat").click(function() {
+      $("#chat-box").toggleClass("shown");
+      if(Number(sessionStorage['show-chat']) == 1){
+        sessionStorage['show-chat'] = 0;
+      }else{
+        sessionStorage['show-chat'] = 1;
+        sessionStorage.unread = 0;
+      }
+      updateTitle();
+    });
 
     // REMINDERS
     function reminders() {

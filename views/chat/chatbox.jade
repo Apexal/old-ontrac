@@ -1,9 +1,9 @@
-.panel.panel-default.resizable.hidden-xs.small-box#chat-box
+.panel.panel-default.hidden-xs.small-box#chat-box
   .panel-heading
     h3.panel-title Global Chat
       small#toggle-chat.small-box(data-show="true")  (toggle)
       small.right#mute-toggle (Mute)
-  #chat-messages.col-xs-12.small-box
+  .panel-body#chat-messages
     
   form#chat-controls.form-inline.small-box(role="form")
     input.form-control#chat-message(type="text", name="message")
