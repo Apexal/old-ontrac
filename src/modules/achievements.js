@@ -60,7 +60,7 @@ module.exports = [
         name: "Become a Moderator",
         reward: 60,
         check: function(user){
-            if(user.rank >= 3)
+            if(user.rank >= 4)
                 return true;
             return false;
         }
@@ -70,7 +70,7 @@ module.exports = [
         name: "Become a Administrator",
         reward: 70,
         check: function(user){
-            if(user.rank >= 4)
+            if(user.rank >= 5)
                 return true;
             return false;
         }
