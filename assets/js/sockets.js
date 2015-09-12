@@ -151,6 +151,10 @@ function sockets() {
         var message = advchatmessages[i].message;
         var when = moment(advchatmessages[i].when);
 
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(message));
+        message = div.innerHTML;
+
         var part = "<b class='user-badge' data-username='"+user+"'>"+user+": </b>";
         part += "<span title='"+when.fromNow()+" | "+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'>"+message+"</span><br>";
         html += part;
@@ -235,6 +239,10 @@ function sockets() {
         var user = messages[i].username;
         var message = messages[i].message;
         var when = moment(messages[i].when);
+
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(message));
+        message = div.innerHTML;
 
         var part = "<b class='user-badge' data-username='"+user+"'>"+user+": </b>";
         part += "<span title='"+when.fromNow()+" | "+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'>"+message+"</span><br>";
