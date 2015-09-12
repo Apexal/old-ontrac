@@ -13,7 +13,9 @@ block content
           .panel.panel-default
             .panel-body
               if c.teacher
-                img.course-list-img.hidden-xs.left(src=c.teacher.ipicture, onError="this.onerror=null;this.src='"+c.teacher.mpicture+"';")
+                img.teacher-badge.course-list-img.hidden-xs.left(data-username=c.teacher.username, 
+                    src=c.teacher.ipicture, 
+                    onError="this.onerror=null;this.src='"+c.teacher.mpicture+"';")
               h3
                 a.undecorated(href="/courses/"+c.mID)= c.title
                 if c.teacher
