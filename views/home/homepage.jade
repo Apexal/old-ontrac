@@ -6,22 +6,16 @@ block content
     .jumbotron
       h1.no-margin(style="text-transform: capitalize")= "Hello, " + (currentUser.nickname !== "none" ? currentUser.nickname : currentUser.fullName)
       p.no-margin.magictime.swashIn.
-        It is #[b#clock Time & Date]. Today is a #[b#today-sd ?] Schedule Day.
+        It is #[b#clock Time & Date].
       span Only #[b= moment("2015-09-14").fromNow(true)] until school starts.
     
     .row
       .col-xs-12
         h3.no-margin Looking to talk with classmates?
         p.
-          Install #[b #[a(target="_blank", href="http://wiki.mumble.info/wiki/Main_Page#Download_Mumble") Mumble]],
-          a light-weight, free voice-chat application for communicating with classmates.
-          Perfect for #[b getting homework help, collaborating on projects, gaming with friends, or just talking]. I'm also usually
-          on every night, so if you have a question about the site you can hop on
-          and ask me directly.
-        p.
-          Once installed, 
-          join the #[b Unofficial Regis Mumble Server] #[i (run by me)]
-          #[b #[a.undecorated(href="mumble://"+currentUser.username+":regis@regismumble.ddns.net/Work?version=1.2.0") here]].
+          Install #[b #[a.undercorated(target="_blank", href="http://wiki.mumble.info/wiki/Main_Page#Download_Mumble") Mumble]],
+          it'll only take seconds, and then
+          #[b #[a.undecorated(href="mumble://"+currentUser.username+":regis@regismumble.ddns.net/Work?version=1.2.0") Click Here]]
         br
     
     .row
