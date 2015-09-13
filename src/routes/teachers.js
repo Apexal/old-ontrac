@@ -10,19 +10,22 @@ router.get("/", function(req, res, next) {
   var pageNum = (req.query.page ? parseInt(req.query.page) : 1);
 
   var sortBy = (req.query.sortBy ? req.query.sortBy : "");
-  req.Teacher.find({}).sort({sortBy: -1}).skip(perPage*(pageNum-1)).limit(perPage).exec(function(err, teachers) {
-    if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
-    if(teachers){
-      req.toJade.pageNum = pageNum;
-      req.toJade.prev = ((pageNum-1) <= 0 ? pages : (pageNum-1));
-      req.toJade.next = ((pageNum+1) > pages ? 1 : (pageNum+1));
-      req.toJade.pages = pages;
+  req.Teacher.find({}, 'firstName lastName department mpicture ipicture')
+    .sort({sortBy: -1})
+    .skip(perPage*(pageNum-1)).limit(perPage)
+    .exec(function(err, teachers) {
+      if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
+      if(teachers){
+        req.toJade.pageNum = pageNum;
+        req.toJade.prev = ((pageNum-1) <= 0 ? pages : (pageNum-1));
+        req.toJade.next = ((pageNum+1) > pages ? 1 : (pageNum+1));
+        req.toJade.pages = pages;
 
-      req.toJade.teachers = teachers;
-    };
-    req.toJade.sortBy = sortBy;
-    res.render('teachers/list', req.toJade);
-  });
+        req.toJade.teachers = teachers;
+      };
+      req.toJade.sortBy = sortBy;
+      res.render('teachers/list', req.toJade);
+    });
 });
 
 router.get("/:mID", function(req, res, next) {
