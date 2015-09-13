@@ -29,7 +29,7 @@ block content
             //if helpers.isReach(t.department) == false
             tr
               td
-                img.table-pic(class=(loggedIn ? "teacher-badge" : ""), data-username=t.username, src=t.image)
+                img.table-pic(class=(loggedIn ? "teacher-badge" : ""), data-username=t.username, src=t.image, onError="this.onerror=null;this.src='"+t.mpicture+"';")
               td
                 h3(class=(loggedIn ? "teacher-badge" : ""), data-username=t.username)= t.firstName + " " + t.lastName
               td
