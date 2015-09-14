@@ -87,7 +87,7 @@ router.get("/:username", function(req, res){
 
         if(req.loggedIn){
           if(req.currentUser.points > u.points)
-            req.toJade.pointdiff = (req.currentUser.points - u.points)+" less";
+            req.toJade.pointdiff = (req.currentUser.points - u.points)+" fewer";
           else if(req.currentUser.points < u.points)
             req.toJade.pointdiff = (u.points - req.currentUser.points)+" more";
           else
