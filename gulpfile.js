@@ -9,14 +9,14 @@ var autoprefix = require('gulp-autoprefixer');
 var minifyCSS = require('gulp-minify-css');
 
 var bowerPath = "vendor";
-var jsPath = "assets/js";
+var jsPath = "client/js";
 
 var files = {
   js: [bowerPath+'/jquery/dist/jquery.min.js', bowerPath+'/jquery-ui/jquery-ui.min.js',
     bowerPath+'/moment/moment.js', bowerPath+'/bootstrap/dist/js/bootstrap.min.js',
     jsPath+'/*.js'],
   css: [bowerPath+'/bootstrap/dist/css/bootstrap.min.css', bowerPath+'/bootstrap/dist/css/cosmo-theme.min.css',
-    bowerPath+'/fontawesome/css/font-awesome.min.css', 'assets/css/cosmo.min.css', 'assets/themes/*.css', 'assets/css/*.css']
+    bowerPath+'/fontawesome/css/font-awesome.min.css', 'client/css/cosmo.min.css', 'client/themes/*.css', 'client/css/*.css']
 }
 
 // JS concat, strip debugging and minify
@@ -56,5 +56,5 @@ gulp.task('default', ['jshint', 'scripts', 'styles', 'fonts'], function() {
   gulp.watch(jsPath+'/*.js', ['jshint', 'scripts']);
 
   // watch for CSS changes
-  gulp.watch('./assets/css/*.css', ['styles']);
+  gulp.watch('./client/css/*.css', ['styles']);
 });
