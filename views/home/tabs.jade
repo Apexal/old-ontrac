@@ -1,14 +1,18 @@
 div
   ul.nav.nav-tabs(role='tablist')
     li.active(role='presentation')
-      a(href='#work-tab', aria-controls='work', role='tab', data-toggle='tab') Upcoming Work
+      a(href='#work-tab', aria-controls='work', role='tab', data-toggle='tab') Quick Access
         span.badge 0
     li(role='presentation')
       a(href='#profile', aria-controls='profile', role='tab', data-toggle='tab') Profile
     li(role='presentation')
       a(href='#messages', aria-controls='messages', role='tab', data-toggle='tab') Messages
   .tab-content
-    #work-tab.tab-pane.active(role='tabpanel') tab1
+    #work-tab.tab-pane.active(role='tabpanel')
+      form.form-inline(role="form", action="/", method="POST")
+        .form-group
+          input(type="text", name="description", placeholder="Assignment")
+        button.btn.btn-default Add
     #profile.tab-pane(role='tabpanel') tab2
     #messages.tab-pane(role='tabpanel') tab3
 
