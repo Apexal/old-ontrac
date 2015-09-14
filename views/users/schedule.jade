@@ -1,6 +1,7 @@
 extends /layout
 
 block content
-  .container-fluid
+  .container
     !{user.schedule}
-  //iframe#schedule(src="http://intranet.regis.org/infocenter/schedule/Print.cfm?StudentCode="+user.code+"&showweek=0&Print=1&NoShading=0")
+    br
+    a.btn.btn-primary(href="http://intranet.regis.org/infocenter/schedule/Print.cfm?StudentCode="+user.code+"&showweek=0&Print=1&NoShading=0") PDF
