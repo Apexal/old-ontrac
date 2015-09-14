@@ -80,7 +80,7 @@ module.exports = function(io) {
                       // NO, get his Student ID and register him!
                       var id = $("td:contains('Locker Number:')").next().text().trim();
                       //console.log(id);
-                      //user.locker_number = id;
+                      user.locker_number = id;
                       user.login_count = 0;
                       user.last_point_login_time = new Date();
                       user.registered_date = new Date();
