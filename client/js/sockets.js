@@ -31,10 +31,10 @@ function sockets() {
   var advisement = ( $("#advchat").length > 0 ? $("#advchat").data('adv') : '');
   var advchatmessages = [];
 
-  if (!localStorage['user-status']){
-    localStorage['user-status'] = "online";
+  if (!sessionStorage['user-status']){
+    sessionStorage['user-status'] = "online";
   }
-  var status = localStorage['user-status'];
+  var status = sessionStorage['user-status'];
 
   $("#user-status b").html(status.charAt(0).toUpperCase() + status.substring(1)+"<span class='caret'></span>");
   socket.emit('setstatus', {status: status});
@@ -120,7 +120,7 @@ function sockets() {
   $("#user-status li a").click(function() {
     var status = $(this).text().toLowerCase().trim();
     //alert(status);
-    localStorage['user-status'] = status;
+    sessionStorage['user-status'] = status;
     socket.emit('setstatus', {status: status});
     $("#user-status b").html($(this).text()+"<span class='caret'></span>");
     if(['in class', 'working', 'busy', 'offline'].indexOf(status.toLowerCase()) > -1){
