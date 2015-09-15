@@ -157,6 +157,9 @@ module.exports = function(io) {
   router.post("/shutdown", function(req, res){
     if(req.body.password == secrets.regis_password){
       process.exit();
+    }else{
+      req.session.errs.push("Incorrect password.");
+      res.redirect("/home");
     }
   });
 
