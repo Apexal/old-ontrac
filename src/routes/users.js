@@ -109,6 +109,7 @@ router.get("/:username/schedule", function(req, res){
 
     if(user.schedule){
       req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+"'s Schedule";
+      req.toJade.url = "StudentCode="+user.code;
       req.toJade.schedule = user.schedule;
 
       res.render('schedule', req.toJade);

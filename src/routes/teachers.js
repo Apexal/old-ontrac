@@ -49,6 +49,7 @@ router.get("/:mID/schedule", function(req, res, next) {
 
     if(teacher.schedule) {
       req.toJade.title = "Teacher "+teacher.firstName.charAt(0)+". "+teacher.lastName+" Schedule";
+      req.toJade.url = "StaffCode="+teacher.code;
       req.toJade.schedule = teacher.schedule;
 
       res.render('schedule', req.toJade);
