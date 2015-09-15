@@ -2,12 +2,12 @@ node_modules/
 data/
 vendor/
 *secrets.json
-public/game/
+client/public/game/
 views/game.jade
 routes/_game.js
 npm-debug.log
-public/*.js
-public/*.css
-public/fonts/*
+client/public/*.js
+client/public/*.css
+client/public/fonts/*
 *.pyc
 src/config.js

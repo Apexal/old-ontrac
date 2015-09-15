@@ -30,7 +30,7 @@ var sessionMiddleware = session({
 });
 
 // Soon
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+//app.use(favicon(__dirname + '/client/public/favicon.ico'));
 app.use(compression());
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -40,7 +40,7 @@ io.use(function(socket, next) {
     sessionMiddleware(socket.request, socket.request.res, next);
 });
 app.use(sessionMiddleware);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'client/public')));
 app.locals.basedir = path.join(__dirname, 'views');
 app.locals.moment = moment;
 app.locals.helpers = utils;

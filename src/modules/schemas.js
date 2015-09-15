@@ -53,6 +53,7 @@ module.exports = {
     tID: String,
     image: String,
     code: String,
+    schedule: String,
     ipicture: String,
     firstName: String,
     lastName: String,

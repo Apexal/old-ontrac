@@ -25,12 +25,12 @@ gulp.task('scripts', function() {
     .pipe(concat('script.js'))
     //.pipe(stripDebug())
     .pipe(uglify())
-    .pipe(gulp.dest('public/'));
+    .pipe(gulp.dest('client/public/'));
 });
 
 gulp.task('fonts', function() {
   return gulp.src([bowerPath+'/fontawesome/fonts/*', bowerPath+'/bootstrap/dist/fonts/*'])
-    .pipe(gulp.dest('public/fonts'));
+    .pipe(gulp.dest('client/public/fonts'));
 });
 
 // JS hint task
@@ -46,7 +46,7 @@ gulp.task('styles', function() {
     .pipe(concat('style.css'))
     .pipe(autoprefix('last 2 versions'))
     .pipe(minifyCSS())
-    .pipe(gulp.dest('./public/'));
+    .pipe(gulp.dest('client/public/'));
 });
 
 gulp.task('pre', ['scripts', 'styles', 'fonts']);

@@ -22,7 +22,7 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "public/components",
+    "client/public/components",
     "test",
     "tests"
   ]
