@@ -36,12 +36,6 @@ function sockets() {
   }
   var status = localStorage['user-status'];
 
-  if(['in class', 'working', 'busy', 'offline'].indexOf(status.toLowerCase()) > -1){
-    if(sessionStorage.muted == "0")
-      sendNotification("warning", "", "Muted chat due to status.");
-    set_muted(true);
-  }
-
   $("#user-status b").html(status.charAt(0).toUpperCase() + status.substring(1)+"<span class='caret'></span>");
   socket.emit('setstatus', {status: status});
 
