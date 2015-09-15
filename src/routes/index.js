@@ -87,6 +87,41 @@ module.exports = function(io) {
                       user.registered_date = new Date();
                       user.registered = true;
                       user.nickname = user.firstName;
+
+                      request({
+                          url: 'http://intranet.regis.org/downloads/outlook_calendar_import/outlook_schedule_download.cfm', //URL to hit
+                          jar: cookieJar,
+                          method: 'GET'
+                      }, function(error, response, text){
+                        var scheduleLines = text.match(/[^\r\n]+/g);
+                        var good = [];
+                        var schedule = [];
+                        scheduleLines.forEach(function(line) {
+                          good.push(line.split("\t"));
+                        });
+                        good.forEach(function(line) {
+                          if(line[4].indexOf("days") > -1){
+                            // Schedule Day
+                          }else{
+                            var period = {
+                              date: moment(line[0], "MM-DD-YY").toDate(),
+                              startTime: moment(line[1], "hh:mm A").toDate(),
+                              endTime: moment(line[3], "hh:mm A").toDate(),
+                              className: line[4],
+                              room: line[5]
+                            };
+                            //console.log(period);
+                            schedule.push(period);
+
+                          }
+                          //console.log(line);
+                        });
+                        user.schedule = schedule;
+                        //console.log(schedule);
+
+                        done();
+                      });
+
                       new req.Log({who: user._id, what: "Registration."}).save();
                       if(req.toJade.production){
                         require("../modules/mailer")(user.email, "Welcome to OnTrac!",
@@ -94,43 +129,48 @@ module.exports = function(io) {
                           is currently in Alpha, meaning it has not fully been released \
                           yet and is in active development. Thank you for being an Alpha Tester!");
                       }
+                    }else{
+                      done();
                     }
 
-                    var uA = user.achievements;
-                    achievements.forEach(function(ach){
-                      if(uA.indexOf(ach.id) == -1){
-                        if(ach.check(user)){
-                          user.achievements.push(ach.id);
-                          user.points += ach.reward;
-                          req.session.info.push("You have been awarded "+ach.reward+" points for achieving '"+ach.name+"'!");
-                        }
-                      }
-                    });
 
-                    user.login_count +=1;
 
-                    // Give points if last time points were given was over 5 minutes ago
-                    var fiveMinAgo = moment().subtract(5, 'minutes');
-                    if(moment(user.last_point_login_time).isBefore(fiveMinAgo)){
-                      user.points += 10;
-                      req.session.info.push("You have been rewarded 10 points for logging in.");
-                      user.last_point_login_time = new Date();
-                    }
-                    req.user = user;
-                    req.session.currentUser = user;
-                    req.session.currentUser.login_time = new Date();
-                    user.save();
-
-                    new req.Log({who: user._id, what: "Login."}).save();
-                    req.session.quietlogin = false; // The actual user logged in, not an admin
                   }
-                  done();
+
                 });
               }
             }
         });
       }
       function done(){
+        var uA = user.achievements;
+        achievements.forEach(function(ach){
+          if(uA.indexOf(ach.id) == -1){
+            if(ach.check(user)){
+              user.achievements.push(ach.id);
+              user.points += ach.reward;
+              req.session.info.push("You have been awarded "+ach.reward+" points for achieving '"+ach.name+"'!");
+            }
+          }
+        });
+
+        user.login_count +=1;
+
+        // Give points if last time points were given was over 5 minutes ago
+        var fiveMinAgo = moment().subtract(5, 'minutes');
+        if(moment(user.last_point_login_time).isBefore(fiveMinAgo)){
+          user.points += 10;
+          req.session.info.push("You have been rewarded 10 points for logging in.");
+          user.last_point_login_time = new Date();
+        }
+        req.user = user;
+        req.session.currentUser = user;
+        req.session.currentUser.login_time = new Date();
+        user.save();
+
+        new req.Log({who: user._id, what: "Login."}).save();
+        req.session.quietlogin = false; // The actual user logged in, not an admin
+
         if(errs.length > 0){
           res.json({errors: errs});
         }else{

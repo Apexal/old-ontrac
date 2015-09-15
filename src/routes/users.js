@@ -14,8 +14,8 @@ router.get('/', function(req, res, next) {
   var pages = (530/10);
   var pageNum = (req.query.page ? parseInt(req.query.page) : 1);
 
-  req.Student.find({registered: true}, function(err, registered){
-    if(err) console.log(err);
+  req.Student.find({registered: true}, 'registered firstName lastName advisement username rank mpicture ipicture', function(err, registered){
+    if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
     if(registered)
       req.toJade.registered = registered;
     req.Student.find({}, 'registered firstName lastName advisement username rank mpicture ipicture')
@@ -74,7 +74,7 @@ router.get("/:username", function(req, res){
   var username = req.params.username;
   req.toJade.user = false;
   req.toJade.title = "Not a User";
-  req.Student.findOne({username: username}).populate('courses', 'tID title mID code').exec(function(err, user) {
+  req.Student.findOne({username: username}, '-schedule -locker_number').populate('courses', 'tID title mID code').exec(function(err, user) {
     if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
 
     if(user){
@@ -93,7 +93,6 @@ router.get("/:username", function(req, res){
           else
             req.toJade.pointdiff = "the same amount of";
         }
-
 
         res.render('users/profile', req.toJade);
       });
