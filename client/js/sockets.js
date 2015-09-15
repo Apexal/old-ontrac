@@ -36,6 +36,12 @@ function sockets() {
   }
   var status = localStorage['user-status'];
 
+  if(['in class', 'working', 'busy', 'offline'].indexOf(status.toLowerCase()) > -1){
+    if(sessionStorage.muted == "0")
+      sendNotification("warning", "", "Muted chat due to status.");
+    set_muted(true);
+  }
+
   $("#user-status b").html(status.charAt(0).toUpperCase() + status.substring(1)+"<span class='caret'></span>");
   socket.emit('setstatus', {status: status});
 
@@ -123,6 +129,11 @@ function sockets() {
     localStorage['user-status'] = status;
     socket.emit('setstatus', {status: status});
     $("#user-status b").html($(this).text()+"<span class='caret'></span>");
+    if(['in class', 'working', 'busy', 'offline'].indexOf(status.toLowerCase()) > -1){
+      if(sessionStorage.muted == "0")
+        sendNotification("warning", "", "Muted chat due to status.");
+      set_muted(true);
+    }
   });
 
 
@@ -231,10 +242,7 @@ function sockets() {
   }
 
   //  GLOBAL CHAT SYSTEM
-  if(sessionStorage.muted == "true")
-    $("#mute-toggle").text("(Unmute)");
-  else
-    $("#mute-toggle").text("(Mute)");
+  if(sessionStorage.muted == "1") set_muted(true); else set_muted(false);
 
 
 
