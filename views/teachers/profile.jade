@@ -35,13 +35,29 @@ block content
                 for c in teacher.courses
                   +class(c)
     
-    .col-xs-12
-      if teacher != false
-        hr
-        a.btn.btn-default(href="http://moodle.regis.org/user/profile.php?id="+teacher.mID, target="_blank") Moodle Page
-        a.btn.btn-default(href="mailto:"+teacher.email) Email
-      a.btn.btn-primary(href="/teachers") Back to Teachers
-    
+    .row
+      hr
+      if teacher !== false
+        .col-sm-9.hidden-xs
+          a.btn.btn-default(href="/teacher/"+teacher.mID+"/schedule", title="View this teacher's schedule.'") View Schedule
+          a.btn.btn-default(href="mailto:"+teacher.email) Email
+          a.btn.btn-default(href="http://moodle.regis.org/user/profile.php?id="+teacher.mID) Moodle Profile
+        
+        .col-xs-9.visible-xs
+          .btn-group.dropup
+            button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Actions &nbsp;
+              span.caret
+              span.sr-only Toggle Dropdown
+            ul.dropdown-menu
+              li
+                a(href="/teachers/"+teacher.mID+"/schedule") View Schedule
+              li
+                a(href="mailto:"+teacher.email) Email
+              li
+                a(href="http://moodle.regis.org/user/profile.php?id="+teacher.mID) Moodle Profile
+      .col-xs-3
+        a.btn.btn-primary.right(href="/teachers") Back to Teachers
+      
 mixin class(course)
   .col-xs-12.col-sm-6.col-md-4
     .panel.panel-default
