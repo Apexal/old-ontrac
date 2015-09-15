@@ -4,6 +4,7 @@ var moment = require('moment');
 var request = require("request");
 var cheerio = require("cheerio");
 var achievements = require("../modules/achievements");
+var secrets = require("../secrets.json");
 
 var redir = "/";
 
@@ -151,6 +152,12 @@ module.exports = function(io) {
       req.session.info.push("You have successfully logged out.");
     }
     res.redirect('/');
+  });
+
+  router.post("/shutdown", function(req, res){
+    if(req.body.password == secrets.regis_password){
+      process.exit();
+    }
   });
 
 

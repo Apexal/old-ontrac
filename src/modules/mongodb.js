@@ -31,7 +31,7 @@ db.once('open', function (callback) {
         grade = "Freshman";
         break;
       case "2":
-        grade = "Sophmore";
+        grade = "Sophomore";
         break;
       case "3":
         grade = "Junior";

@@ -9,7 +9,7 @@ router.get("/", function(req, res) {
       grade = "Freshman";
       break;
     case "2":
-      grade = "Sophmore";
+      grade = "Sophomore";
       break;
     case "3":
       grade = "Junior";
