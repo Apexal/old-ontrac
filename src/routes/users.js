@@ -75,7 +75,7 @@ router.get("/:username", function(req, res){
   req.toJade.user = false;
   req.toJade.title = "Not a User";
   req.Student.findOne({username: username}).populate('courses', 'tID title mID code').exec(function(err, user) {
-    if(err){req.session.errs.push('An error ocwcured, please try again.'); res.redirect(req.baseUrl); return;}
+    if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
 
     if(user){
       user.deepPopulate('courses.teacher', function(err, u) {
@@ -104,13 +104,17 @@ router.get("/:username", function(req, res){
 });
 
 router.get("/:username/schedule", function(req, res){
-  req.Student.findOne({username: req.params.username}, function(err, user) {
-    if(user){
+  req.Student.findOne({username: req.params.username}, 'firstName lastName schedule code', function(err, user) {
+    if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
+
+    if(user.schedule){
       req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+"'s Schedule";
-      req.toJade.user = user;
-      res.render('users/schedule', req.toJade);
+      req.toJade.schedule = user.schedule;
+
+      res.render('schedule', req.toJade);
     }else{
-      res.redirect("/users");
+      req.session.errs.push('Failed to find a schedule for this user.');
+      res.redirect("/users/"+req.params.username);
     }
   });
 });

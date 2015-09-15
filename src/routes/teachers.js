@@ -43,18 +43,19 @@ router.get("/:mID", function(req, res, next) {
   });
 });
 
-router.get("/:tID/schedule", function(req, res, next) {
-  var tID = req.params.tID;
-  req.toJade.teacher = false;
-
-  req.Teacher.findOne({tID: tID}, function(err, teacher) {
+router.get("/:mID/schedule", function(req, res, next) {
+  req.Teacher.findOne({mID: req.params.mID}, 'firstName lastName schedule code', function(err, teacher) {
     if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
 
-    if(teacher) {
-      req.toJade.title = "Teacher "+teacher.firstName.charAt(0)+". "+teacher.lastName;
-      req.toJade.teacher = teacher;
+    if(teacher.schedule) {
+      req.toJade.title = "Teacher "+teacher.firstName.charAt(0)+". "+teacher.lastName+" Schedule";
+      req.toJade.schedule = teacher.schedule;
+
+      res.render('schedule', req.toJade);
+    }else{
+      req.session.errs.push('Failed to find a schedule for this user.');
+      res.redirect("/teachers/"+req.params.mID);
     }
-    res.render('teachers/profile', req.toJade);
   });
 });
 
