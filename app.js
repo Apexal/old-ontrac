@@ -30,7 +30,7 @@ var sessionMiddleware = session({
 });
 
 // Soon
-//app.use(favicon(__dirname + '/client/public/favicon.ico'));
+app.use(favicon(__dirname + '/client/public/images/logo32x32.png'));
 app.use(compression());
 app.use(logger('dev'));
 app.use(bodyParser.json());

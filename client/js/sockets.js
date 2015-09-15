@@ -1,3 +1,22 @@
+function toggle_muted(){
+  sessionStorage.muted = (sessionStorage.muted == "1" ? "0" : "1");
+  if(sessionStorage.muted == "1"){
+    $("#mute-toggle").text("(Unmute)");
+  }else{
+    $("#mute-toggle").text("(Mute)");
+  }
+}
+
+function set_muted(to){
+  if(to){
+    sessionStorage.muted = "1";
+    $("#mute-toggle").text("(Unmute)");
+  }else{
+    sessionStorage.muted = "0";
+    $("#mute-toggle").text("(Mute)");
+  }
+}
+
 function sockets() {
   var chat_notification = new Audio('/sounds/ding.mp3');
 
@@ -170,7 +189,7 @@ function sockets() {
       console.log("New message from "+data.username+": "+data.message);
       if(data.message) {
           advchatmessages.push(data);
-          if(data.username != username)
+          if(data.username != username && sessionStorage.muted == "0")
             chat_notification.play();
           showAdvMessages();
       } else {
@@ -186,7 +205,7 @@ function sockets() {
       console.log("New message from "+data.username+": "+data.message);
       if(data.message) {
           advchatmessages.push(data);
-          if(data.username != username)
+          if(data.username != username && sessionStorage.muted == "0")
             chat_notification.play();
 
           if(!sessionStorage.advunread)
@@ -212,16 +231,15 @@ function sockets() {
   }
 
   //  GLOBAL CHAT SYSTEM
-  if(sessionStorage.mute == "true")
+  if(sessionStorage.muted == "true")
     $("#mute-toggle").text("(Unmute)");
   else
     $("#mute-toggle").text("(Mute)");
 
-  $("#mute-toggle").click(function() {
-    sessionStorage.mute = ($(this).text() == "(Mute)" ? "true" : "false");
-    $(this).text( ($(this).text() == "(Mute)" ? "(Unmute)" : "(Mute)"));
-    console.log("Chat volume is now: "+(sessionStorage.mute == "true" ? "Muted" : "Unmuted"));
-  });
+
+
+
+  $("#mute-toggle").click(toggle_muted);
 
   var messages = [];
   $("#chat-box").submit(function(e){
@@ -256,7 +274,7 @@ function sockets() {
   socket.on('message', function (data) {
     if(data.message) {
         messages.push(data);
-        if(data.username != username && sessionStorage.mute != "true")
+        if(data.username != username && sessionStorage.muted == "0")
           chat_notification.play();
 
         if(!sessionStorage.unread)
