@@ -1,7 +1,7 @@
 from trp import TRP
 
 # This clears the database and scrapes all Moodle info starting with courses
-t = TRP("src/secrets.json")
+t = TRP("server/secrets.json")
 print "Removed ", t.db.students.delete_many({}).deleted_count, "students"
 print "Removed ", t.db.teachers.delete_many({}).deleted_count, "teachers"
 print "Removed ", t.db.courses.delete_many({}).deleted_count, "courses"

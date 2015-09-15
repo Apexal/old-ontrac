@@ -10,4 +10,4 @@ client/public/*.js
 client/public/*.css
 client/public/fonts/*
 *.pyc
-src/config.js
+server/src/config.js

@@ -4,7 +4,7 @@ var express = require("express")
   , http = require("http").createServer(app)
   , Promise = require("bluebird")
   , bodyParser = require("body-parser")
-  , io = require("./src/modules/sockets")(http)
+  , io = require("./server/modules/sockets")(http)
   , compression = require('compression')
   , fs = require("fs")
   , path = require('path')
@@ -13,14 +13,14 @@ var express = require("express")
   , bodyParser = require('body-parser')
   , colors = require('colors')
   , session = require('express-session')
-  , utils = require('./src/modules/utils')
+  , utils = require('./server/modules/utils')
   , moment = require('moment')
-  , config = require('./src/config')
-  , mongo = require('./src/modules/mongodb')
-  , school_years = require('./src/modules/years');
+  , config = require('./server/config')
+  , mongo = require('./server/modules/mongodb')
+  , school_years = require('./server/modules/years');
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'server/views'));
 app.set('view engine', 'jade');
 
 var sessionMiddleware = session({
@@ -41,7 +41,7 @@ io.use(function(socket, next) {
 });
 app.use(sessionMiddleware);
 app.use(express.static(path.join(__dirname, 'client/public')));
-app.locals.basedir = path.join(__dirname, 'views');
+app.locals.basedir = path.join(__dirname, 'server/views');
 app.locals.moment = moment;
 app.locals.helpers = utils;
 
@@ -102,10 +102,10 @@ app.use('/*', function(req, res, next) {
 // =================================ROUTES=================================
 // This dynamically adds all routes in the routes
 // folder and gives them access to whatever Mongo collections they ask for
-fs.readdirSync("./src/routes/").forEach(function(path) {
-  if(fs.lstatSync("./src/routes/"+path).isDirectory() == false){
+fs.readdirSync("./server/routes/").forEach(function(path) {
+  if(fs.lstatSync("./server/routes/"+path).isDirectory() == false){
     var name = ( path == "index.js" ? '' : path.replace('.js', ''));
-    var current = require('./src/routes/'+path)(io);
+    var current = require('./server/routes/'+path)(io);
     app.use('/'+name, function(req, res, next) {
       var models = current.models;
       if(models.length > 0){
