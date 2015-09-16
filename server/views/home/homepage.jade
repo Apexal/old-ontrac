@@ -16,8 +16,8 @@ block content
           else
             h2.no-margin You should be in #[b= "Room "+nowClass.room] for #[b= nowClass.className] right now! 
               small The class ends in #{moment().from(nowClass.endTime)}.
-            if nextClass != false
-              p.larger.no-margin Your next class is in #[b= "Room "+nextClass.room] for #[b= nextClass.className] which starts #[b= moment().from(nextClass.startTime)]!
+          if nextClass != false
+            p.larger.no-margin Your next class is #[b= nextClass.className] in #[b= "Room "+nextClass.room] which starts #[b= moment().from(nextClass.startTime)]!
           hr
     .row
       .col-xs-12

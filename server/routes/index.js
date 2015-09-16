@@ -3,6 +3,7 @@ var router = express.Router();
 var moment = require('moment');
 var request = require("request");
 var cheerio = require("cheerio");
+var utils = require("../modules/utils");
 var achievements = require("../modules/achievements");
 var secrets = require("../secrets.json");
 
@@ -15,38 +16,10 @@ module.exports = function(io) {
     if(req.loggedIn){
       req.toJade.title = "Your Home";
 
-      var mom = moment();
-      var todays = req.currentUser.scheduleArray.filter(function(period) {
-        if(moment(period.date).isSame(req.toJade.today)){
-          return true;
-        }
-        return false;
-      });
-      todays = (todays.length > 0 ? todays : false);
-
-      var now = todays.filter(function(period) {
-        if(mom.isBetween(period.startTime, period.endTime)){
-          return true;
-        }
-        return false;
-      });
-      now = (now.length == 1 ? now[0] : false);
-
-      var next = false;
-
-      if(now != false && mom.isBetween(moment("08:40 AM", "hh:mm A"), moment("02:50 PM", "hh:mm A"))){
-        next = ((todays.length-1 > todays.indexOf(now)) ? todays[todays.indexOf(now)+1] : false);
-      }else if(mom.isBetween(moment("08:40 AM", "hh:mm A"), moment("02:50 PM", "hh:mm A")) && now == false){
-        now = "free";
-      }else{
-        next = false;
-      }
-      console.log(now);
-      console.log(next);
-
-      req.toJade.todaysSchedule = todays;
-      req.toJade.nowClass = now;
-      req.toJade.nextClass = next;
+      var sInfo = utils.getDayScheduleInfo(req.currentUser.scheduleArray);
+      req.toJade.todaysSchedule = sInfo.todays;
+      req.toJade.nowClass = sInfo.nowClass;
+      req.toJade.nextClass = sInfo.nextClass;
       res.render('home/homepage', req.toJade);
     }else{
       res.render('home/index', req.toJade);
@@ -135,11 +108,12 @@ module.exports = function(io) {
                           if(line[4].indexOf(" Day") > -1){
                             // Schedule Day
                           }else{
-                            if(moment(line[0], "MM-DD-YY").isValid()){
+                            if(moment(line[0], "MM/DD/YY").isValid()){
+
                               var period = {
-                                date: moment(line[0], "MM-DD-YY").toDate(),
-                                startTime: moment(line[1], "hh:mm A").toDate(),
-                                endTime: moment(line[3], "hh:mm A").toDate(),
+                                date: moment(line[0], "MM/DD/YY").toDate(),
+                                startTime: moment(line[0]+" "+line[1], "MM/DD/YY hh:mm A").toDate(),
+                                endTime: moment(line[0]+" "+line[3], "MM/DD/YY hh:mm A").toDate(),
                                 className: line[4],
                                 room: line[5]
                               };
