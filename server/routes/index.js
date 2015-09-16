@@ -15,28 +15,38 @@ module.exports = function(io) {
     if(req.loggedIn){
       req.toJade.title = "Your Home";
 
-      var mom = moment();
+      var mom = moment("12:00 PM", "hh:mm A");
       var todays = req.currentUser.scheduleArray.filter(function(period) {
         if(moment(period.date).isSame(moment().startOf("day"))){
           return true;
         }
         return false;
       });
+      todays = (todays.length > 0 ? todays : false);
 
       var now = todays.filter(function(period) {
-        //console.log(mom.toDate());
-        //console.log(moment(period.startTime).toDate());
-        //console.log(moment(period.endTime).toDate() + "\n");
-
-        if(moment(period.startTime).isBefore(mom) && moment(period.endTime).isAfter(mom)){
+        if(mom.isBetween(period.startTime, period.endTime)){
           return true;
         }
         return false;
       });
+      now = (now.length == 1 ? now[0] : false);
+
+      var next = false;
+
+      if(now != false && mom.isBetween(moment("08:40 AM", "hh:mm A"), moment("02:50 PM", "hh:mm A"))){
+        next = ((todays.length-1 > todays.indexOf(now)) ? todays[todays.indexOf(now)+1] : false);
+      }else if(mom.isBetween(moment("08:40 AM", "hh:mm A"), moment("02:50 PM", "hh:mm A")) && now == false){
+        now = "free";
+      }else{
+        next = false;
+      }
+      //console.log(now);
+      //console.log(next);
+
       req.toJade.todaysSchedule = todays;
       req.toJade.now = now;
-      console.log(now);
-
+      req.toJade.nextClass = next;
       res.render('home/homepage', req.toJade);
     }else{
       res.render('home/index', req.toJade);
