@@ -5,8 +5,8 @@ var words = ["anal", "anus", "arse", "ass", "ballsack", "balls", "bastard", "bit
 
 module.exports = {
   getDayScheduleInfo: function(array){
-    var day = "09/23/15";
-    var mom = moment(day+" 01:50 AM", "MM/DD/YY hh:mm A");
+    var day = "09/24/15";
+    var mom = moment(day+" 09:30 AM", "MM/DD/YY hh:mm A");
     var dayStart = moment(day+" 08:40 AM", "MM/DD/YY hh:mm A");
     var dayEnd = moment(day+" 02:50 PM", "MM/DD/YY hh:mm A");
 
@@ -21,6 +21,9 @@ module.exports = {
 
     var now = false;
     var next = false;
+
+    var justEnded = false;
+    var justStarted = false;
 
     if(mom.isBetween(dayStart, dayEnd)){
       // RIGHT NOW IS IN A SCHOOL DAY
@@ -38,21 +41,33 @@ module.exports = {
         if(now.length == 1) now = now[0]; else now = "free";
         // IF NO CLASS NOW, IN A FREE PERIOD
 
-        if(now != false && now != "free"){
-          next = ((todays.length-1 > todays.indexOf(now)) ? todays[todays.indexOf(now)+1] : false);
-        }else if(now == "free"){
-          var cur = mom;
-          while(cur.isBefore(dayEnd) && next == false){
-            cur.add(20, 'minutes');
-            found = todays.filter(function(period) {
-              if(cur.isBetween(period.startTime, period.endTime)){
-                return true;
-              }
-              return false;
-            });
-            if(found.length == 1){ next = found[0]; break;}
+        var cur = mom;
+        var found = todays.filter(function(period) {
+          if(cur.isSame(period.endTime)){
+            return true;
           }
+          return false;
+        });
+        if(found.length == 1){ justEnded = found[0];}else{justEnded = false;}
+        var found = todays.filter(function(period) {
+          if(cur.isSame(period.startTime)){
+            return true;
+          }
+          return false;
+        });
+        if(found.length == 1){ justStarted = found[0];}else{justStarted = false;}
+
+        while(cur.isBefore(dayEnd) && next == false){
+          cur.add(20, 'minutes');
+          var found = todays.filter(function(period) {
+            if(cur.isBetween(period.startTime, period.endTime)){
+              return true;
+            }
+            return false;
+          });
+          if(found.length > 0){ next = found[0]; break;}else{next = "free";}
         }
+
       }
     }else{
       now = false;
@@ -67,7 +82,9 @@ module.exports = {
     return {
       todays: todays,
       nowClass: now,
-      nextClass: next
+      nextClass: next,
+      justEnded: justEnded,
+      justStarted: justStarted
     }
   },
   pluralize: function(num, non, pluralized) {

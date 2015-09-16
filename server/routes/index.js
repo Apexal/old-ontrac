@@ -17,6 +17,7 @@ module.exports = function(io) {
       req.toJade.title = "Your Home";
 
       var sInfo = utils.getDayScheduleInfo(req.currentUser.scheduleArray);
+      console.log(sInfo);
       req.toJade.todaysSchedule = sInfo.todays;
       req.toJade.nowClass = sInfo.nowClass;
       req.toJade.nextClass = sInfo.nextClass;
