@@ -23,6 +23,15 @@ db.once('open', function (callback) {
     return 8+parseInt(this.advisement.charAt(0));
   });
 
+  studentSchema.virtual('closeSchedule').get(function() {
+    return this.scheduleArray.filter(function(period) {
+      if(moment(period.date).isSame(moment().startOf("day"))){
+        return true;
+      }
+      return false;
+    });
+  });
+
   studentSchema.virtual('gradeName').get(function () {
     var adv = this.advisement.charAt(0);
     var grade = "";

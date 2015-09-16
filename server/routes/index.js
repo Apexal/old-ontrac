@@ -14,7 +14,29 @@ module.exports = function(io) {
     req.toJade.title = "OnTrac";
     if(req.loggedIn){
       req.toJade.title = "Your Home";
-      console.log(req.currentUser.nickname);
+
+      var mom = moment();
+      var todays = req.currentUser.scheduleArray.filter(function(period) {
+        if(moment(period.date).isSame(moment().startOf("day"))){
+          return true;
+        }
+        return false;
+      });
+
+      var now = todays.filter(function(period) {
+        //console.log(mom.toDate());
+        //console.log(moment(period.startTime).toDate());
+        //console.log(moment(period.endTime).toDate() + "\n");
+
+        if(moment(period.startTime).isBefore(mom) && moment(period.endTime).isAfter(mom)){
+          return true;
+        }
+        return false;
+      });
+      req.toJade.todaysSchedule = todays;
+      req.toJade.now = now;
+      console.log(now);
+
       res.render('home/homepage', req.toJade);
     }else{
       res.render('home/index', req.toJade);
@@ -100,23 +122,24 @@ module.exports = function(io) {
                           good.push(line.split("\t"));
                         });
                         good.forEach(function(line) {
-                          if(line[4].indexOf("days") > -1){
+                          if(line[4].indexOf(" Day") > -1){
                             // Schedule Day
                           }else{
-                            var period = {
-                              date: moment(line[0], "MM-DD-YY").toDate(),
-                              startTime: moment(line[1], "hh:mm A").toDate(),
-                              endTime: moment(line[3], "hh:mm A").toDate(),
-                              className: line[4],
-                              room: line[5]
-                            };
-                            //console.log(period);
-                            schedule.push(period);
-
+                            if(moment(line[0], "MM-DD-YY").isValid()){
+                              var period = {
+                                date: moment(line[0], "MM-DD-YY").toDate(),
+                                startTime: moment(line[1], "hh:mm A").toDate(),
+                                endTime: moment(line[3], "hh:mm A").toDate(),
+                                className: line[4],
+                                room: line[5]
+                              };
+                              //console.log(period);
+                              schedule.push(period);
+                            }
                           }
                           //console.log(line);
                         });
-                        user.schedule = schedule;
+                        user.scheduleArray = schedule;
                         //console.log(schedule);
 
                         done();
