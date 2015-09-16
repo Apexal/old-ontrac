@@ -2,9 +2,9 @@ node_modules/
 data/
 vendor/
 *secrets.json
+*config.js
 npm-debug.log
 client/public/*.js
 client/public/*.css
 client/public/fonts/*
 *.pyc
-server/src/config.js
