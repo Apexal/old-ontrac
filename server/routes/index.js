@@ -15,9 +15,9 @@ module.exports = function(io) {
     if(req.loggedIn){
       req.toJade.title = "Your Home";
 
-      var mom = moment("12:00 PM", "hh:mm A");
+      var mom = moment("9:43 AM", "hh:mm A");
       var todays = req.currentUser.scheduleArray.filter(function(period) {
-        if(moment(period.date).isSame(moment().startOf("day"))){
+        if(moment(period.date).isSame(req.toJade.today)){
           return true;
         }
         return false;
@@ -41,11 +41,11 @@ module.exports = function(io) {
       }else{
         next = false;
       }
-      //console.log(now);
-      //console.log(next);
+      console.log(now);
+      console.log(next);
 
       req.toJade.todaysSchedule = todays;
-      req.toJade.now = now;
+      req.toJade.nowClass = now;
       req.toJade.nextClass = next;
       res.render('home/homepage', req.toJade);
     }else{

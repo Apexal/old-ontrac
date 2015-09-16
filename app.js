@@ -57,7 +57,8 @@ app.use(function(req, res, next) {
   req.trimester = info.trimester;
   req.full_year = info.full;
 
-  req.today = moment().startOf('day');
+  var now = moment();
+  req.today = now.startOf('day');
 
   // This object is passed to Jade on every request.
   req.toJade = {
