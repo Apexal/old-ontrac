@@ -15,7 +15,7 @@ module.exports = function(io) {
     if(req.loggedIn){
       req.toJade.title = "Your Home";
 
-      var mom = moment("9:43 AM", "hh:mm A");
+      var mom = moment();
       var todays = req.currentUser.scheduleArray.filter(function(period) {
         if(moment(period.date).isSame(req.toJade.today)){
           return true;
