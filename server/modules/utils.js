@@ -5,10 +5,16 @@ var words = ["anal", "anus", "arse", "ass", "ballsack", "balls", "bastard", "bit
 
 module.exports = {
   getDayScheduleInfo: function(array){
-    var day = "09/24/15";
-    var mom = moment(day+" 09:30 AM", "MM/DD/YY hh:mm A");
-    var dayStart = moment(day+" 08:40 AM", "MM/DD/YY hh:mm A");
-    var dayEnd = moment(day+" 02:50 PM", "MM/DD/YY hh:mm A");
+    var mom = moment();
+    var dayStart = moment("08:40 AM", "hh:mm A");
+    var dayEnd = moment("02:50 PM", "hh:mm A");
+
+    /* TESTING
+      var day = "09/24/15";
+      mom = moment(day+" 09:51 AM", "MM/DD/YY hh:mm A");
+      dayStart = moment(day+" 08:40 AM", "MM/DD/YY hh:mm A");
+      dayEnd = moment(day+" 02:50 PM", "MM/DD/YY hh:mm A");
+    */
 
     var todays = array.filter(function(period) {
       if(moment(period.date).isSame(moment(mom).startOf('day'))){
@@ -32,15 +38,52 @@ module.exports = {
       if(todays !== false){
         // THERE ARE CLASSES SCHEDULE FOR TODAY
 
+        // Free periods are not recorded, so find the holes and fill them
+        var newTodays = [];
+        var lastPeriod = {};
+        todays.forEach(function(period) {
+          var cur = period;
+
+          if(moment(period.startTime).isSame(lastPeriod.endTime) == false && todays.indexOf(period) > 0){
+            newTodays.push({
+              date: period.date,
+              room: "Anywhere",
+              startTime: lastPeriod.endTime,
+              endTime: period.startTime,
+              className: "Unstructured Time"
+            });
+          }
+
+          lastPeriod = period;
+          newTodays.push(cur);
+        });
+
+        if(moment(todays[todays.length-1].endTime).isSame(dayEnd) == false){
+          newTodays.push({
+            date: lastPeriod.date,
+            room: "Anywhere",
+            startTime: lastPeriod.endTime,
+            endTime: dayEnd.toDate(),
+            className: "Unstructured Time"
+          });
+        }
+        // I am a genius for this ^^^
+
+
+        todays = newTodays; // Free periods are now in array
+
+
+        // Loop through today's classes to find the currently ongoing
         now = todays.filter(function(period) {
           if(mom.isBetween(period.startTime, period.endTime)){
             return true;
           }
           return false;
         });
-        if(now.length == 1) now = now[0]; else now = "free";
-        // IF NO CLASS NOW, IN A FREE PERIOD
+        if(now.length == 1) now = now[0];
+        // If there is no such period (and it is during the school day)
 
+        // Try to find a class that just ended
         var cur = mom;
         var found = todays.filter(function(period) {
           if(cur.isSame(period.endTime)){
@@ -49,6 +92,9 @@ module.exports = {
           return false;
         });
         if(found.length == 1){ justEnded = found[0];}else{justEnded = false;}
+        // If none found set to false
+
+        // Try to find a class that just started
         var found = todays.filter(function(period) {
           if(cur.isSame(period.startTime)){
             return true;
@@ -56,18 +102,16 @@ module.exports = {
           return false;
         });
         if(found.length == 1){ justStarted = found[0];}else{justStarted = false;}
+        // If none set to false
 
-        while(cur.isBefore(dayEnd) && next == false){
-          cur.add(20, 'minutes');
-          var found = todays.filter(function(period) {
-            if(cur.isBetween(period.startTime, period.endTime)){
-              return true;
-            }
-            return false;
-          });
-          if(found.length > 0){ next = found[0]; break;}else{next = "free";}
+        // If a class jas just ended and another jas just started, you are in between adjacent classes
+        if(justStarted !== false && justEnded !== false){
+          now = "between";
         }
 
+        // Get the next class
+        if(now !== "between")
+          next = ((todays.length-1 > todays.indexOf(now)) ? todays[todays.indexOf(now)+1] : false);
       }
     }else{
       now = false;
