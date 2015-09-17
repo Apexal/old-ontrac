@@ -12,16 +12,20 @@ block content
       .col-xs-12
         if nowClass !== false
           if nowClass == "between"
-            p.larger #[b= justEnded.className] has just ended.
+            p.larger.no-margin #[b= justEnded.className] has just ended.
             if justStarted !== false
-              h2 Get to #[b= "Room "+justStarted.room] for #[b= justStarted.className]!
-          if nowClass == "free"
-            h2 Enjoy your free period! Use it wisely.
-          if nowClass !== "free" && nowClass !== "between"
-            h2 You should currently be in #[b= "Room "+nowClass.room] for #[b= nowClass.className+"!"]
-          
+              h2 Get to #[b= "Room "+justStarted.room] for #[b= justStarted.className+"!"]
+          else
+            if nowClass.className == "Unstructured Time"
+              h2 You are currently in #[b Unstructured Time.]
+            else
+              h2 You should currently be in #[b= "Room "+nowClass.room] for #[b= nowClass.className+"!"]
+            
           if nextClass !== false
             p.larger #[b(title=moment(nextClass.startTime).format("HH:MM A"), style="text-transform: capitalize;")= moment(nextClass.startTime).fromNow(true)] until #[b= nextClass.className] in #[b= "Room "+nextClass.room].
+          else
+            if nowClass !== "between"
+              p.larger This is the last class of your day!
           hr
     .row
       .col-xs-12

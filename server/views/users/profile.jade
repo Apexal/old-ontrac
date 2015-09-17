@@ -77,15 +77,27 @@ block content
               .user-info
                 b Advisement:
                 |  #{user.advisement}
-      
-      .row
+                
+      if user.registered
+        .row
           .col-xs-12
-            hr
-            h2 #{user.firstName}'s Classes
-            br
-            .user-classes
-              for c in user.courses
-                +class(c)
+            if sInfo.nowClass != false
+              h3 As of #[b= moment().format("h:mm A")], #{user.firstName}
+                if sInfo.nowClass.className == "Unstructured Time"
+                  |  has a free period until #[b= moment(sInfo.nowClass.endTime).format("h:mm A")].
+                else
+                  |  is in #[b= "Room "+sInfo.nowClass.room ] for #[b= sInfo.nowClass.className] until #[b= moment(sInfo.nowClass.endTime).format("h:mm A")].
+                br
+                small Refresh the page to update.
+      .row
+        .col-xs-12
+          hr
+          h2 #{user.firstName}'s Classes
+          br
+          .user-classes
+            for c in user.courses
+              +class(c)
+          
       
     .row
       hr

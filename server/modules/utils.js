@@ -9,12 +9,12 @@ module.exports = {
     var dayStart = moment("08:40 AM", "hh:mm A");
     var dayEnd = moment("02:50 PM", "hh:mm A");
 
-    /* TESTING
+
       var day = "09/24/15";
-      mom = moment(day+" 09:51 AM", "MM/DD/YY hh:mm A");
+      mom = moment(day+" 12:30 PM", "MM/DD/YY hh:mm A");
       dayStart = moment(day+" 08:40 AM", "MM/DD/YY hh:mm A");
       dayEnd = moment(day+" 02:50 PM", "MM/DD/YY hh:mm A");
-    */
+
 
     var todays = array.filter(function(period) {
       if(moment(period.date).isSame(moment(mom).startOf('day'))){

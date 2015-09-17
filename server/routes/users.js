@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var _ = require("underscore");
 var achievements = require("../modules/achievements");
+var utils = require("../modules/utils");
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -85,14 +86,15 @@ router.get("/:username", function(req, res){
         req.toJade.allAchievements = achievements;
         req.toJade.stars = _.range(u.rank+1);
 
-        if(req.loggedIn){
-          if(req.currentUser.points > u.points)
-            req.toJade.pointdiff = (req.currentUser.points - u.points)+" fewer";
-          else if(req.currentUser.points < u.points)
-            req.toJade.pointdiff = (u.points - req.currentUser.points)+" more";
-          else
-            req.toJade.pointdiff = "the same amount of";
-        }
+        req.toJade.sInfo = utils.getDayScheduleInfo(user.scheduleArray);
+
+        if(req.currentUser.points > u.points)
+          req.toJade.pointdiff = (req.currentUser.points - u.points)+" fewer";
+        else if(req.currentUser.points < u.points)
+          req.toJade.pointdiff = (u.points - req.currentUser.points)+" more";
+        else
+          req.toJade.pointdiff = "the same amount of";
+
 
         res.render('users/profile', req.toJade);
       });
