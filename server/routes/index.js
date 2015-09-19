@@ -19,10 +19,6 @@ module.exports = function(io) {
       var sInfo = utils.getDayScheduleInfo(req.currentUser.scheduleArray);
       console.log(sInfo);
       req.toJade.todaysSchedule = sInfo.todays;
-      req.toJade.nowClass = sInfo.nowClass;
-      req.toJade.nextClass = sInfo.nextClass;
-      req.toJade.justStarted = sInfo.justStarted;
-      req.toJade.justEnded = sInfo.justEnded;
       res.render('home/homepage', req.toJade);
     }else{
       res.render('home/index', req.toJade);

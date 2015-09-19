@@ -76,7 +76,7 @@ function userbadges(){
 
                 location = "<div class='well well-sm'>As of <b>" +moment().format("h:mm A")+
                   "</b>, "+data.firstName+" is in <b>"+now.className+"</b> in <b>Room "+
-                  now.room + "</b> until <b data-modal-username='"+data.username+"' class='update-time'>"+moment(now.endTime).format("h:mm A")+"</b></div>";
+                  now.room + "</b> until <b>"+moment(now.endTime).format("h:mm A")+"</b></div>";
               }
             }
 

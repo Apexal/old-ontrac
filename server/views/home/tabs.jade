@@ -3,7 +3,7 @@ div
     li.active(role='presentation')
       a(href='#quick-add', aria-controls='work', role='tab', data-toggle='tab') Quick Add
     li(role='presentation')
-      a(href='#profile', aria-controls='profile', role='tab', data-toggle='tab') Profile
+      a(href='#todays-schedule', aria-controls='profile', role='tab', data-toggle='tab') Today's Classes
     li(role='presentation')
       a(href='#messages', aria-controls='messages', role='tab', data-toggle='tab') Messages
   .tab-content
@@ -14,7 +14,19 @@ div
             .input-group-addon.fa.fa-link
             input.form-control(type="text", name="description", placeholder="Assignment")
         button.btn.btn-default Add
-    #profile.tab-pane(role='tabpanel') tab2
+    #todays-schedule.tab-pane(role='tabpanel')
+      table.table#schedule-table
+        thead
+          tr
+            th When
+            th What
+            th Where
+        tbody  
+          for s in todaysSchedule
+            tr
+              td= moment(s.startTime).format("h:mm A")
+              td= s.className
+              td Room #{s.room}
     #messages.tab-pane(role='tabpanel') tab3
 
 

@@ -4,30 +4,12 @@ block content
   .container-fluid
     include /info
     .jumbotron
-      h1.no-margin(style="text-transform: capitalize")= "Hello, " + (currentUser.nickname !== "none" ? currentUser.nickname : currentUser.fullName)
+      h1.no-margin(style="text-transform: capitalize")= "Hello, " + currentUser.nickname
       p.no-margin It is #[b#clock Time & Date].
       
     .row
       .col-xs-12#classInfo
-        //
-          if nowClass !== false
-            if nowClass == "between"
-              p.larger.no-margin #[b= justEnded.className] has just ended.
-              if justStarted !== false
-                h2 Get to #[b= "Room "+justStarted.room] for #[b= justStarted.className+"!"]
-                script setTimeout(function(){location.reload();}, 60000);
-            else
-              if nowClass.className == "Unstructured Time"
-                h2 You are currently in #[b Unstructured Time.]
-              else
-                h2 You should currently be in #[b= "Room "+nowClass.room] for #[b= nowClass.className+"!"]
-              
-            if nextClass !== false
-              p.larger #[b(title=moment(nextClass.startTime).format("HH:MM A"), style="text-transform: capitalize;")= moment(nextClass.startTime).fromNow(true)] until #[b= nextClass.className] in #[b= "Room "+nextClass.room].
-            else
-              if nowClass !== "between"
-                p.larger This is the last class of your day!
-          hr
+        p.larger Loading class info...
     .row
       .col-xs-12
         h3.no-margin Looking to talk with classmates?
