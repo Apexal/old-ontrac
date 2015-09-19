@@ -268,13 +268,13 @@ function effects() {
 
           var sInfo = data.sInfo;
           jS = sInfo.justStarted;
-          console.log(sInfo);
+          //console.log(sInfo);
           if(sInfo.nowClass !== false){
             if(sInfo.nowClass == "between"){
               content += "<p class='larger no-margin'><b>"+sInfo.justEnded.className+"</b> has just ended.</p>";
               if(jS != false){
                 content += "<h2 class='no-margin'>Get to <b>Room"+jS.room+"</b> for <b>"+jS.className+"</b></h2>";
-                $("#schedule-table td:contains('"+jS.className+"')").parent().addClass("sucess");
+                $("#schedule-table td:contains('"+jS.className+"')").parent().addClass("success");
               }
             }else if(sInfo.nowClass.className == "Unstructured Time") {
               // FREE PERIOD
@@ -283,7 +283,7 @@ function effects() {
               // Regular class
               content += "<h2>You should currently be in <b>Room "+sInfo.nowClass.room+"</b> for <b>"+sInfo.nowClass.className+"</b></h2>";
             }
-            $("#schedule-table tbody tr td:contains('"+sInfo.nowClass.className+"')").parent().addClass("sucess");
+            $("#schedule-table tbody tr td:contains('"+sInfo.nowClass.className+"')").parent().addClass("success");
             if(sInfo.nextClass !== false){
               content += "<p class='larger'>Your next class is <b>"+sInfo.nextClass.className+"</b> in <b>Room "+sInfo.nextClass.room+"</b> in <b>"+moment(sInfo.nextClass.startTime).fromNow(true)+"</b></p>";
             }else{
