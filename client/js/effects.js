@@ -259,7 +259,7 @@ function effects() {
 
     // HOMEPAGE CLASS INFO
     function updateHomepageSchedule(){
-      content = "";
+      var content = "";
 
       $.get("/api/user/"+username, function(data) {
         if(data){
@@ -267,14 +267,13 @@ function effects() {
           $("#schedule-table td").removeClass("sucess");
 
           var sInfo = data.sInfo;
-          jS = sInfo.justStarted;
           //console.log(sInfo);
           if(sInfo.nowClass !== false){
             if(sInfo.nowClass == "between"){
               content += "<p class='larger no-margin'><b>"+sInfo.justEnded.className+"</b> has just ended.</p>";
-              if(jS != false){
-                content += "<h2 class='no-margin'>Get to <b>Room"+jS.room+"</b> for <b>"+jS.className+"</b></h2>";
-                $("#schedule-table td:contains('"+jS.className+"')").parent().addClass("success");
+              if(sInfo.justStarted != false){
+                content += "<h2 class='no-margin'>Get to <b>Room"+sInfo.justStarted.room+"</b> for <b>"+sInfo.justStarted.className+"</b></h2>";
+                $("#schedule-table td:contains('"+sInfo.justStarted.className+"')").parent().addClass("success");
               }
             }else if(sInfo.nowClass.className == "Unstructured Time") {
               // FREE PERIOD
@@ -303,5 +302,32 @@ function effects() {
     if($("#classInfo").length){
       updateHomepageSchedule();
       setInterval(updateHomepageSchedule, 60000);
+    }
+
+    function updateProfileSchedule(){
+      var content = "";
+      $.get('/api/user/'+username, function(data){
+        if(data && data.sInfo.nowClass !== false){
+          var now = false;
+          if(data.sInfo.nowClass == "between" && data.sInfo.justStarted !== false)
+            now = data.sInfo.justStarted;
+          else if(data.sInfo.nowClass !== "between")
+            now = data.sInfo.nowClass;
+
+          if(now !== false){
+            if(now.className == "Unstructured Time")
+              content += "<h3>"+data.firstName+" currently has a <b>Free Period</b> until <b>"+moment(now.endTime).format("h:mm A")+"</b></h3>";
+            else
+              content += "<h3>"+data.firstName+" is currently in <b>"+now.className+"</b> in <b>Room "+now.room+"</b> until <b>"+moment(now.endTime).format("h:mm A")+"</b></h3>";
+          }
+        }
+
+        $("#profile-schedule").html(content);
+      });
+    }
+
+    if($("#profile-schedule").length){
+      updateProfileSchedule();
+      setInterval(updateProfileSchedule, 60000);
     }
 }
