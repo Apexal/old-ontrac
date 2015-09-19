@@ -256,4 +256,28 @@ function effects() {
       $("#rank").position({my: "right bottom", at: "right bottom", of: "#profile-pic"});
     }
 
+
+    // HOMEPAGE CLASS INFO
+    setInterval(function(){
+
+      
+
+    }, 60000);
+
+
+
+    $(".update-time").each(function() {
+      var datetime = moment($(this).data("time"), "MM/DD/YY hh:mm A");
+      setInterval(function() {
+        $(this).text(datetime.format("h:mm A"));
+        if(moment().isSame(datetime, 'minute')){
+          if($(this).data("modal-username")){
+            $("#"+$(this).data("modal-username")+"-modal").modal('close');
+            $("#"+$(this).data("modal-username")+"-modal").remove();
+          }else{
+            location.reload();
+          }
+        }
+      }, 60000);
+    });
 }

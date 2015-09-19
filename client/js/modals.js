@@ -10,42 +10,6 @@ function userbadges(){
           if(data != "Not authorized."){
             var title = data.firstName + " " + data.lastName;
             console.log(data);
-            var coursenames = ['None!'];
-            if(data.courses.length > 0){
-              coursenames=[];
-              for(var c in data.courses){
-                coursenames.push(data.courses[c].title);
-              }
-            }
-
-            var button = "";
-
-            var points = "Not registered";
-            if(data.registered){
-              points = data.points + " points";
-
-            }
-            button = "<a class='btn btn-primary' href='/users/"+username+"'>View Full Profile</a>";
-
-            var imgsrc = data.ipicture;
-            var bio = (data.bio ? data.bio : "Not set yet!");
-
-            var adv = data.advisement.charAt(0);
-            var grade = "";
-            switch(adv) {
-              case "1":
-                grade = "Frosh";
-                break;
-              case "2":
-                grade = "Soph";
-                break;
-              case "3":
-                grade = "Junior";
-                break;
-              case "4":
-                grade = "Senior";
-                break;
-            }
 
             var rank = data.rank;
             switch(rank) {
@@ -70,9 +34,56 @@ function userbadges(){
                 rank = "Owner";
             }
 
+            var button = "";
+
+            var underimg = "<b class='left'>Not registered</b>";
+            if(data.registered){
+              underimg = "<b class='left'>"+data.points+" points</b>";
+            }
+            button = "<a class='btn btn-primary' href='/users/"+username+"'>View Profile</a>";
+
+            var imgsrc = data.ipicture;
+            var bio = "<br>";
+            if(data.bio){
+              bio = "<p class='center'>\""+data.bio+"\"</p>";
+            }
+
+            var adv = data.advisement.charAt(0);
+            var grade = "";
+            switch(adv) {
+              case "1":
+                grade = "Frosh";
+                break;
+              case "2":
+                grade = "Soph";
+                break;
+              case "3":
+                grade = "Junior";
+                break;
+              case "4":
+                grade = "Senior";
+                break;
+            }
+
+            var location = "";
+            //console.log(data.sInfo);
+            if(data.registered && data.sInfo.inSchool){
+              //console.log("GOOD");
+              var now = (data.sInfo.nowClass !== false && data.sInfo.nowClass !== "between" ? data.sInfo.nowClass : data.sInfo.justStarted);
+              if(now !== false){
+                console.log(now);
+
+
+                location = "<div class='well well-sm'>As of <b>" +moment().format("h:mm A")+
+                  "</b>, "+data.firstName+" is in <b>"+now.className+"</b> in <b>Room "+
+                  now.room + "</b> until <b data-modal-username='"+data.username+"' class='update-time'>"+moment(now.endTime).format("h:mm A")+"</b></div>";
+              }
+            }
+
+
 
             // TODO: this thing...
-            var content = $("<div class='modal fade user-modal' id='"+username+"-modal' tabindex='-1'>" +
+            var content = $("<div class='modal user-modal' id='"+username+"-modal' tabindex='-1'>" +
                   "        <div class='modal-dialog'>" +
                   "            <div class='modal-content'>" +
                   "                <div class='modal-header'>" +
@@ -86,15 +97,12 @@ function userbadges(){
                                     "    <div class='row'>" +
                                     "        <div class='col-xs-12 col-sm-3 center-xs'>" +
                                     "            <img class='modal-pic' title='Looking good!' alt='No profile picture yet!' src='"+imgsrc+"'>" +
-                                    "            <br><b>"+points+"</b>" +
+                                    "            <br>"+underimg +
                                     "        </div>" +
                                     "        <div class='col-xs-12 col-sm-9'>" +
-                                    "             <h3 class='no-margin center'><b>"+grade+"</b> "+data.firstName + " " +data.lastName+" of <b>"+data.advisement+"</b></h3><br>" +
-                                    "             <div class='well well-sm'>" +
-                                    "                 <b>Rank:</b> <span>"+rank+"</span><br>" +
-                                    "                 <b>Bio: </b><span>"+bio + "</span><br>" +
-                                    "                 <b>Classes: </b><span>"+coursenames.join(',  ')+"</span>" +
-                                    "             </div>" +
+                                    "             <h3 class='no-margin center'><b>"+grade+"</b> "+data.firstName +
+                                    " " +data.lastName+" of <a class='undecorated' href='/advisements/"+data.advisement +
+                                    "'><b>" + data.advisement+"</b></a></h3>" + bio + location +
                                     "        </div>" +
                                     "    </div>" +
                                     "</div>"+

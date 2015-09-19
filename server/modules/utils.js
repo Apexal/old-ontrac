@@ -9,12 +9,12 @@ module.exports = {
     var dayStart = moment("08:40 AM", "hh:mm A");
     var dayEnd = moment("02:50 PM", "hh:mm A");
 
-    /*
-      var day = "09/24/15";
-      mom = moment(day+" 12:30 PM", "MM/DD/YY hh:mm A");
-      dayStart = moment(day+" 08:40 AM", "MM/DD/YY hh:mm A");
-      dayEnd = moment(day+" 02:50 PM", "MM/DD/YY hh:mm A");
-    */
+
+    var day = "09/25/15";
+    mom = moment(day+" 10:30 AM", "MM/DD/YY hh:mm A");
+    dayStart = moment(day+" 08:40 AM", "MM/DD/YY hh:mm A");
+    dayEnd = moment(day+" 02:50 PM", "MM/DD/YY hh:mm A");
+
 
     var todays = array.filter(function(period) {
       if(moment(period.date).isSame(moment(mom).startOf('day'))){
@@ -30,6 +30,8 @@ module.exports = {
 
     var justEnded = false;
     var justStarted = false;
+
+    var inSchool = true;
 
     if(mom.isBetween(dayStart, dayEnd)){
       // RIGHT NOW IS IN A SCHOOL DAY
@@ -115,6 +117,7 @@ module.exports = {
       }
     }else{
       now = false;
+      inSchool = false;
       // NOT IN SCHOOL
       //console.log("OUT OF SCHOOL DAY");
     }
@@ -124,6 +127,7 @@ module.exports = {
 
 
     return {
+      inSchool: inSchool,
       todays: todays,
       nowClass: now,
       nextClass: next,

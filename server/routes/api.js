@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var moment = require('moment');
+var utils = require("../modules/utils");
 
 router.get("/*", function(req, res, next) {
   if(req.loggedIn)
@@ -11,13 +12,18 @@ router.get("/*", function(req, res, next) {
 
 router.get('/user/:username', function(req, res) {
   var username = req.params.username;
-  req.Student.findOne({username: username}).populate('courses', 'title mID').exec(function(err, user) {
-    if(err) res.json({error: err});
-    if(user)
-      res.json(user);
-    else
-      res.json({error: "No such user!"});
-  });
+  req.Student.findOne({username: username}, 'username firstName lastName rank bio ipicture points mpicture scheduleArray registered advisement')
+    .lean()
+    .exec(function(err, user) {
+      if(err) res.json({error: err});
+      if(user){
+        user.sInfo = (user.registered ? utils.getDayScheduleInfo(user.scheduleArray) : false);
+        user.scheduleArray = [];
+        res.json(user);
+      }else{
+        res.json({error: "No such user!"});
+      }
+    });
 });
 
 router.get('/teacher/:username', function(req, res) {
