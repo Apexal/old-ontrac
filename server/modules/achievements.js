@@ -1,3 +1,5 @@
+var moment = require("moment");
+
 module.exports = [
     {
         id: 0,
@@ -84,5 +86,25 @@ module.exports = [
                 return true;
             return false;
         }
+    },
+    {
+      id: 9,
+      name: "Be a Member for a Year",
+      reward: 1000,
+      check: function(user) {
+        //if(moment(user.registered_date).diff(moment(), 'year') => 1)
+        //  return true;
+        return false;
+      }
+    },
+    {
+      id: 10,
+      name: "Be a Member for 2 Years",
+      reward: 5000,
+      check: function(user) {
+        //if(moment(user.registered_date).diff(moment(), 'year') => 2)
+        //  return true;
+        return false;
+      }
     }
 ]
