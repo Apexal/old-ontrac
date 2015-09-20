@@ -67,6 +67,7 @@ function userbadges(){
 
             var location = "";
             //console.log(data.sInfo);
+            data.sInfo = getDayScheduleInfo(data.scheduleArray);
             if(data.registered && data.sInfo.inSchool){
               //console.log("GOOD");
               var now = (data.sInfo.nowClass !== false && data.sInfo.nowClass !== "between" ? data.sInfo.nowClass : data.sInfo.justStarted);

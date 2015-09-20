@@ -213,3 +213,8 @@ span.badge {
 #ontrac-img {
   width: 45px;
 }
+
+
+#user-status b {
+  text-transform: capitalize;
+}

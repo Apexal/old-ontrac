@@ -31,13 +31,12 @@ function sockets() {
   var advisement = ( $("#advchat").length > 0 ? $("#advchat").data('adv') : '');
   var advchatmessages = [];
 
-  if (!sessionStorage['user-status']){
-    sessionStorage['user-status'] = "available";
-  }
   var status = sessionStorage['user-status'];
+  if (!sessionStorage['user-status']){
+    status = "Available";
+  }
 
-  $("#user-status b").html(status.charAt(0).toUpperCase() + status.substring(1)+"<span class='caret'></span>");
-  socket.emit('setstatus', {status: status});
+  setStatus(status);
 
   socket.on('connect', function () {
     sessionId = socket.io.engine.id;
@@ -120,17 +119,7 @@ function sockets() {
   $("#user-status li a").click(function() {
     if(sessionStorage['user-status'].toLowerCase() == "in class")
       return;
-
-    var status = $(this).text().toLowerCase().trim();
-    //alert(status);
-    sessionStorage['user-status'] = status;
-    socket.emit('setstatus', {status: status});
-    $("#user-status b").html($(this).text()+"<span class='caret'></span>");
-    if(['in class', 'working', 'busy', 'offline'].indexOf(status.toLowerCase()) > -1){
-      if(sessionStorage.muted == "0")
-        sendNotification("warning", "", "Muted chat due to status.");
-      set_muted(true);
-    }
+    setStatus($(this).text().toLowerCase().trim());
   });
 
 
@@ -327,7 +316,6 @@ function sockets() {
   function updateHomepageSchedule(data){
     var content = "";
     var data = {sInfo: getDayScheduleInfo(scheduleArray)};
-    var stat = "In Class";
     if(data){
       $("#classInfo").html("");
       $("#schedule-table td").removeClass("sucess");
@@ -335,8 +323,10 @@ function sockets() {
       var sInfo = data.sInfo;
       //console.log(sInfo);
       if(sInfo.nowClass !== false){
-        if(sInfo.nowClass.className == "Unstructured Time" || sInfo.justStarted.className == "Unstructured Time")
-          stat = "Available";
+        if((sInfo.nowClass.className == "Unstructured Time" || sInfo.justStarted.className == "Unstructured Time") && sessionStorage['user-status'] == "In Class")
+          setStatus("Available");
+        else if(sInfo.nowClass.className != "Unstructured Time" && sInfo.justStarted.className != "Unstructured Time")
+          setStatus("In Class");
 
         if(sInfo.nowClass == "between"){
           content += "<p class='larger no-margin'><b>"+sInfo.justEnded.className+"</b> has just ended.</p>";
@@ -363,17 +353,12 @@ function sockets() {
 
         content += "<hr>";
         $("#classInfo").html(content);
+      }else{
+        // out of school
+        if(sessionStorage['user-status'] == "In Class"){
+          setStatus("Available");
+        }
       }
-
-      if(sessionStorage['user-status'] == "In Class" || stat == "In Class"){
-        sessionStorage['user-status'] = stat;
-        socket.emit('setstatus', {status: stat.toLowerCase()});
-
-        if(sessionStorage.muted == "0" && stat !== "Available")
-          sendNotification("warning", "", "Muted chat due to status.");
-        set_muted(true);
-      }
-      $("#user-status b").html(sessionStorage['user-status']+(sessionStorage['user-status'] !== "In Class" ? "<span class='caret'></span>" : ""));
     }
 
   }
@@ -422,5 +407,16 @@ function sockets() {
     $("#profile-schedule").html(content);
   }
 
+  function setStatus(status){
+    sessionStorage['user-status'] = status;
+    socket.emit('setstatus', {status: status.toLowerCase()});
+
+    if(['in class', 'working', 'busy', 'offline'].indexOf(status.toLowerCase()) > -1){
+      if(sessionStorage.muted == "0")
+        sendNotification("warning", "", "Muted chat due to status.");
+      set_muted(true);
+    }
+    $("#user-status b").html(status+(status !== "In Class" ? "<span class='caret'></span>" : ""));
+  }
 
 }
