@@ -146,7 +146,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  req.toJade.title = "Oh come on.";
+  req.toJade.title = "Uh oh...";
   req.toJade.message = err.message;
   req.toJade.error = "There was an error! Please try again later.";
   res.render('error', req.toJade);

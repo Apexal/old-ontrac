@@ -1,6 +1,6 @@
 {
   "name": "ontrac",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Online academic assitant for Regis High School.",
   "private": true,
   "author": "Frank Matranga <thefrankmatranga@gmail.com>",
@@ -24,7 +24,6 @@
     "url": "https://github.com/Apexal/ontrac"
   },
   "dependencies": {
-    "bluebird": "^2.9.34",
     "body-parser": "~1.12.4",
     "cheerio": "*",
     "colors": "*",
