@@ -5,7 +5,7 @@ div
     li(role='presentation')
       a(href='#todays-schedule', aria-controls='profile', role='tab', data-toggle='tab') Today's Classes
     li(role='presentation')
-      a(href='#messages', aria-controls='messages', role='tab', data-toggle='tab') Messages
+      a(href='#moodle-links', aria-controls='messages', role='tab', data-toggle='tab') Moodle Links
   .tab-content
     #quick-add.tab-pane.active(role='tabpanel')
       form.form-inline(role="form", action="/", method="POST")
@@ -27,8 +27,11 @@ div
               td= moment(s.startTime).format("h:mm A")
               td= s.className
               td Room #{s.room}
-    #messages.tab-pane(role='tabpanel') tab3
-
+    #moodle-links.tab-pane(role='tabpanel').text-center
+      each c in currentUser.courses
+        a.btn.btn-default.hidden-xs(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title
+        a.visible-xs(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title
+        br.visible-xs
 
     
   

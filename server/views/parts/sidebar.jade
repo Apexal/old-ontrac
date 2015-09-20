@@ -5,17 +5,13 @@ aside#sidebar
       img#sidebar-pic(title="Looking good!", src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg", onError="this.onerror=null;this.src='"+currentUser.mpicture+"';")
     br
     #user-status.dropdown
-      b.dropdown-toggle(data-toggle="dropdown") Online
+      b.dropdown-toggle(data-toggle="dropdown") Loading...
         span.caret
       ul.dropdown-menu
         li
-          a(href="#") Online
+          a(href="#") Available
         li
           a(href="#") Working
-        li
-          a(href="#") In Class
-        li
-          a(href="#") Relaxing
         li
           a(href="#") Busy
         li

@@ -3,7 +3,7 @@ var router = express.Router();
 var moment = require('moment');
 var request = require("request");
 var cheerio = require("cheerio");
-var utils = require("../modules/utils");
+var getDayScheduleInfo = require("../modules/schedule");
 var achievements = require("../modules/achievements");
 var secrets = require("../secrets.json");
 
@@ -16,7 +16,7 @@ module.exports = function(io) {
     if(req.loggedIn){
       req.toJade.title = "Your Home";
 
-      var sInfo = utils.getDayScheduleInfo(req.currentUser.scheduleArray);
+      var sInfo = getDayScheduleInfo(req.currentUser.scheduleArray);
       console.log(sInfo);
       req.toJade.todaysSchedule = sInfo.todays;
       res.render('home/homepage', req.toJade);
