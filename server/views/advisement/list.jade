@@ -5,15 +5,13 @@ block content
     include /info
     .page-header
       h1 Advisements
-        if loggedIn == false
-          small.right Login for more info.
-    
+
     if advisements == false
       h3 No advisements found!
     else
       for ad in advisements
         .col-xs-12.col-sm-6.col-md-4
-          .panel(class=(loggedIn == true && currentUser.advisement == ad.title ? "panel-primary" : "panel-default"))
+          .panel(class=(currentUser.advisement == ad.title ? "panel-primary" : "panel-default"))
             .panel-heading
               b #[a.undecorated(href="/advisements/"+ad.title)= ad.title]
               if ad.teacher
@@ -21,10 +19,8 @@ block content
               else
                 span.right Uknown Advisor
             .panel-body
-              if loggedIn
-                if ad.list
-                  span !{ad.list}
-                else
-                  span Nobody in #[b= ad.title] has registered yet!
+              if ad.list
+                span !{ad.list}
               else
-                span Log in to see what users in #[b= ad.title] have registered.
+                span Nobody in #[b= ad.title] has registered yet!
+            

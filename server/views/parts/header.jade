@@ -13,21 +13,23 @@ header
         ul.nav.navbar-nav
           li
             a(target="_blank", href="https://github.com/Apexal/ontrac/wiki/About-OnTrac", title="What features does OnTrac provide?") About
+          
+        
           li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') View 
                 span.caret
             ul.dropdown-menu(role='menu')
-              li(class=(helpers.isPage(page, "users")))
-                a(href="/users", title="View and search through list of all students, registered and unregistered.") Users
-              li(class=(helpers.isPage(page, "advisements")))
-                a(href="/advisements", title="View and search through all advisements at Regis.") Advisements
-                
               if loggedIn
+                li(class=(helpers.isPage(page, "users")))
+                  a(href="/users", title="View and search through list of all students, registered and unregistered.") Users
+                li(class=(helpers.isPage(page, "advisements")))
+                  a(href="/advisements", title="View and search through all advisements at Regis.") Advisements  
                 li(class=(helpers.isPage(page, "teachers")))
                   a(href="/teachers", title="View, search, and rate a list of all teachers at Regis.") Teachers
                 li(class=(helpers.isPage(page, "courses")))
                   a(href="/courses", title="View, search, and rate a list of all classes, clubs, or otherwise at Regis.") Courses
-
+              li
+                a(target="_blank", href="https://github.com/Apexal/ontrac") Source Code
                 
           li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Regis Services 
@@ -56,9 +58,9 @@ header
                   li
                     a(href="/users/"+currentUser.username, title="View your public profile as other users see it.") View Profile
                   li
-                    a(href="/users/"+currentUser.username+"/schedule", title="View your class schedule.") Your Schedule
-                  li
                     a(href="/users/profile") Edit Profile
+                  li
+                    a(href="/users/"+currentUser.username+"/schedule", title="View your class schedule.") View Schedule
                   li
                       a(href='/logout') Logout
           else

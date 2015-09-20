@@ -22,7 +22,7 @@ block content
                 #stars(title=user.firstName+" is a "+user.rankName, data-toggle="tooltip", style="color: yellow; font-size: 130%; padding-left: 3px;")
                   for s in stars
                     span.fa.fa-star
-                if loggedIn && user.username != currentUser.username
+                if user.username != currentUser.username
                   b #{user.firstName} has #{pointdiff} points than you.
 
               br

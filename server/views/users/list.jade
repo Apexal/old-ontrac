@@ -38,7 +38,7 @@ block content
                   img.table-pic(src=user.ipicture, onError="this.onerror=null;this.src='"+user.mpicture+"';")
                 td.larger(style="vertical-align: middle;")
                   a(href="/advisements/"+user.advisement)= user.advisement
-                td.larger(class=(loggedIn ? "user-badge" : ""), style="vertical-align: middle;", data-username=user.username)= user.fullName
+                td.larger.user-badge(style="vertical-align: middle;", data-username=user.username)= user.fullName
                 td.larger(style="vertical-align: middle;")= user.rankName
     else
       .row
@@ -47,8 +47,8 @@ block content
             .user-box
               img(src=user.ipicture, onError="this.onerror=null;this.src='"+user.mpicture+"';")
               .btn-group.full-width
-                a.user-adv(href=(loggedIn ? "/advisements/"+user.advisement : "#"))= user.advisement
-                button.btn.btn-default.full-width(data-username=user.username, class=(loggedIn ? "user-badge" : ""), type="button")= user.fullName
+                a.user-adv(href="/advisements/"+user.advisement)= user.advisement
+                button.btn.btn-default.full-width.user-badge(data-username=user.username, type="button")= user.fullName
     .row
       .col-xs-12
         .page-header
@@ -66,11 +66,11 @@ block content
           for user in users
             tr(class=(currentUser && user.username == currentUser.username ? "success" : ""))
               td
-                img.table-pic(class=(loggedIn ? "user-badge" : ""), data-username=user.username, src=user.ipicture, onError="this.onerror=null;this.src='"+user.mpicture+"';")
+                img.table-pic.user-badge(data-username=user.username, src=user.ipicture, onError="this.onerror=null;this.src='"+user.mpicture+"';")
               td.larger(style="vertical-align: middle;")
                 a.undecorated(href="/advisements/"+user.advisement)= user.advisement
               td.larger(style="vertical-align: middle")= user.gradeName
-              td.larger(class=(loggedIn ? "user-badge" : ""), data-username=user.username, style="vertical-align: middle;")= user.fullName
+              td.larger.user-badge(data-username=user.username, style="vertical-align: middle;")= user.fullName
             
     .row
       br.bottom-spacer
