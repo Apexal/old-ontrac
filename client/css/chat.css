@@ -1,19 +1,19 @@
-#chat-box {
+#chat-box.small-chat {
   position: fixed;
   bottom: 0;
   right: 0;
   margin: 0;
 }
-#chat-box.shown {
+#chat-box.small-chat.shown {
   width: 400px;
   height: 400px;
 }
 
 
-#chat-messages {
+#chat-messages.small-chat {
   display: none;
 }
-#chat-box.shown #chat-messages {
+#chat-box.small-chat.shown #chat-messages {
   overflow: auto;
   width: 100%;
   display: inline-block;
@@ -23,21 +23,21 @@
   word-wrap: break-word;
 }
 
-#chat-controls {
+#chat-controls.small-chat {
   display: none;
 }
-#chat-box.shown #chat-controls {
+#chat-box.small-chat.shown #chat-controls.small-chat {
   display: block;
   position: absolute;
   right: 0;
   bottom: 0;
 }
 
-#chat-controls input {
+#chat-controls.small-chat input {
   width: 317px;
 }
 
-#chat-controls button {
+#chat-controls.small-chat button {
   width: 80px;
 }
 

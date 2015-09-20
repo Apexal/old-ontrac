@@ -169,21 +169,5 @@ module.exports = {
       console.log(key, adv.teacher[key]);
     }
     return adv.teacher.toJSON();
-  },
-  isShort: function(p, n){
-    console.log(p || n);
-    if(p || n)
-      return "";
-    else
-      return "short";
-  },
-  fromNow: function(date) {
-    var today = moment().startOf('day');
-    if(date.isSame(today)){
-      return "today";
-    }else{
-      return date.from(today);
-    }
   }
-
 }

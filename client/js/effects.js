@@ -244,7 +244,7 @@ function effects() {
     });
 
     // When on the schedule page, make the main tag full height so that the schedule iframe is full height
-    if(window.location.href.indexOf("/schedule") > -1 || window.location.href.indexOf("/advisements/chat") > -1){
+    if(window.location.href.indexOf("/schedule") > -1 || window.location.href.indexOf("chat") > -1){
       $("main").css("height", "100%");
       if(window.location.href.indexOf("/advisements/chat") > -1){
         $("main").css("padding-bottom", "170px");

@@ -235,5 +235,10 @@ module.exports = function(io) {
     }
   });
 
+  router.get('/gchat', function(req, res){
+    req.toJade.title = "Global Chat";
+    res.render('chat/chatpage', req.toJade);
+  });
+
   return {router: router, models: ['Student']}
 };
