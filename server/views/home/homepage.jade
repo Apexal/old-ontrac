@@ -4,7 +4,7 @@ block content
   .container-fluid
     include /info
     .jumbotron
-      h1.no-margin(style="text-transform: capitalize")= "Hello, " + currentUser.nickname
+      h1.no-margin(style="text-transform: capitalize")= "Good "+helpers.getGreetingTime(moment())+", " + currentUser.nickname
       p.no-margin It is #[b#clock Time & Date].
       
     .row

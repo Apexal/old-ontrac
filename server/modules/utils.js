@@ -4,6 +4,25 @@ var moment = require("moment");
 var words = ["anal", "anus", "arse", "ass", "ballsack", "balls", "bastard", "bitch", "biatch", "bloody", "blowjob", "blow job", "bollock", "bollok", "boner", "boob", "bugger", "bum", "butt", "buttplug", "clitoris", "cock", "coon", "crap", "cunt", "damn", "dick", "dildo", "dyke", "fag", "feck", "fellate", "fellatio", "felching", "fuck", "f u c k", "fudgepacker", "fudge packer", "flange", "Goddamn", "God damn", "hell", "homo", "jerk", "jizz", "knobend", "knob end", "labia", "lmao", "lmfao", "muff", "nigger", "nigga", "omg", "penis", "piss", "poop", "prick", "pube", "pussy", "queer", "scrotum", "sex", "shit", "s hit", "sh1t", "slut", "smegma", "spunk", "tit", "tosser", "turd", "twat", "vagina", "wank", "whore", "wtf"];
 
 module.exports = {
+  getGreetingTime: function(m) {
+  	var g = null; //return g
+
+  	if(!m || !m.isValid()) { return; } //if we can't find a valid or filled moment, we return.
+
+  	var split_afternoon = 12 //24hr time to split the afternoon
+  	var split_evening = 17 //24hr time to split the evening
+  	var currentHour = parseFloat(m.format("HH"));
+
+  	if(currentHour >= split_afternoon && currentHour <= split_evening) {
+  		g = "afternoon";
+  	} else if(currentHour >= split_evening) {
+  		g = "evening";
+  	} else {
+  		g = "morning";
+  	}
+
+  	return g;
+  },
   getDayScheduleInfo: function(array){
     var mom = moment();
     var dayStart = moment("08:40 AM", "hh:mm A");
