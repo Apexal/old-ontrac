@@ -17,7 +17,8 @@ var express = require("express")
   , moment = require('moment')
   , config = require('./server/config')
   , mongo = require('./server/modules/mongodb')
-  , school_years = require('./server/modules/years');
+  , school_years = require('./server/modules/years')
+  , schedules = require("./server/modules/schedule");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'server/views'));
@@ -68,6 +69,7 @@ app.use(function(req, res, next) {
     year: info.years,
     tri: info.trimester,
     full_year: info.full,
+    todaysInfo: (req.loggedIn ? req.session.todaysInfo : undefined),
     today: req.today,
     production: (process.env.NODE_ENV == 'production'),
     currentUser: req.currentUser,

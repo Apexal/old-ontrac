@@ -63,16 +63,19 @@ function getDayScheduleInfo(schedule){
 
   var inSchool = true;
 
-  if(mom.isBetween(dayStart, dayEnd)){
+
     // RIGHT NOW IS IN A SCHOOL DAY
     //console.log("IN SCHOOL DAY");
 
+    var newPeriods = [];
+    var lastPeriod = {};
+
     if(periods !== false){
+
       // THERE ARE CLASSES SCHEDULE FOR TODAY
 
       // Free periods are not recorded, so find the holes and fill them
-      var newPeriods = [];
-      var lastPeriod = {};
+
       newPeriods.push({
         room: "Your Homeroom",
         startTime: dayStart.toDate(),
@@ -153,12 +156,17 @@ function getDayScheduleInfo(schedule){
       // Get the next class
       if(now !== "between")
         next = ((periods.length-1 > periods.indexOf(now)) ? periods[periods.indexOf(now)+1] : false);
+
+
+      if(mom.isBetween(dayStart, dayEnd) == false){
+        now = false;
+        justStarted = false;
+        justEnded = false;
+        inSchool = false;
+        // NOT IN SCHOOL
+      }
     }
-  }else{
-    now = false;
-    inSchool = false;
-    // NOT IN SCHOOL
-  }
+
 
   return {
     day: day,

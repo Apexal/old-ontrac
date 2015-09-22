@@ -3,7 +3,7 @@ var router = express.Router();
 var moment = require('moment');
 var request = require("request");
 var cheerio = require("cheerio");
-var getDayScheduleInfo = require("../modules/schedule");
+var schedules = require("../modules/schedule");
 var achievements = require("../modules/achievements");
 var secrets = require("../secrets.json");
 
@@ -16,9 +16,8 @@ module.exports = function(io) {
     if(req.loggedIn){
       req.toJade.title = "Your Home";
 
-      var sInfo = getDayScheduleInfo(req.currentUser.scheduleObject);
-      console.log(sInfo);
-      req.toJade.todayInfo = sInfo;
+      console.log(req.toJade.todaysInfo);
+      req.toJade.currentClassInfo = schedules.getCurrentClassInfo(req.currentUser.scheduleObject);
       res.render('home/homepage', req.toJade);
     }else{
       res.render('home/index', req.toJade);
@@ -185,6 +184,9 @@ module.exports = function(io) {
         req.session.currentUser.login_time = new Date();
         user.save();
 
+        var today = schedules.getDaySchedule(user.scheduleObject, moment().format("MM/DD/YY"));
+        req.session.todaysInfo = today;
+
         new req.Log({who: user._id, what: "Login."}).save();
         req.session.quietlogin = false; // The actual user logged in, not an admin
 
@@ -206,6 +208,8 @@ module.exports = function(io) {
 
       delete req.session.currentUser;
       delete req.currentUser;
+      delete req.loggedIn;
+      delete req.session.todaysInfo;
       req.session.info.push("You have successfully logged out.");
     }
     res.redirect('/');

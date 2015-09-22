@@ -333,7 +333,7 @@ function sockets() {
           content += "<p class='larger no-margin'><b>"+schedule.justEnded.className+"</b> has just ended.</p>";
           if(schedule.justStarted != false){
             content += "<h2 class='no-margin'>Get to <b>Room "+schedule.justStarted.room+"</b> for <b>"+schedule.justStarted.className+"</b></h2>";
-            $("#schedule-table td:contains('"+schedule.justStarted.className+"')").parent().addClass("success");
+            $("#schedule-table td:contains('"+moment(schedule.justStarted.startTime).format("h:mm A")+"')").parent().addClass("success");
           }
         }else if(schedule.nowClass.className == "Unstructured Time") {
           // FREE PERIOD
@@ -342,7 +342,7 @@ function sockets() {
           // Regular class
           content += "<h2>You should currently be in <b>Room "+schedule.nowClass.room+"</b> for <b>"+schedule.nowClass.className+"</b></h2>";
         }
-        $("#schedule-table tbody tr td:contains('"+schedule.nowClass.className+"')").parent().addClass("success");
+        $("#schedule-table tbody tr td:contains('"+moment(schedule.nowClass.className).format("h:mm A")+"')").parent().addClass("success");
         if(schedule.nextClass !== false){
           content += "<p class='larger'>Your next class is <b>"+schedule.nextClass.className+"</b> in <b>Room "+schedule.nextClass.room+"</b> in <b>"+moment(schedule.nextClass.startTime).fromNow(true)+"</b></p>";
         }else{
@@ -387,7 +387,7 @@ function sockets() {
 
     if($("#classInfo").length)
       updateHomepageSchedule();
-    
+
     console.log("Updated schedule info");
   }
 
