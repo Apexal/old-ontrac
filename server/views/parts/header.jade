@@ -54,13 +54,17 @@ header
               ul.dropdown-menu(role='menu')
                 if loggedIn
                   li
-                    a(href="/users/"+currentUser.username, title="View your public profile as other users see it.") View Profile
+                    a(href="/users/"+currentUser.username, title="View your public profile as other users see it.") View Your Profile
                   li
-                    a(href="/users/profile") Edit Profile
+                    a(href="/users/profile") Edit Your Profile
                   li
-                    a(href="/users/"+currentUser.username+"/schedule", title="View your class schedule.") View Schedule
+                    a(href="/users/"+currentUser.username+"/schedule", title="View your class schedule.") View Your Schedule
+                  if (currentUser.rank > 4 || currentUser.username == "fmatranga18")
+                    if helpers.isPage(page, "admin") == false
+                      li
+                        a(href="/admin") Administration
                   li
-                      a(href='/logout') Logout
+                    a(href='/logout') Logout
           else
             li
               a(href="#", data-toggle="modal", data-target="#login-modal") Not Logged In
