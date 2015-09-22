@@ -11,7 +11,7 @@ router.get("/*", function(req, res, next) {
 
 router.get('/user/:username', function(req, res) {
   var username = req.params.username;
-  req.Student.findOne({username: username}, 'username firstName lastName rank bio ipicture points mpicture scheduleArray registered advisement')
+  req.Student.findOne({username: username}, 'username firstName lastName rank bio ipicture points mpicture scheduleObject registered advisement')
     .lean()
     .exec(function(err, user) {
       if(err) res.json({error: err});

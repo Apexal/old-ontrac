@@ -47,27 +47,13 @@ $(function() {
   }
 });
 
-function getDayScheduleInfo(array){
+function getDayScheduleInfo(schedule){
   var mom = moment();
   var dayStart = moment("08:40 AM", "hh:mm A");
   var dayEnd = moment("02:50 PM", "hh:mm A");
 
-
-  /*
-  var day = "09/25/15";
-  mom = moment(day+" 10:30 AM", "MM/DD/YY hh:mm A");
-  dayStart = moment(day+" 08:40 AM", "MM/DD/YY hh:mm A");
-  dayEnd = moment(day+" 02:50 PM", "MM/DD/YY hh:mm A");
-  */
-
-  var todays = array.filter(function(period) {
-    if(moment(period.date).isSame(moment(mom).startOf('day'))){
-      //console.log(period.className+":\n"+moment(period.startTime).toDate()+"\n"+moment(period.endTime).toDate())
-      return true;
-    }
-    return false;
-  });
-  todays = (todays.length > 0 ? todays : false);
+  var day = schedule[moment().format("MM/DD/YY")];
+  var periods = (day.periods.length > 0 ? day.periods : false);
 
   var now = false;
   var next = false;
@@ -81,18 +67,23 @@ function getDayScheduleInfo(array){
     // RIGHT NOW IS IN A SCHOOL DAY
     //console.log("IN SCHOOL DAY");
 
-    if(todays !== false){
+    if(periods !== false){
       // THERE ARE CLASSES SCHEDULE FOR TODAY
 
       // Free periods are not recorded, so find the holes and fill them
-      var newTodays = [];
+      var newPeriods = [];
       var lastPeriod = {};
-      todays.forEach(function(period) {
+      newPeriods.push({
+        room: "Your Homeroom",
+        startTime: dayStart.toDate(),
+        endTime: moment(mom).hour(8).minute(50).toDate(),
+        className: "AM Advisement"
+      });
+      periods.forEach(function(period) {
         var cur = period;
 
-        if(moment(period.startTime).isSame(lastPeriod.endTime) == false && todays.indexOf(period) > 0){
-          newTodays.push({
-            date: period.date,
+        if(moment(period.startTime).isSame(lastPeriod.endTime) == false && periods.indexOf(period) > 0){
+          newPeriods.push({
             room: "Anywhere",
             startTime: lastPeriod.endTime,
             endTime: period.startTime,
@@ -101,12 +92,11 @@ function getDayScheduleInfo(array){
         }
 
         lastPeriod = period;
-        newTodays.push(cur);
+        newPeriods.push(cur);
       });
 
-      if(moment(todays[todays.length-1].endTime).isSame(dayEnd) == false){
-        newTodays.push({
-          date: lastPeriod.date,
+      if(moment(periods[periods.length-1].endTime).isSame(dayEnd) == false){
+        newPeriods.push({
           room: "Anywhere",
           startTime: lastPeriod.endTime,
           endTime: dayEnd.toDate(),
@@ -115,23 +105,28 @@ function getDayScheduleInfo(array){
       }
       // I am a genius for this ^^^
 
+      newPeriods.push({
+        room: "Your Homeroom",
+        startTime: dayEnd.toDate(),
+        endTime: moment(dayEnd).add(5, 'minutes').toDate(),
+        className: "PM Advisement"
+      });
 
-      todays = newTodays; // Free periods are now in array
-
+      periods = newPeriods; // Free periods are now in array
 
       // Loop through today's classes to find the currently ongoing
-      now = todays.filter(function(period) {
+      now = periods.filter(function(period) {
         if(mom.isBetween(period.startTime, period.endTime)){
           return true;
         }
         return false;
       });
-      if(now.length == 1) now = now[0];
+      if(now.length >= 1) now = now[0];
       // If there is no such period (and it is during the school day)
 
       // Try to find a class that just ended
       var cur = mom;
-      var found = todays.filter(function(period) {
+      var found = periods.filter(function(period) {
         if(cur.isSame(period.endTime)){
           return true;
         }
@@ -141,7 +136,7 @@ function getDayScheduleInfo(array){
       // If none found set to false
 
       // Try to find a class that just started
-      var found = todays.filter(function(period) {
+      var found = periods.filter(function(period) {
         if(cur.isSame(period.startTime)){
           return true;
         }
@@ -157,22 +152,18 @@ function getDayScheduleInfo(array){
 
       // Get the next class
       if(now !== "between")
-        next = ((todays.length-1 > todays.indexOf(now)) ? todays[todays.indexOf(now)+1] : false);
+        next = ((periods.length-1 > periods.indexOf(now)) ? periods[periods.indexOf(now)+1] : false);
     }
   }else{
     now = false;
     inSchool = false;
     // NOT IN SCHOOL
-    //console.log("OUT OF SCHOOL DAY");
   }
 
-  //console.log(now);
-  //console.log(next);
-
-
   return {
+    day: day,
     inSchool: inSchool,
-    todays: todays,
+    todays: periods,
     nowClass: now,
     nextClass: next,
     justEnded: justEnded,

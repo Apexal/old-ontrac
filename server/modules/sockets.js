@@ -18,7 +18,7 @@ module.exports = function(http) {
       var user = {username: client.username, tabs: 1, advisement: client.advisement};
       //var user = {name: client.firstName, username: client.username, code: client.code, tabs: 1};
       socket.emit('pastMessages', {messages: messages});
-      var status = "online";
+      var status = "Available";
 
       //console.log(codes.indexOf(user.code));
       if(usernames.indexOf(user.username) > -1){
@@ -43,7 +43,7 @@ module.exports = function(http) {
       socket.on('setstatus', function (data) {
         var index = usernames.indexOf(user.username);
         if(usernames.indexOf(user.username) > -1){
-          online[index].status = data.status;
+          online[index].status = (data.status != undefined ? data.status : "Available");
           //console.log("Found!");
         }else{
           console.log("Couldn't find");

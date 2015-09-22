@@ -17,7 +17,7 @@ module.exports = {
     achievements: Array,
     locker_number: String,
     schedule: String,
-    scheduleArray: Array,
+    scheduleObject: Object,
     nickname: String,
     friends: [{ type: Schema.Types.ObjectId, ref: 'Student'}],
     advisement: String,

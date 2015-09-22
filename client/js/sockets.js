@@ -32,10 +32,9 @@ function sockets() {
   var advchatmessages = [];
 
   var status = sessionStorage['user-status'];
-  if (!sessionStorage['user-status']){
-    status = "Available";
+  if (!status){
+    status = "available";
   }
-
   setStatus(status);
 
   socket.on('connect', function () {
@@ -84,6 +83,9 @@ function sockets() {
 
       if(user.status == "offline" && user.username == username)
         names.push("<span class='user-badge text-muted' data-username='"+username+"'><b>You</b><i class='right'>offline</i></span><br>");
+
+      if(user.username == username)
+        setStatusNoLoop(user.status);
 
       console.log(user.advisement +" vs "+advisement);
       if(user.advisement == advisement){
@@ -313,39 +315,38 @@ function sockets() {
 
 
   // HOMEPAGE CLASS INFO
-  function updateHomepageSchedule(data){
+  function updateHomepageSchedule(){
     var content = "";
-    var data = {sInfo: getDayScheduleInfo(scheduleArray)};
-    if(data){
+    var schedule = getDayScheduleInfo(userInfo.scheduleObject);
+    if(schedule){
       $("#classInfo").html("");
-      $("#schedule-table td").removeClass("sucess");
+      $("#schedule-table tr").removeClass("sucess");
 
-      var sInfo = data.sInfo;
       //console.log(sInfo);
-      if(sInfo.nowClass !== false){
-        if((sInfo.nowClass.className == "Unstructured Time" || sInfo.justStarted.className == "Unstructured Time") && sessionStorage['user-status'] == "In Class")
+      if(schedule.nowClass !== false){
+        if((schedule.nowClass.className == "Unstructured Time" || schedule.justStarted.className == "Unstructured Time") && sessionStorage['user-status'] == "In Class")
           setStatus("Available");
-        else if(sInfo.nowClass.className != "Unstructured Time" && sInfo.justStarted.className != "Unstructured Time")
+        else if(schedule.nowClass.className != "Unstructured Time" && schedule.justStarted.className != "Unstructured Time")
           setStatus("In Class");
 
-        if(sInfo.nowClass == "between"){
-          content += "<p class='larger no-margin'><b>"+sInfo.justEnded.className+"</b> has just ended.</p>";
-          if(sInfo.justStarted != false){
-            content += "<h2 class='no-margin'>Get to <b>Room "+sInfo.justStarted.room+"</b> for <b>"+sInfo.justStarted.className+"</b></h2>";
-            $("#schedule-table td:contains('"+sInfo.justStarted.className+"')").parent().addClass("success");
+        if(schedule.nowClass == "between"){
+          content += "<p class='larger no-margin'><b>"+schedule.justEnded.className+"</b> has just ended.</p>";
+          if(schedule.justStarted != false){
+            content += "<h2 class='no-margin'>Get to <b>Room "+schedule.justStarted.room+"</b> for <b>"+schedule.justStarted.className+"</b></h2>";
+            $("#schedule-table td:contains('"+schedule.justStarted.className+"')").parent().addClass("success");
           }
-        }else if(sInfo.nowClass.className == "Unstructured Time") {
+        }else if(schedule.nowClass.className == "Unstructured Time") {
           // FREE PERIOD
-          content += "You currently have a <b>Free Period</b> for <b>"+moment(sInfo.nowClass.endTime).fromNow(true)+"</b>";
+          content += "You currently have a <b>Free Period</b> for <b>"+moment(schedule.nowClass.endTime).fromNow(true)+"</b>";
         }else{
           // Regular class
-          content += "<h2>You should currently be in <b>Room "+sInfo.nowClass.room+"</b> for <b>"+sInfo.nowClass.className+"</b></h2>";
+          content += "<h2>You should currently be in <b>Room "+schedule.nowClass.room+"</b> for <b>"+schedule.nowClass.className+"</b></h2>";
         }
-        $("#schedule-table tbody tr td:contains('"+sInfo.nowClass.className+"')").parent().addClass("success");
-        if(sInfo.nextClass !== false){
-          content += "<p class='larger'>Your next class is <b>"+sInfo.nextClass.className+"</b> in <b>Room "+sInfo.nextClass.room+"</b> in <b>"+moment(sInfo.nextClass.startTime).fromNow(true)+"</b></p>";
+        $("#schedule-table tbody tr td:contains('"+schedule.nowClass.className+"')").parent().addClass("success");
+        if(schedule.nextClass !== false){
+          content += "<p class='larger'>Your next class is <b>"+schedule.nextClass.className+"</b> in <b>Room "+schedule.nextClass.room+"</b> in <b>"+moment(schedule.nextClass.startTime).fromNow(true)+"</b></p>";
         }else{
-          if(sInfo.nowClass !== "between")
+          if(schedule.nowClass !== "between")
             content += "<p class='larger'>This is the last class of your day!</p>";
         }
 
@@ -365,36 +366,33 @@ function sockets() {
 
 
 
-
-
-  var scheduleArray = [];
   userInfo = false;
   $.get('/api/user/'+username, function(data){
     userInfo = data;
-    if(data.scheduleArray){
-      scheduleArray = data.scheduleArray;
-
-      if($("#profile-schedule").length){
-        updateProfileSchedule();
-        setInterval(updateProfileSchedule, 60000);
-      }
-
-      updateHomepageSchedule();
-      setInterval(updateHomepageSchedule, 60000);
-
-    }
+    setInterval(updateDayInfo, 60000);
+    updateDayInfo();
   });
+
+  function updateDayInfo(info){
+    if($("#profile-schedule").length)
+      updateProfileSchedule();
+
+    if($("#classInfo").length)
+      updateHomepageSchedule();
+
+    console.log("Updated schedule info");
+  }
 
   function updateProfileSchedule(){
     var content = "";
-    var data = {sInfo: getDayScheduleInfo(scheduleArray)};
+    var schedule = getDayScheduleInfo(userInfo.scheduleObject);
 
-    if(data && data.sInfo.nowClass !== false){
+    if(schedule && schedule.nowClass !== false){
       var now = false;
-      if(data.sInfo.nowClass == "between" && data.sInfo.justStarted !== false)
-        now = data.sInfo.justStarted;
-      else if(data.sInfo.nowClass !== "between")
-        now = data.sInfo.nowClass;
+      if(schedule.nowClass == "between" && schedule.justStarted !== false)
+        now = schedule.justStarted;
+      else if(schedule.nowClass !== "between")
+        now = schedule.nowClass;
 
       if(now !== false){
         if(now.className == "Unstructured Time")
@@ -408,6 +406,9 @@ function sockets() {
   }
 
   function setStatus(status){
+    if(!status)
+      status = "available";
+
     sessionStorage['user-status'] = status;
     socket.emit('setstatus', {status: status.toLowerCase()});
 
@@ -417,6 +418,20 @@ function sockets() {
       set_muted(true);
     }
     $("#user-status b").html(status+(status !== "In Class" ? "<span class='caret'></span>" : ""));
+    console.log("Set status to "+status);
+  }
+
+  function setStatusNoLoop(stat){
+    if(!stat)
+      stat = "available";
+    sessionStorage['user-status'] = stat;
+
+    if(['in class', 'working', 'busy', 'offline'].indexOf(stat.toLowerCase()) > -1){
+      if(sessionStorage.muted == "0")
+        sendNotification("warning", "", "Muted chat due to status.");
+      set_muted(true);
+    }
+    $("#user-status b").html(stat+(stat !== "In Class" ? "<span class='caret'></span>" : ""));
   }
 
 }
