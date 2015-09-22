@@ -22,7 +22,7 @@ div
             th What
             th Where
         tbody  
-          for s in todaysSchedule
+          for s in todayInfo.todays
             tr
               td= moment(s.startTime).format("h:mm A")
               td= s.className

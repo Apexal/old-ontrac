@@ -24,7 +24,7 @@ db.once('open', function (callback) {
   });
 
   studentSchema.virtual('closeSchedule').get(function() {
-    return this.scheduleArray.filter(function(period) {
+    return this.scheduleObject.filter(function(period) {
       if(moment(period.date).isSame(moment().startOf("day"))){
         return true;
       }

@@ -16,9 +16,9 @@ module.exports = function(io) {
     if(req.loggedIn){
       req.toJade.title = "Your Home";
 
-      var sInfo = getDayScheduleInfo(req.currentUser.scheduleArray);
+      var sInfo = getDayScheduleInfo(req.currentUser.scheduleObject);
       console.log(sInfo);
-      req.toJade.todaysSchedule = sInfo.todays;
+      req.toJade.todayInfo = sInfo;
       res.render('home/homepage', req.toJade);
     }else{
       res.render('home/index', req.toJade);
@@ -99,31 +99,42 @@ module.exports = function(io) {
                       }, function(error, response, text){
                         var scheduleLines = text.match(/[^\r\n]+/g);
                         var good = [];
-                        var schedule = [];
+                        var schedule = {};
+
                         scheduleLines.forEach(function(line) {
                           good.push(line.split("\t"));
                         });
                         good.forEach(function(line) {
-                          if(line[4].indexOf(" Day") > -1){
-                            // Schedule Day
-                          }else{
-                            if(moment(line[0], "MM/DD/YY").isValid()){
+                          var dateS = line[0]; // String date in format MM/DD/YY
+                          if(moment(dateS, "MM/DD/YY").isValid()){
 
+                            if(!schedule[dateS]){ // If the property for that date does not yet exist in the Schedule object
+                              schedule[dateS] = {
+                                date: moment(dateS, "MM/DD/YY").toDate(),
+                                scheduleDay: "-",
+                                periods: []
+                              };
+
+                            }
+
+                            if(line[4].indexOf(" Day") > -1){ // This line is stating a Schedule Day
+                              schedule[dateS].scheduleDay = line[4].replace(" Day", "");
+                              //console.log(line);
+                            }else{ // This line is stating a period
                               var period = {
-                                date: moment(line[0], "MM/DD/YY").toDate(),
-                                startTime: moment(line[0]+" "+line[1], "MM/DD/YY hh:mm A").toDate(),
-                                endTime: moment(line[0]+" "+line[3], "MM/DD/YY hh:mm A").toDate(),
+                                //date: moment(line[0], "MM/DD/YY").toDate(),
+                                startTime: moment(dateS+" "+line[1], "MM/DD/YY hh:mm A").toDate(),
+                                endTime: moment(dateS+" "+line[3], "MM/DD/YY hh:mm A").toDate(),
                                 className: line[4],
                                 room: line[5]
                               };
-                              //console.log(period);
-                              schedule.push(period);
+                              schedule[dateS].periods.push(period);
                             }
+
                           }
-                          //console.log(line);
                         });
-                        user.scheduleArray = schedule;
-                        //console.log(schedule);
+                        user.scheduleObject = schedule;
+                        console.log(schedule);
 
                         done();
                       });
