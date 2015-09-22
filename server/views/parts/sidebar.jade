@@ -1,6 +1,6 @@
 aside#sidebar
   br
-  section.center  
+  section.center
     a(href="/users/"+currentUser.username)
       img#sidebar-pic(title="Looking good!", src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg", onError="this.onerror=null;this.src='"+currentUser.mpicture+"';")
     br
@@ -16,13 +16,10 @@ aside#sidebar
           a(href="#") Busy
         li
           a(href="#", title="You will not appear on the online users list.") Offline      
-    hr
-  
-  if (currentUser.rank > 4 || currentUser.username == "fmatranga18")
-    if helpers.isPage(page, "admin") == false
-      .text-center
-        a.btn.btn-primary(href="/admin") Administration
-      hr
+    #scheduleDaySidebar
+      hr(style="margin-bottom: 10px;")
+      b Loading...
+      hr(style="margin-top: 10px;")
     
   section
     ul.nav

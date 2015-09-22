@@ -371,6 +371,14 @@ function sockets() {
     userInfo = data;
     setInterval(updateDayInfo, 60000);
     updateDayInfo();
+
+    var schedule = getDayScheduleInfo(userInfo.scheduleObject);
+    if(schedule.day){
+      $("#scheduleDaySidebar").show();
+      $("#scheduleDaySidebar b").text(schedule.day.scheduleDay + " - Day");
+    }else{
+      $("#scheduleDaySidebar").hide();
+    }
   });
 
   function updateDayInfo(info){
@@ -379,7 +387,7 @@ function sockets() {
 
     if($("#classInfo").length)
       updateHomepageSchedule();
-
+    
     console.log("Updated schedule info");
   }
 
