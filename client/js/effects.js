@@ -198,32 +198,36 @@ function effects() {
         }
     });
     // LOGIN MODAL FORM
-    $("#login-form").submit(function() {
-        var username = $("#username").val();
-        var password = $("#password").val();
-        $("#login-button").text("Logging in...");
-        $.post("/login", {
-            username: username,
-            password: password
-        }, function(data) {
-            $("#login-errors .alert").remove();
-            if (data.errors) {
-                for (var err in data.errors) {
-                    $("#login-errors").append("<div class='alert alert-danger'>"+
-                      data.errors[err]+"</div>");
-                }
-                $("#login-button").text("Login");
-            } else {
-                window.location.href = $("#login-form").data(
-                    "redirect");
-            }
-        });
-        return false;
+    $("#login-form").submit(function(e) {
+      e.preventDefault();
+      var username = $("#username").val();
+      var password = $("#password").val();
+      $("#login-button").text("Logging in...");
+      $("body").css("cursor", "wait");
+      $.post("/login", {
+          username: username,
+          password: password
+      }, function(data) {
+          $("#login-errors .alert").remove();
+          if (data.errors) {
+              for (var err in data.errors) {
+                  $("#login-errors").append("<div class='alert alert-danger'>"+
+                    data.errors[err]+"</div>");
+              }
+              $("#login-button").text("Login");
+              $("body").css("cursor", "auto");
+          } else {
+              window.location.href = $("#login-form").data(
+                  "redirect");
+          }
+      });
+      return false;
     });
 
     // FEEDBACK
-    $("#feedback-form").submit(function() {
-        return false;
+    $("#feedback-form").submit(function(e) {
+      e.preventDefault();
+      return false;
     });
     $("#send-feedback").click(function() {
         var type = $("#feedback-type").val();
@@ -257,5 +261,5 @@ function effects() {
     }
 
 
-    
+
 }

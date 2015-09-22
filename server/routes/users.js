@@ -3,7 +3,7 @@ var router = express.Router();
 var _ = require("underscore");
 var achievements = require("../modules/achievements");
 var utils = require("../modules/utils");
-var getDayScheduleInfo = require("../modules/schedule");
+var schedules = require("../modules/schedule");
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -86,8 +86,6 @@ router.get("/:username", function(req, res){
         req.toJade.user = u;
         req.toJade.allAchievements = achievements;
         req.toJade.stars = _.range(u.rank+1);
-
-        req.toJade.sInfo = getDayScheduleInfo(user.scheduleObject);
 
         if(req.currentUser.points > u.points)
           req.toJade.pointdiff = (req.currentUser.points - u.points)+" fewer";

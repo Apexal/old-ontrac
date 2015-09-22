@@ -159,43 +159,45 @@ module.exports = function(io) {
         });
       }
       function done(){
-        var uA = user.achievements;
-        achievements.forEach(function(ach){
-          if(uA.indexOf(ach.id) == -1){
-            if(ach.check(user)){
-              user.achievements.push(ach.id);
-              user.points += ach.reward;
-              req.session.info.push("You have been awarded "+ach.reward+" points for achieving '"+ach.name+"'!");
-            }
-          }
-        });
-
-        user.login_count +=1;
-
-        // Give points if last time points were given was over 5 minutes ago
-        var fiveMinAgo = moment().subtract(5, 'minutes');
-        if(moment(user.last_point_login_time).isBefore(fiveMinAgo)){
-          user.points += 10;
-          req.session.info.push("You have been rewarded 10 points for logging in.");
-          user.last_point_login_time = new Date();
-        }
-        req.user = user;
-        req.session.currentUser = user;
-        req.session.currentUser.login_time = new Date();
-        user.save();
-
-        var today = schedules.getDaySchedule(user.scheduleObject, moment().format("MM/DD/YY"));
-        req.session.todaysInfo = today;
-
-        new req.Log({who: user._id, what: "Login."}).save();
-        req.session.quietlogin = false; // The actual user logged in, not an admin
-
         if(errs.length > 0){
           res.json({errors: errs});
         }else{
+
+          var uA = user.achievements;
+          achievements.forEach(function(ach){
+            if(uA.indexOf(ach.id) == -1){
+              if(ach.check(user)){
+                user.achievements.push(ach.id);
+                user.points += ach.reward;
+                req.session.info.push("You have been awarded "+ach.reward+" points for achieving '"+ach.name+"'!");
+              }
+            }
+          });
+
+          user.login_count +=1;
+
+          // Give points if last time points were given was over 5 minutes ago
+          var fiveMinAgo = moment().subtract(5, 'minutes');
+          if(moment(user.last_point_login_time).isBefore(fiveMinAgo)){
+            user.points += 10;
+            req.session.info.push("You have been rewarded 10 points for logging in.");
+            user.last_point_login_time = new Date();
+          }
+          req.user = user;
+          req.session.currentUser = user;
+          req.session.currentUser.login_time = new Date();
+          user.save();
+
+          var today = schedules.getDaySchedule(user.scheduleObject, moment().format("MM/DD/YY"));
+          req.session.todaysInfo = today;
+
+          new req.Log({who: user._id, what: "Login."}).save();
+          req.session.quietlogin = false; // The actual user logged in, not an admin
+
           io.sockets.emit('new-login', {username: username});
           res.json({success: true});
         }
+
       }
     });
   });

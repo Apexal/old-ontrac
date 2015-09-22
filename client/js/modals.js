@@ -9,7 +9,6 @@ function userbadges(){
         success: function(data) {
           if(data != "Not authorized."){
             var title = data.firstName + " " + data.lastName;
-            console.log(data);
 
             var rank = data.rank;
             switch(rank) {
@@ -68,7 +67,8 @@ function userbadges(){
             var location = "";
             //console.log(data.sInfo);
             if(data.registered){
-              data.sInfo = getDayScheduleInfo(data.scheduleObject);
+              //console.log(data);
+              data.sInfo = data.todaysSchedule;
               if(data.sInfo.inSchool){
                 //console.log("GOOD");
                 var now = (data.sInfo.nowClass !== false && data.sInfo.nowClass !== "between" ? data.sInfo.nowClass : data.sInfo.justStarted);

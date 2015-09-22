@@ -317,7 +317,6 @@ function sockets() {
   // HOMEPAGE CLASS INFO
   function updateHomepageSchedule(){
     var content = "";
-    var schedule = getDayScheduleInfo(userInfo.scheduleObject);
     if(schedule){
       $("#classInfo").html("");
       $("#schedule-table tr").removeClass("sucess");
@@ -368,17 +367,13 @@ function sockets() {
 
   userInfo = false;
   $.get('/api/user/'+username, function(data){
+    console.log(data);
     userInfo = data;
+    today = userInfo.todaysSchedule;
+    schedule = getCurrentClassInfo(today);
+
     setInterval(updateDayInfo, 60000);
     updateDayInfo();
-
-    var schedule = getDayScheduleInfo(userInfo.scheduleObject);
-    if(schedule.day){
-      $("#scheduleDaySidebar").show();
-      $("#scheduleDaySidebar b").text(schedule.day.scheduleDay + " - Day");
-    }else{
-      $("#scheduleDaySidebar").hide();
-    }
   });
 
   function updateDayInfo(info){
@@ -393,7 +388,6 @@ function sockets() {
 
   function updateProfileSchedule(){
     var content = "";
-    var schedule = getDayScheduleInfo(userInfo.scheduleObject);
 
     if(schedule && schedule.nowClass !== false){
       var now = false;

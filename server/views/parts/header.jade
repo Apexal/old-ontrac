@@ -54,15 +54,15 @@ header
               ul.dropdown-menu(role='menu')
                 if loggedIn
                   li
-                    a(href="/users/"+currentUser.username, title="View your public profile as other users see it.") View Your Profile
+                    a(href="/users/"+currentUser.username, title="View your public profile as other users see it.") View Profile
                   li
-                    a(href="/users/profile") Edit Your Profile
+                    a(href="/users/profile") Edit Profile
                   li
-                    a(href="/users/"+currentUser.username+"/schedule", title="View your class schedule.") View Your Schedule
+                    a(href="/users/"+currentUser.username+"/schedule", title="View your class schedule.") View Schedule
                   if (currentUser.rank > 4 || currentUser.username == "fmatranga18")
                     if helpers.isPage(page, "admin") == false
                       li
-                        a(href="/admin") Administration
+                        a(href="/admin") Admin Page
                   li
                     a(href='/logout') Logout
           else

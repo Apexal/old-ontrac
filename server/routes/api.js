@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var moment = require('moment');
+var schedules = require('../modules/schedule');
 
 router.get("/*", function(req, res, next) {
   if(req.loggedIn)
@@ -16,6 +17,8 @@ router.get('/user/:username', function(req, res) {
     .exec(function(err, user) {
       if(err) res.json({error: err});
       if(user){
+        if(user.registered)
+          user.todaysSchedule = schedules.getDaySchedule(user.scheduleObject, moment().format("MM/DD/YY"));
         res.json(user);
       }else{
         res.json({error: "No such user!"});

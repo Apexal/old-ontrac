@@ -82,15 +82,7 @@ block content
         .row
           .col-xs-12.text-center#profile-schedule
             p.larger.center Loading schedule info...
-            //
-              if sInfo.nowClass != false
-                h3 As of #[b= moment().format("h:mm A")], #{user.firstName}
-                  if sInfo.nowClass.className == "Unstructured Time"
-                    |  has a free period until #[b= moment(sInfo.nowClass.endTime).format("h:mm A")].
-                  else
-                    |  is in #[b= "Room "+sInfo.nowClass.room ] for #[b= sInfo.nowClass.className] until #[b= moment(sInfo.nowClass.endTime).format("h:mm A")].
-                  br
-                  small Refresh the page to update.
+
       .row
         .col-xs-12
           hr
