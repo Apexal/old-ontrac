@@ -21,18 +21,18 @@ function updateHomepageInfo(){
         content += "<p class='larger no-margin'><b>"+cInfo.justEnded.className+"</b> has just ended.</p>";
         if(cInfo.justStarted != false){
           content += "<h2 class='no-margin'>Get to <b>Room "+cInfo.justStarted.room+"</b> for <b>"+cInfo.justStarted.className+"</b></h2>";
-          $("#cInfo-table td:contains('"+moment(cInfo.justStarted.startTime).format("h:mm A")+"')").parent().addClass("success");
+          $("#cInfo-table td:contains('"+moment(cInfo.justStarted.startTime, "hh:mm A").format("h:mm A")+"')").parent().addClass("success");
         }
       }else if(cInfo.nowClass.className == "Unstructured Time") {
         // FREE PERIOD
-        content += "You currently have a <b>Free Period</b> for <b>"+moment(cInfo.nowClass.endTime).fromNow(true)+"</b>";
+        content += "You currently have a <b>Free Period</b> for <b>"+moment(cInfo.nowClass.endTime, "hh:mm A").fromNow(true)+"</b>";
       }else{
         // Regular class
         content += "<h2>You should currently be in <b>Room "+cInfo.nowClass.room+"</b> for <b>"+cInfo.nowClass.className+"</b></h2>";
       }
-      $("#cInfo-table tbody tr td:contains('"+moment(cInfo.nowClass.className).format("h:mm A")+"')").parent().addClass("success");
+      $("#cInfo-table tbody tr td:contains('"+moment(cInfo.nowClass.className, "hh:mm A").format("h:mm A")+"')").parent().addClass("success");
       if(cInfo.nextClass !== false){
-        content += "<p class='larger'>Your next class is <b>"+cInfo.nextClass.className+"</b> in <b>Room "+cInfo.nextClass.room+"</b> in <b>"+moment(cInfo.nextClass.startTime).fromNow(true)+"</b></p>";
+        content += "<p class='larger'>Your next class is <b>"+cInfo.nextClass.className+"</b> in <b>Room "+cInfo.nextClass.room+"</b> in <b>"+moment(cInfo.nextClass.startTime, "hh:mm A").fromNow(true)+"</b></p>";
       }else{
         if(cInfo.nowClass !== "between")
           content += "<p class='larger'>This is the last class of your day!</p>";
