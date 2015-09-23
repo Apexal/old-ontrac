@@ -44,5 +44,6 @@ $(function() {
   days();
   if($('#send-message').data("username") !== undefined){
     sockets();
+    clientSchedule();
   }
 });
