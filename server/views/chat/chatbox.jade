@@ -1,8 +1,9 @@
 .panel.panel-default.hidden-xs.small-chat#chat-box
   .panel-heading
-    h3.panel-title Global Chat
-      small#toggle-chat  (Toggle)
-      small.right#mute-toggle  (Mute)
+    h3.panel-title 
+      small.fa.fa-chevron-up#toggle-chat(style="font-size: 80%;")
+      |  Global Chat &nbsp;&nbsp;
+      small.right.fa.fa-volume-up#mute-toggle
   .panel-body#chat-messages.small-chat
     
   form#chat-controls.form-inline.small-chat(role="form")

@@ -1,19 +1,23 @@
 function toggle_muted(){
   sessionStorage.muted = (sessionStorage.muted == "1" ? "0" : "1");
   if(sessionStorage.muted == "1"){
-    $("#mute-toggle").text("(Unmute)");
+    $("#mute-toggle").removeClass("fa-volume-up");
+    $("#mute-toggle").addClass("fa-volume-off");
   }else{
-    $("#mute-toggle").text("(Mute)");
+    $("#mute-toggle").removeClass("fa-volume-off");
+    $("#mute-toggle").addClass("fa-volume-up");
   }
 }
 
 function set_muted(to){
   if(to){
     sessionStorage.muted = "1";
-    $("#mute-toggle").text("(Unmute)");
+    $("#mute-toggle").removeClass("fa-volume-up");
+    $("#mute-toggle").addClass("fa-volume-off");
   }else{
     sessionStorage.muted = "0";
-    $("#mute-toggle").text("(Mute)");
+    $("#mute-toggle").removeClass("fa-volume-off");
+    $("#mute-toggle").addClass("fa-volume-up");
   }
 }
 

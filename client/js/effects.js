@@ -67,68 +67,28 @@ function effects() {
         });
     });
     // Prevent the chat form from sending data and refreshing the page
-    $("#chat-controls").submit(function() {
-        return false;
+    $("#chat-controls").submit(function(e) {
+      e.preventDefault();
+      return false;
     });
-    // Make the  small chat box resizable with default values
-
-
-    /*
-    $("#chat-box.resizable").resizable({
-        maxHeight: 550,
-        maxWidth: 650,
-        minHeight: 250,
-        minWidth: 400,
-        handles: 'n'
-    });
-    // Toggle the small chat box
-    var chat_box = $("#chat-box.small-box");
-    var small_box = $("#chat-controls.small-box");
-    var small_box2 = $("#chat-messages.small-box");
-    var set_chat = function(show) {
-        if (show == 1) {
-            small_box.show();
-            small_box2.show();
-            $(this).removeAttr('style');
-            chat_box.height("300px").width("400px").css("bottom",
-                "43px");
-            $("#chat-box").data("hidden", "false");
-            sessionStorage.unread = 0;
-        } else {
-            small_box.hide();
-            small_box2.hide();
-            chat_box.css({
-                width: "250px",
-                height: "40px",
-                bottom: "0px"
-            });
-            $("#chat-box").data("hidden", "true");
-
-        }
-        localStorage["show-chat"] = show;
-    };
-    if (localStorage['show-chat'] == false) {
-        set_chat(0);
-    }
-
-    $("#toggle-chat").click(function() {
-        var show = (localStorage['show-chat'] == 1 ? 0 : 1);
-        set_chat(show);
-        updateTitle();
-    });
-    */
 
     if (sessionStorage['show-chat'] == "1") {
       $("#chat-box").addClass("shown");
+      $("#toggle-chat").removeClass("fa-chevron-up");
+      $("#toggle-chat").addClass("fa-chevron-down");
     }
 
     $("#toggle-chat").click(function() {
       $("#chat-box").toggleClass("shown");
       if(Number(sessionStorage['show-chat']) == 1){
         sessionStorage['show-chat'] = 0;
+        $("#toggle-chat").removeClass("fa-chevron-down");
+        $("#toggle-chat").addClass("fa-chevron-up");
       }else{
         sessionStorage['show-chat'] = 1;
         sessionStorage.unread = 0;
+        $("#toggle-chat").removeClass("fa-chevron-up");
+        $("#toggle-chat").addClass("fa-chevron-down");
       }
       updateTitle();
     });
