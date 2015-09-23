@@ -17,3 +17,7 @@
 #regis-pic {
   margin: 0 auto;
 }
+
+#tabs .nav-tabs a[role="tabs"]{
+  outline: none;
+}
