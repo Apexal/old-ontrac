@@ -10,7 +10,7 @@ module.exports = function(http) {
   var io = require("socket.io").listen(http);
 
   io.sockets.on('connection', function (socket) {
-    messages = messages.slice(Math.max(messages.length - 100, 0));
+    messages = messages.slice(0, 100);
 
     var client = socket.request.session.currentUser;
 
