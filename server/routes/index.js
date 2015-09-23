@@ -23,11 +23,6 @@ module.exports = function(io) {
     }
   });
 
-  router.get('/login', function(req, res, next) {
-    req.toJade.title = "Login";
-    res.render('users/login', req.toJade);
-  });
-
   router.post('/login', function(req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
