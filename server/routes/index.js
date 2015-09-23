@@ -280,9 +280,11 @@ module.exports = function(io) {
 
   router.get('/logout', function(req, res) {
     if(req.loggedIn){
-      io.sockets.emit('new-logout', {username: req.currentUser.username});
-      if(req.session.quietlogin == false)
+
+      if(req.session.quietlogin == false){
         new req.Log({who: req.currentUser._id, what: "Logout."}).save();
+        io.sockets.emit('new-logout', {username: req.currentUser.username});
+      }
 
       delete req.session.currentUser;
       delete req.currentUser;
@@ -309,10 +311,17 @@ module.exports = function(io) {
     if(req.currentUser && req.currentUser.username == "fmatranga18"){
       // Same as Logout basically
       delete req.session.currentUser;
+      delete req.session.todaysInfo;
       delete req.currentUser;
       req.Student.findOne({username: username}).populate('courses', 'mID title').exec(function(err, user) {
         if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
         if(user){
+          var sd = user.scheduleObject.scheduleDays[moment().format("MM/DD/YY")];
+          if(sd){
+            //console.log(user.scheduleObject.dayClasses);
+            req.session.todaysInfo = {scheduleDay: sd, periods: user.scheduleObject.dayClasses[sd]};
+            console.log(req.session.todaysInfo);
+          }
           req.session.quietlogin = true;
           req.user = user;
           req.session.currentUser = user;
