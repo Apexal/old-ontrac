@@ -43,7 +43,7 @@ module.exports = function(http) {
       socket.on('setstatus', function (data) {
         var index = usernames.indexOf(user.username);
         if(usernames.indexOf(user.username) > -1){
-          online[index].status = (data.status != undefined ? data.status : "Available");
+          online[index].status = (data.status !== undefined ? data.status : "Available");
           //console.log("Found!");
         }else{
           console.log("Couldn't find");

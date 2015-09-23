@@ -17,7 +17,20 @@ function set_muted(to){
   }
 }
 
+function handleVisibilityChange() {
+  if (document[hidden]) {
+    console.log("HIDE TAB");
+  } else {
+    if($("#chat-box").hasClass("shown"))
+      sessionStorage.unread = "0";
+    updateTitle();
+    console.log("SHOWED TAB");
+  }
+}
+
 function sockets() {
+  document.addEventListener(visibilityChange, handleVisibilityChange, false);
+
   var chat_notification = new Audio('/sounds/ding.mp3');
 
   var full = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
@@ -276,7 +289,7 @@ function sockets() {
         if(!sessionStorage.unread)
           sessionStorage.unread = 0;
 
-        if($("#chat-box").hasClass("shown") == false){
+        if($("#chat-box").hasClass("shown") == false || document[hidden]){
           sessionStorage.unread = Number(sessionStorage.unread)+1;
 
         }else{

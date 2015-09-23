@@ -1,18 +1,24 @@
 div#tabs
   ul.nav.nav-tabs(role='tablist')
     li.active(role='presentation')
-      a(href='#quick-add', aria-controls='work', role='tab', data-toggle='tab') Quick Add
+      a(href='#quick-add', aria-controls='work', role='tab', data-toggle='tab')
+        span.hidden-xs Quick Add &nbsp;
+        span.fa.fa-plus-square-o
     li(role='presentation')
-      a(href='#todays-schedule', aria-controls='profile', role='tab', data-toggle='tab') Today's Classes
+      a(href='#todays-schedule', aria-controls='profile', role='tab', data-toggle='tab')
+        span.hidden-xs Today's Classes &nbsp;
+        span.fa.fa-calendar
     li(role='presentation')
-      a(href='#moodle-links', aria-controls='messages', role='tab', data-toggle='tab') Moodle Links
+      a(href='#moodle-links', aria-controls='messages', role='tab', data-toggle='tab')
+        span.hidden-xs Moodle Links &nbsp;
+        span.fa.fa-link
   .tab-content
     #quick-add.tab-pane.active(role='tabpanel')
       form.form-inline(role="form", action="/", method="POST")
         .form-group
           .input-group
             .input-group-addon.fa.fa-link
-            input.form-control(type="text", name="description", placeholder="Assignment")
+            input.form-control(type="text", name="description", placeholder="Homework Assignment")
         button.btn.btn-default Add
     #todays-schedule.tab-pane(role='tabpanel')
       table.table#schedule-table
