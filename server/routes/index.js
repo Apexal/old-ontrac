@@ -17,7 +17,6 @@ module.exports = function(io) {
       req.toJade.title = "Your Home";
 
       console.log(req.toJade.todaysInfo);
-      req.toJade.currentClassInfo = schedules.getCurrentClassInfo(req.currentUser.scheduleObject);
       res.render('home/homepage', req.toJade);
     }else{
       res.render('home/index', req.toJade);
@@ -98,43 +97,121 @@ module.exports = function(io) {
                       }, function(error, response, text){
                         var scheduleLines = text.match(/[^\r\n]+/g);
                         var good = [];
-                        var schedule = {};
+                        var schedule = {
+                          scheduleDays: {},
+                          dayClasses: {}
+                          /*
+                          scheduleDays: {
+                            '09/22/15': 'E'
+                          },
+                          dayClasses: {
+                            'A': [A DAY CLASSES],
+                            etc...
+                          }
+                          */
+                        };
 
                         scheduleLines.forEach(function(line) {
                           good.push(line.split("\t"));
                         });
+                        var actualClassses = [];
                         good.forEach(function(line) {
                           var dateS = line[0]; // String date in format MM/DD/YY
                           if(moment(dateS, "MM/DD/YY").isValid()){
-
-                            if(!schedule[dateS]){ // If the property for that date does not yet exist in the Schedule object
-                              schedule[dateS] = {
-                                date: moment(dateS, "MM/DD/YY").toDate(),
-                                scheduleDay: "-",
-                                periods: []
-                              };
-
-                            }
-
                             if(line[4].indexOf(" Day") > -1){ // This line is stating a Schedule Day
-                              schedule[dateS].scheduleDay = line[4].replace(" Day", "");
-                              //console.log(line);
-                            }else{ // This line is stating a period
-                              var period = {
-                                //date: moment(line[0], "MM/DD/YY").toDate(),
-                                startTime: moment(dateS+" "+line[1], "MM/DD/YY hh:mm A").toDate(),
-                                endTime: moment(dateS+" "+line[3], "MM/DD/YY hh:mm A").toDate(),
-                                className: line[4],
-                                room: line[5]
-                              };
-                              schedule[dateS].periods.push(period);
+                              schedule.scheduleDays[dateS] = line[4].replace(" Day", "");
+                            }else{
+                              actualClassses.push(line);
                             }
-
                           }
                         });
-                        user.scheduleObject = schedule;
-                        console.log(schedule);
 
+                        actualClassses = actualClassses.slice(0, 60);
+                        //console.log(actualClassses);
+
+                        var doneF = false;
+                        var i = 0;
+                        while(doneF == false && i < actualClassses.length){
+                          var line = actualClassses[i];
+                          var dateS = line[0];
+                          var sd = schedule.scheduleDays[dateS];
+
+                          if(!schedule.dayClasses[sd])
+                            schedule.dayClasses[sd] = [];
+
+                          var room = (isNaN(line[5]) ? line[5] : "Room "+line[5]);
+
+                          var period = {
+                            //date: moment(line[0], "MM/DD/YY").toDate(),
+                            startTime: line[1],
+                            endTime: line[3],
+                            className: line[4],
+                            room: room
+                          };
+
+                          var length = schedule.dayClasses[sd].filter(function(p){
+                            if(p.className == line[4])
+                              return true;
+                            return false;
+                          }).length;
+                          if(length == 0)
+                            schedule.dayClasses[sd].push(period);
+
+                          i ++;
+                        }
+
+                        user.scheduleObject = schedule;
+                        ['A', 'B', 'C', 'D', 'E'].forEach(function(sd){
+                          var filledPeriods = [];
+                          // AM ADVISEMENT
+                          var amAdv = {
+                            startTime: '08:40 AM',
+                            endTime: '08:50 AM',
+                            className: 'Morning Advisement',
+                            room: 'Homeroom'
+                          };
+                          filledPeriods.push(amAdv);
+
+                          var periods = schedule.dayClasses[sd];
+                          var lastPeriod = amAdv;
+
+                          periods.forEach(function(period) {
+                            if(lastPeriod.endTime !== period.startTime){
+                              filledPeriods.push({
+                                room: "Anywhere",
+                                startTime: lastPeriod.endTime,
+                                endTime: period.startTime,
+                                className: "Unstructured Time"
+                              });
+                            }
+
+                            lastPeriod = period;
+                            filledPeriods.push(period);
+                          });
+
+                          // End of day free
+                          if(filledPeriods[filledPeriods.length-1].endTime !== "02:50 PM"){
+                            filledPeriods.push({
+                              room: "Anywhere",
+                              startTime: lastPeriod.endTime,
+                              endTime: "02:50 PM",
+                              className: "Unstructured Time"
+                            });
+                          }
+
+                          // PM ADVISEMENT
+                          filledPeriods.push({
+                            startTime: '02:50 PM',
+                            endTime: '02:55 PM',
+                            className: 'Afternoon Advisement',
+                            room: 'Homeroom'
+                          });
+
+                          schedule.dayClasses[sd] = filledPeriods;
+                        });
+
+                        console.log(schedule);
+                        user.scheduleObject = schedule;
                         done();
                       });
 
@@ -188,8 +265,12 @@ module.exports = function(io) {
           req.session.currentUser.login_time = new Date();
           user.save();
 
-          var today = schedules.getDaySchedule(user.scheduleObject, moment().format("MM/DD/YY"));
-          req.session.todaysInfo = today;
+          var sd = user.scheduleObject.scheduleDays[moment().format("MM/DD/YY")];
+          if(sd){
+            //console.log(user.scheduleObject.dayClasses);
+            req.session.todaysInfo = {scheduleDay: sd, periods: user.scheduleObject.dayClasses[sd]};
+            console.log(req.session.todaysInfo);
+          }
 
           new req.Log({who: user._id, what: "Login."}).save();
           req.session.quietlogin = false; // The actual user logged in, not an admin

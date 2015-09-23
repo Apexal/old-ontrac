@@ -17,8 +17,13 @@ router.get('/user/:username', function(req, res) {
     .exec(function(err, user) {
       if(err) res.json({error: err});
       if(user){
-        if(user.registered)
-          user.todaysSchedule = schedules.getDaySchedule(user.scheduleObject, moment().format("MM/DD/YY"));
+        if(user.registered){
+          var sd = user.scheduleObject.scheduleDays[moment().format("MM/DD/YY")];
+          if(sd){
+            //console.log(user.scheduleObject.dayClasses);
+            user.todaysClassesInfo = {scheduleDay: sd, periods: user.scheduleObject.dayClasses[sd], currentInfo: schedules.getCurrentClassInfo(user.scheduleObject.dayClasses[sd])};
+          }
+        }
         res.json(user);
       }else{
         res.json({error: "No such user!"});

@@ -1,10 +1,127 @@
-function getCurrentClassInfo(day){
+// HOMEPAGE CLASS INFO
+todayInfo = false;
+userInfo = false;
+schedule = false;
+
+function updateHomepageInfo(){
+  var content = "";
+  var cInfo = todayInfo.currentInfo;
+  if(schedule){
+    $("#classInfo").html("");
+    $("#cInfo-table tr").removeClass("sucess");
+
+    //console.log(sInfo);
+    if(cInfo.nowClass !== false){
+      if((cInfo.nowClass.className == "Unstructured Time" || cInfo.justStarted.className == "Unstructured Time") && sessionStorage['user-status'] == "In Class")
+        setStatus("Available");
+      else if(cInfo.nowClass.className != "Unstructured Time" && cInfo.justStarted.className != "Unstructured Time")
+        setStatus("In Class");
+
+      if(cInfo.nowClass == "between"){
+        content += "<p class='larger no-margin'><b>"+cInfo.justEnded.className+"</b> has just ended.</p>";
+        if(cInfo.justStarted != false){
+          content += "<h2 class='no-margin'>Get to <b>Room "+cInfo.justStarted.room+"</b> for <b>"+cInfo.justStarted.className+"</b></h2>";
+          $("#cInfo-table td:contains('"+moment(cInfo.justStarted.startTime).format("h:mm A")+"')").parent().addClass("success");
+        }
+      }else if(cInfo.nowClass.className == "Unstructured Time") {
+        // FREE PERIOD
+        content += "You currently have a <b>Free Period</b> for <b>"+moment(cInfo.nowClass.endTime).fromNow(true)+"</b>";
+      }else{
+        // Regular class
+        content += "<h2>You should currently be in <b>Room "+cInfo.nowClass.room+"</b> for <b>"+cInfo.nowClass.className+"</b></h2>";
+      }
+      $("#cInfo-table tbody tr td:contains('"+moment(cInfo.nowClass.className).format("h:mm A")+"')").parent().addClass("success");
+      if(cInfo.nextClass !== false){
+        content += "<p class='larger'>Your next class is <b>"+cInfo.nextClass.className+"</b> in <b>Room "+cInfo.nextClass.room+"</b> in <b>"+moment(cInfo.nextClass.startTime).fromNow(true)+"</b></p>";
+      }else{
+        if(cInfo.nowClass !== "between")
+          content += "<p class='larger'>This is the last class of your day!</p>";
+      }
+
+
+
+      content += "<hr>";
+      $("#classInfo").html(content);
+    }else{
+      // out of school
+      if(sessionStorage['user-status'] == "In Class"){
+        setStatus("Available");
+      }
+    }
+  }
+
+}
+
+var hasClasses = false;
+var registered = true;
+var profileUserInfo = null;
+function updateProfileSchedule(){
+  var profileUsername = window.location.href.split("/")[2];
+  if(!profileUserInfo){
+    $.get('/api/user/'+username, function(data){
+      if(data){
+        console.log(data);
+        registered = data.registered;
+        if(data.registered == false){
+          $("#profile-schedule").hide();
+          return;
+        }
+        hasClasses = true;
+        profileUserInfo = data;
+        updateProfileSchedule();
+      }
+    });
+  }else{
+    if(profileUserInfo.todaysClassesInfo.currentInfo.inSchool == true){
+      var cInfo = profileUserInfo.todaysClassesInfo.currentInfo;
+      if(cInfo.now !== false || cInfo.justStarted !== false){
+        var n = false;
+        if(cInfo.now != false)
+          n = cInfo.now;
+        if(cInfo.justStarted != false)
+          n = cInfo.justStarted;
+
+        if(n !== false){
+          console.log(n);
+          $("#profile-schedule").show();
+          $("#profile-schedule p").html("<b>"+profileUserInfo.firstName+"</b> currently has <b>"+n.className+"</b> in <b>"+n.room+"</b> until <b>"+moment(n.endTime, "hh:mm A").format("h:mm A")+"</b>");
+        }
+      }
+    }else{
+      $("#profile-schedule").hide();
+    }
+  }
+}
+
+
+function clientSchedule(){
+  $.get('/api/user/'+username, function(data){
+    console.log(data);
+    userInfo = data;
+    todayInfo = userInfo.todaysClassesInfo;
+    console.log(todayInfo);
+    schedule = getCurrentClassInfo(todayInfo.periods);
+
+    setInterval(updateDayInfo, 60000);
+    updateDayInfo();
+  });
+}
+
+function updateDayInfo(){
+  if($("#classInfo").length)
+    updateHomepageInfo();
+
+  if($("#profile-schedule").length && registered)
+    updateProfileSchedule();
+
+  console.log("Updated schedule info");
+}
+
+
+function getCurrentClassInfo(periods){
   var mom = moment();
   var dayStart = moment("08:40 AM", "hh:mm A");
   var dayEnd = moment("02:50 PM", "hh:mm A");
-
-  var periods = day.filledPeriods;
-  var newPeriods = [];
 
   var now = false;
   var next = false;
@@ -18,7 +135,7 @@ function getCurrentClassInfo(day){
 
     // Loop through today's classes to find the currently ongoing
     now = periods.filter(function(period) {
-      if(mom.isBetween(period.startTime, period.endTime)){
+      if(mom.isBetween(moment(period.startTime, "hh:mm A"), moment(period.endTime, "hh:mm A"))){
         return true;
       }
       return false;
@@ -29,7 +146,7 @@ function getCurrentClassInfo(day){
     // Try to find a class that just ended
     var cur = mom;
     var found = periods.filter(function(period) {
-      if(cur.isSame(period.endTime)){
+      if(cur.isSame(moment(period.endTime, "hh:mm A"))){
         return true;
       }
       return false;
@@ -39,7 +156,7 @@ function getCurrentClassInfo(day){
 
     // Try to find a class that just started
     var found = periods.filter(function(period) {
-      if(cur.isSame(period.startTime)){
+      if(cur.isSame(moment(period.startTime, "hh:mm A"))){
         return true;
       }
       return false;
@@ -65,4 +182,4 @@ function getCurrentClassInfo(day){
     justEnded: justEnded,
     inSchool: inSchool
   };
-}
+};

@@ -24,9 +24,9 @@ div
         tbody  
           for s in todaysInfo.periods
             tr
-              td= moment(s.startTime).format("h:mm A")
+              td= moment(s.startTime, "hh:mm A").format("h:mm A")
               td= s.className
-              td Room #{s.room}
+              td= s.room
     #moodle-links.tab-pane(role='tabpanel').text-center
       each c in currentUser.courses
         a.btn.btn-default.hidden-xs(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title

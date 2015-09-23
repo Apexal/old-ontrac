@@ -65,7 +65,7 @@ app.use(function(req, res, next) {
   req.toJade = {
     info: (req.session.info ? req.session.info : []),
     errs: (req.session.errs ? req.session.errs : []),
-    title: "Page", // default title for a page
+    title: "OnTrac", // default title for a page
     year: info.years,
     tri: info.trimester,
     full_year: info.full,

@@ -21,12 +21,12 @@ function sockets() {
   var chat_notification = new Audio('/sounds/ding.mp3');
 
   var full = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
-  var socket = io.connect(full);
-  var username = $('#send-message').data("username");
-  var online = [];
-  var list = $("#online-list, #online-list-mobile");
-  var advlist= $("#advchat-online");
-  var title = $("title").text();
+  socket = io.connect(full);
+  username = $('#send-message').data("username");
+  online = [];
+  list = $("#online-list, #online-list-mobile");
+  advlist= $("#advchat-online");
+  title = $("title").text();
 
   var advisement = ( $("#advchat").length > 0 ? $("#advchat").data('adv') : '');
   var advchatmessages = [];
@@ -313,127 +313,33 @@ function sockets() {
   $('#chat-message').on('keyup', outgoingMessageKeyUp);
   $('#send-message').on('click', sendMessage);
 
+}
 
-  // HOMEPAGE CLASS INFO
-  function updateHomepageSchedule(){
-    var content = "";
-    if(schedule){
-      $("#classInfo").html("");
-      $("#schedule-table tr").removeClass("sucess");
+function setStatus(status){
+  if(!status)
+    status = "available";
 
-      //console.log(sInfo);
-      if(schedule.nowClass !== false){
-        if((schedule.nowClass.className == "Unstructured Time" || schedule.justStarted.className == "Unstructured Time") && sessionStorage['user-status'] == "In Class")
-          setStatus("Available");
-        else if(schedule.nowClass.className != "Unstructured Time" && schedule.justStarted.className != "Unstructured Time")
-          setStatus("In Class");
+  sessionStorage['user-status'] = status;
+  socket.emit('setstatus', {status: status.toLowerCase()});
 
-        if(schedule.nowClass == "between"){
-          content += "<p class='larger no-margin'><b>"+schedule.justEnded.className+"</b> has just ended.</p>";
-          if(schedule.justStarted != false){
-            content += "<h2 class='no-margin'>Get to <b>Room "+schedule.justStarted.room+"</b> for <b>"+schedule.justStarted.className+"</b></h2>";
-            $("#schedule-table td:contains('"+moment(schedule.justStarted.startTime).format("h:mm A")+"')").parent().addClass("success");
-          }
-        }else if(schedule.nowClass.className == "Unstructured Time") {
-          // FREE PERIOD
-          content += "You currently have a <b>Free Period</b> for <b>"+moment(schedule.nowClass.endTime).fromNow(true)+"</b>";
-        }else{
-          // Regular class
-          content += "<h2>You should currently be in <b>Room "+schedule.nowClass.room+"</b> for <b>"+schedule.nowClass.className+"</b></h2>";
-        }
-        $("#schedule-table tbody tr td:contains('"+moment(schedule.nowClass.className).format("h:mm A")+"')").parent().addClass("success");
-        if(schedule.nextClass !== false){
-          content += "<p class='larger'>Your next class is <b>"+schedule.nextClass.className+"</b> in <b>Room "+schedule.nextClass.room+"</b> in <b>"+moment(schedule.nextClass.startTime).fromNow(true)+"</b></p>";
-        }else{
-          if(schedule.nowClass !== "between")
-            content += "<p class='larger'>This is the last class of your day!</p>";
-        }
-
-
-
-        content += "<hr>";
-        $("#classInfo").html(content);
-      }else{
-        // out of school
-        if(sessionStorage['user-status'] == "In Class"){
-          setStatus("Available");
-        }
-      }
-    }
-
+  if(['in class', 'working', 'busy', 'offline'].indexOf(status.toLowerCase()) > -1){
+    if(sessionStorage.muted == "0")
+      sendNotification("warning", "", "Muted chat due to status.");
+    set_muted(true);
   }
+  $("#user-status b").html(status+(status !== "In Class" ? "<span class='caret'></span>" : ""));
+  console.log("Set status to "+status);
+}
 
+function setStatusNoLoop(stat){
+  if(!stat)
+    stat = "available";
+  sessionStorage['user-status'] = stat;
 
-
-  userInfo = false;
-  $.get('/api/user/'+username, function(data){
-    console.log(data);
-    userInfo = data;
-    today = userInfo.todaysSchedule;
-    schedule = getCurrentClassInfo(today);
-
-    setInterval(updateDayInfo, 60000);
-    updateDayInfo();
-  });
-
-  function updateDayInfo(info){
-    if($("#profile-schedule").length)
-      updateProfileSchedule();
-
-    if($("#classInfo").length)
-      updateHomepageSchedule();
-
-    console.log("Updated schedule info");
+  if(['in class', 'working', 'busy', 'offline'].indexOf(stat.toLowerCase()) > -1){
+    if(sessionStorage.muted == "0")
+      sendNotification("warning", "", "Muted chat due to status.");
+    set_muted(true);
   }
-
-  function updateProfileSchedule(){
-    var content = "";
-
-    if(schedule && schedule.nowClass !== false){
-      var now = false;
-      if(schedule.nowClass == "between" && schedule.justStarted !== false)
-        now = schedule.justStarted;
-      else if(schedule.nowClass !== "between")
-        now = schedule.nowClass;
-
-      if(now !== false){
-        if(now.className == "Unstructured Time")
-          content += "<h3>"+userInfo.firstName+" currently has a <b>Free Period</b> until <b>"+moment(now.endTime).format("h:mm A")+"</b></h3>";
-        else
-          content += "<h3>"+userInfo.firstName+" is currently in <b>"+now.className+"</b> in <b>Room "+now.room+"</b> until <b>"+moment(now.endTime).format("h:mm A")+"</b></h3>";
-      }
-    }
-
-    $("#profile-schedule").html(content);
-  }
-
-  function setStatus(status){
-    if(!status)
-      status = "available";
-
-    sessionStorage['user-status'] = status;
-    socket.emit('setstatus', {status: status.toLowerCase()});
-
-    if(['in class', 'working', 'busy', 'offline'].indexOf(status.toLowerCase()) > -1){
-      if(sessionStorage.muted == "0")
-        sendNotification("warning", "", "Muted chat due to status.");
-      set_muted(true);
-    }
-    $("#user-status b").html(status+(status !== "In Class" ? "<span class='caret'></span>" : ""));
-    console.log("Set status to "+status);
-  }
-
-  function setStatusNoLoop(stat){
-    if(!stat)
-      stat = "available";
-    sessionStorage['user-status'] = stat;
-
-    if(['in class', 'working', 'busy', 'offline'].indexOf(stat.toLowerCase()) > -1){
-      if(sessionStorage.muted == "0")
-        sendNotification("warning", "", "Muted chat due to status.");
-      set_muted(true);
-    }
-    $("#user-status b").html(stat+(stat !== "In Class" ? "<span class='caret'></span>" : ""));
-  }
-
+  $("#user-status b").html(stat+(stat !== "In Class" ? "<span class='caret'></span>" : ""));
 }
