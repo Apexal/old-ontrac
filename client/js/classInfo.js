@@ -31,7 +31,7 @@ function updateHomepageInfo(){
         content += "<h2>You should currently be in <b>Room "+cInfo.nowClass.room+"</b> for <b>"+cInfo.nowClass.className+"</b></h2>";
       }
       $("#cInfo-table tbody tr td:contains('"+moment(cInfo.nowClass.className, "hh:mm A").format("h:mm A")+"')").parent().addClass("success");
-      if(cInfo.nextClass !== false){
+      if(cInfo.nextClass !== false && cInfo.nextClass.className !== "Afternoon Advisement"){
         content += "<p class='larger'>Your next class is <b>"+cInfo.nextClass.className+"</b> in <b>Room "+cInfo.nextClass.room+"</b> in <b>"+moment(cInfo.nextClass.startTime, "hh:mm A").fromNow(true)+"</b></p>";
       }else{
         if(cInfo.nowClass !== "between")
@@ -72,7 +72,7 @@ function updateProfileSchedule(){
       }
     });
   }else{
-    if(profileUserInfo.todaysClassesInfo.currentInfo.inSchool == true){
+    if(profileUserInfo.todaysClassesInfo.currentInfo.inSchool == true && profileUserInfo.todaysClassesInfo.currentInfo !== false){
       var cInfo = profileUserInfo.todaysClassesInfo.currentInfo;
       if(cInfo.now !== false || cInfo.justStarted !== false){
         var n = false;
