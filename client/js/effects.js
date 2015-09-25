@@ -14,9 +14,9 @@ function effects() {
     $('[data-toggle="tooltip"]').tooltip();
 
     var clock = $("#clock");
-    clock.text(moment().format('MMMM Do YYYY, h:mm:ss a'));
+    clock.text(moment().format('dddd [the] Do, h:mm a'));
     setInterval(function() {
-      clock.text(moment().format('MMMM Do YYYY, h:mm:ss a'));
+      clock.text(moment().format('dddd [the] Do, h:mm a'));
     }, 1000);
 
     var today = moment().format("YYYY-MM-DD");

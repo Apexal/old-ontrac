@@ -49,7 +49,7 @@ router.post("/profile", function(req, res) {
   var newbio = req.body.newbio;
   var newnickname = req.body.newnickname;
   if(newbio){
-    req.session.currentUser.bio = newbio;
+    req.session.currentUser.bio = utils.filter(newbio);
     req.session.currentUser.nickname = newnickname;
     req.Student.findOne({username: req.currentUser.username}, function(err, user) {
       if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}

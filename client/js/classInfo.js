@@ -4,7 +4,7 @@ userInfo = false;
 schedule = false;
 
 function updateHomepageInfo(){
-  var content = "";
+  var content = "<hr>";
   var cInfo = todayInfo.currentInfo;
   if(schedule){
     $("#classInfo").html("");
@@ -20,7 +20,7 @@ function updateHomepageInfo(){
       if(cInfo.nowClass == "between"){
         content += "<p class='larger no-margin'><b>"+cInfo.justEnded.className+"</b> has just ended.</p>";
         if(cInfo.justStarted != false){
-          content += "<h2 class='no-margin'>Get to <b>Room "+cInfo.justStarted.room+"</b> for <b>"+cInfo.justStarted.className+"</b></h2>";
+          content += "<h2 class='no-margin'>Get to <b>"+cInfo.justStarted.room+"</b> for <b>"+cInfo.justStarted.className+"</b></h2>";
           $("#cInfo-table td:contains('"+moment(cInfo.justStarted.startTime, "hh:mm A").format("h:mm A")+"')").parent().addClass("success");
         }
       }else if(cInfo.nowClass.className == "Unstructured Time") {
@@ -28,19 +28,16 @@ function updateHomepageInfo(){
         content += "You currently have a <b>Free Period</b> for <b>"+moment(cInfo.nowClass.endTime, "hh:mm A").fromNow(true)+"</b>";
       }else{
         // Regular class
-        content += "<h2>You should currently be in <b>Room "+cInfo.nowClass.room+"</b> for <b>"+cInfo.nowClass.className+"</b></h2>";
+        content += "<h2>You should currently be in <b>"+cInfo.nowClass.room+"</b> for <b>"+cInfo.nowClass.className+"</b></h2>";
       }
       $("#cInfo-table tbody tr td:contains('"+moment(cInfo.nowClass.className, "hh:mm A").format("h:mm A")+"')").parent().addClass("success");
       if(cInfo.nextClass !== false && cInfo.nextClass.className !== "Afternoon Advisement"){
-        content += "<p class='larger'>Your next class is <b>"+cInfo.nextClass.className+"</b> in <b>Room "+cInfo.nextClass.room+"</b> in <b>"+moment(cInfo.nextClass.startTime, "hh:mm A").fromNow(true)+"</b></p>";
+        content += "<p class='larger'>Your next class is <b>"+cInfo.nextClass.className+"</b> in <b>"+cInfo.nextClass.room+"</b> in <b>"+moment(cInfo.nextClass.startTime, "hh:mm A").fromNow(true)+"</b></p>";
       }else{
         if(cInfo.nowClass !== "between")
           content += "<p class='larger'>This is the last class of your day!</p>";
       }
 
-
-
-      content += "<hr>";
       $("#classInfo").html(content);
     }else{
       // out of school
@@ -49,7 +46,40 @@ function updateHomepageInfo(){
       }
     }
   }
+}
 
+function updateSidebarClassInfo(){
+  var content = "";
+  var cInfo = todayInfo.currentInfo;
+  if(schedule){
+    if(cInfo.nowClass !== false){
+      $("#sidebar-class-info").show();
+      if(cInfo.nowClass == "between"){
+        if(cInfo.justStarted != false){
+          $("#sidebar-now-class").text(cInfo.justStarted.className.split(")")[0]+")");
+          $("#nowclass-room").text(cInfo.justStarted.room);
+        }
+      }else if(cInfo.nowClass.className == "Unstructured Time") {
+        // FREE PERIOD
+        $("#sidebar-now-class").text("Free Period");
+      }else{
+        // Regular class
+        $("#sidebar-now-class").text(cInfo.nowClass.className.split(")")[0]+")");
+        $("#nowclass-room").text(cInfo.nowClass.room);
+      }
+
+      if(cInfo.nextClass !== false && cInfo.nextClass.className !== "Afternoon Advisement"){
+        $("#sd-nextc").show();
+        $("#sidebar-next-class").text(cInfo.nextClass.className.split(")")[0]+")");
+        if(cInfo.nextClass.room !== "Anywhere")
+          $("#nextclass-room").text(cInfo.nextClass.room);
+      }else{
+        $("#sd-nextc").hide();
+      }
+    }else{
+      $("#sidebar-class-info").hide();
+    }
+  }
 }
 
 var hasClasses = false;
@@ -102,18 +132,20 @@ function clientSchedule(){
     console.log(todayInfo);
     schedule = getCurrentClassInfo(todayInfo.periods);
 
-    setInterval(updateDayInfo, 60000);
     updateDayInfo();
+    setInterval(updateDayInfo, 60000);
   });
 }
 
 function updateDayInfo(){
+  schedule = getCurrentClassInfo(todayInfo.periods);
   if($("#classInfo").length)
     updateHomepageInfo();
 
   if($("#profile-schedule").length && registered)
     updateProfileSchedule();
 
+  updateSidebarClassInfo();
   console.log("Updated schedule info");
 }
 

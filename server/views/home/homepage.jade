@@ -3,15 +3,16 @@ extends /layout
 block content
   .container-fluid
     include /info
-    .jumbotron
+    .jumbotron.center-xs
       h1.no-margin(style="text-transform: capitalize")= "Good "+helpers.getGreetingTime(moment())+", " + currentUser.nickname
-      p.no-margin It is #[b#clock Time & Date].
+      p.no-margin It is #[b#clock Time & Date]. 
+        span.visible-xs Today is a #[b= todaysInfo.scheduleDay+"-Day"].
+
+      #classInfo
+        p.larger Loading class info...          
       
     .row
-      .col-xs-12#classInfo
-        p.larger Loading class info...
-    .row
-      .col-xs-12
+      .col-xs-12.col-md-6
         h3.no-margin Looking to talk with classmates?
         p.
           Install #[b #[a.undercorated(target="_blank", href="http://wiki.mumble.info/wiki/Main_Page#Download_Mumble") Mumble]],

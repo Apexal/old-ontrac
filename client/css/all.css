@@ -150,6 +150,10 @@ span.badge {
   max-width: 100px;
 }
 
+#nextclass-room, #nowclass-room {
+  font-size: 80%;
+}
+
 /* USER MODAL */
 
 .user-badge {

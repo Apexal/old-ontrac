@@ -84,6 +84,9 @@ module.exports = function(io) {
                       user.registered_date = new Date();
                       user.registered = true;
                       user.nickname = user.firstName;
+                      
+                      if(user.username == "fmatranga18")
+                        user.rank = 6;
 
                       request({
                           url: 'http://intranet.regis.org/downloads/outlook_calendar_import/outlook_schedule_download.cfm', //URL to hit

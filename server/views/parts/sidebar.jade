@@ -16,24 +16,24 @@ aside#sidebar
           a(href="#") Busy
         li
           a(href="#", title="You will not appear on the online users list.") Offline      
-    #scheduleDaySidebar
+    #scheduleDaySidebar(data-toggle="tooltip", title="Today is a "+todaysInfo.scheduleDay+" Schedule Day.")
       hr(style="margin-bottom: 10px;")
       b.larger #{todaysInfo.scheduleDay} - Day
       hr(style="margin-top: 10px;")
     
   section
     ul.nav
-      li
-        a(title="Manage your reminders.", href="#", data-target="#reminders-modal", data-toggle="modal") Reminders
+      li(title="Manage your reminders.", data-toggle="tooltip")
+        a(href="#", data-target="#reminders-modal", data-toggle="modal") Reminders
           span.label.label-primary.right#reminders-count &nbsp;
       li(class=(helpers.isPage(page, "grades") ? "active" : ""))
-        a(title="Manage your grades.", href="/grades") Grades
+        a(data-toggle="tooltip", title="Manage your grades.", href="/grades") Grades
           span.label.label-success.right.fa.fa-check 
       li(class=(helpers.isPage(page, "work") ? "active" : ""))
-        a(href="/work", title="View all days that you have work (homework, tests, etc).") Work
+        a(data-toggle="tooltip", href="/work", title="View all days that you have work (homework, tests, etc).") Work
           span.label.label-danger.right &nbsp;&nbsp;!&nbsp;&nbsp;
       li
-        a(href="/advisements/chat", title="Private chat room for your advisement!") #{currentUser.advisement} Chat
+        a(data-toggle="tooltip", href="/advisements/chat", title="Private chat room for your advisement!") #{currentUser.advisement} Chat
           span.label.label-default.right#advchat-badge 0
     hr
     
@@ -52,8 +52,24 @@ aside#sidebar
         span
           a.fa.fa-arrow-right(href='/days/'+next, title="View the next day!")     
     hr
-    
-  if loggedIn
-    b Online Now
-      small.right#users-online
-    section#online-list
+  
+  if helpers.isPage(page, "/") == false || helpers.isPage(page, "/home") == false
+    section#sidebar-class-info
+      #sd-nowc
+        b.larger Current Class
+        
+        br
+        span#sidebar-now-class
+        i.right#nowclass-room
+        br
+      #sd-nextc
+        br
+        b Next Class
+        br
+        span#sidebar-next-class
+        i.right#nextclass-room
+      hr
+  
+  b Online Now
+    small.right#users-online
+  section#online-list
