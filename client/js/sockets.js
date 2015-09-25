@@ -139,6 +139,11 @@ function sockets() {
     if(sessionStorage['user-status'].toLowerCase() == "in class")
       return;
     setStatus($(this).text().toLowerCase().trim());
+    if(['in class', 'working', 'busy', 'offline'].indexOf($(this).text().toLowerCase()) > -1){
+      if(sessionStorage.muted == "0")
+        sendNotification("warning", "", "Muted chat due to status.");
+      set_muted(true);
+    }
   });
 
 
@@ -339,11 +344,6 @@ function setStatus(status){
   sessionStorage['user-status'] = status;
   socket.emit('setstatus', {status: status.toLowerCase()});
 
-  if(['in class', 'working', 'busy', 'offline'].indexOf(status.toLowerCase()) > -1){
-    if(sessionStorage.muted == "0")
-      sendNotification("warning", "", "Muted chat due to status.");
-    set_muted(true);
-  }
   $("#user-status b").html(status+(status !== "In Class" ? "<span class='caret'></span>" : ""));
   console.log("Set status to "+status);
 }
@@ -353,10 +353,5 @@ function setStatusNoLoop(stat){
     stat = "available";
   sessionStorage['user-status'] = stat;
 
-  if(['in class', 'working', 'busy', 'offline'].indexOf(stat.toLowerCase()) > -1){
-    if(sessionStorage.muted == "0")
-      sendNotification("warning", "", "Muted chat due to status.");
-    set_muted(true);
-  }
   $("#user-status b").html(stat+(stat !== "In Class" ? "<span class='caret'></span>" : ""));
 }
