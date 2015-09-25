@@ -1,7 +1,7 @@
 // A bunch of helper functions (mainly for Jade)
 var moment = require("moment");
 // The site I found this on was British, can you tell?
-var words = ["anal", "anus", "arse", "ass", "ballsack", "balls", "bastard", "bitch", "biatch", "bloody", "blowjob", "blow job", "bollock", "bollok", "boner", "boob", "bugger", "bum", "butt", "buttplug", "clitoris", "cock", "coon", "crap", "cunt", "damn", "dick", "dildo", "dyke", "fag", "feck", "fellate", "fellatio", "felching", "fuck", "f u c k", "fudgepacker", "fudge packer", "flange", "Goddamn", "God damn", "hell", "homo", "jerk", "jizz", "knobend", "knob end", "labia", "lmao", "lmfao", "muff", "nigger", "nigga", "omg", "penis", "piss", "poop", "prick", "pube", "pussy", "queer", "scrotum", "sex", "shit", "s hit", "sh1t", "slut", "smegma", "spunk", "tit", "tosser", "turd", "twat", "vagina", "wank", "whore", "wtf"];
+var words = ["anal", "anus", "ass", "ballsack", "balls", "bastard", "bitch", "biatch", "bloody", "blowjob", "blow job", "boner", "boob", "butt", "buttplug", "clitoris", "cock", "coon", "crap", "cunt", "damn", "dick", "dildo", "fag", "feck", "fellate", "fellatio", "felching", "fuck", "f u c k", "homo", "jerk", "jizz", "labia", "lmao", "lmfao", "muff", "nigger", "nigga", "penis", "piss", "poop", "prick", "pube", "pussy", "queer", "scrotum", "sex", "shit", "s hit", "sh1t", "slut", "spunk", "tit", "turd", "twat", "vagina", "wank", "whore", "wtf"];
 
 module.exports = {
   getGreetingTime: function(m) {
@@ -33,7 +33,7 @@ module.exports = {
   filter: function(str){
     words.forEach(function(word) {
       var re = new RegExp(word, 'g');
-      str = str.replace(re, 'Vode');
+      str = str.replace(re, '****');
     });
     return str;
   },

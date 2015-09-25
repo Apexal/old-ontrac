@@ -1,4 +1,6 @@
 var moment = require("moment");
+var filter = require("./utils").filter;
+
 var messages = [];
 var online = [];
 var server_user = {username: "OnTrac", tabs: 1};
@@ -35,7 +37,7 @@ module.exports = function(http) {
       io.sockets.emit('online-list', {users: online});
 
       socket.on('message', function (data) {
-        var d = {username: user.username, message: data.message, when: data.when};
+        var d = {username: user.username, message: filter(data.message), when: data.when};
         messages.push(d);
         io.sockets.emit('message', d);
       });
@@ -65,7 +67,7 @@ module.exports = function(http) {
       });
 
       socket.on('advchat-message', function(data) {
-        var d = {username: user.username, message: data.message, when: data.when};
+        var d = {username: user.username, message: filter(data.message), when: data.when};
         advchatmessages[client.advisement].push(d);
         advchatmessages[client.advisement] = advchatmessages[client.advisement].slice(Math.max(advchatmessages[client.advisement].length - 100, 0));
         io.to(client.advisement).emit('advchat-message', d);
