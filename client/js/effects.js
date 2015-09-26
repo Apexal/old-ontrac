@@ -107,7 +107,7 @@ function effects() {
                             "<tr class='reminder' data-id='" +
                             reminders[reminder]._id +
                             "'><td title='Added " + moment(
-                                reminders[reminder].date_added
+                                reminders[reminder].added_date
                             ).fromNow() + "'>" + reminders[
                                 reminder].desc +
                             "</td></tr>");
