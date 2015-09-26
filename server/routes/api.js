@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var moment = require('moment');
 var schedules = require('../modules/schedule');
+var filter = require("../modules/utils").filter;
 
 router.get("/*", function(req, res, next) {
   if(req.loggedIn)
@@ -80,7 +81,7 @@ router.post("/feedback/send", function(req, res) {
     console.log(feedbackType + " " + text);
     new req.Feedback({
       feedbackType: feedbackType,
-      text: text
+      text: filter(text)
     }).save(function(err, fb) {
       if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
       res.json({success: true});
