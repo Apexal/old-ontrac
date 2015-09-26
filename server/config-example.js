@@ -4,5 +4,6 @@ module.exports = {
   ip: "",
   port: "3000",
   db: "mongodb://localhost:27017/regis",
-  dbauth: {}
+  dbauth: {},
+  ga_code: ""
 };
