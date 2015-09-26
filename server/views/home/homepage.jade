@@ -5,11 +5,12 @@ block content
     include /info
     .jumbotron.center-xs
       h1.no-margin(style="text-transform: capitalize")= "Good "+helpers.getGreetingTime(moment())+", " + currentUser.nickname
-      p.no-margin It is #[b#clock Time & Date]. 
-        span.visible-xs Today is a #[b= todaysInfo.scheduleDay+"-Day"].
-
-      #classInfo
-        p.larger Loading class info...          
+      p.visible-xs.no-margin It is #[b#clock Time & Date].
+        if todaysInfo
+          span.visible-xs Today is a #[b= todaysInfo.scheduleDay+"-Day"].
+      if todaysInfo
+        #classInfo
+          p.larger Loading class info...          
       
     .row
       .col-xs-12.col-md-6

@@ -27,12 +27,16 @@ div#tabs
             th When
             th What
             th Where
-        tbody  
-          for s in todaysInfo.periods
+        tbody
+          if todaysInfo
+            for s in todaysInfo.periods
+              tr
+                td= moment(s.startTime, "hh:mm A").format("h:mm A")
+                td= s.className
+                td= s.room
+          else
             tr
-              td= moment(s.startTime, "hh:mm A").format("h:mm A")
-              td= s.className
-              td= s.room
+              td No classes today!
     #moodle-links.tab-pane(role='tabpanel').text-center
       each c in currentUser.courses
         a.btn.btn-default.hidden-xs(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title

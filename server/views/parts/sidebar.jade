@@ -15,12 +15,14 @@ aside#sidebar
         li
           a(href="#") Busy
         li
-          a(href="#", title="You will not appear on the online users list.") Offline      
-    #scheduleDaySidebar(data-toggle="tooltip", title="Today is a "+todaysInfo.scheduleDay+" Schedule Day.")
-      hr(style="margin-bottom: 10px;")
-      b.larger #{todaysInfo.scheduleDay} - Day
-      hr(style="margin-top: 10px;")
-    
+          a(href="#", title="You will not appear on the online users list.") Offline
+    if todaysInfo 
+      #scheduleDaySidebar(data-toggle="tooltip", title="Today is a "+todaysInfo.scheduleDay+" Schedule Day.")
+        hr(style="margin-bottom: 10px;")
+        b.larger #{todaysInfo.scheduleDay} - Day
+        hr(style="margin-top: 10px;")
+    else
+      hr
   section
     ul.nav
       li(title="Manage your reminders.", data-toggle="tooltip")
@@ -53,22 +55,23 @@ aside#sidebar
           a.fa.fa-arrow-right(href='/days/'+next, title="View the next day!")     
     hr
   
-  if helpers.isPage(page, "/") == false || helpers.isPage(page, "/home") == false
-    section#sidebar-class-info
-      #sd-nowc
-        b.larger Current Class
-        
-        br
-        span#sidebar-now-class
-        i.right#nowclass-room
-        br
-      #sd-nextc
-        br
-        b Next Class
-        br
-        span#sidebar-next-class
-        i.right#nextclass-room
-      hr
+  if todaysInfo
+    if helpers.isPage(page, "/") == false || helpers.isPage(page, "/home") == false
+      section#sidebar-class-info
+        #sd-nowc
+          b.larger Current Class
+          
+          br
+          span#sidebar-now-class
+          i.right#nowclass-room
+          br
+        #sd-nextc
+          br
+          b Next Class
+          br
+          span#sidebar-next-class
+          i.right#nextclass-room
+        hr
   
   b Online Now
     small.right#users-online

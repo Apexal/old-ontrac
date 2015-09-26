@@ -5,8 +5,9 @@ schedule = false;
 
 function updateHomepageInfo(){
   var content = "<hr>";
-  var cInfo = todayInfo.currentInfo;
+
   if(schedule){
+    var cInfo = todayInfo.currentInfo;
     $("#classInfo").html("");
     $("#cInfo-table tr").removeClass("sucess");
 
@@ -50,8 +51,8 @@ function updateHomepageInfo(){
 
 function updateSidebarClassInfo(){
   var content = "";
-  var cInfo = todayInfo.currentInfo;
   if(schedule){
+    var cInfo = todayInfo.currentInfo;
     if(cInfo.nowClass !== false){
       $("#sidebar-class-info").show();
       if(cInfo.nowClass == "between"){
@@ -130,15 +131,20 @@ function clientSchedule(){
     userInfo = data;
     todayInfo = userInfo.todaysClassesInfo;
     console.log(todayInfo);
-    schedule = getCurrentClassInfo(todayInfo.periods);
 
-    updateDayInfo();
-    setInterval(updateDayInfo, 60000);
+    if(todayInfo){
+      schedule = getCurrentClassInfo(todayInfo.periods);
+      updateDayInfo();
+      setInterval(updateDayInfo, 60000);
+    }else{
+      console.log("Not a school day, not updating class info.");
+    }
   });
 }
 
 function updateDayInfo(){
-  schedule = getCurrentClassInfo(todayInfo.periods);
+  if(todayInfo)
+    schedule = getCurrentClassInfo(todayInfo.periods);
   if($("#classInfo").length)
     updateHomepageInfo();
 
