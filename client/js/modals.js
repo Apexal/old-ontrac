@@ -68,19 +68,22 @@ function userbadges(){
             //console.log(data.sInfo);
             if(data.registered){
               //console.log(data);
-              data.sInfo = data.todaysClassesInfo.currentInfo;
-              if(data.sInfo.inSchool){
-                //console.log("GOOD");
-                var now = (data.sInfo.nowClass !== false && data.sInfo.nowClass !== "between" ? data.sInfo.nowClass : data.sInfo.justStarted);
-                if(now !== false){
-                  console.log(now);
+              if(data.todaysClassesInfo){
+                data.sInfo = data.todaysClassesInfo.currentInfo;
+                if(data.sInfo.inSchool){
+                  //console.log("GOOD");
+                  var now = (data.sInfo.nowClass !== false && data.sInfo.nowClass !== "between" ? data.sInfo.nowClass : data.sInfo.justStarted);
+                  if(now !== false){
+                    console.log(now);
 
 
-                  location = "<div class='well well-sm'>As of <b>" +moment().format("h:mm A")+
-                    "</b>, "+data.firstName+" is in <b>"+now.className+"</b> in <b>"+
-                    now.room + "</b> until <b>"+moment(now.endTime, "hh:mm A").format("h:mm A")+"</b></div>";
+                    location = "<div class='well well-sm'>As of <b>" +moment().format("h:mm A")+
+                      "</b>, "+data.firstName+" is in <b>"+now.className+"</b> in <b>"+
+                      now.room + "</b> until <b>"+moment(now.endTime, "hh:mm A").format("h:mm A")+"</b></div>";
+                  }
                 }
               }
+
             }
 
 
