@@ -42,15 +42,18 @@ router.get('/', function(req, res) {
 });
 
 router.get(['/closest'], function(req, res) {
-  req.Day.getClosest(req.currentUser.username, req.today, function(err, day) {
-    if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
-
-    if(day){
-      res.redirect("/work/"+moment(day.date).format("YYYY-MM-DD"));
-    }else{
-      res.redirect("/work/today");
+  var start = moment();
+  var count = 0;
+  var sDays = req.currentUser.scheduleObject.scheduleDays;
+  while(count < 50){
+    if(sDays[start.format("MM/DD/YY")] !== undefined){
+      res.redirect("/work/"+start.format("YYYY-MM-DD"));
+      return;
     }
-  });
+    start.add(1, 'days');
+    count++;
+  }
+  res.redirect("/work/today");
 });
 
 router.get("/today", function(req, res) {
@@ -116,7 +119,27 @@ router.get('/:date', function(req, res){
   else
     req.toJade.fromNow = Math.abs(diff)+" days ago";
 
+
+
+
+  // GET THE NEXT AND PREVIOUS DATES FOR THE DAY CONTROLS
   req.toJade.next = moment(date).add(1, 'days').format('YYYY-MM-DD');
+  if(req.currentUser.scheduleObject.scheduleDays[moment(date).add(1, 'days').format('MM/DD/YY')] == undefined){
+    // find the previous work day
+    console.log("Next day is not 1 ahead.");
+    var count = 0;
+    var last = moment(date);
+    var found = false;
+    while(count < 50 && found == false){
+      last.add(1, 'days');
+      //console.log(last.format("MM/DD/YY"));
+      if(req.currentUser.scheduleObject.scheduleDays[last.format("MM/DD/YY")]){
+        req.toJade.next = last.format("YYYY-MM-DD");
+        found = true;
+      }
+      count++;
+    }
+  }
   req.toJade.previous = moment(date).subtract(1, 'days').format('YYYY-MM-DD');
   if(req.currentUser.scheduleObject.scheduleDays[moment(date).subtract(1, 'days').format('MM/DD/YY')] == undefined){
     // find the previous work day
@@ -134,9 +157,6 @@ router.get('/:date', function(req, res){
       count--;
     }
   }
-
-
-
 
   req.toJade.hwTitles = false;
 

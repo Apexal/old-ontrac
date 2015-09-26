@@ -67,7 +67,6 @@ module.exports = {
   },
   day: {
         date: Date,
-        scheduleDay: String,
         username: String,
         items: {
           homework: [{ type: Schema.Types.ObjectId, ref: 'HWItem' }],
