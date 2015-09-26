@@ -62,4 +62,8 @@ function days(){
       dataType: "json"
     });
   });
+
+  $("#set-hw-link").click(function(){
+    $(this).data("link", prompt("Link for Assignment", $(this).data("link")));
+  });
 }

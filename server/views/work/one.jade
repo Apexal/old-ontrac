@@ -1,57 +1,49 @@
 extends /layout
 
 block content
-  .container
+  .container-fluid
     include /info
-    .page-header
-      h1= date.format("dddd, MMMM Do YYYY")
-        small.right= fromNow
+    .page-header.no-margin.center-xs
+      h1(data-toggle="tooltip", title=fromNow)= date.format("dddd, MMMM Do YYYY")
+        b.hidden-xs.right #{scheduleDay}-Day
+    
     .row
-      .col-xs-12.text-center
-        b#schedule-day #{scheduleDay}-Day
-
-    p#hw-info.text-center
-      | On this #[b= date.format("dddd")], you have #[a(href="#homework", style="color: #2780e3;")= (items.homework ? items.homework.length : 0) + " homework"] assignments
-      | to complete, #[a(href="#tests", style="color: #f0005e;") 0 tests] to take, #[a(href="#quizzes", style="color: #7643a8;") 0 quizzes] to take, and
-      | #[a(href="#projects", style="color: #ff4309;") 0 projects] due.
-
-    br
-    br.hidden-xs
+      .col-sm-3.col-md-2.hidden-xs
+        br
+        ul.nav.nav-pills.nav-stacked
+          li.active(role='presentation')
+            a(href='#homework-tab') Homework
+          li(role='presentation')
+            a(href='#tests-tab') Tests/Quizzes
+          li(role='presentation')
+            a(href='#') Messages
+      .col-xs-12.visible-xs
+        p.no-margin.full-width.text-center#schedule-day #{scheduleDay}-Day
+        hr(style="margin-top: 0")
+        ul.nav.nav-pills
+          li.active(role='presentation')
+            a(href='#homework-tab') Homework
+          li(role='presentation')
+            a(href='#tests-tab') Tests/Quizzes
+          li(role='presentation')
+            a(href='#') Messages
+    
+      include homework
+    
     .row.hidden-xs
-      .col-xs-12.text-center
-        input#hw-dial(type="text", value="50", data-fgcolor="#2780e3", data-readonly="true", data-width="100")
-        span.right-spacer
-        input.dial(type="text", value="50", data-fgcolor="#f0005e", data-readonly="true", data-width="100")
-        span.right-spacer
-        input.dial(type="text", value="50", data-fgcolor="#7643a8", data-readonly="true", data-width="100")
-        span.right-spacer
-        input.dial(type="text", value="50", data-fgcolor="#ff4309", data-readonly="true", data-width="100")
-
-    // HOMEWORK
-    include homework
-
-    -for(var i=0;i<6;i++)
-      br
-
-    // TESTS
-    .row#tests
-      .col-xs-12
-        .page-header
-          h2.text-center Tests
-        .col-xs-12.text-center
-          //b Items
-
-      .col-xs-12.text-center
-        if !items.tests
-          h4 No tests!
-          -for(var i=0;i<4;i++)
-            br
-        form.form-inline#tests-form(method="POST", role="form")
-          select.form-control(id="newTestSubject", name="newTestSubject", required=true)
-            for course in currentUser.courses
-              option(value=course.mID)= course.title
-          input.form-control(id="newTestDesc", name="newTestDesc", type="text", placeholder="Description", required=true)
-          button.btn.btn-primary.full-when-xs#test-button Add
+      hr
+      .col-sm-12.col-md-6
+        h2 Your #{scheduleDay}-Day Schedule
+    
+      .col-sm-12.col-md-6.text-center
         br
         br
         br
+        input#hw-dial(title="Progress on Homework", data-toggle="tooltip", type="text", value="50", data-fgcolor="#2780e3", data-readonly="true", data-width="100")
+        span.right-spacer
+        input.dial(title="Amount of Tests", data-toggle="tooltip", type="text", value="50", data-fgcolor="#f0005e", data-readonly="true", data-width="100")
+        span.right-spacer
+        input.dial(title="Amount of Quizzes", data-toggle="tooltip", type="text", value="50", data-fgcolor="#7643a8", data-readonly="true", data-width="100")
+        span.right-spacer
+        input.dial(title="Amount of Projects", data-toggle="tooltip", type="text", value="50", data-fgcolor="#ff4309", data-readonly="true", data-width="100")
+    

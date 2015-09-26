@@ -18,20 +18,21 @@
 /* Homework Pages */
 
 #schedule-day {
-  font-size: 1.5em;
+  font-size: 2em;
   cursor: pointer;
 }
 
-#hw-info {
-  font-size: 1.1em;
+#homework-form * {
+  margin-bottom: 0;
 }
 
-#hw-info a {
-  font-weight: 570;
+#homework-form div {
+  padding-left: 0;
+  padding-right: 0;
 }
 
-#hw-info a:hover {
-  text-decoration: none;
+#set-hw-link {
+  cursor: pointer;
 }
 
 .hw-item .title{
@@ -48,25 +49,6 @@
 .remove-assignment {
   font-size: 0.8em;
   cursor: pointer;
-}
-
-#newHWItemCourse{
-  max-width: 30%;
-}
-
-#newHWItemDesc {
-  width: 60%;
-}
-
-#homework-button {
-  width: 10%
-}
-
-@media (max-width: 757px) {
-  #homework-form *{
-    width: 100%;
-    max-width: 100%;
-  }
 }
 
 .timeline {

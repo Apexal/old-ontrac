@@ -1,31 +1,32 @@
-.row#homework
-  .col-xs-12
-    .page-header
-      h2.text-center Homework
-    .col-xs-12.text-center
-      //b Items
-  
-  .row
-    if hwTitles == false
-      h4.text-center No homework!
-      br
-    else
-      for title in hwTitles
-        .col-xs-12.col-md-6.hw-item.text-center
-          a.title(href="/courses/"+homework[title][0].course.mID)= title
-          ol
-            for item in homework[title]
-              li(data-id=item._id)
-                span(class="assignment"+(item.completed == true ? " completed" : ""))= item.desc+" "
-                i.fa.fa-close.remove-assignment
-                span  &nbsp;  &nbsp;  &nbsp;
-          br
+.col-xs-12.col-sm-9.col-md-10
   br
   if currentUser.courses.length > 0
     .row
       form.form-inline.center#homework-form(method="POST", action="/days/"+date.format('YYYY-MM-DD')+"/homework", role="form")
-        select.form-control(id="newHWItemCourse", name="newHWItemCourse", required=true)
-          for course in currentUser.courses
-            option(value=course.mID)= course.title
-        input.form-control(id="newHWItemDesc", name="newHWItemDesc", maxlength="50", type="text", placeholder="Description", required=true)
-        button.btn.btn-primary.full-when-xs#homework-button Add
+        .form-group.col-xs-12.col-sm-4.col-md-3
+          .input-group(style="width: 100%;")
+            .input-group-addon.fa.fa-link#set-hw-link(data-link="")
+            select.form-control(id="newHWItemCourse", name="newHWItemCourse", required=true)
+              for course in currentUser.courses
+                option(value=course.mID)= course.title  
+        .form-group.col-xs-12.col-sm-6.com-md-7
+          input.form-control(style="width: 100%;", id="newHWItemDesc", name="newHWItemDesc", maxlength="50", type="text", placeholder="Description", required=true)
+        .form-group.col-xs-12.col-sm-2
+          button.btn.btn-default.full-when-xs#homework-button(style="width: 100%;") Add
+
+  if hwTitles == false
+    h4.text-center No homework!
+    br
+  else
+    for title in hwTitles
+      .col-xs-12.col-md-6.hw-item.text-center
+        a.title(href="/courses/"+homework[title][0].course.mID)= title
+        ol
+          for item in homework[title]
+            li(data-id=item._id)
+              span(class="assignment"+(item.completed == true ? " completed" : ""))= item.desc+" "
+              i.fa.fa-close.remove-assignment
+              span  &nbsp;  &nbsp;  &nbsp;
+        br
+  br
+  
