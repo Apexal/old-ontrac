@@ -11,7 +11,7 @@ block content
         form.form(role="form", method="POST")
           .form-group
             label(for="newnickname") Nickname
-            input.form-control(type="text", name="newnickname", value=currentUser.nickname)
+            input.form-control(type="text", name="newnickname", maxlength="50", value=currentUser.nickname)
           .form-group
             label(for="newbio") Bio
             textarea.form-control#newbio(name="newbio")= currentUser.bio

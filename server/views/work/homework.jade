@@ -27,5 +27,5 @@
         select.form-control(id="newHWItemCourse", name="newHWItemCourse", required=true)
           for course in currentUser.courses
             option(value=course.mID)= course.title
-        input.form-control(id="newHWItemDesc", name="newHWItemDesc", type="text", placeholder="Description", required=true)
+        input.form-control(id="newHWItemDesc", name="newHWItemDesc", maxlength="50", type="text", placeholder="Description", required=true)
         button.btn.btn-primary.full-when-xs#homework-button Add

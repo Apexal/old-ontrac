@@ -49,7 +49,7 @@ block content
               else
                 for course in currentUser.courses
                   option(value=course.title)= sub.title
-            input.form-control(name="newItemDesc", type="text", placeholder="Description", required=true)
+            input.form-control(name="newItemDesc", type="text", maxlength="50", placeholder="Description", required=true)
             button.btn.btn-primary.full-when-xs Add
 
     //script(src="/javascripts/jquery.knob.js")

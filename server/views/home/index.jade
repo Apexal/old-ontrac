@@ -77,5 +77,5 @@ block content
         br
         form.form-inline(method="POST", action="/shutdown")
           .form-group
-            input.form-control(type="password", placeholder="Admin password", name="password", required=true)
+            input.form-control(type="password", maxlength="50", placeholder="Admin password", name="password", required=true)
           button.btn.btn-default Force Shutdown
