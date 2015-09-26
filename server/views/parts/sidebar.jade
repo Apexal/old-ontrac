@@ -40,19 +40,19 @@ aside#sidebar
     hr
     
   
-  if helpers.isPage(page, "days")
+  if helpers.isPage(page, "work")
     section#day-controls(class=(helpers.isShort(previous, next)))
       span
-        a(href="/days/today", title="View the work due today!") T
+        a(href="/work/today", title="View the work due today!") T
       span
-        a(href="/days/closest", title="Find the closest day from today that you have work!") C
+        a(href="/work/closest", title="Find the closest day from today that you have work!") C
       
       if previous
         span
-          a.fa.fa-arrow-left(href='/days/'+previous, title="View the previous day!")
+          a.fa.fa-arrow-left(href='/work/'+previous, title="View the previous work day!")
       if next
         span
-          a.fa.fa-arrow-right(href='/days/'+next, title="View the next day!")     
+          a.fa.fa-arrow-right(href='/work/'+next, title="View the next work day!")     
     hr
   
   if todaysInfo

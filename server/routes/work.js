@@ -54,44 +54,97 @@ router.get(['/closest'], function(req, res) {
 });
 
 router.get("/today", function(req, res) {
-  res.redirect("/days/"+moment().format("YYYY-MM-DD"));
+  res.redirect("/work/"+moment().format("YYYY-MM-DD"));
 });
 
-router.get("/:date", function(req, res, next) {
+router.get('/:date', function(req, res){
   var dateString = req.toJade.dateString = req.params.date;
   req.toJade.day = false;
   req.toJade.date = false;
   req.toJade.isToday = (dateString == req.today.format("YYYY-MM-DD"));
 
   if(moment(dateString, 'YYYY-MM-DD', true).isValid() == false){
-    req.toJade.title = "Invalid Date";
-    res.render('work/one', req.toJade);
-  }else{
-    var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true);
-    req.toJade.title = date.format("dddd, MMM Do YY");
-    req.toJade.items = false;
-    req.toJade.hwTitles = [];
+    // Bad date passed
+    req.session.errors.push("Bad date.");
+    res.redirect('/work');
+    return;
+  }
 
-    var diff = moment(date).diff(req.today, 'days');
-    if(diff == 0)
-      req.toJade.fromNow = "today";
-    else if(diff == 1)
-      req.toJade.fromNow = "tomorrow";
-    else if(diff > 0)
-      req.toJade.fromNow = diff+" days away";
-    else if(diff == -1)
-      req.toJade.fromNow = "yesterday";
-    else
-      req.toJade.fromNow = Math.abs(diff)+" days ago";
+  // Good date
+  var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true);
+  req.toJade.title = date.format("dddd, MMM Do YY");
+  req.toJade.items = false;
 
-    req.toJade.next = date.add(1, 'days').format('YYYY-MM-DD');
-    // We subtract 2 since we just added one above
-    req.toJade.previous = date.subtract(2, 'days').format('YYYY-MM-DD');
-    req.toJade.date = date.add(1, 'days');
+  if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
+    req.session.info.push("Redirected to closest school day.");
+    // Passed date is not a school, day try to find the next one
+    console.log("Not school day, finding closest one.");
+    var count = 0;
+    var last = moment(date);
+    while(count < 50){
+      last.add(1, 'days');
+      if(req.currentUser.scheduleObject.scheduleDays[last.format("MM/DD/YY")]){
+        res.redirect('/work/'+last.format("YYYY-MM-DD"));
+        return;
+      }
+      count++;
+    }
 
-    req.Day.findOne({username: req.currentUser.username, date: date.toDate()}).deepPopulate('items.homework').exec(function(err, day) {
+    var count = 50;
+    var last = moment(date);
+    while(count > 0){
+      last.subtract(1, 'days');
+      if(req.currentUser.scheduleObject.scheduleDays[last.format("MM/DD/YY")]){
+        res.redirect('/work/'+last.format("YYYY-MM-DD"));
+        return;
+      }
+      count--;
+    }
+  }
+  req.toJade.scheduleDay = req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")];
+
+  // Get time from today to this date
+  var diff = moment(date).diff(req.today, 'days');
+  if(diff == 0)
+    req.toJade.fromNow = "today";
+  else if(diff == 1)
+    req.toJade.fromNow = "tomorrow";
+  else if(diff > 0)
+    req.toJade.fromNow = diff+" days away";
+  else if(diff == -1)
+    req.toJade.fromNow = "yesterday";
+  else
+    req.toJade.fromNow = Math.abs(diff)+" days ago";
+
+  req.toJade.next = moment(date).add(1, 'days').format('YYYY-MM-DD');
+  req.toJade.previous = moment(date).subtract(1, 'days').format('YYYY-MM-DD');
+  if(req.currentUser.scheduleObject.scheduleDays[moment(date).subtract(1, 'days').format('MM/DD/YY')] == undefined){
+    // find the previous work day
+    console.log("Previous day is not 1 back.");
+    var count = 50;
+    var last = moment(date);
+    var found = false;
+    while(count > 0 && found == false){
+      last.subtract(1, 'days');
+      //console.log(last.format("MM/DD/YY"));
+      if(req.currentUser.scheduleObject.scheduleDays[last.format("MM/DD/YY")]){
+        req.toJade.previous = last.format("YYYY-MM-DD");
+        found = true;
+      }
+      count--;
+    }
+  }
+
+
+
+
+  req.toJade.hwTitles = false;
+
+  req.Day.findOne({username: req.currentUser.username, date: date.toDate()})
+    .deepPopulate('items.homework')
+    .exec(function(err, day) {
       if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
-      console.log(date.toDate());
+
       if(day){
         console.log("Found day");
         day.deepPopulate(['items.homework.course', 'mID title'], function(err, d) {
@@ -112,17 +165,16 @@ router.get("/:date", function(req, res, next) {
           req.toJade.hwTitles = cTitles;
           req.toJade.homework = organized;
 
-          console.log(req.toJade.hwcourses);
+          //console.log(req.toJade);
           req.toJade.items = d.items;
           res.render('work/one', req.toJade);
         });
       }else{
-        console.log("Did not find day");
+        console.log("No such day.");
+        //console.log(req.toJade);
         res.render('work/one', req.toJade);
       }
-
     });
-  }
 });
 
 module.exports = function(io) {
