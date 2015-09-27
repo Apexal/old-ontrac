@@ -178,7 +178,7 @@ function teacherbadges(){
                                     "            <img class='modal-pic' title='Looking good!' alt='No profile picture yet!' src='"+imgsrc+"'>" +
                                     "        </div>" +
                                     "        <div class='col-xs-12 col-sm-9'>" +
-                                    "             <h3 class='no-margin'>"+data.firstName + " " +data.lastName+" from <b>"+dep+"</b></h3><br>" +
+                                    "             <h3 class='no-margin'>"+data.firstName + " " +data.lastName+" of <b>"+dep+"</b></h3><br>" +
                                     "             <div class='well well-sm'>" +
                                     "                 <b>Classes: </b><span>"+coursenames.join(',  ')+"</span>" +
                                     "             </div>" +
@@ -189,10 +189,9 @@ function teacherbadges(){
                                     "    </div>" +
                                     "</div>"+
                   "                </div>" +
-                  "                <div class='modal-footer'>" +
-                  "                    <button class='btn btn-default' data-dismiss='modal' type=" +
-                  "                    'button'>Close</button> <a class='btn btn-primary'" +
-                  "                    href='/teachers/"+data.mID+"'>View Full Profile</a>" +
+                  "                <div class='modal-footer'><a class='btn btn-default' href='mailto:"+data.email+"'>Email</a> " +
+                  "                     <a class='btn btn-primary' target='_blank' " +
+                  "                    href='http://moodle.regis.org/user/profile.php?id="+data.mID+"'>Moodle Profile</a>" +
                   "                </div>" +
                   "            </div>" +
                   "        </div>" +
