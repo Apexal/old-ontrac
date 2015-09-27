@@ -7,8 +7,9 @@ function effects() {
         return false;
     });
     if (username) {
-        userbadges();
-        teacherbadges();
+      userbadges();
+      teacherbadges();
+      coursebadges();
     }
 
     $('[data-toggle="tooltip"]').tooltip();

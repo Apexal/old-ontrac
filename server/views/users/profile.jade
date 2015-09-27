@@ -118,6 +118,6 @@ mixin class(course)
     .panel(title=(currentUser.username !== user.username && currentUser.sclasses.indexOf(course.mID) > -1 ? "You share this class!" : ""), class=( currentUser.username !== user.username && currentUser.sclasses.indexOf(course.mID) > -1 ? "panel-success" : "panel-default"))
       .panel-body
         h1.panel-title
-          a(href="/courses/"+course.mID)= course.title
+          span.course-badge(data-mid=course.mID)= course.title
           if course.teacher
             small.right.teacher-badge(data-username=course.teacher.username) Teacher #{course.teacher.fullName}

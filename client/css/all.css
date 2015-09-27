@@ -165,6 +165,9 @@ span.badge {
   cursor: pointer;
 }
 
+.course-badge {
+  cursor: pointer;
+}
 
 /* REMINDER MODAL */
 

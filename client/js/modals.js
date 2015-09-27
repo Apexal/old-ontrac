@@ -208,3 +208,71 @@ function teacherbadges(){
   });
 
 }
+
+
+function coursebadges(){
+  $(".course-badge").off("click").click(function() {
+    var mID = $(this).data("mid");
+
+    if($("#course-"+mID+"-modal").length === 0){
+      $.ajax({
+        type: 'GET',
+        url: "/api/course/"+mID,
+        success: function(data) {
+          if(data != "Not authorized."){
+            var title = data.title;
+            console.log(data);
+            var teachertitle = "";
+            var teacherpic = "";
+            if(data.teacher){
+              teacherpic = "<div class='col-xs-12 col-sm-3 center'>" +
+                    "<a target='_blank' href='http://moodle.regis.org/user/profile.php?id="+data.teacher.mID+
+                    "'><img class='modal-pic' title='Looking good!' alt='No profile picture yet!' src='"+
+                    data.teacher.ipicture+"'></a></div>";
+
+              teachertitle = "with <b>Teacher "+data.teacher.firstName+" "+data.teacher.lastName+"</b>";
+            }
+
+            // TODO: this thing too...
+            var content = $("<div class='modal fade teacher-modal' id='course-"+mID+"-modal' tabindex='-1'>" +
+                  "        <div class='modal-dialog'>" +
+                  "            <div class='modal-content'>" +
+                  "                <div class='modal-header'>" +
+                  "                    <button class='close' data-dismiss='modal' type=" +
+                  "                    'button'><span>&times;</span></button>" +
+                  "                    <h4 class='modal-title'>Course " +
+                  "                    Summary</h4>" +
+                  "                </div>" +
+                  "                <div class='modal-body'>" +
+                                    "<div class='container-fluid'>" +
+                                    "    <div class='row'>" + teacherpic +
+                                    "        <div class='col-xs-12 col-sm-9'>" +
+                                    "             <h3 class='no-margin'> Course "+title+" "+teachertitle+"</h3><br>" +
+                                    "             <div class='well well-sm'>" +
+                                    "                 <p>This course has <b>"+data.students.length+"</b> enrolled students." +
+                                    "             </div>" +
+                                    "        </div>" +
+                                    "    </div>" +
+                                    "</div>"+
+                  "                </div>" +
+                  "                <div class='modal-footer'>" +
+                  "                     <a class='btn btn-primary' target='_blank' " +
+                  "                    href='http://moodle.regis.org/course/view.php?id="+mID+"'>Moodle Page</a>" +
+                  "                </div>" +
+                  "            </div>" +
+                  "        </div>" +
+                  "    </div>");
+
+            $("body").append(content);
+            if(!data.err)
+              $("#course-"+mID+"-modal").modal();
+          }
+        }
+      });
+    }else{
+      if(!data.err)
+        $("#course-"+mID+"-modal").modal();
+    }
+  });
+
+}

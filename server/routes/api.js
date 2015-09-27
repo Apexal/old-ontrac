@@ -16,7 +16,7 @@ router.get('/user/:username', function(req, res) {
   req.Student.findOne({username: username}, 'username firstName lastName rank bio ipicture points mpicture scheduleObject registered advisement')
     .lean()
     .exec(function(err, user) {
-      if(err) res.json({error: err});
+      if(err){res.json({error: err}); return;};
       if(user){
         if(user.registered){
           var sd = user.scheduleObject.scheduleDays[moment().format("MM/DD/YY")];
@@ -35,11 +35,10 @@ router.get('/user/:username', function(req, res) {
 router.get('/teacher/:username', function(req, res) {
   var username = req.params.username;
   req.Teacher.findOne({username: username}).populate('courses', 'title mID').exec(function(err, teacher) {
-    if(err) res.json({error: err});
-
+    if(err){res.json({error: err}); return;};
     if(teacher){
       teacher.ratingStringJSON = String(teacher.ratingString);
-      console.log("LOOK: "+teacher);
+      //console.log("LOOK: "+teacher);
       res.json(teacher);
     }else{
       res.json({error: "No such teacher!"});
@@ -47,6 +46,19 @@ router.get('/teacher/:username', function(req, res) {
   });
 });
 
+router.get('/course/:mID', function(req, res) {
+  var mID = req.params.mID;
+  req.Course.findOne({mID: mID})
+    .populate('teacher', 'firstName lastName username ipicture mpicture mID')
+    .exec(function(err, course){
+      if(err){res.json({error: err}); return;};
+      if(course){
+        res.json(course);
+      }else{
+        res.json({error: "No such course!"});
+      }
+    });
+});
 
 router.get('/work/:date', function(req, res) {
   var dateString = req.params.date;
@@ -93,5 +105,5 @@ router.post("/feedback/send", function(req, res) {
 });
 
 module.exports = function(io) {
-  return {router: router, models: ['Student', 'Teacher', 'Day', 'GradedItem', 'Feedback']}
+  return {router: router, models: ['Student', 'Teacher', 'Day', 'GradedItem', 'Feedback', 'Course']}
 };
