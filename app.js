@@ -75,7 +75,7 @@ app.use(function(req, res, next) {
     currentUser: req.currentUser,
     loggedIn: req.loggedIn,
     redir: (req.query.redir ? req.query.redir : req._parsedUrl.pathname),
-    analytics_code: config.ga_code 
+    analytics_code: config.ga_code
   }
   req.toJade.openLogin = (req.toJade.redir == req._parsedUrl.pathname ? false : true);
 
@@ -88,7 +88,7 @@ app.use(function(req, res, next) {
 });
 
 // List of paths users can only access if logged in
-var restricted = ['/users', '/advisements', '/teachers', '/courses', '/work', '/gchat', '/reminders', '/admin', '/rating'];
+var restricted = ['/users', '/advisements', '/work', '/gchat', '/reminders', '/admin', '/rating'];
 app.use(restricted, function(req, res, next) {
   if(req.toJade.loggedIn){
     next();
