@@ -32,6 +32,7 @@ module.exports = {
   banned: words,
   filter: function(str){
     words.forEach(function(word) {
+      var word = word.replace('1', 'i').replace('3', 'e').replace('()', 'o');
       var re = new RegExp(word, 'g');
       str = str.replace(re, '****');
     });
