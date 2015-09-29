@@ -53,8 +53,8 @@ block content
                     |  #{moment(user.registered_date).format('dddd, MMMM Do YYYY')}
                     br
                     if user.steamlink
-                      b 
-                        a(href=user.steamlink, target="_blank") Steam Profile
+                      b
+                        a(data-toggle="tooltip", title="This guy is cool.", href=user.steamlink, target="_blank") Steam Profile
             
         
         .col-xs-12.col-sm-6.col-md-6.col-lg-4

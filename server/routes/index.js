@@ -17,6 +17,7 @@ module.exports = function(io) {
       req.toJade.title = "Your Home";
       req.toJade.nextCD = schedules.getNextDay(moment(), req.currentUser.scheduleObject);
       req.toJade.nextSD = req.currentUser.scheduleObject.scheduleDays[req.toJade.nextCD];
+      console.log(schedules.getCurrentClassInfo(req.toJade.todaysInfo.periods));
       res.render('home/homepage', req.toJade);
     }else{
       res.render('home/index', req.toJade);
@@ -175,12 +176,35 @@ module.exports = function(io) {
 
                           periods.forEach(function(period) {
                             if(lastPeriod.endTime !== period.startTime){
-                              filledPeriods.push({
-                                room: "Anywhere",
-                                startTime: lastPeriod.endTime,
-                                endTime: period.startTime,
-                                className: "Unstructured Time"
-                              });
+                              var room = "Anywhere";
+                              var cName = "Unstructured Time";
+                              var grade = user.grade;
+                              var lunch = moment(lastPeriod.endTime, "hh:mm A").startOf('day').hour(11).minute(30);
+                              switch(grade){
+                                case 9:
+                                case 10:
+                                  lunch = moment(lastPeriod.endTime, "hh:mm A").startOf('day').hour(11).minute(30);
+                                  break;
+                                case 11:
+                                case 12:
+                                  lunch = moment(lastPeriod.endTime, "hh:mm A").startOf('day').hour(12).minute(10);
+                                  break;
+                              }
+                              if(moment(lastPeriod.endTime, "hh:mm A").isSame(lunch)){
+                                filledPeriods.push({
+                                  room: "Cafeteria",
+                                  startTime: lunch.format("hh:mm A"),
+                                  endTime: moment(lunch).add(40, 'minutes').format("hh:mm A"),
+                                  className: "Lunch"
+                                });
+                              }else{
+                                filledPeriods.push({
+                                  room: "Anywhere",
+                                  startTime: lastPeriod.endTime,
+                                  endTime: period.startTime,
+                                  className: "Unstructured Time"
+                                });
+                              }
                             }
 
                             lastPeriod = period;

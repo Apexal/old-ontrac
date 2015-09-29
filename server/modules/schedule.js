@@ -2,7 +2,7 @@ var moment = require("moment");
 
 // Return an the scheduleobject for today with the periods filled in.
 var getCurrentClassInfo = function(periods){
-  var mom = moment();
+  var mom = moment("08:45 AM", "hh:mm A");
   var dayStart = moment("08:40 AM", "hh:mm A");
   var dayEnd = moment("02:50 PM", "hh:mm A");
 
@@ -29,7 +29,9 @@ var getCurrentClassInfo = function(periods){
     // Try to find a class that just ended
     var cur = mom;
     var found = periods.filter(function(period) {
-      if(cur.isSame(moment(period.endTime, "hh:mm A"))){
+      var ended = moment(period.endTime, "hh:mm A");
+      var buffer = moment(ended).add(3, 'minutes'); // Start of next period with buffer time
+      if(cur.isBetween(ended, buffer)){
         return true;
       }
       return false;
@@ -37,33 +39,29 @@ var getCurrentClassInfo = function(periods){
     if(found.length == 1){ justEnded = found[0];}else{justEnded = false;}
     // If none found set to false
 
-    // Try to find a class that just started
-    var found = periods.filter(function(period) {
-      if(cur.isSame(moment(period.startTime, "hh:mm A"))){
-        return true;
-      }
-      return false;
-    });
-    if(found.length == 1){ justStarted = found[0];}else{justStarted = false;}
-    // If none set to false
+    // Did the current class just start?
+    var started = moment(now.startTime, "hh:mm A");
+    var buffer = moment(started).add(3, 'minutes');
+    if(cur.isBetween(started, buffer)) justStarted = true;
 
-    // If a class jas just ended and another jas just started, you are in between adjacent classes
+    // If a class has just ended and another has just started, you are in between adjacent classes
     if(justStarted !== false && justEnded !== false){
-      now = "between";
+      var index = periods.indexOf(justStarted) + 1;
+      if(periods[index])
+        now = periods[index];
     }
 
     // Get the next class
-    if(now !== "between")
-      next = ((periods.length-1 > periods.indexOf(now)) ? periods[periods.indexOf(now)+1] : false);
+    next = ((periods.length-1 > periods.indexOf(now)) ? periods[periods.indexOf(now)+1] : false);
 
   }
 
   return {
-    nowClass: now,
-    nextClass: next,
-    justStarted: justStarted,
-    justEnded: justEnded,
-    inSchool: inSchool
+    nowClass: now, // object of current class | false
+    nextClass: next, // object of next class | false
+    justStarted: justStarted, // boolean stating whether current class just started | false
+    justEnded: justEnded, // object of class that just ended | false
+    inSchool: inSchool // boolean stating whether the current time is during school hours
   };
 };
 

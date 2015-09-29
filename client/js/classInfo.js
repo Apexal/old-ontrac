@@ -13,16 +13,15 @@ function updateHomepageInfo(){
 
     //console.log(sInfo);
     if(cInfo.nowClass !== false){
-      if((cInfo.nowClass.className == "Unstructured Time" || cInfo.justStarted.className == "Unstructured Time") && sessionStorage['user-status'] == "In Class")
+      if(cInfo.nowClass.className == "Unstructured Time" && sessionStorage['user-status'] == "In Class")
         setStatus("Available");
-      else if(cInfo.nowClass.className != "Unstructured Time" && cInfo.justStarted.className != "Unstructured Time")
+      else if(cInfo.nowClass.className != "Unstructured Time")
         setStatus("In Class");
 
-      if(cInfo.nowClass == "between"){
+      if(cInfo.justEnded !== false){
         content += "<p class='larger no-margin'><b>"+cInfo.justEnded.className+"</b> has just ended.</p>";
-        if(cInfo.justStarted != false){
-          content += "<h2 class='no-margin'>Get to <b>"+cInfo.justStarted.room+"</b> for <b>"+cInfo.justStarted.className+"</b></h2>";
-          $("#cInfo-table td:contains('"+moment(cInfo.justStarted.startTime, "hh:mm A").format("h:mm A")+"')").parent().addClass("success");
+        if(cInfo.justStarted){
+          content += "<h2 class='no-margin'>Get to <b>"+cInfo.nowClass.room+"</b> for <b>"+cInfo.nowClass.className+"</b></h2>";
         }
       }else if(cInfo.nowClass.className == "Unstructured Time") {
         // FREE PERIOD
@@ -35,8 +34,7 @@ function updateHomepageInfo(){
       if(cInfo.nextClass !== false && cInfo.nextClass.className !== "Afternoon Advisement"){
         content += "<p class='larger'>Your next class is <b>"+cInfo.nextClass.className+"</b> in <b>"+cInfo.nextClass.room+"</b> in <b>"+moment(cInfo.nextClass.startTime, "hh:mm A").fromNow(true)+"</b></p>";
       }else{
-        if(cInfo.nowClass !== "between")
-          content += "<p class='larger'>This is the last class of your day!</p>";
+        content += "<p class='larger'>This is the last class of your day!</p>";
       }
 
       $("#classInfo").html(content);
@@ -55,17 +53,15 @@ function updateSidebarClassInfo(){
     var cInfo = schedule;
     if(cInfo.nowClass !== false){
       $("#sidebar-class-info").show();
-      if(cInfo.nowClass == "between"){
-        if(cInfo.justStarted != false){
-          $("#sidebar-now-class").text(cInfo.justStarted.className.split(")")[0]+")");
-          $("#nowclass-room").text(cInfo.justStarted.room);
-        }
-      }else if(cInfo.nowClass.className == "Unstructured Time") {
+      if(cInfo.nowClass.className == "Unstructured Time") {
         // FREE PERIOD
         $("#sidebar-now-class").text("Free Period");
       }else{
         // Regular class
-        $("#sidebar-now-class").text(cInfo.nowClass.className.split(")")[0]+")");
+        var cTitle = cInfo.nowClass.className;
+        if(cTitle.indexOf(")") > -1)
+          cTitle = cTitle.split(")")[0] +")";
+        $("#sidebar-now-class").text(cTitle);
         $("#nowclass-room").text(cInfo.nowClass.room);
       }
 
@@ -105,18 +101,9 @@ function updateProfileSchedule(){
   }else{
     var cInfo = getCurrentClassInfo(profileUserInfo.todaysClassesInfo.periods);
     if(cInfo.inSchool == true && cInfo !== false){
-      if(cInfo.now !== false || cInfo.justStarted !== false){
-        var n = false;
-        if(cInfo.now != false)
-          n = cInfo.now;
-        if(cInfo.justStarted != false)
-          n = cInfo.justStarted;
-
-        if(n !== false){
-          console.log(n);
-          $("#profile-schedule").show();
-          $("#profile-schedule p").html("<b>"+profileUserInfo.firstName+"</b> currently has <b>"+n.className+"</b> in <b>"+n.room+"</b> until <b>"+moment(n.endTime, "hh:mm A").format("h:mm A")+"</b>");
-        }
+      if(cInfo.nowClass !== false){
+        $("#profile-schedule").show();
+        $("#profile-schedule p").html("<b>"+profileUserInfo.firstName+"</b> currently has <b>"+cInfo.nowClass.className+"</b> in <b>"+cInfo.nowClass.room+"</b> until <b>"+moment(cInfo.nowClass.endTime, "hh:mm A").format("h:mm A")+"</b>");
       }
     }else{
       $("#profile-schedule").hide();
@@ -155,9 +142,9 @@ function updateDayInfo(){
   console.log("Updated schedule info");
 }
 
-
-function getCurrentClassInfo(periods){
-  var mom = moment();
+// Return an the scheduleobject for today with the periods filled in.
+var getCurrentClassInfo = function(periods){
+  var mom = moment("08:45 AM", "hh:mm A");
   var dayStart = moment("08:40 AM", "hh:mm A");
   var dayEnd = moment("02:50 PM", "hh:mm A");
 
@@ -184,7 +171,9 @@ function getCurrentClassInfo(periods){
     // Try to find a class that just ended
     var cur = mom;
     var found = periods.filter(function(period) {
-      if(cur.isSame(moment(period.endTime, "hh:mm A"))){
+      var ended = moment(period.endTime, "hh:mm A");
+      var buffer = moment(ended).add(3, 'minutes'); // Start of next period with buffer time
+      if(cur.isBetween(ended, buffer)){
         return true;
       }
       return false;
@@ -192,32 +181,54 @@ function getCurrentClassInfo(periods){
     if(found.length == 1){ justEnded = found[0];}else{justEnded = false;}
     // If none found set to false
 
-    // Try to find a class that just started
-    var found = periods.filter(function(period) {
-      if(cur.isSame(moment(period.startTime, "hh:mm A"))){
-        return true;
-      }
-      return false;
-    });
-    if(found.length == 1){ justStarted = found[0];}else{justStarted = false;}
-    // If none set to false
+    // Did the current class just start?
+    var started = moment(now.startTime, "hh:mm A");
+    var buffer = moment(started).add(3, 'minutes');
+    if(cur.isBetween(started, buffer)) justStarted = true;
 
-    // If a class jas just ended and another jas just started, you are in between adjacent classes
+    // If a class has just ended and another has just started, you are in between adjacent classes
     if(justStarted !== false && justEnded !== false){
-      now = "between";
+      var index = periods.indexOf(justStarted) + 1;
+      if(periods[index])
+        now = periods[index];
     }
 
     // Get the next class
-    if(now !== "between")
-      next = ((periods.length-1 > periods.indexOf(now)) ? periods[periods.indexOf(now)+1] : false);
+    next = ((periods.length-1 > periods.indexOf(now)) ? periods[periods.indexOf(now)+1] : false);
 
   }
 
   return {
-    nowClass: now,
-    nextClass: next,
-    justStarted: justStarted,
-    justEnded: justEnded,
-    inSchool: inSchool
+    nowClass: now, // object of current class | false
+    nextClass: next, // object of next class | false
+    justStarted: justStarted, // boolean stating whether current class just started | false
+    justEnded: justEnded, // object of class that just ended | false
+    inSchool: inSchool // boolean stating whether the current time is during school hours
   };
 };
+
+function getNextDay(day, sO){
+  var current = moment(day).add(1, 'days');
+  var count = 0;
+  while(count < 50){
+    if(sO.scheduleDays[current.format("MM/DD/YY")] !== undefined){
+      return current.format("MM/DD/YY");
+    }
+    current.add(1, 'days');
+    count++;
+  }
+  return false;
+}
+
+function getPrevDay(day, sO){
+  var current = moment(day).subtract(1, 'days');
+  var count = 50;
+  while(count > 0){
+    if(sO.scheduleDays[current.format("MM/DD/YY")] !== undefined){
+      return current.format("MM/DD/YY");
+    }
+    current.subtract(1, 'days');
+    count--;
+  }
+  return false;
+}
