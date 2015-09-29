@@ -75,7 +75,9 @@ app.use(function(req, res, next) {
     currentUser: req.currentUser,
     loggedIn: req.loggedIn,
     redir: (req.query.redir ? req.query.redir : req._parsedUrl.pathname),
-    analytics_code: config.ga_code
+    analytics_code: config.ga_code,
+    next: false,
+    previous: false
   }
   req.toJade.openLogin = (req.toJade.redir == req._parsedUrl.pathname ? false : true);
 

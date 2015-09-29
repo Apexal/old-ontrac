@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var moment = require('moment');
+var schedules = require('../modules/schedule');
 
 /* ----------------------------- */
 /*         GET REQUESTS          */
@@ -42,18 +43,14 @@ router.get('/', function(req, res) {
 });
 
 router.get(['/closest'], function(req, res) {
-  var start = moment();
-  var count = 0;
-  var sDays = req.currentUser.scheduleObject.scheduleDays;
-  while(count < 50){
-    if(sDays[start.format("MM/DD/YY")] !== undefined){
-      res.redirect("/work/"+start.format("YYYY-MM-DD"));
-      return;
-    }
-    start.add(1, 'days');
-    count++;
+  var nD = schedules.getNextDay(moment(), req.currentUser.scheduleObject);
+  if(!nD){
+    req.session.info.push("Cannot find the next class day!");
+    res.redirect("/work");
+    return;
+  }else{
+    res.redirect("/work/"+moment(nD, "MM/DD/YY").format("YYYY-MM-DD"));
   }
-  res.redirect("/work/today");
 });
 
 router.get("/today", function(req, res) {
@@ -78,30 +75,30 @@ router.get('/:date', function(req, res){
   req.toJade.title = date.format("dddd, MMM Do YY");
   req.toJade.items = false;
 
+
+
   if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
     req.session.info.push("Redirected to closest school day.");
     // Passed date is not a school, day try to find the next one
     console.log("Not school day, finding closest one.");
-    var count = 0;
-    var last = moment(date);
-    while(count < 50){
-      last.add(1, 'days');
-      if(req.currentUser.scheduleObject.scheduleDays[last.format("MM/DD/YY")]){
-        res.redirect('/work/'+last.format("YYYY-MM-DD"));
-        return;
-      }
-      count++;
+    var nD = schedules.getNextDay(date, req.currentUser.scheduleObject);
+    if(!nD){
+      req.session.info.push("Cannot find the next class day!");
+      res.redirect("/work");
+      return;
+    }else{
+      res.redirect('/work/'+moment(nD, "MM/DD/YY").format("YYYY-MM-DD"));
+      return;
     }
 
-    var count = 50;
-    var last = moment(date);
-    while(count > 0){
-      last.subtract(1, 'days');
-      if(req.currentUser.scheduleObject.scheduleDays[last.format("MM/DD/YY")]){
-        res.redirect('/work/'+last.format("YYYY-MM-DD"));
-        return;
-      }
-      count--;
+    var pD = schedules.getPrevDay(date, req.currentUser.scheduleObject);
+    if(!pD){
+      req.session.info.push("Cannot find the previous class day!");
+      res.redirect("/work");
+      return;
+    }else{
+      res.redirect('/work/'+moment(pD, "MM/DD/YY").format("YYYY-MM-DD"));
+      return;
     }
   }
   req.toJade.scheduleDay = req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")];
@@ -120,43 +117,9 @@ router.get('/:date', function(req, res){
     req.toJade.fromNow = Math.abs(diff)+" days ago";
 
 
-
-
   // GET THE NEXT AND PREVIOUS DATES FOR THE DAY CONTROLS
-  req.toJade.next = moment(date).add(1, 'days').format('YYYY-MM-DD');
-  if(req.currentUser.scheduleObject.scheduleDays[moment(date).add(1, 'days').format('MM/DD/YY')] == undefined){
-    // find the previous work day
-    console.log("Next day is not 1 ahead.");
-    var count = 0;
-    var last = moment(date);
-    var found = false;
-    while(count < 50 && found == false){
-      last.add(1, 'days');
-      //console.log(last.format("MM/DD/YY"));
-      if(req.currentUser.scheduleObject.scheduleDays[last.format("MM/DD/YY")]){
-        req.toJade.next = last.format("YYYY-MM-DD");
-        found = true;
-      }
-      count++;
-    }
-  }
-  req.toJade.previous = moment(date).subtract(1, 'days').format('YYYY-MM-DD');
-  if(req.currentUser.scheduleObject.scheduleDays[moment(date).subtract(1, 'days').format('MM/DD/YY')] == undefined){
-    // find the previous work day
-    console.log("Previous day is not 1 back.");
-    var count = 50;
-    var last = moment(date);
-    var found = false;
-    while(count > 0 && found == false){
-      last.subtract(1, 'days');
-      //console.log(last.format("MM/DD/YY"));
-      if(req.currentUser.scheduleObject.scheduleDays[last.format("MM/DD/YY")]){
-        req.toJade.previous = last.format("YYYY-MM-DD");
-        found = true;
-      }
-      count--;
-    }
-  }
+  req.toJade.next = moment(schedules.getNextDay(date, req.currentUser.scheduleObject), "MM/DD/YY").format("YYYY-MM-DD");
+  req.toJade.previous = moment(schedules.getPrevDay(date, req.currentUser.scheduleObject), "MM/DD/YY").format("YYYY-MM-DD");
 
   req.toJade.hwTitles = false;
 

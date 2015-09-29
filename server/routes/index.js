@@ -15,8 +15,8 @@ module.exports = function(io) {
     req.toJade.title = "OnTrac";
     if(req.loggedIn){
       req.toJade.title = "Your Home";
-
-      console.log(req.toJade.todaysInfo);
+      req.toJade.nextCD = schedules.getNextDay(moment(), req.currentUser.scheduleObject);
+      req.toJade.nextSD = req.currentUser.scheduleObject.scheduleDays[req.toJade.nextCD];
       res.render('home/homepage', req.toJade);
     }else{
       res.render('home/index', req.toJade);
@@ -84,7 +84,7 @@ module.exports = function(io) {
                       user.registered_date = new Date();
                       user.registered = true;
                       user.nickname = user.firstName;
-                      
+
                       if(user.username == "fmatranga18")
                         user.rank = 6;
 

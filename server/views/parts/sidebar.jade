@@ -48,10 +48,10 @@ aside#sidebar
       span
         a(href="/work/closest", title="Find the closest day from today that you have work!") C
       
-      if previous
+      if previous !== false
         span
           a.fa.fa-arrow-left(href='/work/'+previous, title=moment(previous).format("dddd, MMMM Do"))
-      if next
+      if next !== false
         span
           a.fa.fa-arrow-right(href='/work/'+next, title="View the next work day!")     
     hr

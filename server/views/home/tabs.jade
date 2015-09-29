@@ -1,14 +1,20 @@
 div#tabs
   ul.nav.nav-tabs(role='tablist')
-    li.active(role='presentation')
+    li.active(role='presentation', data-toggle='tooltip', title='Quick add homework assignments for the current night.')
       a(href='#quick-add', aria-controls='work', role='tab', data-toggle='tab')
         span.hidden-xs Quick Add &nbsp;
         span.fa.fa-plus-square-o
-    li(role='presentation')
-      a(href='#todays-schedule', aria-controls='profile', role='tab', data-toggle='tab')
-        span.hidden-xs Today's Classes &nbsp;
-        span.fa.fa-calendar
-    li(role='presentation')
+    if todaysInfo
+      li(role='presentation', data-toggle='tooltip', title='View the ordered list of today\'s classes.')
+        a(href='#todays-schedule', aria-controls='profile', role='tab', data-toggle='tab')
+          span.hidden-xs Today's Classes &nbsp;
+          span.fa.fa-calendar
+    if nextSD
+      li(role='presentation', data-toggle='tooltip', title='View the ordered list of your next school day\'s classes.')
+        a(href='#next-schedule', aria-controls='profile', role='tab', data-toggle='tab')
+          span.hidden-xs Next Day's Classes &nbsp;
+          span.fa.fa-calendar-minus-o
+    li(role='presentation', data-toggle='tooltip', title='Get direct links to the Moodle page of each of your courses.')
       a(href='#moodle-links', aria-controls='messages', role='tab', data-toggle='tab')
         span.hidden-xs Moodle Links &nbsp;
         span.fa.fa-link
@@ -30,6 +36,24 @@ div#tabs
         tbody
           if todaysInfo
             for s in todaysInfo.periods
+              tr
+                td= moment(s.startTime, "hh:mm A").format("h:mm A")
+                td= s.className
+                td= s.room
+          else
+            tr
+              td No classes today!
+    #next-schedule.tab-pane(role='tabpanel')
+      b.center-xs Next class day is #{moment(nextCD, "MM/DD/YY").format("dddd [the] Do")}, only #{moment(nextCD, "MM/DD/YY").fromNow()}. It is a #{nextSD}-Day.
+      table.table#schedule-table
+        thead
+          tr
+            th When
+            th What
+            th Where
+        tbody
+          if nextSD
+            for s in currentUser.scheduleObject.dayClasses[nextSD]
               tr
                 td= moment(s.startTime, "hh:mm A").format("h:mm A")
                 td= s.className

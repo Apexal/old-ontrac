@@ -67,6 +67,34 @@ var getCurrentClassInfo = function(periods){
   };
 };
 
+function getNextDay(day, sO){
+  var current = moment(day).add(1, 'days');
+  var count = 0;
+  while(count < 50){
+    if(sO.scheduleDays[current.format("MM/DD/YY")] !== undefined){
+      return current.format("MM/DD/YY");
+    }
+    current.add(1, 'days');
+    count++;
+  }
+  return false;
+}
+
+function getPrevDay(day, sO){
+  var current = moment(day).subtract(1, 'days');
+  var count = 50;
+  while(count > 0){
+    if(sO.scheduleDays[current.format("MM/DD/YY")] !== undefined){
+      return current.format("MM/DD/YY");
+    }
+    current.subtract(1, 'days');
+    count--;
+  }
+  return false;
+}
+
 module.exports = {
-  getCurrentClassInfo: getCurrentClassInfo
+  getCurrentClassInfo: getCurrentClassInfo,
+  getNextDay: getNextDay,
+  getPrevDay: getPrevDay
 }
