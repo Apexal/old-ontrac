@@ -2,7 +2,7 @@ var moment = require("moment");
 
 // Return an the scheduleobject for today with the periods filled in.
 var getCurrentClassInfo = function(periods){
-  var mom = moment("08:45 AM", "hh:mm A");
+  var mom = moment();
   var dayStart = moment("08:40 AM", "hh:mm A");
   var dayEnd = moment("02:50 PM", "hh:mm A");
 

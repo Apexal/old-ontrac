@@ -144,7 +144,7 @@ function updateDayInfo(){
 
 // Return an the scheduleobject for today with the periods filled in.
 var getCurrentClassInfo = function(periods){
-  var mom = moment("08:45 AM", "hh:mm A");
+  var mom = moment();
   var dayStart = moment("08:40 AM", "hh:mm A");
   var dayEnd = moment("02:50 PM", "hh:mm A");
 
@@ -206,29 +206,3 @@ var getCurrentClassInfo = function(periods){
     inSchool: inSchool // boolean stating whether the current time is during school hours
   };
 };
-
-function getNextDay(day, sO){
-  var current = moment(day).add(1, 'days');
-  var count = 0;
-  while(count < 50){
-    if(sO.scheduleDays[current.format("MM/DD/YY")] !== undefined){
-      return current.format("MM/DD/YY");
-    }
-    current.add(1, 'days');
-    count++;
-  }
-  return false;
-}
-
-function getPrevDay(day, sO){
-  var current = moment(day).subtract(1, 'days');
-  var count = 50;
-  while(count > 0){
-    if(sO.scheduleDays[current.format("MM/DD/YY")] !== undefined){
-      return current.format("MM/DD/YY");
-    }
-    current.subtract(1, 'days');
-    count--;
-  }
-  return false;
-}
