@@ -13,6 +13,7 @@ module.exports = {
     mpicture: String,
     ipicture: String,
     bio: String,
+    steamlink: String,
     email: String,
     achievements: Array,
     locker_number: String,
