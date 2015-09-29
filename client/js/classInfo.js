@@ -7,7 +7,7 @@ function updateHomepageInfo(){
   var content = "<hr>";
 
   if(schedule){
-    var cInfo = todayInfo.currentInfo;
+    var cInfo = schedule;
     $("#classInfo").html("");
     $("#cInfo-table tr").removeClass("sucess");
 
@@ -52,7 +52,7 @@ function updateHomepageInfo(){
 function updateSidebarClassInfo(){
   var content = "";
   if(schedule){
-    var cInfo = todayInfo.currentInfo;
+    var cInfo = schedule;
     if(cInfo.nowClass !== false){
       $("#sidebar-class-info").show();
       if(cInfo.nowClass == "between"){
@@ -103,8 +103,8 @@ function updateProfileSchedule(){
       }
     });
   }else{
-    if(profileUserInfo.todaysClassesInfo.currentInfo.inSchool == true && profileUserInfo.todaysClassesInfo.currentInfo !== false){
-      var cInfo = profileUserInfo.todaysClassesInfo.currentInfo;
+    var cInfo = getCurrentClassInfo(profileUserInfo.todaysClassesInfo.periods);
+    if(cInfo.inSchool == true && cInfo !== false){
       if(cInfo.now !== false || cInfo.justStarted !== false){
         var n = false;
         if(cInfo.now != false)
@@ -143,8 +143,8 @@ function clientSchedule(){
 }
 
 function updateDayInfo(){
-  if(todayInfo)
-    schedule = getCurrentClassInfo(todayInfo.periods);
+  schedule = getCurrentClassInfo(todayInfo.periods);
+
   if($("#classInfo").length)
     updateHomepageInfo();
 
