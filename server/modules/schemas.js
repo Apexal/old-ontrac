@@ -72,6 +72,8 @@ module.exports = {
     when: {type: Date, default: Date.now}
   },
   hwItem: {
+    date: Date,
+    username: String,
     course: { type: Schema.Types.ObjectId, ref: 'Course' },
     desc: String,
     link: String,
