@@ -15,7 +15,7 @@ function updateHomepageInfo(){
     if(cInfo.nowClass !== false){
       if(cInfo.nowClass.className == "Unstructured Time" && sessionStorage['user-status'] == "In Class")
         setStatus("Available");
-      else if(cInfo.nowClass.className != "Unstructured Time")
+      else if(cInfo.nowClass.className !== "Unstructured Time")
         setStatus("In Class");
 
       if(cInfo.justEnded !== false){
@@ -40,9 +40,13 @@ function updateHomepageInfo(){
       $("#classInfo").html(content);
     }else{
       // out of school
-      if(sessionStorage['user-status'] == "In Class"){
+      if(sessionStorage['user-status'].toLowerCase() == "in class"){
         setStatus("Available");
       }
+    }
+  }else{
+    if(sessionStorage['user-status'].toLowerCase() == "in class"){
+      setStatus("Available");
     }
   }
 }
@@ -75,6 +79,10 @@ function updateSidebarClassInfo(){
       }
     }else{
       $("#sidebar-class-info").hide();
+    }
+  }else{
+    if(sessionStorage['user-status'].toLowerCase() == "in class"){
+      setStatus("Available");
     }
   }
 }
