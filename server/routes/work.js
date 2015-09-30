@@ -27,19 +27,7 @@ router.get('/', function(req, res) {
   }
 
   req.toJade.title = "Your "+grade+" Work";
-  req.toJade.days = false;
-
-  req.Day.find({username: req.currentUser.username, date: {$lt: moment(req.today).add(5, 'days').toDate()}})
-    .sort({date: -1})
-    .exec(function(err, days) {
-      console.log(days);
-      if(err) console.log(err);
-      if(days){
-        req.toJade.days = days;
-      }
-      res.render('work/index', req.toJade);
-    });
-
+  res.render('work/index', req.toJade);
 });
 
 router.get(['/closest'], function(req, res) {
@@ -74,8 +62,6 @@ router.get('/:date', function(req, res){
   var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true);
   req.toJade.title = date.format("dddd, MMM Do YY");
   req.toJade.items = false;
-
-
 
   if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
     req.session.info.push("Redirected to closest school day.");
@@ -116,49 +102,11 @@ router.get('/:date', function(req, res){
   else
     req.toJade.fromNow = Math.abs(diff)+" days ago";
 
-
   // GET THE NEXT AND PREVIOUS DATES FOR THE DAY CONTROLS
   req.toJade.next = moment(schedules.getNextDay(date, req.currentUser.scheduleObject), "MM/DD/YY").format("YYYY-MM-DD");
   req.toJade.previous = moment(schedules.getPrevDay(date, req.currentUser.scheduleObject), "MM/DD/YY").format("YYYY-MM-DD");
 
-  req.toJade.hwTitles = false;
-
-  req.Day.findOne({username: req.currentUser.username, date: date.toDate()})
-    .deepPopulate('items.homework')
-    .exec(function(err, day) {
-      if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
-
-      if(day){
-        console.log("Found day");
-        day.deepPopulate('items.homework.course', 'mID title', function(err, d) {
-          req.toJade.day = d;
-          //console.log(d.items);
-          var cTitles = [];
-          var organized = {};
-          d.items.homework.forEach(function(item){
-            console.log(item);
-            var cTitle = item.course.title;
-
-            if(organized[cTitle] == null){
-             organized[cTitle] = [item];
-             cTitles.push(cTitle);
-            }else{
-              organized[cTitle].push(item);
-            }
-          });
-          req.toJade.hwTitles = cTitles;
-          req.toJade.homework = organized;
-
-          //console.log(req.toJade);
-          req.toJade.items = d.items;
-          res.render('work/one', req.toJade);
-        });
-      }else{
-        console.log("No such day.");
-        //console.log(req.toJade);
-        res.render('work/one', req.toJade);
-      }
-    });
+  res.render('work/one', req.toJade);
 });
 
 router.post("/:date/homework", function(req, res){
@@ -285,5 +233,5 @@ router.delete("/:date/homework", function(req, res){
 });
 
 module.exports = function(io) {
-  return {router: router, models: ['Day', 'HWItem', 'Course']}
+  return {router: router, models: ['HWItem', 'Course']}
 };

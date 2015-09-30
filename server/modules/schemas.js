@@ -66,16 +66,6 @@ module.exports = {
     averageRating: Number,
     ratingStringJSON: String
   },
-  day: {
-        date: Date,
-        username: String,
-        items: {
-          homework: [{ type: Schema.Types.ObjectId, ref: 'HWItem' }],
-          tests : [{ type: Schema.Types.ObjectId, ref: 'GradedItem' }],
-          quizzes: [{ type: Schema.Types.ObjectId, ref: 'GradedItem' }],
-          projects: [{ type: Schema.Types.ObjectId, ref: 'GradedItem' }]
-        }
-    },
   log_item: {
     who: { type: Schema.Types.ObjectId, ref: 'Student'},
     what: String,

@@ -33,7 +33,7 @@ router.get('/', function(req, res) {
 
 router.post('/clearcollection', function(req,res){
   var coll = req.body.collection;
-  if(['Feedback', 'Log', 'HWItem', 'Grade', 'Day', 'Reminder'].indexOf(coll)>-1){
+  if(['Feedback', 'Log', 'HWItem', 'Grade', 'Reminder'].indexOf(coll)>-1){
     req[coll].remove({}, function(err) {
       if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
       new req.Log({who: req.currentUser._id, what: "Cleared the "+coll+" collection as Admin."}).save();

@@ -105,5 +105,5 @@ router.post("/feedback/send", function(req, res) {
 });
 
 module.exports = function(io) {
-  return {router: router, models: ['Student', 'Teacher', 'Day', 'GradedItem', 'Feedback', 'Course']}
+  return {router: router, models: ['Student', 'Teacher', 'GradedItem', 'Feedback', 'Course']}
 };
