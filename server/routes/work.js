@@ -130,20 +130,21 @@ router.get('/:date', function(req, res){
 
       if(day){
         console.log("Found day");
-        day.deepPopulate(['items.homework.course', 'mID title'], function(err, d) {
+        day.deepPopulate('items.homework.course', 'mID title', function(err, d) {
           req.toJade.day = d;
           //console.log(d.items);
           var cTitles = [];
           var organized = {};
           d.items.homework.forEach(function(item){
-              var cTitle = item.course.title;
+            console.log(item);
+            var cTitle = item.course.title;
 
-              if(organized[cTitle] == null){
-                 organized[cTitle] = [item];
-                 cTitles.push(cTitle);
-              }else{
-                  organized[cTitle].push(item);
-              }
+            if(organized[cTitle] == null){
+             organized[cTitle] = [item];
+             cTitles.push(cTitle);
+            }else{
+              organized[cTitle].push(item);
+            }
           });
           req.toJade.hwTitles = cTitles;
           req.toJade.homework = organized;
@@ -156,6 +157,129 @@ router.get('/:date', function(req, res){
         console.log("No such day.");
         //console.log(req.toJade);
         res.render('work/one', req.toJade);
+      }
+    });
+});
+
+router.post("/:date/homework", function(req, res){
+  var dateString = req.params.date;
+  var day = false;
+
+  if(moment(dateString, 'YYYY-MM-DD', true).isValid() == false){
+    res.json({error: "Bad date."}); // Bad date passed
+    return;
+  }
+  var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true); // Good date
+  if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
+    res.json({error: "Date passed is not a school day."});
+    return;
+  }
+  req.Day.findOne({username: req.currentUser.username, date: date.toDate()})
+    .exec(function(err, day){
+      if(err){res.json({error: "An error occured. Please try again later."}); return;}
+      if(day){
+        // Construct new HWItem
+        var hwItemID = req.body.setCompHWItemID;
+        var itemStatus = req.body.setCompHWItemStatus;
+
+        req.HWItem.findOne({_id: hwItemID}, function(err, hwitem){
+          if(err){res.json({error: "An error occured. Please try again later."}); return;}
+          if(hwitem){
+            hwitem.completed = itemStatus;
+            hwitem.save(function(err) {
+              if(err){res.json({error: "An error occured. Please try again later."}); return;}
+              res.json({success: true});
+            });
+          }
+        });
+      }else{
+        res.json({error: "Failed to find day. Please try again later."}); return;
+      }
+    });
+});
+
+router.put("/:date/homework", function(req, res){
+  var dateString = req.params.date;
+  var day = false;
+
+  if(moment(dateString, 'YYYY-MM-DD', true).isValid() == false){
+    res.json({error: "Bad date."}); // Bad date passed
+    return;
+  }
+  var date = moment(dateString, 'YYYY-MM-DD', true); // Good date
+  if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
+    res.json({error: "Date passed is not a school day."});
+    return;
+  }
+  req.Day.findOne({username: req.currentUser.username, date: date.toDate()})
+    .exec(function(err, day){
+      if(err){res.json({error: "An error occured. Please try again later."}); return;}
+
+      // Construct new HWItem
+      //console.log(req.body);
+      var courseID = req.body.newHWItemCourseID;
+      var desc = req.body.newHWItemDesc;
+      var link = req.body.newHWItemLink;
+      var newHWItem = new req.HWItem({
+        course: courseID,
+        desc: desc,
+        link: link,
+        completed: false
+      });
+      //console.log(newHWItem);
+      if(!day){
+        day = new req.Day({
+          date: date.toDate(),
+          username: req.currentUser.username,
+          items: {
+
+          }
+        });
+      }
+      newHWItem.save(function(err){
+        if(err){res.json({error: "Failed to save new item. Please try again later."}); return;}
+        if(!day.items)
+          day.items = {homework: []};
+        day.items.homework.push(newHWItem._id);
+        day.save(function(err){
+          if(err){res.json({error: "Failed to save new item. Please try again later."}); return;}
+          new req.Log({who: req.currentUser._id, what: "Added a HWItem to "+dateString}).save();
+          res.json({success: true});
+        });
+      });
+    });
+});
+
+router.delete("/:date/homework", function(req, res){
+  var dateString = req.params.date;
+  var day = false;
+
+  if(moment(dateString, 'YYYY-MM-DD', true).isValid() == false){
+    res.json({error: "Bad date."}); // Bad date passed
+    return;
+  }
+  var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true); // Good date
+  if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
+    res.json({error: "Date passed is not a school day."});
+    return;
+  }
+  req.Day.findOne({username: req.currentUser.username, date: date.toDate()})
+    .exec(function(err, day){
+      if(err){res.json({error: "An error occured. Please try again later."}); return;}
+      if(day){
+        // Construct new HWItem
+        var id = req.body.deleteHWItemID;
+        req.HWItem.remove({_id: id}, function(err){
+          if(err){res.json({error: "Failed to remove item. Please try again later."}); return;}
+          var index = day.items.homework.indexOf(id);
+          day.items.homework.splice(index, 1);
+          day.save(function(err){
+            if(err){res.json({error: "Failed to remove item. Please try again later."}); return;}
+            res.json({success: true});
+          });
+        });
+      }else{
+        res.json({error: "Failed to find day. Please try again later."}); return;
       }
     });
 });

@@ -50,5 +50,5 @@ router.post('/clearcollection', function(req,res){
 
 
 module.exports = function(io) {
-  return {router: router, models: ['Feedback', 'Days', 'HWItem', 'Grade', 'Reminder']}
+  return {router: router, models: ['Feedback', 'Day', 'HWItem', 'Grade', 'Reminder']}
 };
