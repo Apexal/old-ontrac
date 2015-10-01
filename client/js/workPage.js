@@ -162,7 +162,7 @@ function workPage(){
 
     hwTitles.forEach(function(t){
       var items = hw[t];
-      var html = "<div class='col-xs-12 col-md-6 hw-item text-center'> \
+      var html = "<div class='col-xs-12 col-md-5 hw-item text-center'> \
         <b class='title course-badge' data-mid='"+items[0].course.mID+"'>"+t+"</b> \
         <ol>";
       items.forEach(function(i){
