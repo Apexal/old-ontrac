@@ -77,10 +77,12 @@ app.use(function(req, res, next) {
     redir: (req.query.redir ? req.query.redir : req._parsedUrl.pathname),
     analytics_code: config.ga_code,
     next: false,
-    previous: false
+    previous: false,
+    page: req.path,
+    isHomepage: (req.path == "/" || req.path == "/home" ? true : false)
   }
   req.toJade.openLogin = (req.toJade.redir == req._parsedUrl.pathname ? false : true);
-
+  console.log(req.toJade.isHomepage);
   if(req.loggedIn == false)
     console.log("On login will redirect to "+req.toJade.redir);
 
@@ -101,7 +103,8 @@ app.use(restricted, function(req, res, next) {
 
 // So Jade knows what nav links to set as active
 app.use('/*', function(req, res, next) {
-  req.toJade.page = req.baseUrl;
+  //req.toJade.page = req.path;
+  console.log("PATH: "+req.toJade.page);
   next();
 });
 

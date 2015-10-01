@@ -7,7 +7,7 @@ header
           span.icon-bar
           span.icon-bar
           span.icon-bar
-        a#brand.navbar-brand(href=(helpers.isPage(page, "home") == "active" ? "#" : "/home"))
+        a#brand.navbar-brand(href=(isHomepage ? "#" : "/home"))
           img#ontrac-img(title="Homepage.", src="/images/logo64x64.png")
       #navbar.navbar-collapse.collapse
         ul.nav.navbar-nav
@@ -25,7 +25,7 @@ header
               li
                 a(target="_blank", title="View the public source code behind this project, maintained solely by me.", href="https://github.com/Apexal/ontrac") Source Code
           if loggedIn
-            if !page || helpers.isPage(page, "/home") == false
+            if isHomepage == false
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Moodle Links
                   span.caret

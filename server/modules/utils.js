@@ -47,7 +47,8 @@ module.exports = {
     return true;
   },
   isPage : function(word, other) {
-    return (word.indexOf(other) > -1 ? "active" : "");
+    console.log(word +" vs "+other + " == "+(word.indexOf(other) > -1));
+    return (word.indexOf(other) > -1);
   },
   isReach: function(department) {
     return (department.indexOf("REACH") > -1);

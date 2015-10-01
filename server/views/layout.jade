@@ -31,7 +31,7 @@ html
         include /users/login-modal
       
       block content      
-      if loggedIn && helpers.isPage(page, '/gchat') == ""
+      if loggedIn && helpers.isPage(page, '/gchat') == false
         include /chat/chatbox
     
     if loggedIn
