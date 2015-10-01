@@ -44,16 +44,8 @@ var getCurrentClassInfo = function(periods){
     var buffer = moment(started).add(3, 'minutes');
     if(cur.isBetween(started, buffer)) justStarted = true;
 
-    // If a class has just ended and another has just started, you are in between adjacent classes
-    if(justStarted !== false && justEnded !== false){
-      var index = periods.indexOf(justStarted) + 1;
-      if(periods[index])
-        now = periods[index];
-    }
-
     // Get the next class
     next = ((periods.length-1 > periods.indexOf(now)) ? periods[periods.indexOf(now)+1] : false);
-
   }
 
   return {
