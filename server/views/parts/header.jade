@@ -24,14 +24,15 @@ header
                   a(href="/advisements", title="View and search through all advisements at Regis.") Advisements
               li
                 a(target="_blank", title="View the public source code behind this project, maintained solely by me.", href="https://github.com/Apexal/ontrac") Source Code
-          if page !== "" || helpers.isPage(page, "/home") == false
-            li.dropdown
-              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Moodle Links
-                span.caret
-              ul.dropdown-menu(role='menu')
-                each c in currentUser.courses
-                  li
-                    a(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title
+          if loggedIn
+            if !page || helpers.isPage(page, "/home") == false
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Moodle Links
+                  span.caret
+                ul.dropdown-menu(role='menu')
+                  each c in currentUser.courses
+                    li
+                      a(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title
           li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Regis Services 
                 span.caret
