@@ -195,6 +195,7 @@ function sockets() {
         var div = document.createElement('div');
         div.appendChild(document.createTextNode(message));
         message = div.innerHTML;
+        message = linkify(message);
 
         var part = "<b class='user-badge' data-username='"+user+"'>"+user+": </b>";
         part += "<span title='"+when.fromNow()+" | "+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'>"+message+"</span><br>";
@@ -280,6 +281,7 @@ function sockets() {
         var div = document.createElement('div');
         div.appendChild(document.createTextNode(message));
         message = div.innerHTML;
+        message = linkify(message);
 
         var part = "<b class='user-badge' data-username='"+user+"'>"+user+": </b>";
         part += "<span title='"+when.fromNow()+" | "+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'>"+message+"</span><br>";
