@@ -36,7 +36,7 @@
   text-decoration: line-through;
 }
 
-.remove-assignment {
+.worklist .fa {
   font-size: 0.8em;
   cursor: pointer;
 }

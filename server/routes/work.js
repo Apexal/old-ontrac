@@ -30,7 +30,7 @@ router.get('/', function(req, res) {
   res.render('work/index', req.toJade);
 });
 
-router.get(['/closest'], function(req, res) {
+router.get('/closest', function(req, res) {
   var nD = schedules.getNextDay(moment(), req.currentUser.scheduleObject);
   if(!nD){
     req.session.info.push("Cannot find the next class day!");
@@ -53,7 +53,7 @@ router.get('/:date', function(req, res){
 
   if(moment(dateString, 'YYYY-MM-DD', true).isValid() == false){
     // Bad date passed
-    req.session.errors.push("Bad date.");
+    req.session.errs.push("Bad date.");
     res.redirect('/work');
     return;
   }
