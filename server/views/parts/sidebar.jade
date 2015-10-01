@@ -57,7 +57,7 @@ aside#sidebar
     hr
   
   if todaysInfo
-    if helpers.isPage(page, "/") == false || helpers.isPage(page, "/home") == false
+    if page !== "" || helpers.isPage(page, "/home") == false
       section#sidebar-class-info
         #sd-nowc
           b.larger Current Class
