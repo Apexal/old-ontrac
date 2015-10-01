@@ -12,6 +12,12 @@
   cursor: pointer;
 }
 
+#schedule-day .fa {
+  font-size: 0.7em;
+  color: inherit;
+  margin-top: 9px;
+}
+
 #homework-form * {
   margin-bottom: 0;
 }

@@ -14,6 +14,11 @@ block content
         span(data-toggle="tooltip", title="Hooray!") 0 projects
 
     .row
+      .col-xs-12.visible-xs
+        if currentUser.scheduleObject.scheduleDays[moment().format("MM/DD/YY")]
+          a.btn.btn-default(href="/work/today", title="View the work due today!") Today's Work
+        a.btn.btn-default(href="/work/closest", title="Find the closest day from today that you have work!") Closest Work Day
+        
       .col-xs-12.col-sm-6.col-md-3
         .page-header
           h2 Due Today
