@@ -270,8 +270,7 @@ function coursebadges(){
         }
       });
     }else{
-      if(!data.err)
-        $("#course-"+mID+"-modal").modal();
+      $("#course-"+mID+"-modal").modal();
     }
   });
 
