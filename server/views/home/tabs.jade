@@ -36,7 +36,7 @@ div#tabs
         tbody
           if todaysInfo
             for s in todaysInfo.periods
-              tr
+              tr(class=(s.room=="Cafeteria" ? "active" : ""))
                 td= moment(s.startTime, "hh:mm A").format("h:mm A")
                 td= s.className
                 td= s.room
@@ -54,7 +54,7 @@ div#tabs
         tbody
           if nextSD
             for s in currentUser.scheduleObject.dayClasses[nextSD]
-              tr
+              tr(class=(s.room=="Cafeteria" ? "active" : ""))
                 td= moment(s.startTime, "hh:mm A").format("h:mm A")
                 td= s.className
                 td= s.room

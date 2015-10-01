@@ -54,6 +54,7 @@ function sendNotification(ntype, title, text){
 }
 
 $(function() {
+  var page = window.location.href.split("/")[3];
   console.log("Loaded JS");
   updateTitle();
   effects();
@@ -61,5 +62,9 @@ $(function() {
   if($('#send-message').data("username") !== undefined){
     sockets();
     clientSchedule();
+    console.log(page);
+    if(page == "work"){
+      workPage();
+    }
   }
 });

@@ -124,10 +124,11 @@ router.get("/:date/homework", function(req, res) {
   }
   req.HWItem.find({username: req.currentUser.username, date: date.toDate()})
     .populate('course', 'title mID')
+    .lean()
     .exec(function(err, hwItems){
       if(err){res.json({error: err}); return;}
       if(hwItems){
-        res.json({hwItems: hwItems});
+        res.json({success: true, hwItems: hwItems});
       }else{
         res.json({error: "No items found"});
       }
@@ -193,7 +194,10 @@ router.put("/:date/homework", function(req, res){
   newHWItem.save(function(err){
     if(err){res.json({error: "Failed to save new item. Please try again later."}); return;}
     new req.Log({who: req.currentUser._id, what: "Added a HWItem to "+dateString}).save();
-    res.json({success: true});
+    req.Course.findOne({_id: newHWItem.course}, 'mID title', function(err, c) {
+      newHWItem.course = c;
+      res.json({success: true, added: newHWItem.toJSON()});
+    });
   });
 });
 

@@ -1,10 +1,4 @@
 function days(){
-
-  var date = window.location.pathname.split("/")[2];
-  var scheduleDay = $("#schedule-day");
-
-  var hasSD = $("#schedule-day").hasClass("set");
-
   var hwdial = $("#hw-dial");
 
   var percentsAndDials = function() {
@@ -29,41 +23,4 @@ function days(){
   };
 
   percentsAndDials();
-
-  $(".assignment").click(function() {
-    var id = $(this).parent().data("id");
-    $.ajax({
-      type: 'POST',
-      url: "/days/toggle",
-      data: {
-        id: id.replace("\"", "").replace("\"", "")
-      },
-      success: function(data) {
-        percentsAndDials();
-      },
-      dataType: "json"
-    });
-    $(this).toggleClass("completed");
-  });
-
-  $(".remove-assignment").click(function() {
-    var id = $(this).parent().data("id");
-    $.ajax({
-      type: 'POST',
-      url: "/days/remove",
-      data: {
-        date: date,
-        removeHWItemID: id.replace("\"", "").replace("\"", "")
-      },
-      success: function(data) {
-        console.log(data);
-        location.reload();
-      },
-      dataType: "json"
-    });
-  });
-
-  $("#set-hw-link").click(function(){
-    $(this).data("link", prompt("Link for Assignment", $(this).data("link")));
-  });
 }
