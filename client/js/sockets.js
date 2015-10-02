@@ -269,6 +269,7 @@ function sockets() {
   socket.on('pastMessages', function(data) {
     messages = data.messages;
     showMessages();
+    $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
   });
 
   var showMessages = function() {

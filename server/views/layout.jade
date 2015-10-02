@@ -23,7 +23,7 @@ html
     if loggedIn
       include /parts/sidebar
 
-    main(class=(loggedIn ? "pushed" : ""))
+    main(class=(loggedIn ? "pushed" : ""), class=(helpers.isPage(page, '/gchat') ? "chatpage" : ""))
       if loggedIn
         include /parts/feedback-modal
         include /parts/reminders

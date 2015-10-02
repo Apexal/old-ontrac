@@ -1,3 +1,30 @@
+main.chatpage {
+  height: auto;
+  margin: auto;
+  padding: auto;
+}
+#gchat #chat-controls {
+  height: 10%;
+  width: 100%;
+}
+#gchat #chat-controls * {
+  display: inline-block;
+}
+
+#gchat {
+  width: 100%;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  height: 90%;
+}
+#gchat #chat-message {
+  width:79%;
+}
+#gchat #send-message {
+  width: 20%;
+}
+
 #chat-box.small-chat {
   z-index: 500;
   position: fixed;

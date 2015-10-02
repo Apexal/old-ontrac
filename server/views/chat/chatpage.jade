@@ -1,9 +1,18 @@
 extends /layout
 
 block content
-  .container-fluid(style="height: 90%;")
-    .page-header
-      h2.no-margin Global Chat
+  //
+    .container-fluid(style="height: 90%;")
+      .page-header
+        h2.no-margin Global Chat
+      #chat-box.full-width(style="height: 70%; overflow: auto;word-wrap: break-word;")
+        #chat-messages(style="height: 100%;")
+        
+      form#chat-controls.form-inline(role="form")
+        input.form-control#chat-message(type="text", maxlength="140", name="message")
+        button#send-message.btn.btn-primary(type="button", data-username=currentUser.username) Send
+  #gchat
+    h2.no-margin Global Chat
     #chat-box.full-width(style="height: 70%; overflow: auto;word-wrap: break-word;")
       #chat-messages(style="height: 100%;")
       
