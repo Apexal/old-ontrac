@@ -1,5 +1,6 @@
 // Database stuff
 var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
 var config = require('../config');
 var Schema = mongoose.Schema;
 var schemas = require('./schemas');

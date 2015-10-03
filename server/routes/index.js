@@ -17,7 +17,6 @@ module.exports = function(io) {
       req.toJade.title = "Your Home";
       req.toJade.nextCD = schedules.getNextDay(moment(), req.currentUser.scheduleObject);
       req.toJade.nextSD = req.currentUser.scheduleObject.scheduleDays[req.toJade.nextCD];
-      console.log(schedules.getCurrentClassInfo(req.toJade.todaysInfo.periods));
       res.render('home/homepage', req.toJade);
     }else{
       res.render('home/index', req.toJade);

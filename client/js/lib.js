@@ -71,7 +71,7 @@ $(function() {
     clientSchedule();
     console.log(page);
     if(page == "work"){
-      workPage();
+      homework();
     }
   }
 });

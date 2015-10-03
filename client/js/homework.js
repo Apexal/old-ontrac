@@ -1,4 +1,4 @@
-function workPage(){
+function homework(){
   var work = {
     homework: []
   };
