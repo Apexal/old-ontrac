@@ -1,11 +1,7 @@
 div#tabs
   ul.nav.nav-tabs(role='tablist')
-    li.active(role='presentation', data-toggle='tooltip', title='Quick add homework assignments for the current night.')
-      a(href='#quick-add', aria-controls='work', role='tab', data-toggle='tab')
-        span.hidden-xs Quick Add &nbsp;
-        span.fa.fa-plus-square-o
     if todaysInfo
-      li(role='presentation', data-toggle='tooltip', title='View the ordered list of today\'s classes.')
+      li.active(role='presentation', data-toggle='tooltip', title='View the ordered list of today\'s classes.')
         a(href='#todays-schedule', aria-controls='profile', role='tab', data-toggle='tab')
           span.hidden-xs Today's Classes &nbsp;
           span.fa.fa-calendar
@@ -19,14 +15,7 @@ div#tabs
         span.hidden-xs Moodle Links &nbsp;
         span.fa.fa-link
   .tab-content
-    #quick-add.tab-pane.active(role='tabpanel')
-      form.form-inline(role="form", action="/", method="POST")
-        .form-group
-          .input-group
-            .input-group-addon.fa.fa-link
-            input.form-control(type="text", maxlength="50", name="description", placeholder="Homework Assignment")
-        button.btn.btn-default Add
-    #todays-schedule.tab-pane(role='tabpanel')
+    #todays-schedule.tab-pane.active(role='tabpanel')
       table.table#schedule-table
         thead
           tr
