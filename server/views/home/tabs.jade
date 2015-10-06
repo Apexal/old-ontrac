@@ -39,7 +39,8 @@ div#tabs
               if s.className.indexOf("Advisement") == -1
                 tr(class=(s.room=="Cafeteria" ? "active" : ""))
                   td= moment(s.startTime, "hh:mm A").format("h:mm A")
-                  td= s.className
+                  td= s.className.split("(")[0]
+                    span.hidden-xs= (s.className.split("(")[1] ? "("+s.className.split("(")[1] : "")
                   td= s.room
           else
             tr
@@ -58,7 +59,8 @@ div#tabs
               if s.className.indexOf("Advisement") == -1
                 tr(class=(s.room=="Cafeteria" ? "active" : ""))
                   td= moment(s.startTime, "hh:mm A").format("h:mm A")
-                  td= s.className
+                  td= s.className.split("(")[0]
+                    span.hidden-xs= (s.className.split("(")[1] ? "("+s.className.split("(")[1] : "")
                   td= s.room
           else
             tr
