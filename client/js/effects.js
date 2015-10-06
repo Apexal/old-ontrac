@@ -160,10 +160,12 @@ function effects() {
     });
     // LOGIN MODAL FORM
     var loggingIn = false;
-    $("#login-form").submit(function(e) {
-      e.preventDefault();
+    $("#login-button").click(function() {
       var username = $("#username").val();
       var password = $("#password").val();
+      if(!username || !password)
+        return;
+      
       $("#login-button").text("Logging in...");
       $("body").css("cursor", "wait");
       if(loggingIn == false){
@@ -187,7 +189,6 @@ function effects() {
             }
         });
       }
-      return false;
     });
 
     // FEEDBACK
