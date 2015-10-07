@@ -1,4 +1,4 @@
-div#tabs
+div#tabs.visible-xs
   ul.nav.nav-tabs(role='tablist')
     if todaysInfo
       li.active(role='presentation', data-toggle='tooltip', title='View the ordered list of today\'s classes.')
@@ -29,14 +29,13 @@ div#tabs
                 tr(class=(s.room=="Cafeteria" ? "active" : ""))
                   td= moment(s.startTime, "hh:mm A").format("h:mm A")
                   td= s.className.split("(")[0]
-                    span.hidden-xs= (s.className.split("(")[1] ? "("+s.className.split("(")[1] : "")
                   td= s.room
           else
             tr
               td No classes today!
     #next-schedule.tab-pane(role='tabpanel')
       b.center-xs Next class day is #{moment(nextCD, "MM/DD/YY").format("dddd [the] Do")}, only #{moment(nextCD, "MM/DD/YY").fromNow()}. It is a #{nextSD}-Day.
-      table.table#schedule-table
+      table.table.table-condensed#next-schedule-table
         thead
           tr
             th When
@@ -49,7 +48,6 @@ div#tabs
                 tr(class=(s.room=="Cafeteria" ? "active" : ""))
                   td= moment(s.startTime, "hh:mm A").format("h:mm A")
                   td= s.className.split("(")[0]
-                    span.hidden-xs= (s.className.split("(")[1] ? "("+s.className.split("(")[1] : "")
                   td= s.room
           else
             tr
@@ -60,5 +58,46 @@ div#tabs
         a.visible-xs(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title
         br.visible-xs
 
+
+.hidden-xs
+  if(moment().isBefore(moment().hour(4)))
+    #todays-schedule.col-xs-12.col-md-6
+      table.table
+        caption.center Today's Schedule
+        thead
+          tr
+            th When
+            th What
+            th Where
+        tbody
+          if todaysInfo
+            for s in todaysInfo.periods
+              if s.className.indexOf("Advisement") == -1
+                tr(class=(s.room=="Cafeteria" ? "active" : ""))
+                  td= moment(s.startTime, "hh:mm A").format("h:mm A")
+                  td= s.className.split("(")[0]
+                  td= s.room
+          else
+            tr
+              td No classes today!
+
+  #next-schedule.col-xs-12.col-md-6
+    table.table
+      caption.center Next Class Day's Schedule (#{moment(nextCD, "MM/DD/YY").format("dddd [the] Do")}) #[b= nextSD+"-Day"]
+      thead
+        tr
+          th When
+          th What
+          th Where
+      tbody
+        if nextSD
+          for s in currentUser.scheduleObject.dayClasses[nextSD]
+            if s.className.indexOf("Advisement") == -1
+              tr(class=(s.room=="Cafeteria" ? "active" : ""))
+                td= moment(s.startTime, "hh:mm A").format("h:mm A")
+                td= s.className.split("(")[0]
+                td= s.room
+        else
+          tr
+            td No classes today!
     
-  

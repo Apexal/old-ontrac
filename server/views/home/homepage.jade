@@ -3,7 +3,7 @@ extends /layout
 block content
   .container-fluid
     include /info
-    .jumbotron.center-xs
+    .jumbotron.center-xs(style="margin-bottom: 0;")
       h1.no-margin(style="text-transform: capitalize")= "Good "+helpers.getGreetingTime(moment())+", " + currentUser.nickname
       p.visible-xs.no-margin It is #[b#clock Time & Date].
         if todaysInfo
@@ -11,7 +11,13 @@ block content
       if todaysInfo
         #classInfo
           p.larger Loading class info...          
-      
+    .row.center.visible-sm.visible-md.visible-lg
+      .col-xs-12
+        div.full-width(style="background-color: #222")
+          each c in currentUser.courses
+            a.btn.btn-default(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title.split("(")[0]
+    br
+    br
     .row
       .col-xs-12.col-md-6
         h3.no-margin Looking to talk with classmates?

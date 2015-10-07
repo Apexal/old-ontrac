@@ -21,3 +21,7 @@
 #tabs .nav-tabs a[role="tab"]{
   outline: none;
 }
+
+#moodle-links a {
+  display: inline-block;
+}
