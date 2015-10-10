@@ -60,7 +60,7 @@ db.once('open', function (callback) {
         rank = "Guest";
         break;
       case 2:
-        ranl = "User";
+        rank = "User";
         break;
       case 3:
         rank = "Member";
@@ -73,6 +73,7 @@ db.once('open', function (callback) {
         break;
       case 6:
         rank = "Administrator";
+        break;
       case 7:
         rank = "Owner";
     }

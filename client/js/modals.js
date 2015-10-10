@@ -9,14 +9,14 @@ function userbadges(){
         success: function(data) {
           if(data != "Not authorized."){
             var title = data.firstName + " " + data.lastName;
-
-            var rank = data.rank;
+            console.log(data);
+            var rank = (data.rank ? data.rank : 0);
             switch(rank) {
               case 0:
                 rank = "Guest";
                 break;
               case 2:
-                ranl = "User";
+                rank = "User";
                 break;
               case 3:
                 rank = "Member";
@@ -29,8 +29,9 @@ function userbadges(){
                 break;
               case 6:
                 rank = "Administrator";
+                break;
               case 7:
-                rank = "Owner";
+                rank = "<b>Owner</b>";
             }
 
             var button = "";
@@ -95,8 +96,8 @@ function userbadges(){
                   "                <div class='modal-header'>" +
                   "                    <button class='close' data-dismiss='modal' type=" +
                   "                    'button'><span>&times;</span></button>" +
-                  "                    <h4 class='modal-title'>User" +
-                  "                    Summary</h4>" +
+                  "                    <h4 class='modal-title'>"+rank+
+                  "                     Summary</h4>" +
                   "                </div>" +
                   "                <div class='modal-body'>" +
                                     "<div class='container-fluid'>" +
