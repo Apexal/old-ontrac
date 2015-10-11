@@ -42,19 +42,21 @@ block content
       hr.visible-xs
       .col-xs-12
         h2.visible-xs Your #{scheduleDay}-Day Classes
-        table.table.table-hover#schedule-table.visible-xs
-          for s in currentUser.scheduleObject.dayClasses[scheduleDay]
+        table.table.table-hover.schedule-table.visible-xs
+          for s in classes
             if s.className.indexOf("Advisement") == -1
               tr(class=(s.room=="Cafeteria" ? "active" : ""))
-                td(data-toggle="tooltip", title=moment(s.startTime, "hh:mm A").format("h:mm A")+" to "+moment(s.endTime, "hh:mm A").format("h:mm A"))= s.className.split("(")[0]
-        table.table#schedule-table.hidden-xs.center
+                td(data-toggle="tooltip", title=moment(s.startTime, "hh:mm A").format("h:mm A")+" to "+moment(s.endTime, "hh:mm A").format("h:mm A"))
+                  a.undecorated(style="text-decoration: none;", target="_blank", href=(s.mID ? "http://moodle.regis.org/course/view.php?id="+s.mID : "#"))= s.className.split("(")[0]
+        table.table.schedule-table.hidden-xs.center
           caption.center
             b Your #{scheduleDay}-Day Classes
           tbody
             tr
-              for s in currentUser.scheduleObject.dayClasses[scheduleDay]
+              for s in classes
                 if s.className.indexOf("Advisement") == -1
-                  td(class=(s.room=="Cafeteria" ? "active" : ""), data-toggle="tooltip", title=moment(s.startTime, "hh:mm A").format("h:mm A")+" to "+moment(s.endTime, "hh:mm A").format("h:mm A"))= s.className.split("(")[0]
+                  td(class=(s.room=="Cafeteria" ? "active" : ""), data-toggle="tooltip", title=moment(s.startTime, "hh:mm A").format("h:mm A")+" to "+moment(s.endTime, "hh:mm A").format("h:mm A"))
+                    a.undecorated(style="text-decoration: none;", target="_blank", href=(s.mID ? "http://moodle.regis.org/course/view.php?id="+s.mID : "#"))= s.className.split("(")[0]
       
       .col-sm-12.text-center.hidden-xs
         br

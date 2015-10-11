@@ -107,6 +107,19 @@ router.get('/:date', function(req, res){
   req.toJade.next = moment(schedules.getNextDay(date, req.currentUser.scheduleObject), "MM/DD/YY").format("YYYY-MM-DD");
   req.toJade.previous = moment(schedules.getPrevDay(date, req.currentUser.scheduleObject), "MM/DD/YY").format("YYYY-MM-DD");
 
+  var c = [];
+  var classes = req.currentUser.scheduleObject.dayClasses[req.toJade.scheduleDay];
+  var myC = req.currentUser.courses;
+  classes.forEach(function(period) {
+    myC.forEach(function(course) {
+      if(period.className.indexOf(course.title) > -1){
+        period.mID = course.mID;
+      }
+    });
+    c.push(period);
+  });
+  req.toJade.classes = c;
+  console.log(c);
   res.render('work/one', req.toJade);
 });
 
