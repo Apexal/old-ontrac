@@ -60,32 +60,6 @@ router.get('/course/:mID', function(req, res) {
     });
 });
 
-router.get('/work/:date', function(req, res) {
-  var dateString = req.params.date;
-
-  if(moment(dateString, 'YYYY-MM-DD', true).isValid() == false){
-    res.json({error: "Invalid date!"});
-  }else{
-    var date = moment(dateString, 'YYYY-MM-DD', true);
-    req.Day.findOne({username: req.currentUser.username, date: date.toDate()})
-      .deepPopulate('items.homework items.tests items.quizzes items.essays')
-      .exec(function(err, day) {
-        if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
-        if(day){
-          day.deepPopulate('items.homework.course items.tests.course items.quizzes.course items.essays.course', {
-            whitelist: ['_id', 'students']
-          }, function(err, day) {
-            //console.log(day);
-            res.json({work: day.items});
-          });
-        }else{
-          res.json({error: "No such day!"});
-        }
-      });
-  }
-
-});
-
 router.post("/feedback/send", function(req, res) {
   var feedbackType = req.body.feedbackType;
   var text = req.body.text;

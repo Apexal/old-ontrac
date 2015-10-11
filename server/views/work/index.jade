@@ -19,18 +19,18 @@ block content
           a.btn.btn-default(href="/work/today", title="View the work due today!") Today's Work
         a.btn.btn-default(href="/work/closest", title="Find the closest day from today that you have work!") Closest Work Day
         
-      .col-xs-12.col-sm-6.col-md-3
+      .col-xs-12.col-sm-6.col-md-3#due-today
         .page-header
           h2 Due Today
-            small   0 items
+            small.right 0 items
         
         .col-xs-12
           p.text-center Nothing!
       
-      .col-xs-12.col-sm-6.col-md-3
+      .col-xs-12.col-sm-6.col-md-3#upcoming(data-closest=closestDay)
         .page-header
           h2 Upcoming
-            small   0 items
+            small.right 0 items
         
         .col-xs-12
           p.text-center Nothing!

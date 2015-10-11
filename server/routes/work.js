@@ -8,7 +8,8 @@ var schedules = require('../modules/schedule');
 /* ----------------------------- */
 
 router.get('/', function(req, res) {
-
+  var nD = schedules.getNextDay(moment(), req.currentUser.scheduleObject);
+  req.toJade.closestDay = moment(nD, "MM/DD/YY").format("YYYY-MM-DD")
   var adv = req.currentUser.advisement.charAt(0);
   var grade = "";
   switch(adv) {
@@ -132,6 +133,34 @@ router.get("/:date/homework", function(req, res) {
       }else{
         res.json({error: "No items found"});
       }
+    });
+});
+
+router.get('/:date/all', function(req, res){
+  var dateString = req.params.date;
+  var day = false;
+  var returned = {success: true};
+  if(moment(dateString, 'YYYY-MM-DD', true).isValid() == false){
+    res.json({error: "Bad date."}); // Bad date passed
+    return;
+  }
+  var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true); // Good date
+  if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
+    res.json({error: "Date passed is not a school day."});
+    return;
+  }
+  req.HWItem.find({username: req.currentUser.username, date: date.toDate()})
+    .populate('course', 'title mID')
+    .lean()
+    .exec(function(err, hwItems){
+      if(err){res.json({error: err}); return;}
+      if(hwItems){
+        returned.hwItems = hwItems;
+      }else{
+        returned.hwItems = [];
+      }
+
+      res.json(returned);
     });
 });
 

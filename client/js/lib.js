@@ -71,6 +71,7 @@ $(function() {
     clientSchedule();
     console.log(page);
     if(page == "work"){
+      workindex();
       homework();
     }
   }
