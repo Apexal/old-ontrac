@@ -147,7 +147,11 @@ function homework(){
     // HOMEWORK
     var hw = {};
     var hwTitles = [];
+    var doneC = 0;
+    var total = work.homework.length;
     work.homework.forEach(function(item){
+      if(item.completed)
+        doneC++;
       //console.log(item.course.title);
       if(hwTitles.indexOf(item.course.title) == -1)
         hwTitles.push(item.course.title);
@@ -179,9 +183,12 @@ function homework(){
     });
 
     tab.html(hwHTML);
+    $(".hw-badge").attr("title", Math.round((doneC/total)*100) + "% done!").attr("data-toggle", "tooltip").attr("data-placement", "right");
+    $(".hw-badge").text(total);
     coursebadges();
     setRemoveClickHandler();
     setToggleHandler();
+    updateTooltips();
   }
 
 

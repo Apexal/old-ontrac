@@ -11,9 +11,7 @@ function effects() {
       teacherbadges();
       coursebadges();
     }
-
-    $('[data-toggle="tooltip"]').tooltip();
-
+    
     var clock = $("#clock");
     clock.text(moment().format('dddd [the] Do, h:mm a'));
     setInterval(function() {
@@ -165,7 +163,7 @@ function effects() {
       var password = $("#password").val();
       if(!username || !password)
         return;
-      
+
       $("#login-button").text("Logging in...");
       $("body").css("cursor", "wait");
       if(loggingIn == false){

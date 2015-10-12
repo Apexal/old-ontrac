@@ -1,5 +1,9 @@
 var stack_bottomright = {"dir1": "up", "dir2": "left", "firstpos1": 25, "firstpos2": 25};
 
+updateTooltips = function(){
+  $('[data-toggle="tooltip"]').tooltip();
+}
+
 function linkify(text) {
     var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
     return text.replace(urlRegex, function(url) {
@@ -75,4 +79,5 @@ $(function() {
       homework();
     }
   }
+  updateTooltips();
 });
