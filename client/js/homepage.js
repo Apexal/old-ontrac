@@ -7,11 +7,14 @@ function homepage() {
       console.log(data);
       if(data.error){
         console.log(data.error);
+
         $("#due-today").remove();
         return;
       }
 
       if(data.success){
+        if(data.hwItems.length == 0)
+          $("#due-today").remove();
         var courses = [];
         var total = data.hwItems.length;
         var doneC = 0;
@@ -54,6 +57,8 @@ function homepage() {
       }
 
       if(data.success){
+        if(data.hwItems.length == 0)
+          $("#due-closest").remove();
         var courses = [];
         var total = data.hwItems.length;
         var doneC = 0;
