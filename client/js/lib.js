@@ -71,6 +71,9 @@ $(function() {
   effects();
   days();
   if($('#send-message').data("username") !== undefined){
+    if(page == "home" || page==""){
+      homepage();
+    }
     sockets();
     clientSchedule();
     console.log(page);

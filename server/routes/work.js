@@ -9,7 +9,7 @@ var schedules = require('../modules/schedule');
 
 router.get('/', function(req, res) {
   var nD = schedules.getNextDay(moment(), req.currentUser.scheduleObject);
-  req.toJade.closestDay = moment(nD, "MM/DD/YY").format("YYYY-MM-DD")
+  req.toJade.closestDay = moment(nD, "MM/DD/YY").format("YYYY-MM-DD");
   var adv = req.currentUser.advisement.charAt(0);
   var grade = "";
   switch(adv) {
