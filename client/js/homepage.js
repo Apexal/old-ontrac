@@ -47,7 +47,7 @@ function homepage() {
       }
     });
   }else{
-    $("due-today").remove();
+    $("#due-today").remove();
   }
 
   // CLOSEST DAY DUE
@@ -95,6 +95,6 @@ function homepage() {
       }
     });
   }else{
-    $("due-closest").remove();
+    $("#due-closest").remove();
   }
 }
