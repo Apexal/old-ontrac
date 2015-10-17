@@ -32,10 +32,11 @@ module.exports = {
   banned: words,
   filter: function(str){
     words.forEach(function(word) {
-      var word = word.toLowerCase().replace('1', 'i').replace('3', 'e').replace('()', 'o');
-      var re = new RegExp(word.toLowerCase(), 'g');
-      str = str.replace(re, '****');
+      var searchMask = word+" ";
+      var regEx = new RegExp(searchMask, "ig");
+      var replaceMask = "****";
 
+      str = str.replace(regEx, replaceMask);
     });
     return str;
   },
