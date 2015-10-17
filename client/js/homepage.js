@@ -51,7 +51,7 @@ function homepage() {
   }
 
   // CLOSEST DAY DUE
-  if(moment().isAfter(moment().hour(15))){
+  if(moment().isAfter(moment().hour(14))){
     $.get("/work/"+$("#due-closest").data("closest")+"/all", function(data){
       if(data){
         console.log(data);

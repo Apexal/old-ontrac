@@ -137,8 +137,22 @@ function clientSchedule(){
   });
 }
 
+var sendabout = "";
 function updateDayInfo(){
   schedule = getCurrentClassInfo(todayInfo.periods);
+  var title = "Class has just Ended!";
+
+  if(schedule.justStarted && schedule.nowClass.room !== sendabout){
+    var n = schedule.nowClass;
+    var text = "Next is "+n.className+" in "+n.room;
+    if(schedule.justEnded == false){
+      "Get to "+n.room+" for "+n.className+".";
+    }
+    if(n.className == "Unstructured Time")
+      text = "You now have a free until "+n.endTime+"!";
+    sendDesktopNotification("info", title, text);
+    sendabout = n.room;
+  }
 
   if($("#classInfo").length)
     updateHomepageInfo();

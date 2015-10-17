@@ -1,4 +1,7 @@
 function workindex() {
+  if(!$("#upcoming").length)
+    return;
+
   var date = moment().format("YYYY-MM-DD");
   // DUE TODAY
   $.get("/work/"+date+"/all", function(data){
@@ -22,7 +25,6 @@ function workindex() {
             courses.push(item.course.title);
         });
         $("#due-today p").html("<a data-toggle='tooltip' title='"+courses.join(', ')+"' class='undecorated' href='/work/"+date+"'><b>"+data.hwItems.length+"</b> Homework items <b>"+Math.round((doneC/total)*1000)/10+"%</b> completed.</a>");
-
       }
     }
   });
