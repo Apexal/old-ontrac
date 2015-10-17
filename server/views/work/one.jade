@@ -56,10 +56,13 @@ block content
           tbody
             tr
               for s in classes
-                if s.className.indexOf("Advisement") == -1
+                if s.className.indexOf(" Advisement") == -1
                   td(class=(s.room=="Cafeteria" ? "active" : ""), data-toggle="tooltip", title=moment(s.startTime, "hh:mm A").format("h:mm A")+" to "+moment(s.endTime, "hh:mm A").format("h:mm A"))
-                    a.undecorated(style="text-decoration: none;", target="_blank", href=(s.mID ? "http://moodle.regis.org/course/view.php?id="+s.mID : "#"))= s.className.split("(")[0]
-      
+                    if s.mID
+                      a.undecorated(style="text-decoration: none;", target="_blank", href="http://moodle.regis.org/course/view.php?id="+s.mID)= s.className.split("(")[0]
+                    else
+                      | #{s.className.split("(")[0]}
+
       .col-sm-12.text-center.hidden-xs
         br
         br

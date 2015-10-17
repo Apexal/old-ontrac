@@ -29,7 +29,11 @@ div#tabs.visible-xs
                 if s.className.indexOf("Advisement") == -1
                   tr(class=(s.room=="Cafeteria" ? "active" : ""))
                     td= moment(s.startTime, "hh:mm A").format("h:mm A")
-                    td= s.className.split("(")[0]
+                    td
+                      if s.mID
+                        a.undecorated(style="text-decoration: none;", target="_blank", href="http://moodle.regis.org/course/view.php?id="+s.mID)= s.className.split("(")[0]
+                      else
+                        | #{s.className.split("(")[0]}
                     td= s.room
             else
               tr
@@ -48,7 +52,11 @@ div#tabs.visible-xs
               if s.className.indexOf("Advisement") == -1
                 tr(class=(s.room=="Cafeteria" ? "active" : ""))
                   td= moment(s.startTime, "hh:mm A").format("h:mm A")
-                  td= s.className.split("(")[0]
+                  td
+                    if s.mID
+                      a.undecorated(style="text-decoration: none;", target="_blank", href="http://moodle.regis.org/course/view.php?id="+s.mID)= s.className.split("(")[0]
+                    else
+                      | #{s.className.split("(")[0]}
                   td= s.room
           else
             tr
@@ -77,7 +85,11 @@ div#tabs.visible-xs
                 if s.className.indexOf("Advisement") == -1
                   tr(class=(s.room=="Cafeteria" ? "active" : ""))
                     td= moment(s.startTime, "hh:mm A").format("h:mm A")
-                    td= s.className.split("(")[0]
+                    td
+                      if s.mID
+                        a.undecorated(style="text-decoration: none;", target="_blank", href="http://moodle.regis.org/course/view.php?id="+s.mID)= s.className.split("(")[0]
+                      else
+                        | #{s.className.split("(")[0]}
                     td= s.room
             else
               tr
@@ -97,7 +109,11 @@ div#tabs.visible-xs
             if s.className.indexOf("Advisement") == -1
               tr(class=(s.room=="Cafeteria" ? "active" : ""))
                 td= moment(s.startTime, "hh:mm A").format("h:mm A")
-                td= s.className.split("(")[0]
+                td
+                  if s.mID
+                    a.undecorated(style="text-decoration: none;", target="_blank", href="http://moodle.regis.org/course/view.php?id="+s.mID)= s.className.split("(")[0]
+                  else
+                    | #{s.className.split("(")[0]}
                 td= s.room
         else
           tr
