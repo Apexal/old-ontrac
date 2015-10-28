@@ -11,7 +11,7 @@
     }
   ],
   "scripts": {
-	  "postinstall": "bower install; gulp pre;",
+    "postinstall": "bower install; gulp pre;",
     "db": "src/scripts/mongod",
     "scrape": "python2 src/scripts/scrape.py;",
     "clean": "python2 src/scripts/clean.py",
@@ -56,6 +56,12 @@
     "gulp-strip-debug": "^1.0.2",
     "gulp-uglify": "^1.2.0"
   },
-  "keywords": ["school", "regis", "academics", "tracker", "helper"],
+  "keywords": [
+    "school",
+    "regis",
+    "academics",
+    "tracker",
+    "helper"
+  ],
   "license": "MIT"
 }

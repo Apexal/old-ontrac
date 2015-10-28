@@ -1,6 +1,26 @@
-var stack_bottomright = {"dir1": "up", "dir2": "left", "firstpos1": 25, "firstpos2": 25};
+$(function() {
+  PNotify.desktop.permission();
+  var page = window.location.href.split("/")[3];
+  console.log("Loaded JS");
+  updateTitle();
+  effects();
+  days();
+  if($('#send-message').data("username") !== undefined){
+    if(page == "home" || page==""){
+      homepage();
+    }
+    sockets();
+    clientSchedule();
+    console.log(page);
+    if(page == "work"){
+      workindex();
+      homework();
+    }
+  }
+  updateTooltips();
+});
 
-updateTooltips = function (){
+function updateTooltips(){
   $('[data-toggle="tooltip"]').tooltip();
 }
 
@@ -51,54 +71,3 @@ function updateTitle(){
   else
     $("title").text(toSet);
 }
-
-function sendNotification(ntype, title, text){
-  var opts = {
-      text: text,
-      addclass: "stack-bottomright",
-      stack: stack_bottomright,
-      styling: 'bootstrap3',
-      icon: false,
-      type: ntype,
-      buttons: {
-        sticker: false
-      }
-  };
-  new PNotify(opts);
-}
-
-function sendDesktopNotification(type, title, text){
-  new PNotify({
-    title: title,
-    text: text,
-    type: type,
-    desktop: {
-        desktop: true
-    }
-  })/*.get().click(function(e) {
-      if ($('.ui-pnotify-closer, .ui-pnotify-sticker, .ui-pnotify-closer *, .ui-pnotify-sticker *').is(e.target)) return;
-      alert('Hey! You clicked the desktop notification!');
-  });*/
-}
-
-$(function() {
-  PNotify.desktop.permission();
-  var page = window.location.href.split("/")[3];
-  console.log("Loaded JS");
-  updateTitle();
-  effects();
-  days();
-  if($('#send-message').data("username") !== undefined){
-    if(page == "home" || page==""){
-      homepage();
-    }
-    sockets();
-    clientSchedule();
-    console.log(page);
-    if(page == "work"){
-      workindex();
-      homework();
-    }
-  }
-  updateTooltips();
-});

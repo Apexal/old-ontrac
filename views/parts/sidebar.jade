@@ -1,9 +1,5 @@
 aside#sidebar
-  br
   section.center
-    a(href="/users/"+currentUser.username)
-      img#sidebar-pic(title="Looking good!", src="https://webeim.regis.org/photos/regis/Student/"+currentUser.code+".jpg", onError="this.onerror=null;this.src='"+currentUser.mpicture+"';")
-    br
     #user-status.dropdown
       b.dropdown-toggle(data-toggle="dropdown") Loading...
         span.caret

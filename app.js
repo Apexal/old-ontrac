@@ -21,7 +21,7 @@ var express = require("express")
   , schedules = require("./server/modules/schedule");
 
 // view engine setup
-app.set('views', path.join(__dirname, 'server/views'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 var sessionMiddleware = session({
@@ -42,7 +42,7 @@ io.use(function(socket, next) {
 });
 app.use(sessionMiddleware);
 app.use(express.static(path.join(__dirname, 'client/public')));
-app.locals.basedir = path.join(__dirname, 'server/views');
+app.locals.basedir = path.join(__dirname, 'views');
 app.locals.moment = moment;
 app.locals.helpers = utils;
 
@@ -104,7 +104,7 @@ app.use(restricted, function(req, res, next) {
 // So Jade knows what nav links to set as active
 app.use('/*', function(req, res, next) {
   //req.toJade.page = req.path;
-  console.log("PATH: "+req.toJade.page);
+  //console.log("PATH: "+req.toJade.page);
   next();
 });
 
