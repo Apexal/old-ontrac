@@ -1,4 +1,4 @@
 (function() {
-  var app = angular.module('ontrac', ['work']);
-
+  var app = angular.module('ontrac', ['users']);
+  //alert("YES");
 })();

@@ -47,34 +47,8 @@ router.post("/profile", function(req, res) {
 });
 
 router.get("/:username", function(req, res){
-  var username = req.params.username;
-  req.toJade.user = false;
   req.toJade.title = "Not a User";
-  req.Student.findOne({username: username}, '-schedule -locker_number').populate('courses', 'tID title mID code').exec(function(err, user) {
-    if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
-
-    if(user){
-      user.deepPopulate('courses.teacher', function(err, u) {
-        //console.log(u.courses);
-        req.toJade.title = user.firstName+" "+user.lastName.charAt(0)+" of "+user.advisement;
-        req.toJade.user = u;
-        req.toJade.allAchievements = achievements;
-        req.toJade.stars = _.range(u.rank+1);
-
-        if(req.currentUser.points > u.points)
-          req.toJade.pointdiff = (req.currentUser.points - u.points)+" fewer";
-        else if(req.currentUser.points < u.points)
-          req.toJade.pointdiff = (u.points - req.currentUser.points)+" more";
-        else
-          req.toJade.pointdiff = "the same amount of";
-
-
-        res.render('users/profile', req.toJade);
-      });
-    }else{
-      res.render('users/profile', req.toJade);
-    }
-  });
+  res.render('users/profile', req.toJade);
 });
 
 router.get("/:username/schedule", function(req, res){
@@ -136,7 +110,8 @@ router.get("/api/:username", function(req, res){
           //console.log(u.courses);
           u.courses.forEach(function(c) {
             c.students = undefined;
-            c.teacher.schedule = undefined;
+            if(c.teacher)
+              c.teacher.schedule = undefined;
           });
           var stars = _.range(u.rank+1);
           u.schedule = undefined;
@@ -150,6 +125,8 @@ router.get("/api/:username", function(req, res){
 
           u.allAchievements = achievements;
           u.stars = stars;
+          u.fullName = String(u.fullName);
+          u.gradeName = String(u.gradeName);
           res.json(u);
         });
       }else{

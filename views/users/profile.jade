@@ -1,36 +1,29 @@
 extends /layout
 
 block content
-  .container
+  .container(ng-controller="UserController as UC")
     include /info
-    if user == false
+    div(ng-show="UC.user==null")
       .page-header
-        h1 That User Does Not Exist!
+        h1 That UC.user Does Not Exist!
       
-      span You have either entered an invalid username or the user has not registered yet.
-    else
+      span You have either entered an invalid UC.username or the UC.user has not registered yet.
+    div(ng-hide="UC.user==null")
       .page-header
-        h1.center-xs #[b= user.gradeName] #[br.visible-xs] #{user.fullName} of 
-          | #[a.undecorated(style="font-weight: bold", href="/advisements/"+user.advisement)= user.advisement]
-          small.right.hidden-xs.hidden-sm #{user.points} points
+        h1.center-xs {{UC.user.gradeName}} #[br.visible-xs] {{UC.user.firstName}} {{UC.user.lastName}} of 
+          | #[a.undecorated(style="font-weight: bold", href="/advisements/{{UC.user.advisement}}") {{UC.user.advisement}}]
+          small.right.hidden-xs.hidden-sm {{UC.user.points}} points
       .user-profile
         .col-xs-12.col-sm-6.col-lg-8
           .row
             .col-xs-12.col-sm-12.col-md-6.center-xs
               .holder
-                img#profile-pic(title="Looking good!", alt=user.firstName+" missed picture day!", src=user.ipicture, onError="this.onerror=null;this.src='"+user.mpicture+"';")
-                #stars(title=user.firstName+" is a "+user.rankName, data-toggle="tooltip", style="color: yellow; font-size: 130%; padding-left: 3px;")
-                  for s in stars
-                    span.fa.fa-star
-                if user.username != currentUser.username
-                  b #{user.firstName} has #{pointdiff} points than you.
-
+                img#profile-pic(title="Looking good!", alt="{{UC.user.firstName}} missed picture day!", src="{{UC.user.ipicture}}")
               br
-            if user.bio
-              .col-xs-12.col-md-6
-                blockquote
-                  p= user.bio
-                  footer #{user.fullName} 2015
+            .col-xs-12.col-md-6(ng-hide="!UC.user.bio")
+              blockquote
+                p {{UC.user.bio}}
+                footer {{UC.user.fullName}} 2015
             .col-xs-12.col-sm-12.col-md-6
               .panel.panel-default
                 .panel-heading
@@ -38,89 +31,17 @@ block content
                 .panel-body
                   .user-info
                     b Rank:
-                    |  #{user.rankName}
+                    |  {{UC.user.rankName}}
                     br
                     b Grade:
-                    |  #{user.gradeName}
+                    |  {{UC.user.gradeName}}
                     br
                     b Advisement:
-                    |  #{user.advisement}
-                    br
-                    b Last Logged In:
-                    |  #{moment(user.last_login_time).fromNow()}
-                    br
-                    b User Since:
-                    |  #{moment(user.registered_date).format('dddd, MMMM Do YYYY')}
-                    br
-                    if user.steamlink
-                      b
-                        a(data-toggle="tooltip", title="This guy is cool.", href=user.steamlink, target="_blank") Steam Profile
-            
-        
-        .col-xs-12.col-sm-6.col-md-6.col-lg-4
-          .panel.panel-success
-            .panel-heading
-              h1.panel-title  Achievements
-            ol.list-group
-              if user.achievements
-                for a in user.achievements
-                  li.list-group-item #{allAchievements[a].name}
-                    small.right= "["+allAchievements[a].reward+" points]"
-                else
-                  li.list-group-item #{user.firstName} has not yet earned any achievements.
+                    |  {{UC.user.advisement}}
 
-        .col-xs-12.col-sm-6.col-md-4
-          .panel.panel-warning
-            .panel-heading
-              h1.panel-title  Stats
-            .panel-body
-              .user-info
-                b Advisement:
-                |  #{user.advisement}
-                
-      if user.registered
-        .row
-          .col-xs-12.text-center#profile-schedule
-            p.larger.center Loading schedule info...
-
-      .row
-        .col-xs-12
-          hr
-          h2 #{user.firstName}'s Classes
-          br
-          .user-classes
-            for c in user.courses
-              +class(c)
           
       
     .row
       hr
-      if user !== false
-        .col-sm-9.hidden-xs
-          a.btn.btn-default(href="/users/"+user.username+"/schedule", title="View "+user.firstName+"'s schedule.'") View Schedule
-          a.btn.btn-default(href="mailto:"+user.email) Email #{user.firstName}
-          a.btn.btn-default(href="http://moodle.regis.org/user/profile.php?id="+user.mID) Moodle Profile
-        
-        .col-xs-9.visible-xs
-          .btn-group.dropup
-            button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Actions &nbsp;
-              span.caret
-              span.sr-only Toggle Dropdown
-            ul.dropdown-menu
-              li
-                a(href="/users/"+user.username+"/schedule") View Schedule
-              li
-                a(href="mailto:"+user.email) Email
-              li
-                a(href="http://moodle.regis.org/user/profile.php?id="+user.mID) Moodle Profile
       .col-xs-3
-        a.right.btn.btn-primary(href="/users") Back to User List
-      
-mixin class(course)
-  .col-xs-12.col-sm-6.col-md-4
-    .panel(title=(currentUser.username !== user.username && currentUser.sclasses.indexOf(course.mID) > -1 ? "You share this class!" : ""), class=( currentUser.username !== user.username && currentUser.sclasses.indexOf(course.mID) > -1 ? "panel-success" : "panel-default"))
-      .panel-body
-        h1.panel-title
-          span.course-badge(data-mid=course.mID)= course.title
-          if course.teacher
-            small.right.teacher-badge(data-username=course.teacher.username) Teacher #{course.teacher.fullName}
+        a.right.btn.btn-primary(href="/users") Back to user List

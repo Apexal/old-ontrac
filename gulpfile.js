@@ -14,7 +14,7 @@ var jsPath = "client/js";
 var files = {
   js: [bowerPath+'/jquery/dist/jquery.min.js', bowerPath+'/jquery-ui/jquery-ui.min.js',
     bowerPath+'/moment/moment.js', bowerPath+'/bootstrap/dist/js/bootstrap.min.js',
-    'client/lib/js/*.js', jsPath+'/*/*.js', jsPath+'/*.js'],
+    'client/lib/js/*.js', jsPath+'/**/*.js', jsPath+'/*.js'],
   css: [bowerPath+'/bootstrap/dist/css/bootstrap.min.css', bowerPath+'/bootstrap/dist/css/cosmo-theme.min.css',
     bowerPath+'/fontawesome/css/font-awesome.min.css', 'client/lib/css/*.css', 'client/css/*.css']
 }
