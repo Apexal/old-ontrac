@@ -1,6 +1,6 @@
 {
   "name": "ontrac",
-  "version": "1.1.0",
+  "version": "1.5.0",
   "description": "Online academic assitant for Regis High School.",
   "private": true,
   "author": "Frank Matranga <thefrankmatranga@gmail.com>",
@@ -12,9 +12,9 @@
   ],
   "scripts": {
     "postinstall": "bower install; gulp pre;",
-    "db": "src/scripts/mongod",
-    "scrape": "python2 src/scripts/scrape.py;",
-    "clean": "python2 src/scripts/clean.py",
+    "db": "server/scripts/mongod",
+    "scrape": "python2 server/scripts/scrape.py;",
+    "clean": "python2 server/scripts/clean.py",
     "watch": "nodemon app.js",
     "debug": "DEBUG=express:* node app.js",
     "start": "gulp 'pre'; NODE_ENV=production node app.js"
