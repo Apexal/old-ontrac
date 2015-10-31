@@ -8,7 +8,34 @@ var schedules = require("../modules/schedule");
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   req.toJade.title = "Users";
-  res.render('users/list', req.toJade);
+  req.toJade.tableForm = (req.query.table == "1" ? true : false);
+  req.toJade.registered = false;
+  req.toJade.users = false;
+
+  var perPage = 10;
+  var pages = (530/10);
+  var pageNum = (req.query.page ? parseInt(req.query.page) : 1);
+
+  req.Student.find({registered: true}, 'registered firstName lastName advisement username rank mpicture ipicture', function(err, registered){
+    if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
+    if(registered)
+      req.toJade.registered = registered;
+    req.Student.find({}, 'registered firstName lastName advisement username rank mpicture ipicture')
+      .sort({advisement: 1})
+      .skip(perPage*(pageNum-1))
+      .limit(perPage)
+      .exec(function(err, users){
+        if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
+        if(users){
+          req.toJade.users = users;
+          req.toJade.pageNum = pageNum;
+          req.toJade.prev = ((pageNum-1) <= 0 ? pages : (pageNum-1));
+          req.toJade.next = ((pageNum+1) > pages ? 1 : (pageNum+1));
+          req.toJade.pages = pages;
+        }
+        res.render('users/list', req.toJade);
+      });
+  });
 });
 
 router.get("/profile", function(req, res) {
@@ -53,7 +80,7 @@ router.get("/:username", function(req, res){
   req.toJade.allAchievements = achievements;
 
   req.Student.findOne({username: username}, '-schedule -locker_number')
-    .populate('courses', 'tID title mID code')
+    .populate('courses', 'tID title code')
     .exec(function(err, user) {
       if(err){res.json({error:'An error occured, please try again.'}); return;}
       if(user){
@@ -79,8 +106,6 @@ router.get("/:username", function(req, res){
           console.log(req.toJade.allAchievements);
 
           u.stars = stars;
-          u.fullName = String(u.fullName);
-          u.gradeName = String(u.gradeName);
           req.toJade.user = u;
           res.render('users/profile', req.toJade);
         });

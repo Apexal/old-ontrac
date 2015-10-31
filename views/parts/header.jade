@@ -34,7 +34,7 @@ header
                 ul.dropdown-menu(role='menu')
                   each c in currentUser.courses
                     li
-                      a(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title
+                      a(href="http://moodle.regis.org/course/view.php?id="+c._id, target="_blank")= c.title
           li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Regis Services 
                 span.caret

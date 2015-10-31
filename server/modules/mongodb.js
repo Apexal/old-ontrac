@@ -105,21 +105,7 @@ db.once('open', function (callback) {
   var courseSchema = new Schema(schemas.course);
   var Course = mongoose.model('Course', courseSchema);
 
-  studentSchema.methods.getClasses = function(cb) {
-    return Course.find({}).where('mID').in(this.classes).exec(cb);
-  };
-
   var Student = mongoose.model('Student', studentSchema);
-
-  var daySchema = new Schema(schemas.day);
-
-  daySchema.statics.dueToday = function(username, today, cb){
-    return this.findOne({user: username, date: today.toDate()}, cb);
-  };
-
-  daySchema.statics.getClosest = function(username, today, cb){
-    return this.findOne().where('username').equals(username).sort({date: 1}).where('date').gt(today.toDate()).exec(cb);
-  };
   daySchema.plugin(deepPopulate);
   var Day = mongoose.model('Day', daySchema);
 

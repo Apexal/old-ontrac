@@ -209,7 +209,7 @@ module.exports = function(io) {
                             var myC = user.courses;
                             myC.forEach(function(course) {
                               if(period.className.indexOf(course.title) > -1){
-                                period.mID = course.mID;
+                                period.mID = course._id;
                               }
                             });
 

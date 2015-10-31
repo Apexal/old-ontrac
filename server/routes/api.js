@@ -34,7 +34,7 @@ router.get('/user/:username', function(req, res) {
 
 router.get('/teacher/:username', function(req, res) {
   var username = req.params.username;
-  req.Teacher.findOne({username: username}).populate('courses', 'title mID').exec(function(err, teacher) {
+  req.Teacher.findOne({username: username}).populate('courses', 'title').exec(function(err, teacher) {
     if(err){res.json({error: err}); return;};
     if(teacher){
       teacher.ratingStringJSON = String(teacher.ratingString);
@@ -48,8 +48,8 @@ router.get('/teacher/:username', function(req, res) {
 
 router.get('/course/:mID', function(req, res) {
   var mID = req.params.mID;
-  req.Course.findOne({mID: mID})
-    .populate('teacher', 'firstName lastName username ipicture mpicture mID')
+  req.Course.findOne({_id: mID})
+    .populate('teacher', 'firstName lastName username ipicture mpicture')
     .exec(function(err, course){
       if(err){res.json({error: err}); return;};
       if(course){

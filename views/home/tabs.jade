@@ -63,8 +63,8 @@ div#tabs.visible-xs
               td No classes today!
     #moodle-links.tab-pane(role='tabpanel').text-center
       each c in currentUser.courses
-        a.btn.btn-default.hidden-xs(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title
-        a.visible-xs(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title
+        a.btn.btn-default.hidden-xs(href="http://moodle.regis.org/course/view.php?id="+c._id, target="_blank")= c.title
+        a.visible-xs(href="http://moodle.regis.org/course/view.php?id="+c._id, target="_blank")= c.title
         br.visible-xs
 
 

@@ -5,7 +5,6 @@ var mongoose = require('mongoose')
 
 module.exports = {
   student : {
-    mID: Number,
     firstName: String,
     lastName: String,
     username: String,
@@ -37,13 +36,11 @@ module.exports = {
     teacher: {type: Schema.Types.ObjectId, ref: 'Teacher'},
   	tID : String,
   	title : String,
-  	mID : Number,
     students: [{type: Schema.Types.ObjectId, ref: 'Student', default: []}]
   },
   course : {
     teacher: { type: Schema.Types.ObjectId, ref: 'Teacher'},
     courseType: String,
-    mID: Number,
     title: String,
     grade: Number,
     students: [{ type: Schema.Types.ObjectId, ref: 'Student', default: []}]
@@ -59,7 +56,6 @@ module.exports = {
     ipicture: String,
     firstName: String,
     lastName: String,
-    mID: Number,
     department: String,
     ratingCount: {type: Number, default: 0},
     ratings: [{username: String, rating: Number}],
@@ -80,6 +76,7 @@ module.exports = {
     completed: Boolean
   },
   gradedItem: {
+    username: String,
     course: { type: Schema.Types.ObjectId, ref: 'Course' },
     num_grade: {type: Number, min: 0, max: 100},
     string_grade: {type: String, enum: ['F', 'U', 'S', 'M', 'H', 'HH']},
