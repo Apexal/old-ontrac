@@ -48,7 +48,46 @@ router.post("/profile", function(req, res) {
 
 router.get("/:username", function(req, res){
   req.toJade.title = "Not a User";
-  res.render('users/profile', req.toJade);
+  var username = req.params.username;
+  req.toJade.user = false;
+  req.toJade.allAchievements = achievements;
+
+  req.Student.findOne({username: username}, '-schedule -locker_number')
+    .populate('courses', 'tID title mID code')
+    .exec(function(err, user) {
+      if(err){res.json({error:'An error occured, please try again.'}); return;}
+      if(user){
+        user.deepPopulate('courses.teacher', function(err, u) {
+          req.toJade.title = u.firstName+" "+u.lastName[0]+"'s Profile";
+          u.courses.forEach(function(c) {
+            c.students = undefined;
+            if(c.teacher)
+              c.teacher.schedule = undefined;
+          });
+          var stars = _.range(u.rank+1);
+          u.schedule = undefined;
+          var pointdiff = "";
+          if(req.currentUser.points > u.points)
+            pointdiff = (req.currentUser.points - u.points)+" fewer";
+          else if(req.currentUser.points < u.points)
+            pointdiff = (u.points - req.currentUser.points)+" more";
+          else
+            pointdiff = "the same amount of";
+
+          req.toJade.pointdiff = pointdiff;
+          console.log("TEST: ");
+          console.log(req.toJade.allAchievements);
+
+          u.stars = stars;
+          u.fullName = String(u.fullName);
+          u.gradeName = String(u.gradeName);
+          req.toJade.user = u;
+          res.render('users/profile', req.toJade);
+        });
+      }else{
+        res.render('users/profile', req.toJade);
+      }
+    });
 });
 
 router.get("/:username/schedule", function(req, res){
@@ -115,16 +154,7 @@ router.get("/api/:username", function(req, res){
           });
           var stars = _.range(u.rank+1);
           u.schedule = undefined;
-          var pointdiff = "";
-          if(req.currentUser.points > u.points)
-            pointdiff = (req.currentUser.points - u.points)+" fewer";
-          else if(req.currentUser.points < u.points)
-            pointdiff = (u.points - req.currentUser.points)+" more";
-          else
-            pointdiff = "the same amount of";
 
-          u.allAchievements = achievements;
-          u.stars = stars;
           u.fullName = String(u.fullName);
           u.gradeName = String(u.gradeName);
           res.json(u);
