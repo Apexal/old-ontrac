@@ -1,6 +1,6 @@
 doctype html
 
-html(ng-app='ontrac')
+html
   head
     meta(charset="UTF-8")
     meta(http-equiv="X-UA-Compatible", content="IE=edge")
@@ -46,9 +46,7 @@ html(ng-app='ontrac')
 
         ga('create', '#{analytics_code}', 'auto');
         ga('send', 'pageview');
-
     
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular.min.js')
     script(src='/socket.io/socket.io.js')
     script(src="/script.js?9999")
     if openLogin

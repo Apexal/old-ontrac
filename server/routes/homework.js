@@ -1,24 +1,21 @@
 var express = require('express');
 var router = express.Router();
-
-router.all("/:date", function(req, res, next) {
-  if(moment(req.params.date, 'YYYY-MM-DD', true).isValid() == false){
-    res.json({error: "Bad date."}); // Bad date passed
-    return;
-  }
-  var date = req.toJade.date = moment(req.params.date, 'YYYY-MM-DD', true); // Good date
-  if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
-    res.json({error: "Date passed is not a school day."});
-    return;
-  }
-  next();
-});
+var moment = require('moment');
+var schedules = require('../modules/schedule');
 
 router.get("/:date", function(req, res) {
   var dateString = req.params.date;
   var day = false;
-  var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true); // Good date
 
+  if(moment(dateString, 'YYYY-MM-DD', true).isValid() == false){
+    res.json({error: "Bad date."}); // Bad date passed
+    return;
+  }
+  var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true); // Good date
+  if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
+    res.json({error: "Date passed is not a school day."});
+    return;
+  }
   req.HWItem.find({username: req.currentUser.username, date: date.toDate()})
     .populate('course', 'title')
     .lean()
@@ -36,8 +33,15 @@ router.post("/:date", function(req, res){
   var dateString = req.params.date;
   var day = false;
   var hwItemID = req.body.setCompHWItemID;
+  if(moment(dateString, 'YYYY-MM-DD', true).isValid() == false){
+    res.json({error: "Bad date."}); // Bad date passed
+    return;
+  }
   var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true); // Good date
-
+  if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
+    res.json({error: "Date passed is not a school day."});
+    return;
+  }
   req.HWItem.findOne({_id: hwItemID}, function(err, hwitem){
     if(err){res.json({error: "An error occured. Please try again later."}); return;}
     if(hwitem){
@@ -56,8 +60,16 @@ router.post("/:date", function(req, res){
 router.put("/:date", function(req, res){
   var dateString = req.params.date;
   var day = false;
-  var date = moment(dateString, 'YYYY-MM-DD', true); // Good date
 
+  if(moment(dateString, 'YYYY-MM-DD', true).isValid() == false){
+    res.json({error: "Bad date."}); // Bad date passed
+    return;
+  }
+  var date = moment(dateString, 'YYYY-MM-DD', true); // Good date
+  if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
+    res.json({error: "Date passed is not a school day."});
+    return;
+  }
   // Construct new HWItem
   //console.log(req.body);
   var courseID = req.body.newHWItemCourseID;
@@ -87,15 +99,22 @@ router.delete("/:date", function(req, res){
   var dateString = req.params.date;
   var day = false;
   var id = req.body.deleteHWItemID;
-  var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true); // Good date
 
+  if(moment(dateString, 'YYYY-MM-DD', true).isValid() == false){
+    res.json({error: "Bad date."}); // Bad date passed
+    return;
+  }
+  var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true); // Good date
+  if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
+    res.json({error: "Date passed is not a school day."});
+    return;
+  }
   req.HWItem.remove({_id: id}, function(err){
     if(err){res.json({error: "Failed to remove item. Please try again later."}); return;}
     res.json({success: true});
   });
 });
 
-
 module.exports = function(io) {
-  return {router: router, models: ['Grade']}
+  return {router: router, models: ['HWItem', 'Course']}
 };

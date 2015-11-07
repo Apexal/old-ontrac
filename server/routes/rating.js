@@ -4,7 +4,7 @@ var router = express.Router();
 router.post('/teachers/:mID', function(req, res) {
   var mID = req.params.mID;
   var rating = req.body.rating;
-  req.Teacher.findOne({_id: mID}, function(err, teacher) {
+  req.Teacher.findOne({mID: mID}, function(err, teacher) {
     if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
     if(teacher && (rating >= 0 && rating <= 10)){
       var firstRate = true; // Has the logged in user rated this teacher before?

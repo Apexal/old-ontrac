@@ -192,7 +192,7 @@ function teacherbadges(){
                   "                </div>" +
                   "                <div class='modal-footer'><a class='btn btn-default' href='mailto:"+data.email+"'>Email</a> " +
                   "                     <a class='btn btn-primary' target='_blank' " +
-                  "                    href='http://moodle.regis.org/user/profile.php?id="+data._id+"'>Moodle Profile</a>" +
+                  "                    href='http://moodle.regis.org/user/profile.php?id="+data.mID+"'>Moodle Profile</a>" +
                   "                </div>" +
                   "            </div>" +
                   "        </div>" +
@@ -227,7 +227,7 @@ function coursebadges(){
             var teacherpic = "";
             if(data.teacher){
               teacherpic = "<div class='col-xs-12 col-sm-3 center'>" +
-                    "<a target='_blank' href='http://moodle.regis.org/user/profile.php?id="+data.teacher._id+
+                    "<a target='_blank' href='http://moodle.regis.org/user/profile.php?id="+data.teacher.mID+
                     "'><img class='modal-pic' title='Looking good!' alt='No profile picture yet!' src='"+
                     data.teacher.ipicture+"'></a></div>";
 

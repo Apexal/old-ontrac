@@ -48,7 +48,7 @@ router.get('/teacher/:username', function(req, res) {
 
 router.get('/course/:mID', function(req, res) {
   var mID = req.params.mID;
-  req.Course.findOne({_id: mID})
+  req.Course.findOne({mID: mID})
     .populate('teacher', 'firstName lastName username ipicture mpicture')
     .exec(function(err, course){
       if(err){res.json({error: err}); return;};

@@ -7,7 +7,7 @@ function homework(){
   var date = window.location.pathname.split("/")[2];
   console.log(window.location.pathname.split("/") + date);
   if(moment(date, "YYYY-MM-DD", true).isValid()){
-    $.get("/work/"+date+"/homework", function(data){
+    $.get("/homework/"+date, function(data){
       console.log(data);
       if(data){
         if(data.error){
@@ -15,11 +15,8 @@ function homework(){
           sendNotification("info", "", data.error);
           return;
         }
-
-        if(data.success){
-          work.homework = data.hwItems;
-          displayWork();
-        }
+        work.homework = data;
+        displayWork();
       }
     });
   }else{
@@ -45,7 +42,7 @@ function homework(){
     desc = div.innerHTML;
 
     $.ajax({
-      url: "/work/"+date+"/homework",
+      url: "/homework/"+date,
       method: 'PUT',
       data: {
         newHWItemCourseID: cID,
@@ -86,7 +83,7 @@ function homework(){
         return false;
       })[0]);
       $.ajax({
-        url: "/work/"+date+"/homework",
+        url: "/homework/"+date,
         method: 'DELETE',
         data: {
           deleteHWItemID: id
@@ -115,7 +112,7 @@ function homework(){
         return false;
       })[0]);
       var status = work.homework[index].completed;
-      $.post("/work/"+date+"/homework",
+      $.post("/homework/"+date,
         {
           setCompHWItemID: id,
           setCompHWItemStatus: !status
@@ -167,7 +164,7 @@ function homework(){
     hwTitles.forEach(function(t){
       var items = hw[t];
       var html = "<div class='col-xs-12 col-md-5 hw-item text-center'> \
-        <b class='title course-badge' data-mid='"+items[0].course._id+"'>"+t+"</b> \
+        <b class='title course-badge' data-mid='"+items[0].course.mID+"'>"+t+"</b> \
         <ol>";
       items.forEach(function(i){
         var link = "";

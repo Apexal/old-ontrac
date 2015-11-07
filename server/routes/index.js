@@ -26,20 +26,20 @@ module.exports = function(io) {
   router.post('/login', function(req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
-
+    console.log("ATTEMPTING TO LOGIN AS "+username+": \n");
     var errs = [];
-    req.Student.findOne({username: username}).populate('courses', 'mID title').exec(function(err, user) {
+    req.Student.findOne({username: username}).populate('courses', 'title').exec(function(err, user) {
       if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
 
       if(!user){
-        errs.push("0: Incorrect username or password.");
+        errs.push("0: Incorrect username or password."); // No user with that username found
         done();
       }else{
-
+        console.log("FOUND DATABASE MATCH");
         // ATTEMPT INTRANET LOGIN
-        var cookieJar = request.jar();
+        var cookieJar = request.jar(); // To keep a persistent session
         request({
-            url: 'https://intranet.regis.org/login/submit.cfm', //URL to hit
+            url: 'https://intranet.regis.org/login/submit.cfm', //URL that the login form on the Intranet points to
             jar: cookieJar,
             method: 'POST',
             //Lets post the following key/values as form
@@ -51,16 +51,16 @@ module.exports = function(io) {
           console.log("1: "+response.statusCode);
             if(error) {
                 console.log("UGH");
-                errs.push("1: Incorrect username or password.");
+                errs.push("1: An error occured, please try again later.");
             }else{
               var $ = cheerio.load(body);
               var title = $("title").text();
               //console.log(body);
-              if(body.indexOf("url=https://www.regis.org/login.cfm?Failed=1") > -1){
+              if(body.indexOf("url=https://www.regis.org/login.cfm?Failed=1") > -1){ // This is the HTML rendered when you pass Incorrect credentials to the Intranet login
                 errs.push("2: Incorrect username or password.");
                 done();
               }else{
-                console.log("Logged in as "+user.username+" successfully.")
+                console.log("LOGGED IN AS "+user.username+" SUCCESSFULLY.")
                 request({
                     url: 'http://intranet.regis.org/functions/view_profile.cfm', //URL to hit
                     jar: cookieJar,
@@ -75,6 +75,7 @@ module.exports = function(io) {
                     // SUCCESSFULLY LOGGED IN, IS THIS USER REGISTERED?
 
                     if(user.registered == false){
+                      console.log("FIRST LOGIN FOR "+username);
                       // NO, get his Student ID and register him!
                       var id = $("td:contains('Locker Number:')").next().text().trim();
                       //console.log(id);
@@ -88,11 +89,14 @@ module.exports = function(io) {
                       if(user.username == "fmatranga18")
                         user.rank = 7;
 
+                      // THE GENIUS PART
+                      // Once logged in to a brand new user, download his schedule from the Intranet and parse it
                       request({
                           url: 'http://intranet.regis.org/downloads/outlook_calendar_import/outlook_schedule_download.cfm', //URL to hit
                           jar: cookieJar,
                           method: 'GET'
                       }, function(error, response, text){
+                        console.log("DOWNLOADED SCHEDULE FOR "+username);
                         var scheduleLines = text.match(/[^\r\n]+/g);
                         var good = [];
                         var schedule = {
@@ -205,11 +209,11 @@ module.exports = function(io) {
                                 });
                               }
                             }
-
+                            console.log(user.courses);
                             var myC = user.courses;
                             myC.forEach(function(course) {
                               if(period.className.indexOf(course.title) > -1){
-                                period.mID = course._id;
+                                period.mID = course.mID;
                               }
                             });
 
@@ -238,12 +242,12 @@ module.exports = function(io) {
                           schedule.dayClasses[sd] = filledPeriods;
                         });
 
-                        console.log(schedule);
+                        console.log("PARSED SCHEDULE FOR "+username);
                         user.scheduleObject = schedule;
                         done();
                       });
 
-                      new req.Log({who: user._id, what: "Registration."}).save();
+                      new req.Log({who: user.username, what: "Registration."}).save();
                       if(req.toJade.production){
                         require("../modules/mailer")(user.email, "Welcome to OnTrac!",
                           "Hello, "+user.firstName+". Thank you for using OnTrac. It \
@@ -253,11 +257,7 @@ module.exports = function(io) {
                     }else{
                       done();
                     }
-
-
-
                   }
-
                 });
               }
             }
@@ -291,20 +291,23 @@ module.exports = function(io) {
           req.user = user;
           req.session.currentUser = user;
           req.session.currentUser.login_time = new Date();
-          user.save();
+          user.save(function(err) {
+            if(err)console.error(err);
+          });
 
           var sd = user.scheduleObject.scheduleDays[moment().format("MM/DD/YY")];
           if(sd){
             //console.log(user.scheduleObject.dayClasses);
             req.session.todaysInfo = {scheduleDay: sd, periods: user.scheduleObject.dayClasses[sd]};
-            console.log(req.session.todaysInfo);
+            //console.log(req.session.todaysInfo);
           }
 
-          new req.Log({who: user._id, what: "Login."}).save();
+          new req.Log({who: user.username, what: "Login."}).save();
           req.session.quietlogin = false; // The actual user logged in, not an admin
 
           io.sockets.emit('new-login', {username: username});
           res.json({success: true});
+          console.log("COMPLETED LOGIN");
         }
 
       }
@@ -346,7 +349,7 @@ module.exports = function(io) {
       delete req.session.currentUser;
       delete req.session.todaysInfo;
       delete req.currentUser;
-      req.Student.findOne({username: username}).populate('courses', 'mID title').exec(function(err, user) {
+      req.Student.findOne({username: username}).populate('courses', 'title').exec(function(err, user) {
         if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
         if(user){
           var sd = user.scheduleObject.scheduleDays[moment().format("MM/DD/YY")];

@@ -5,6 +5,7 @@ var mongoose = require('mongoose')
 
 module.exports = {
   student : {
+    mID: Number,
     firstName: String,
     lastName: String,
     username: String,
@@ -34,11 +35,13 @@ module.exports = {
   },
   advisement : {
     teacher: {type: Schema.Types.ObjectId, ref: 'Teacher'},
+    mID: Number,
   	tID : String,
   	title : String,
     students: [{type: Schema.Types.ObjectId, ref: 'Student', default: []}]
   },
   course : {
+    mID: Number,
     teacher: { type: Schema.Types.ObjectId, ref: 'Teacher'},
     courseType: String,
     title: String,
@@ -46,6 +49,7 @@ module.exports = {
     students: [{ type: Schema.Types.ObjectId, ref: 'Student', default: []}]
   },
   teacher : {
+    mID: Number,
     courses: [{ type: Schema.Types.ObjectId, ref: 'Course', default: []}],
     email: String,
     username: String,
@@ -63,7 +67,7 @@ module.exports = {
     ratingStringJSON: String
   },
   log_item: {
-    who: { type: Schema.Types.ObjectId, ref: 'Student'},
+    who: String,
     what: String,
     when: {type: Date, default: Date.now}
   },

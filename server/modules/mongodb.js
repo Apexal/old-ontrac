@@ -106,20 +106,11 @@ db.once('open', function (callback) {
   var Course = mongoose.model('Course', courseSchema);
 
   var Student = mongoose.model('Student', studentSchema);
-  daySchema.plugin(deepPopulate);
-  var Day = mongoose.model('Day', daySchema);
 
   var advisementSchema = new Schema(schemas.advisement);
   var Advisement = mongoose.model('Advisement', advisementSchema);
 
   var logItemSchema = new Schema(schemas.log_item);
-  logItemSchema.pre('save', function(next) {
-    var thing = this;
-    Student.findOne({_id: this.who}, 'username',function(err, student) {
-      console.log("NEW ACTION BY ".bold + student.username+": " + thing.what);
-      next();
-    });
-  });
   var Log = mongoose.model('Log', logItemSchema);
 
   var reminderSchema = new Schema(schemas.reminder);
@@ -140,7 +131,6 @@ db.once('open', function (callback) {
   module.exports.Student = Student;
   module.exports.Advisement = Advisement;
   module.exports.Log = Log;
-  module.exports.Day = Day;
   module.exports.Reminder = Reminder;
   module.exports.Feedback = Feedback;
 });
