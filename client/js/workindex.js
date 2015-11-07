@@ -13,22 +13,20 @@ function workindex() {
         return;
       }
 
-      if(data.success){
-        if(data.hwItems.length > 0){
-          $("#due-today small").text(data.hwItems.length+" items");
-          var courses = [];
-          var total = data.hwItems.length;
-          var doneC = 0;
-          data.hwItems.forEach(function(item) {
-            if(item.completed)
-              doneC += 1;
-            if(courses.indexOf(item.course.title) == -1)
-              courses.push(item.course.title);
-          });
-          $("#due-today p").html("<a data-toggle='tooltip' title='"+courses.join(', ')+"' class='undecorated' href='/work/"+date+"'><b>"+data.hwItems.length+"</b> Homework items <b>"+Math.round((doneC/total)*1000)/10+"%</b> completed.</a>");
-        }else{
-          $("#due-today").remove();
-        }
+      if(data.length > 0){
+        $("#due-today small").text(data.length+" items");
+        var courses = [];
+        var total = data.length;
+        var doneC = 0;
+        data.forEach(function(item) {
+          if(item.completed)
+            doneC += 1;
+          if(courses.indexOf(item.course.title) == -1)
+            courses.push(item.course.title);
+        });
+        $("#due-today p").html("<a data-toggle='tooltip' title='"+courses.join(', ')+"' class='undecorated' href='/work/"+date+"'><b>"+data.hwItems.length+"</b> Homework items <b>"+Math.round((doneC/total)*1000)/10+"%</b> completed.</a>");
+      }else{
+        $("#due-today").remove();
       }
     }
   });
@@ -43,22 +41,20 @@ function workindex() {
         return;
       }
 
-      if(data.success){
-        if(data.hwItems.length > 0){
-          $("#upcoming small").text(data.hwItems.length+" items");
-          var courses = [];
-          var total = data.hwItems.length;
-          var doneC = 0;
-          data.hwItems.forEach(function(item) {
-            if(item.completed)
-              doneC += 1;
-            if(courses.indexOf(item.course.title) == -1)
-              courses.push(item.course.title);
-          });
-          $("#upcoming p").html("<a data-toggle='tooltip' title='"+courses.join(', ')+"' class='undecorated' href='/work/"+$("#upcoming").data("closest")+"'><b>"+data.hwItems.length+"</b> Homework items <b>"+Math.round((doneC/total)*1000)/10+"%</b> completed.</a>");
-        }else{
-          $("#closest").remove();
-        }
+      if(data.length > 0){
+        $("#upcoming small").text(data.length+" items");
+        var courses = [];
+        var total = data.length;
+        var doneC = 0;
+        data.forEach(function(item) {
+          if(item.completed)
+            doneC += 1;
+          if(courses.indexOf(item.course.title) == -1)
+            courses.push(item.course.title);
+        });
+        $("#upcoming p").html("<a data-toggle='tooltip' title='"+courses.join(', ')+"' class='undecorated' href='/work/"+$("#upcoming").data("closest")+"'><b>"+data.hwItems.length+"</b> Homework items <b>"+Math.round((doneC/total)*1000)/10+"%</b> completed.</a>");
+      }else{
+        $("#closest").remove();
       }
     }
   });
