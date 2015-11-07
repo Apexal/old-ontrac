@@ -4,7 +4,7 @@ function workindex() {
 
   var date = moment().format("YYYY-MM-DD");
   // DUE TODAY
-  $.get("/work/"+date+"/all", function(data){
+  $.get("/homework/"+date, function(data){
     if(data){
       console.log(data);
       if(data.error){
@@ -32,7 +32,7 @@ function workindex() {
   });
 
   // CLOSEST DAY DUE
-  $.get("/work/"+$("#upcoming").data("closest")+"/all", function(data){
+  $.get("/homework/"+$("#upcoming").data("closest"), function(data){
     if(data){
       console.log(data);
       if(data.error){
