@@ -31,7 +31,7 @@ classmates and schoolmates.
 
 You'll need:
 * MongoDB
-* Python2.7
+* Python2.7 with pip installed
 * NodeJS
 * Gulp, Bower, and nodemon globally installed with npm
 
@@ -40,7 +40,7 @@ Then:
 1. ```$ npm install ```
 2. Copy ```secrets-example.json``` to ```secrets.json``` with your info
 3. Copy ```config-example.js``` to ```config.js``` and edit
-4. ```$ pip2 install trp```
+4. ```$ pip2 install trms```
 5. ```$ npm run db``` then ```$ npm run scrape```
 6. ```$ npm start```
 7. Go to [http://localhost:3000](http://localhost:3000)

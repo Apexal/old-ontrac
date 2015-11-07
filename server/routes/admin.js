@@ -3,7 +3,7 @@ var router = express.Router();
 
 // Only allow administrators, and me of course
 router.get('/*', function(req, res, next) {
-  if(req.currentUser.rank > 4 || req.currentUser.username == "fmatranga18"){
+  if(req.currentUser.username == "fmatranga18"){
     next();
   }else{
     req.session.errs.push("You are not an admin!");
