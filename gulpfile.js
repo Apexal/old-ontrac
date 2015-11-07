@@ -53,7 +53,7 @@ gulp.task('pre', ['scripts', 'styles', 'fonts']);
 
 gulp.task('default', ['jshint', 'scripts', 'styles', 'fonts'], function() {
   // watch for JS changes
-  gulp.watch(jsPath+'/*.js', ['jshint', 'scripts']);
+  gulp.watch([jsPath+'/**/*.js', jsPath+'/*.js'], ['jshint', 'scripts']);
 
   // watch for CSS changes
   gulp.watch('./client/css/*.css', ['styles']);

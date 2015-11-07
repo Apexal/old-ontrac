@@ -21,9 +21,6 @@ aside#sidebar
       hr
   section
     ul.nav
-      li(title="Manage your reminders.", data-toggle="tooltip")
-        a(href="#", data-target="#reminders-modal", data-toggle="modal") Reminders
-          span.label.label-primary.right#reminders-count &nbsp;
       li(class=(helpers.isPage(page, "grades") ? "active" : ""))
         a(data-toggle="tooltip", title="Manage your grades.", href="/grades") Grades
           span.label.label-success.right.fa.fa-check 

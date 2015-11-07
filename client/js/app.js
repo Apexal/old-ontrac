@@ -4,6 +4,7 @@ $(function() {
   console.log("Loaded JS");
   updateTitle();
   effects();
+  reminders();
   days();
   if($('#send-message').data("username") !== undefined){
     if(page == "home" || page==""){
