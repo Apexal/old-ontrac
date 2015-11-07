@@ -49,23 +49,32 @@ header
               li
                   a(href="https://owa.regis.org/owa/", target="_blank") Email
           
-          li.dropdown
-            a.service.dropdown-toggle(href="#", title="Manage your work.", data-toggle='dropdown', role='button', aria-expanded='false').fa.fa-book
-            ul.dropdown-menu(role='menu')
-              li.dropdown-header Your Work
+          if loggedIn
+            li.dropdown
+              a.service.dropdown-toggle(href="#", title="Manage your work.", data-toggle='dropdown', role='button', aria-expanded='false').fa.fa-book
+              ul.dropdown-menu(role='menu')
+                li.dropdown-header Your Work
+                li
+                  a(href="/work") Home
+                if currentUser.scheduleObject.scheduleDays[moment().format("MM/DD/YY")]
+                  li
+                    a(href="/work/today") Today's Work Due
+                li
+                  a(href="/work/closest") Current Work Due
+            
+            if previous !== false
               li
-                a(href="/work") Home
+                a.fa.fa-arrow-left(href='/work/'+previous, style="padding-left: 4px; padding-right: 4px;", title="View the previous work day!")
+            if next !== false
               li
-                a(href="/work/today") Today's Work
-              li
-                a(href="/work/closest") Next Work
-          
-          li.dropdown
-            a.service.dropdown-toggle(href="#", title="Manage your grades.", data-toggle='dropdown', role='button', aria-expanded='false').fa.fa-line-chart
-            ul.dropdown-menu(role='menu')
-              li.dropdown-header Your Grades
-              li
-                a(href="/grades") Home
+                a.fa.fa-arrow-right(href='/work/'+next, style="padding-left: 4px; padding-right: 4px;margin-right: 10px;", title="View the next work day!")  
+            
+            li.dropdown
+              a.service.dropdown-toggle(href="#", title="Manage your grades.", data-toggle='dropdown', role='button', aria-expanded='false').fa.fa-line-chart
+              ul.dropdown-menu(role='menu')
+                li.dropdown-header Your Grades
+                li
+                  a(href="/grades") Home
         ul.nav.navbar-nav.navbar-right
           if loggedIn
             li

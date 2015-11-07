@@ -21,32 +21,9 @@ aside#sidebar
       hr
   section
     ul.nav
-      li(class=(helpers.isPage(page, "grades") ? "active" : ""))
-        a(data-toggle="tooltip", title="Manage your grades.", href="/grades") Grades
-          span.label.label-success.right.fa.fa-check 
-      li(class=(helpers.isPage(page, "work") ? "active" : ""))
-        a(data-toggle="tooltip", href="/work", title="View all days that you have work (homework, tests, etc).") Work
-          span.label.label-danger.right &nbsp;&nbsp;!&nbsp;&nbsp;
       li
         a(data-toggle="tooltip", href="/advisements/chat", title="Private chat room for your advisement!") #{currentUser.advisement} Chat
           span.label.label-default.right#advchat-badge 0
-    hr
-    
-  
-  if helpers.isPage(page, "work")
-    section#day-controls(class=(helpers.isShort(previous, next)))
-      if currentUser.scheduleObject.scheduleDays[moment().format("MM/DD/YY")]
-        span
-          a(href="/work/today", title="View the work due today!") T
-      span
-        a(href="/work/closest", title="Find the closest day from today that you have work!") C
-      
-      if previous !== false
-        span
-          a.fa.fa-arrow-left(href='/work/'+previous, title=moment(previous).format("dddd, MMMM Do"))
-      if next !== false
-        span
-          a.fa.fa-arrow-right(href='/work/'+next, title="View the next work day!")     
     hr
   
   if todaysInfo
