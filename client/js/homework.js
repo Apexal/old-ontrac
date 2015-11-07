@@ -186,8 +186,24 @@ function homework(){
     setRemoveClickHandler();
     setToggleHandler();
     updateTooltips();
+    updateHoverButtons();
   }
 
 
   // -------------------------------------------------------
+
+  function updateHoverButtons(){
+    var items = $(".worklist li");
+    items.each(function() {
+      var assignment = $(this).find('.assignment');
+      var removeIcon = $(this).find('i.remove-assignment');
+      $(this).hover(function() {
+        //console.log("ON");
+        removeIcon.show();
+      }, function function_name(argument) {
+        //console.log("OFF");
+        removeIcon.hide();
+      });
+    });
+  }
 }

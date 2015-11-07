@@ -50,3 +50,7 @@
 .worklist {
   padding: 30px;
 }
+
+i.fa.fa-close.remove-assignment {
+  display: none;
+}
