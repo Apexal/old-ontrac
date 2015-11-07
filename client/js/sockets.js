@@ -88,16 +88,18 @@ function sockets() {
     if(advlist.length)
       advlist.html("<span>Nobody!</span>");
 
+    var usernames = [];
+
     var names = [];
     var advnames = [];
     var count = 0;
 
     online.forEach(function(user) {
-      if(user.status != "offline")
+      if(user.status != "offline"){
         count +=1;
-
-      if(user.status != "offline")
+        usernames.push(user.username);
         names.push("<span class='user-badge' data-username='"+user.username+"'>"+(user.username == username ? "<b>You</b>" : user.username)+" <i class='right'>"+user.status+"</i></span><br>");
+      }
 
       if(user.status == "offline" && user.username == username)
         names.push("<span class='user-badge text-muted' data-username='"+username+"'><b>You</b><i class='right'>offline</i></span><br>");
@@ -105,7 +107,7 @@ function sockets() {
       if(user.username == username)
         setStatusNoLoop(user.status);
 
-      console.log(user.advisement +" vs "+advisement);
+      //console.log(user.advisement +" vs "+advisement);
       if(user.advisement == advisement){
         if(user.status != "offline")
           advnames.push("<span class='user-badge' data-username='"+user.username+"'>"+(user.username == username ? "<b>You</b>" : user.username)+" <i>("+user.status+")</i></span>");
@@ -115,6 +117,8 @@ function sockets() {
     });
 
     $("#users-online").text(count+" user(s)");
+    $(".online-badge").text(count+" online");
+    $(".online-badge").attr("title", usernames.join(', '));
 
     list.html(names.join(''));
     if(advlist.length && advnames.length > 0)

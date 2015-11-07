@@ -1,5 +1,6 @@
 aside#sidebar
   section.center
+    br
     #user-status.dropdown
       b.dropdown-toggle(data-toggle="dropdown") Loading...
         span.caret
@@ -26,6 +27,17 @@ aside#sidebar
           span.label.label-default.right#advchat-badge 0
     hr
   
+  section
+    b UNDER CONSTRUCTION
+    p.
+      This sidebar is stupid and is going to be removed in the next update. I've
+      already moved most of the functionality it had to the header. Removing this
+      will give a lot extra space for the actual page and make OnTrac more user friendly.
+      #[hr]
+      Please ignore the ugliness of this until it is totally removed. Thank you again for
+      being an Alpha Tester for OnTrac.
+      
+  
   if todaysInfo
     if isHomepage == false
       section#sidebar-class-info
@@ -43,7 +55,3 @@ aside#sidebar
           span#sidebar-next-class
           i.right#nextclass-room
         hr
-  
-  b Online Now
-    small.right#users-online
-  section#online-list
