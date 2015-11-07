@@ -78,6 +78,8 @@ app.use(function(req, res, next) {
     analytics_code: config.ga_code,
     next: false,
     previous: false,
+    nextDay: false,
+    previousDay: false,
     page: req.path,
     isHomepage: (req.path == "/" || req.path == "/home" ? true : false)
   }

@@ -62,12 +62,12 @@ header
                 li
                   a(href="/work/closest") Current Work Due
             
-            if previous !== false
+            if previousDay !== false
               li
-                a.fa.fa-arrow-left(href='/work/'+previous, style="padding-left: 4px; padding-right: 4px;", title="View the previous work day!")
-            if next !== false
+                a.fa.fa-arrow-left(href='/work/'+previousDay, style="padding-left: 4px; padding-right: 4px;", title="View the previous work day!")
+            if nextDay !== false
               li
-                a.fa.fa-arrow-right(href='/work/'+next, style="padding-left: 4px; padding-right: 4px;margin-right: 10px;", title="View the next work day!")  
+                a.fa.fa-arrow-right(href='/work/'+nextDay, style="padding-left: 4px; padding-right: 4px;margin-right: 10px;", title="View the next work day!")  
             
             li.dropdown
               a.service.dropdown-toggle(href="#", title="Manage your grades.", data-toggle='dropdown', role='button', aria-expanded='false').fa.fa-line-chart

@@ -20,13 +20,13 @@ block content
             a(href='#') Messages
       .col-xs-12.visible-xs
         p.no-margin.full-width.text-center#schedule-day
-          if previous !== false
+          if previousDay !== false
             span
-              a.fa.fa-arrow-left.left(href='/work/'+previous, title=moment(previous).format("dddd, MMMM Do"))
+              a.fa.fa-arrow-left.left(href='/work/'+previousDay, title=moment(previousDay).format("dddd, MMMM Do"))
           | #{scheduleDay}-Day
-          if next !== false
+          if nextDay !== false
             span
-              a.fa.fa-arrow-right.right(href='/work/'+next, title="View the next work day!")    
+              a.fa.fa-arrow-right.right(href='/work/'+nextDay, title="View the next work day!")    
         hr(style="margin-top: 0")
         ul.nav.nav-pills
           li.active(role='presentation')

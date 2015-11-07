@@ -104,8 +104,8 @@ router.get('/:date', function(req, res){
     req.toJade.fromNow = Math.abs(diff)+" days ago";
 
   // GET THE NEXT AND PREVIOUS DATES FOR THE DAY CONTROLS
-  req.toJade.next = moment(schedules.getNextDay(date, req.currentUser.scheduleObject), "MM/DD/YY").format("YYYY-MM-DD");
-  req.toJade.previous = moment(schedules.getPrevDay(date, req.currentUser.scheduleObject), "MM/DD/YY").format("YYYY-MM-DD");
+  req.toJade.nextDay = moment(schedules.getNextDay(date, req.currentUser.scheduleObject), "MM/DD/YY").format("YYYY-MM-DD");
+  req.toJade.previousDay = moment(schedules.getPrevDay(date, req.currentUser.scheduleObject), "MM/DD/YY").format("YYYY-MM-DD");
 
   var classes = req.currentUser.scheduleObject.dayClasses[req.toJade.scheduleDay];
   req.toJade.classes = classes;
