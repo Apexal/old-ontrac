@@ -223,3 +223,9 @@ span.badge {
 #user-status b {
   text-transform: capitalize;
 }
+
+.service{
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+  font-size: 1.4em;
+}

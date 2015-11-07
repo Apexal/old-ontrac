@@ -11,8 +11,9 @@ header
           img#ontrac-img(title="Homepage.", src="/images/logo64x64.png")
       #navbar.navbar-collapse.collapse
         ul.nav.navbar-nav
-          li
-            a(target="_blank", href="https://github.com/Apexal/ontrac/wiki", title="What features does OnTrac provide?") About
+          //
+            li
+              a(target="_blank", href="https://github.com/Apexal/ontrac/wiki", title="What features does OnTrac provide?") About
           li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') View 
                 span.caret
@@ -29,14 +30,14 @@ header
           if loggedIn
             if isHomepage == false
               li.dropdown
-                a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Moodle Links
+                a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Your Courses
                   span.caret
                 ul.dropdown-menu(role='menu')
                   each c in currentUser.courses
                     li
                       a(href="http://moodle.regis.org/course/view.php?id="+c._id, target="_blank")= c.title
           li.dropdown
-            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Regis Services 
+            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Regis
                 span.caret
             ul.dropdown-menu(role='menu')
               li
@@ -48,12 +49,25 @@ header
               li
                   a(href="https://owa.regis.org/owa/", target="_blank") Email
           
-          if loggedIn
-            li
-              a(href="#", data-toggle="modal", data-target="#feedback-modal") Offer Feedback
+          li.dropdown
+            a.service.dropdown-toggle(href="#", title="Manage your work.", data-toggle='dropdown', role='button', aria-expanded='false').fa.fa-book
+            ul.dropdown-menu(role='menu')
+              li
+                a(href="/work") Home
+              li
+                a(href="/work/today") Today's Work
+              li
+                a(href="/work/closest") Next Work
           
+          li.dropdown
+            a.service.dropdown-toggle(href="#", title="Manage your grades.", data-toggle='dropdown', role='button', aria-expanded='false').fa.fa-line-chart
+            ul.dropdown-menu(role='menu')
+              li
+                a(href="/grades") Home
         ul.nav.navbar-nav.navbar-right
           if loggedIn
+            li
+              a(href="#", data-toggle="modal", data-target="#feedback-modal", title="Offer Feedback", style="padding-right: 5px;padding-left: 2px;").fa.fa-comment
             li
               a(href="#", title="Manage your reminders", data-target="#reminders-modal", data-toggle="modal", style="padding-right: 2px;padding-left: 2px;").reminder-bell.fa.fa-bell-o
             li.dropdown

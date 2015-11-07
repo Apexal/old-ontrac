@@ -5,7 +5,9 @@ $(function() {
   updateTitle();
   effects();
   reminders();
+  login();
   days();
+  header();
   if($('#send-message').data("username") !== undefined){
     if(page == "home" || page==""){
       homepage();
