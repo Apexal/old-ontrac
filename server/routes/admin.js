@@ -16,19 +16,21 @@ router.get('/', function(req, res) {
   req.toJade.logs = false;
   req.toJade.feedback = false;
 
-  req.Log.find({}).populate('who', 'username firstName lastName').sort({when : -1}).exec(function(err, logs) {
-    if(err){req.session.errs.push('An error occured, please try again.'); res.redirect('/'); return;}
-    if(logs){
-      req.toJade.logs = logs;
-    }
-    req.Feedback.find({}).sort({feedbackType: -1}).exec(function(err, feedback) {
-      if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
-      if(feedback){
-        req.toJade.feedback = feedback;
+  req.Log.find({})
+    .sort({when : -1})
+    .exec(function(err, logs) {
+      if(err){console.log(err);req.session.errs.push('An error occured, please try again.'); res.redirect('/'); return;}
+      if(logs){
+        req.toJade.logs = logs;
       }
-      res.render('admin/index', req.toJade);
+      req.Feedback.find({}).sort({feedbackType: -1}).exec(function(err, feedback) {
+        if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
+        if(feedback){
+          req.toJade.feedback = feedback;
+        }
+        res.render('admin/index', req.toJade);
+      });
     });
-  });
 });
 
 router.post('/clearcollection', function(req,res){
@@ -36,7 +38,7 @@ router.post('/clearcollection', function(req,res){
   if(['Feedback', 'Log', 'HWItem', 'Grade', 'Reminder'].indexOf(coll)>-1){
     req[coll].remove({}, function(err) {
       if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
-      new req.Log({who: req.currentUser._id, what: "Cleared the "+coll+" collection as Admin."}).save();
+      new req.Log({who: req.currentUser.username, what: "Cleared the "+coll+" collection as Admin."}).save();
       req.session.info.push("Successfully cleared "+coll);
       done();
     });

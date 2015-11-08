@@ -318,7 +318,7 @@ module.exports = function(io) {
     if(req.loggedIn){
 
       if(req.session.quietlogin == false){
-        new req.Log({who: req.currentUser._id, what: "Logout."}).save();
+        new req.Log({who: req.currentUser.username, what: "Logout."}).save();
         io.sockets.emit('new-logout', {username: req.currentUser.username});
       }
 

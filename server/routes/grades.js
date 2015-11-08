@@ -75,7 +75,7 @@ router.put("/:date", function(req, res){
 
   newHWItem.save(function(err){
     if(err){res.json({error: "Failed to save new item. Please try again later."}); return;}
-    new req.Log({who: req.currentUser._id, what: "Added a HWItem to "+dateString}).save();
+    new req.Log({who: req.currentUser.username, what: "Added a HWItem to "+dateString}).save();
     req.Course.findOne({_id: newHWItem.course}, 'mID title', function(err, c) {
       newHWItem.course = c;
       res.json({success: true, added: newHWItem.toJSON()});
