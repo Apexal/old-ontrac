@@ -43,7 +43,6 @@
     "socket.io": "*",
     "promisified-request": "*",
     "underscore": "*",
-    "mumble": "*"
   },
   "homepage": "http://www.getontrac.info",
   "devDependencies": {
