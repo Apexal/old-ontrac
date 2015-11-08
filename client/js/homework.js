@@ -172,7 +172,8 @@ function homework(){
           link = "<a href='"+i.link+"' target='_blank' class='fa fa-link'></a>";
 
         html+= "<li data-id='"+i._id+"'><span class='assignment "+(i.completed == true ? " completed" : "");
-        html += "'>"+i.desc+" </span>"+link+"<i class='fa fa-close remove-assignment'></i><span>&nbsp;  &nbsp;  &nbsp;</span></li>";
+        html += "'>"+i.desc+" </span>"+link+"<i class='fa fa-close remove-assignment hidden-xs'></i>";
+        html += "<i class='fa fa-close remove-assignment visible-xs'></i></li>";
       });
       html += "</ol></div>";
 
@@ -196,7 +197,7 @@ function homework(){
     var items = $(".worklist li");
     items.each(function() {
       var assignment = $(this).find('.assignment');
-      var removeIcon = $(this).find('i.remove-assignment');
+      var removeIcon = $(this).find('i.remove-assignment.hidden-xs');
       $(this).hover(function() {
         //console.log("ON");
         removeIcon.show();

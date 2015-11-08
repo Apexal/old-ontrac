@@ -99,9 +99,12 @@ block content
       hr
       if user !== false
         .col-sm-9.hidden-xs
-          a.btn.btn-default(href="/users/"+user.username+"/schedule", title="View "+user.firstName+"'s schedule.'") View Schedule
-          a.btn.btn-default(href="mailto:"+user.email) Email #{user.firstName}
-          a.btn.btn-default(href="http://moodle.regis.org/user/profile.php?id="+user._id) Moodle Profile
+          if currentUser.username == user.username
+            a.btn.btn-primary(href="/users/profile") Edit Your Profile
+          else
+            a.btn.btn-default(href="/users/"+user.username+"/schedule", title="View "+user.firstName+"'s schedule.'") View Schedule
+            a.btn.btn-default(href="mailto:"+user.email) Email #{user.firstName}
+          a.btn.btn-default(href="http://moodle.regis.org/user/profile.php?id="+user.mID) Moodle Profile
         
         .col-xs-9.visible-xs
           .btn-group.dropup
@@ -120,7 +123,7 @@ block content
       
 mixin class(course)
   .col-xs-12.col-sm-6.col-md-4
-    .panel(title=(currentUser.username !== user.username && currentUser.sclasses.indexOf(course._id) > -1 ? "You share this class!" : ""), class=( currentUser.username !== user.username && currentUser.sclasses.indexOf(course._id) > -1 ? "panel-success" : "panel-default"))
+    .panel(title=(currentUser.username !== user.username && currentUser.sclasses.indexOf(course.mID) > -1 ? "You share this class!" : ""), class=( currentUser.username !== user.username && currentUser.sclasses.indexOf(course.mID) > -1 ? "panel-success" : "panel-default"))
       .panel-body
         h1.panel-title
           span.course-badge(data-mid=course.mID)= course.title

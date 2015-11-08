@@ -42,7 +42,8 @@
     "serve-favicon": "~2.2.1",
     "socket.io": "*",
     "promisified-request": "*",
-    "underscore": "*"
+    "underscore": "*",
+    "mumble": "*"
   },
   "homepage": "http://www.getontrac.info",
   "devDependencies": {

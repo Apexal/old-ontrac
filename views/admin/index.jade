@@ -31,7 +31,7 @@ block content
             for log in logs
               if log.who != null
                 tr
-                  td.user-badge(title=log.who.username, data-username=log.who.username)= log.who.fullName
+                  td.user-badge(data-username=log.who)= log.who
                   td= log.what
                   td(title=moment(log.when).format("dddd, MMMM Do YYYY, h:mm:ss a"))= moment(log.when).fromNow()
 
