@@ -127,7 +127,7 @@ function clientSchedule(){
     todayInfo = userInfo.todaysClassesInfo;
     console.log(todayInfo);
 
-    if(todayInfo){
+    if(todayInfo !== undefined){
       schedule = getCurrentClassInfo(todayInfo.periods);
       updateDayInfo();
       setInterval(updateDayInfo, 60000);

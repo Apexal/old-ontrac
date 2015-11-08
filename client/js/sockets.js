@@ -29,7 +29,7 @@ function handleVisibilityChange() {
       sessionStorage.unread = "0";
     updateTitle();
     console.log("SHOWED TAB");
-    if(typeof updateDayInfo == 'function') updateDayInfo();
+    if(typeof updateDayInfo == 'function' && todayInfo !== undefined) updateDayInfo();
   }
 }
 
