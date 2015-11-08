@@ -191,8 +191,11 @@ function teacherbadges(){
                                     "</div>"+
                   "                </div>" +
                   "                <div class='modal-footer'><a class='btn btn-default' href='mailto:"+data.email+"'>Email</a> " +
-                  "                     <a class='btn btn-primary' target='_blank' " +
+                  "                     <a class='btn btn-info' target='_blank' " +
                   "                    href='http://moodle.regis.org/user/profile.php?id="+data.mID+"'>Moodle Profile</a>" +
+                  "                     <a class='btn btn-primary' " +
+                  "                     href='http://intranet.regis.org/infocenter/default.cfm?StaffCode="+
+                                        data.code+"' target='blank'>Schedule</a>" +
                   "                </div>" +
                   "            </div>" +
                   "        </div>" +
