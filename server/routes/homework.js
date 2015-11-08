@@ -17,7 +17,7 @@ router.get("/:date", function(req, res) {
     return;
   }
   req.HWItem.find({username: req.currentUser.username, date: date.toDate()})
-    .populate('course', 'title')
+    .populate('course', 'title mID')
     .lean()
     .exec(function(err, hwItems){
       if(err){res.json({error: err}); return;}
