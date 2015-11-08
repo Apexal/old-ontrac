@@ -35,7 +35,7 @@ header
                 ul.dropdown-menu(role='menu')
                   each c in currentUser.courses
                     li
-                      a(href="http://moodle.regis.org/course/view.php?id="+c._id, target="_blank")= c.title
+                      a(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title
           li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Regis
                 span.caret
@@ -55,7 +55,7 @@ header
               ul.dropdown-menu(role='menu')
                 li.dropdown-header Your Work
                 li
-                  a(href="/work") Home
+                  a(href="/work") Overview
                 if currentUser.scheduleObject.scheduleDays[moment().format("MM/DD/YY")]
                   li
                     a(href="/work/today") Today's Work Due
@@ -74,33 +74,30 @@ header
               ul.dropdown-menu(role='menu')
                 li.dropdown-header Your Grades
                 li
-                  a(href="/grades") Home
+                  a(href="/grades") Overview
         ul.nav.navbar-nav.navbar-right
           if loggedIn
             li
               a(href="#")
                 span.online-badge.badge 1 online
             li
-              a(href="#", data-toggle="modal", data-target="#feedback-modal", title="Offer Feedback", style="padding-right: 5px;padding-left: 2px;").fa.fa-comment
+              a(href="/users/"+currentUser.username+"/schedule", title="View your class schedule.", style="padding-right: 5px;padding-left: 2px;").fa.fa-calendar
             li
-              a(href="#", title="Manage your reminders", data-target="#reminders-modal", data-toggle="modal", style="padding-right: 2px;padding-left: 2px;").reminder-bell.fa.fa-bell-o
+              a(href="#", data-toggle="modal", data-target="#feedback-modal", title="Offer feedback.", style="padding-right: 5px;padding-left: 2px;").fa.fa-comment
+            li
+              a(href="#", title="Manage your reminders.", data-target="#reminders-modal", data-toggle="modal", style="padding-right: 2px;padding-left: 2px;").reminder-bell.fa.fa-bell-o
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')= currentUser.firstName + " "+currentUser.lastName
-                  span.caret
-              ul.dropdown-menu(role='menu')
-                if loggedIn
-                  li
-                    a(href="/users/"+currentUser.username, title="View your public profile as other users see it.") View Profile
-                  li
-                    a(href="/users/profile") Edit Profile
-                  li
-                    a(href="/users/"+currentUser.username+"/schedule", title="View your class schedule.") View Schedule
-                  if (currentUser.rank > 4 || currentUser.username == "fmatranga18")
-                    if helpers.isPage(page, "admin") == false
-                      li
-                        a(href="/admin") Admin Page
-                  li
-                    a(href='/logout') Logout
+                span.caret
+              ul.dropdown-menu(role='menu')            
+                li
+                  a(href="/users/"+currentUser.username, title="View your public profile as other users see it.") View Profile
+                if (currentUser.rank > 4 || currentUser.username == "fmatranga18")
+                  if helpers.isPage(page, "admin") == false
+                    li
+                      a(href="/admin") Admin Page
+                li
+                  a(href='/logout') Logout
           else
             li
               a(href="#", data-toggle="modal", data-target="#login-modal") Not Logged In

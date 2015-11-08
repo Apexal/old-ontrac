@@ -28,7 +28,7 @@ module.exports = function(io) {
     var password = req.body.password;
     console.log("ATTEMPTING TO LOGIN AS "+username+": \n");
     var errs = [];
-    req.Student.findOne({username: username}).populate('courses', 'title').exec(function(err, user) {
+    req.Student.findOne({username: username}).populate('courses', 'title mID').exec(function(err, user) {
       if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
 
       if(!user){

@@ -15,7 +15,7 @@ block content
       .col-xs-12
         div.full-width(style="background-color: #222")
           each c in currentUser.courses
-            a.btn.btn-default(href="http://moodle.regis.org/course/view.php?id="+c._id, target="_blank")= c.title.split("(")[0]
+            a.btn.btn-default(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title.split("(")[0]
     br
     .row
       .col-xs-12.col-md-6.col-lg-4#due-today
