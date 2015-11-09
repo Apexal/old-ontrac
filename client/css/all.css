@@ -234,3 +234,12 @@ span.badge {
 .service:hover {
   font-size: 1.5em;
 }
+
+#status-circle {
+  vertical-align: middle;
+  margin-bottom: 4px;
+}
+
+#menu-status img {
+  display: table-cell;
+}
