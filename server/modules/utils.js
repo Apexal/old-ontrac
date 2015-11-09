@@ -36,7 +36,7 @@ module.exports = {
       var regEx = new RegExp(searchMask, "ig");
       var replaceMask = "****";
 
-      str = str.replace(regEx, replaceMask);
+      //str = str.replace(regEx, replaceMask);
     });
     return str;
   },

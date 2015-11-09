@@ -228,4 +228,9 @@ span.badge {
   padding-left: 8px !important;
   padding-right: 8px !important;
   font-size: 1.4em;
+  transition: font-size .2s;
+}
+
+.service:hover {
+  font-size: 1.5em;
 }

@@ -139,6 +139,9 @@ function clientSchedule(){
 
 var sendabout = "";
 function updateDayInfo(){
+  if(todayInfo == undefined)
+    return;
+  
   schedule = getCurrentClassInfo(todayInfo.periods);
   var title = "Class has just Ended!";
 
