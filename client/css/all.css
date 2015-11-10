@@ -243,3 +243,7 @@ span.badge {
 #menu-status img {
   display: table-cell;
 }
+
+.nb {
+  background-color: #999;
+}
