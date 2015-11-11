@@ -4,6 +4,7 @@ var _ = require("underscore");
 var achievements = require("../modules/achievements");
 var utils = require("../modules/utils");
 var schedules = require("../modules/schedule");
+var moment = require("moment");
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {

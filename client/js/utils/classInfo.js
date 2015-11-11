@@ -93,7 +93,7 @@ var profileUserInfo = null;
 function updateProfileSchedule(){
   var profileUsername = window.location.href.split("/")[2];
   if(!profileUserInfo){
-    $.get('/api/user/'+username, function(data){
+    $.get('/users/api/'+username, function(data){
       if(data){
         console.log(data);
         registered = data.registered;
@@ -121,7 +121,7 @@ function updateProfileSchedule(){
 
 
 function clientSchedule(){
-  $.get('/api/user/'+username, function(data){
+  $.get('/users/api/'+username, function(data){
     console.log(data);
     userInfo = data;
     todayInfo = userInfo.todaysClassesInfo;
@@ -132,6 +132,7 @@ function clientSchedule(){
       updateDayInfo();
       setInterval(updateDayInfo, 60000);
     }else{
+      $("#classInfo").remove();
       console.log("Not a school day, not updating class info.");
     }
   });
@@ -141,7 +142,7 @@ var sendabout = "";
 function updateDayInfo(){
   if(todayInfo == undefined)
     return;
-  
+
   schedule = getCurrentClassInfo(todayInfo.periods);
   var title = "Class has just Ended!";
 
