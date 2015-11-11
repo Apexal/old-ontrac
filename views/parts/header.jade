@@ -80,8 +80,8 @@ header
         ul.nav.navbar-nav.navbar-right
           if loggedIn
             li
-              a(href="#")
-                span.online-badge.badge 1 online
+              a(href="#", tabindex="0", role="button", data-toggle="popover", data-trigger="focus", data-content="<b>You</b>", data-placement="bottom").online-badge
+                span.badge 1 online
             li
               a(href="/users/"+currentUser.username+"/schedule", title="View your class schedule.", style="padding-right: 5px;padding-left: 2px;").fa.fa-calendar
             li
@@ -89,9 +89,7 @@ header
             li
               a(href="#", title="Manage your reminders.", data-target="#reminders-modal", data-toggle="modal", style="padding-right: 2px;padding-left: 2px;").reminder-bell.fa.fa-bell-o
             li.dropdown
-              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false')
-                img#status-circle(src="/images/status-online.png")
-                | &nbsp; #{currentUser.firstName} #{currentUser.lastName}
+              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') #{currentUser.firstName} #{currentUser.lastName}
                 span.caret
               ul.dropdown-menu(role='menu')
                 li

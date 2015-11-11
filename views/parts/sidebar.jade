@@ -2,17 +2,27 @@ aside#sidebar
   section.center
     br
     #user-status.dropdown
+      img#status-circle(src="/images/status-online.png")
+      span &nbsp;
       b.dropdown-toggle(data-toggle="dropdown") Loading...
         span.caret
       ul.dropdown-menu
         li
-          a(href="#") Available
+          a(href="#")
+            img(src="/images/status-available.png")
+            |  Available
         li
-          a(href="#") Working
+          a(href="#")
+            img(src="/images/status-working.png")
+            |  Working
         li
-          a(href="#") Busy
+          a(href="#")
+            img(src="/images/status-busy.png")
+            |  Busy
         li
-          a(href="#", title="You will not appear on the online users list.") Offline
+          a(href="#", title="You will not appear on the online users list.")
+            img(src="/images/status-offline.png")
+            |  Offline
     if todaysInfo 
       #scheduleDaySidebar(data-toggle="tooltip", title="Today is a "+todaysInfo.scheduleDay+" Schedule Day.")
         hr(style="margin-bottom: 10px;")

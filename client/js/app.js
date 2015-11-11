@@ -24,7 +24,8 @@ $(function() {
 });
 
 function updateTooltips(){
-  $('[data-toggle="tooltip"]').tooltip();
+  $('[data-toggle="tooltip"]').tooltip({animation: true, html: true});
+  $('[data-toggle="popover"]').popover({html: true});
 }
 
 function linkify(text) {

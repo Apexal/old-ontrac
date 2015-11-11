@@ -237,13 +237,14 @@ span.badge {
 
 #status-circle {
   vertical-align: middle;
-  margin-bottom: 4px;
-}
-
-#menu-status img {
-  display: table-cell;
+  margin-bottom: 2px;
 }
 
 .nb {
   background-color: #999;
+}
+
+.nav .popover{
+  font-size: 0.9em;
+  white-space: nowrap;
 }

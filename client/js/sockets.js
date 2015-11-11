@@ -98,11 +98,11 @@ function sockets() {
       if(user.status != "offline"){
         count +=1;
         usernames.push(user.username);
-        names.push("<span class='user-badge' data-username='"+user.username+"'>"+(user.username == username ? "<b>You</b>" : user.username)+" <i class='right'>"+user.status+"</i></span><br>");
+        names.push("<span class='user-badge' data-username='"+user.username+"'>"+(user.username == username ? "<b>You</b>" : user.username)+" <img src='/images/status-"+user.status+".png'></span>");
       }
 
       if(user.status == "offline" && user.username == username)
-        names.push("<span class='user-badge text-muted' data-username='"+username+"'><b>You</b><i class='right'>offline</i></span><br>");
+        names.push("<span class='user-badge text-muted' data-username='"+username+"'><b>You</b><img src='/images/status-"+user.status+".png'></span>");
 
       if(user.username == username)
         setStatusNoLoop(user.status);
@@ -110,15 +110,15 @@ function sockets() {
       //console.log(user.advisement +" vs "+advisement);
       if(user.advisement == advisement){
         if(user.status != "offline")
-          advnames.push("<span class='user-badge' data-username='"+user.username+"'>"+(user.username == username ? "<b>You</b>" : user.username)+" <i>("+user.status+")</i></span>");
+          advnames.push("<span class='user-badge' data-username='"+user.username+"'>"+(user.username == username ? "<b>You</b>" : user.username)+" <img src='/images/status-"+user.status+".png'></span>");
         if(user.status == "offline" && user.username == username)
-          advnames.push("<span class='user-badge text-muted' data-username='"+username+"'><b>You</b> <i>("+user.status+")</i></span>");
+          advnames.push("<span class='user-badge text-muted' data-username='"+username+"'><b>You</b> </span>");
       }
     });
 
     $("#users-online").text(count+" user(s)");
-    $(".online-badge").text(count+" online");
-    $(".online-badge").attr("title", usernames.join(', '));
+    $(".online-badge span").text(count+" online");
+    $(".online-badge").attr("data-content", names.join(', '));
 
     list.html(names.join(''));
     if(advlist.length && advnames.length > 0)
@@ -202,7 +202,7 @@ function sockets() {
         message = linkify(message);
 
         var part = "<b class='user-badge' data-username='"+user+"'>"+user+": </b>";
-        part += "<span title='"+when.fromNow()+" | "+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'>"+message+"</span><br>";
+        part += "<span title='"+when.fromNow()+" | "+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'>"+message+"</span>";
         html += part;
     }
     $("#advchat-messages").html(html);
