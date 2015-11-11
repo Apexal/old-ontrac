@@ -182,6 +182,14 @@ router.get("/api/:username", function(req, res){
           var stars = _.range(u.rank+1);
           u.schedule = undefined;
 
+          if(user.registered){
+            var sd = user.scheduleObject.scheduleDays[moment().format("MM/DD/YY")];
+            if(sd){
+              //console.log(user.scheduleObject.dayClasses);
+              user.todaysClassesInfo = {scheduleDay: sd, periods: user.scheduleObject.dayClasses[sd], currentInfo: schedules.getCurrentClassInfo(user.scheduleObject.dayClasses[sd])};
+            }
+          }
+
           u.fullName = String(u.fullName);
           u.gradeName = String(u.gradeName);
           res.json(u);

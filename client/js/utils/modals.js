@@ -5,7 +5,7 @@ function userbadges(){
     if($("#"+username+"-modal").length === 0){
       $.ajax({
         type: 'GET',
-        url: "/api/user/"+username,
+        url: "/users/api/"+username,
         success: function(data) {
           if(data != "Not authorized."){
             var title = data.firstName + " " + data.lastName;
