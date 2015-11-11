@@ -25,3 +25,7 @@
 #moodle-links a {
   display: inline-block;
 }
+
+#due-closest .progress, #due-today .progress {
+  margin-bottom: 0;
+}
