@@ -248,3 +248,7 @@ span.badge {
   font-size: 0.9em;
   white-space: nowrap;
 }
+
+#sidebar .online-badge span {
+  margin-top: 10px;
+}

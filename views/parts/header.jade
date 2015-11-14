@@ -80,9 +80,6 @@ header
         ul.nav.navbar-nav.navbar-right
           if loggedIn
             li
-              a(href="#", tabindex="0", role="button", data-toggle="popover", data-trigger="focus", data-content="<b>You</b>", data-placement="bottom").online-badge
-                span.badge 1 online
-            li
               a(href="/users/"+currentUser.username+"/schedule", title="View your class schedule.", style="padding-right: 5px;padding-left: 2px;").fa.fa-calendar
             li
               a(href="#", data-toggle="modal", data-target="#feedback-modal", title="Offer feedback.", style="padding-right: 5px;padding-left: 2px;").fa.fa-comment
