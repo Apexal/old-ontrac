@@ -1,19 +1,20 @@
-#homework-content.col-xs-12.col-sm-9.col-md-10
+#homework-content.col-xs-12
   br
   if currentUser.courses.length > 0
     .row
-      form.form-inline.center#homework-form(method="POST", action="/days/"+date.format('YYYY-MM-DD')+"/homework", role="form")
-        .form-group.col-xs-12.col-sm-4.col-md-3
-          .input-group(style="width: 100%;")
-            .input-group-addon.fa.fa-link#set-hw-link(data-link="")
-            input.hidden#newHWItemLink(name="newHWItemLink", value="")
-            select.form-control#newHWItemCourseID(name="newHWItemCourseID", required=true)
-              for course in currentUser.courses
-                option(value=course._id)= course.title  
-        .form-group.col-xs-12.col-sm-6.com-md-7
-          input.form-control(style="width: 100%;", id="newHWItemDesc", name="newHWItemDesc", maxlength="140", type="text", placeholder="Description", required=true)
-        .form-group.col-xs-12.col-sm-2
-          button.btn.btn-default.full-when-xs#homework-button(style="width: 100%;") Add
+      .col-xs-12
+        form.form-inline.center#homework-form(method="POST", action="/days/"+date.format('YYYY-MM-DD')+"/homework", role="form")
+          .form-group.col-xs-12.col-sm-4.col-md-3
+            .input-group(style="width: 100%;")
+              .input-group-addon.fa.fa-link#set-hw-link(data-link="")
+              input.hidden#newHWItemLink(name="newHWItemLink", value="")
+              select.form-control#newHWItemCourseID(name="newHWItemCourseID", required=true)
+                for course in currentUser.courses
+                  option(value=course._id)= course.title  
+          .form-group.col-xs-12.col-sm-6.com-md-7
+            input.form-control(style="width: 100%;", id="newHWItemDesc", name="newHWItemDesc", maxlength="140", type="text", placeholder="Description", required=true)
+          .form-group.col-xs-12.col-sm-2
+            button.btn.btn-default.full-when-xs#homework-button(style="width: 100%;") Add
     
     .row.worklist
     //

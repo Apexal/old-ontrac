@@ -174,7 +174,7 @@ function homework(){
 
     hwTitles.forEach(function(t){
       var items = hw[t];
-      var html = "<div class='col-xs-12 col-md-5 hw-item text-center'> \
+      var html = "<div class='col-xs-12 col-md-6 hw-item text-center'> \
         <b class='title course-badge' data-mid='"+items[0].course.mID+"'>"+t+"</b> \
         <ol>";
       items.forEach(function(i){
@@ -184,7 +184,7 @@ function homework(){
 
         html+= "<li data-id='"+i._id+"'><span class='assignment "+(i.completed == true ? " completed" : "");
         html += "'>"+i.desc+" </span>"+link+"<i class='fa fa-close remove-assignment hidden-xs'></i>";
-        html += "<i class='fa fa-close remove-assignment visible-xs'></i></li>";
+        html += "<i class='fa fa-close remove-assignment visible-xs'><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></i><span class='hidden-xs'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li>";
       });
       html += "</ol></div>";
 
@@ -218,4 +218,11 @@ function homework(){
       });
     });
   }
+
+
+
+  $("#hw-popup").click(function() {
+
+  	return false;
+  });
 }
