@@ -19,26 +19,6 @@ function effects() {
     }, 1000);
 
     var today = moment().format("YYYY-MM-DD");
-    if($("#work-tab").length > 0){
-      //alert("AYY");
-      $.get('/api/work/'+today, function(data){
-        if(data.work){
-          $("#todays-work").show();
-          if(data.work.homework.length > 0){
-            var hw = data.work.homework;
-            var counts = {};
-            for(var t in data.work.homework){
-              if(counts[hw[t].course.title])
-                counts[hw[t].course.title] += 1;
-              else
-                counts[hw[t].course.title] = 0;
-            }
-          }
-
-          //$("#todays-work").text(data.work.toString());
-        }
-      });
-    }
 
     // Animate the knobs to random percentages (for now)
     // TODO: remove this when I finish the view

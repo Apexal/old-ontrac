@@ -1,6 +1,8 @@
 aside#sidebar
   section.center
     br
+    a(href="#", tabindex="0", role="button", data-toggle="popover", data-trigger="focus", data-content="<b>You</b>", data-placement="bottom").online-badge
+      span.badge 1 online
     #user-status.dropdown
       img#status-circle(src="/images/status-online.png")
       span &nbsp;
@@ -24,8 +26,6 @@ aside#sidebar
             img(src="/images/status-offline.png")
             |  Offline
       br
-      a(href="#", tabindex="0", role="button", data-toggle="popover", data-trigger="focus", data-content="<b>You</b>", data-placement="bottom").online-badge
-        span.badge 1 online
     if todaysInfo 
       #scheduleDaySidebar(data-toggle="tooltip", title="Today is a "+todaysInfo.scheduleDay+" Schedule Day.")
         hr(style="margin-bottom: 10px;")
