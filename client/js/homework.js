@@ -3,6 +3,17 @@ function homework(){
     homework: []
   };
 
+  $("#day-schedule td").click(function() {
+    var text = $(this).text().trim();
+    $("#newHWItemCourseID option").each(function() {
+      var item = $(this).text().trim();
+      var that = $(this);
+      if(item.indexOf(text) > -1 || item == text){
+        that.attr("selected", true);
+      }
+    });
+  });
+
   // ------------- GET HOMEWORK ON PAGE LOAD --------------
   var date = window.location.pathname.split("/")[2];
   console.log(window.location.pathname.split("/") + date);
