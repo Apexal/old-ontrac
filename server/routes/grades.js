@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
+router.get('/', function(req, res) {
+  req.toJade.title = "Your Grades";
+  res.render('grade/index', req.toJade);
+});
+
 router.get('/api/:date', function(req, res) {
   var dateString = req.params.date;
   var day = false;

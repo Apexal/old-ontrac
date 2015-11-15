@@ -1,0 +1,25 @@
+extends /layout
+
+block content
+  .container-fluid
+    include /info
+    .jumbotron.no-margin
+      h1.no-margin Handle Your Studies
+      br
+      #stats.larger
+        b There's gonna be some nice helpful stuff here one day I swear.
+      
+    .row
+      .col-xs-12.col-sm-7
+        .page-header
+          h2 Today's Items
+            small.right 0 items
+        .col-xs-12
+          p No tests or quizzes today!
+      .col-xs-12.col-sm-4
+        .page-header
+          h2 Upcoming Items
+            small.right 0 items
+        
+        .col-xs-12
+          p No tests or quizzes for at least a month!

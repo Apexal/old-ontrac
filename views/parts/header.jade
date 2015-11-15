@@ -47,9 +47,9 @@ header
               li
                 a(href="http://moodle.regis.org/my/", target="_blank") Moodle
               li
-                a(href="https://myfiles.regis.org/", target="_blank") MyFiles
-              li
                 a(href="https://owa.regis.org/owa/", target="_blank") Email
+              li
+                a(href="https://myfiles.regis.org/", target="_blank") MyFiles
           
           if loggedIn
             li.dropdown
@@ -58,6 +58,7 @@ header
                 li.dropdown-header Your Work
                 li
                   a(href="/work") Overview
+                li(role="separator").divider
                 if currentUser.scheduleObject.scheduleDays[moment().format("MM/DD/YY")]
                   li
                     a(href="/work/today") Today's Work Due
@@ -71,6 +72,16 @@ header
               li
                 a.fa.fa-arrow-right(href='/work/'+nextDay, style="padding-left: 4px; padding-right: 4px;margin-right: 10px;", title="View the next work day!")  
             
+            li.dropdown
+              a.service.dropdown-toggle(href="#", title="Manage your studying.", data-toggle='dropdown', role='button', aria-expanded='false').fa.fa-calendar-check-o
+              ul.dropdown-menu(role='menu')
+                li.dropdown-header Study Management
+                li
+                  a(href="/study") Overview
+                li(role="separator").divider
+                li
+                  a(href="/study/today") Today's Items
+                  
             li.dropdown
               a.service.dropdown-toggle(href="#", title="Manage your grades.", data-toggle='dropdown', role='button', aria-expanded='false').fa.fa-line-chart
               ul.dropdown-menu(role='menu')
