@@ -10,7 +10,6 @@ var advchatmessages = {};
 
 module.exports = function(http) {
   var io = require("socket.io").listen(http);
-
   io.sockets.on('connection', function (socket) {
     messages = messages.slice(-100);
 

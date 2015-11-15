@@ -103,13 +103,6 @@ app.use(restricted, function(req, res, next) {
   }
 });
 
-// So Jade knows what nav links to set as active
-app.use('/*', function(req, res, next) {
-  //req.toJade.page = req.path;
-  //console.log("PATH: "+req.toJade.page);
-  next();
-});
-
 // =================================ROUTES=================================
 // This dynamically adds all routes in the routes
 // folder and gives them access to whatever Mongo collections they ask for

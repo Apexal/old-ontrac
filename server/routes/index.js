@@ -378,5 +378,5 @@ module.exports = function(io) {
     res.render('chat/chatpage', req.toJade);
   });
 
-  return {router: router, models: ['Student']}
+  return {router: router, noLogin: true, models: ['Student']}
 };
