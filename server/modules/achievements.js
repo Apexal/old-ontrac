@@ -106,5 +106,13 @@ module.exports = [
         //  return true;
         return false;
       }
+    },
+    {
+      id: 11,
+      name: "Be an Alpha Tester",
+      reward: 200,
+      check: function(user){
+        return true;
+      }
     }
 ]
