@@ -54,15 +54,3 @@ block content
                       a.undecorated(style="text-decoration: none;", target="_blank", href="http://moodle.regis.org/course/view.php?id="+s.mID)= s.className.split("(")[0]
                     else
                       | #{s.className.split("(")[0]}
-
-      .col-sm-12.text-center.hidden-xs
-        br
-        br
-        br
-        input#hw-dial(title="Progress on Homework", data-toggle="tooltip", type="text", value="50", data-fgcolor="#2780e3", data-readonly="true", data-width="100")
-        span.right-spacer
-        input.dial(title="Amount of Tests", data-toggle="tooltip", type="text", value="50", data-fgcolor="#f0005e", data-readonly="true", data-width="100")
-        span.right-spacer
-        input.dial(title="Amount of Quizzes", data-toggle="tooltip", type="text", value="50", data-fgcolor="#7643a8", data-readonly="true", data-width="100")
-        span.right-spacer
-        input.dial(title="Amount of Projects", data-toggle="tooltip", type="text", value="50", data-fgcolor="#ff4309", data-readonly="true", data-width="100")

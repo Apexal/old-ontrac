@@ -20,31 +20,7 @@ function effects() {
 
     var today = moment().format("YYYY-MM-DD");
 
-    // Animate the knobs to random percentages (for now)
-    // TODO: remove this when I finish the view
-    $('.dial').each(function() {
-        var elm = $(this);
-        //var percent = elm.attr("value");
-        var percent = Math.floor((Math.random() * 90) + 10);
-        elm.knob({
-            'value': 0,
-            'format': function(value) {
-                return value + '%';
-            }
-        });
-        $({
-            value: 0
-        }).animate({
-            value: percent
-        }, {
-            duration: 1000,
-            easing: 'swing',
-            progress: function() {
-                elm.val(Math.ceil(this.value)).trigger(
-                    'change');
-            }
-        });
-    });
+
     // Prevent the chat form from sending data and refreshing the page
     $("#chat-controls").submit(function(e) {
       e.preventDefault();
