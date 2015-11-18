@@ -1,9 +1,10 @@
 #homework-content.col-xs-12
-  br
+  .progress(style="margin-bottom: 0;")
+    .progress-bar#homework-progress(role="progressbar", title="You are 0% done with your homework!", style="width: 0%;")
   if currentUser.courses.length > 0
     .row
       .col-xs-12
-        form.form-inline.center#homework-form(method="POST", action="/days/"+date.format('YYYY-MM-DD')+"/homework", role="form")
+        form.form-inline.center#homework-form(method="POST")
           .form-group.col-xs-12.col-sm-4.col-md-3
             .input-group(style="width: 100%;")
               .input-group-addon.fa.fa-link#set-hw-link(data-link="")
@@ -15,7 +16,6 @@
             input.form-control(style="width: 100%;", id="newHWItemDesc", name="newHWItemDesc", maxlength="140", type="text", placeholder="Description", required=true)
           .form-group.col-xs-12.col-sm-2
             button.btn.btn-default.full-when-xs#homework-button(style="width: 100%;") Add
-    
     .row.worklist
     //
       if hwTitles == false
