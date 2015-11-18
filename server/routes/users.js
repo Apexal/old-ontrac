@@ -162,6 +162,12 @@ router.get('/api/list', function(req, res, next) {
 /* GET user */
 router.get('/api/loggedIn', function(req, res) {
   if(req.loggedIn){
+    var u = req.currentUser;
+    var sd = user.scheduleObject.scheduleDays[moment().format("MM/DD/YY")];
+    if(sd){
+      //console.log(user.scheduleObject.dayClasses);
+      u.todaysClassesInfo = {scheduleDay: sd, periods: user.scheduleObject.dayClasses[sd], currentInfo: schedules.getCurrentClassInfo(user.scheduleObject.dayClasses[sd])};
+    }
     res.json(req.currentUser);
   }
 });
