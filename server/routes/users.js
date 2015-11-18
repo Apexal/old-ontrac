@@ -182,7 +182,7 @@ router.get("/api/:username", function(req, res){
           });
           var stars = _.range(u.rank+1);
           u.schedule = undefined;
-
+          u = u.toObject();
           if(user.registered){
             var sd = user.scheduleObject.scheduleDays[moment().format("MM/DD/YY")];
             if(sd){
