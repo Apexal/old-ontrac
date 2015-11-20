@@ -352,24 +352,26 @@ module.exports = function(io) {
       delete req.session.currentUser;
       delete req.session.todaysInfo;
       delete req.currentUser;
-      req.Student.findOne({username: username}).populate('courses', 'title').exec(function(err, user) {
-        if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
-        if(user){
-          var sd = user.scheduleObject.scheduleDays[moment().format("MM/DD/YY")];
-          if(sd){
-            //console.log(user.scheduleObject.dayClasses);
-            req.session.todaysInfo = {scheduleDay: sd, periods: user.scheduleObject.dayClasses[sd]};
-            console.log(req.session.todaysInfo);
+      req.Student.findOne({username: username, registered: true})
+        .populate('courses', 'title mID')
+        .exec(function(err, user) {
+          if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
+          if(user){
+            var sd = user.scheduleObject.scheduleDays[moment().format("MM/DD/YY")];
+            if(sd){
+              //console.log(user.scheduleObject.dayClasses);
+              req.session.todaysInfo = {scheduleDay: sd, periods: user.scheduleObject.dayClasses[sd]};
+              //console.log(req.session.todaysInfo);
+            }
+            req.session.quietlogin = true;
+            req.user = user;
+            req.session.currentUser = user;
+            res.redirect("/");
+          }else{
+            req.session.info.push("No such registered user!");
+            res.redirect('/');
           }
-          req.session.quietlogin = true;
-          req.user = user;
-          req.session.currentUser = user;
-          res.redirect("/");
-        }else{
-          req.session.info.push("No such registered user!");
-          res.redirect('/');
-        }
-      })
+        });
     }else{
       req.session.info.push("Only admins can do that!");
       res.redirect('/');

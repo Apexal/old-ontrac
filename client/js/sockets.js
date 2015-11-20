@@ -352,7 +352,7 @@ function setStatus(status){
   sessionStorage['user-status'] = status;
   socket.emit('setstatus', {status: status.toLowerCase()});
 
-  $("#status-circle").attr("src", "/images/status-"+status.toLowerCase()+".png");
+  $("#status-circle").attr("src", "/images/status-"+status.toLowerCase().replace(" ", "")+".png");
 
   $("#user-status b").html(status+(status !== "In Class" ? "<span class='caret'></span>" : ""));
   console.log("Set status to "+status);
@@ -362,6 +362,6 @@ function setStatusNoLoop(stat){
   if(!stat)
     stat = "available";
   sessionStorage['user-status'] = stat;
-  $("#status-circle").attr("src", "/images/status-"+stat.toLowerCase()+".png");
+  $("#status-circle").attr("src", "/images/status-"+stat.toLowerCase().replace(" ", "")+".png");
   $("#user-status b").html(stat+(stat !== "In Class" ? "<span class='caret'></span>" : ""));
 }
