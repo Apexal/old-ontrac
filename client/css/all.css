@@ -252,3 +252,10 @@ span.badge {
 #sidebar .online-badge span {
   margin-bottom: 10px;
 }
+
+
+#advertisements {
+  width: 350px;
+  height: 150px;
+  margin: 0 auto;
+}

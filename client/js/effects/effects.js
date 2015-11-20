@@ -86,4 +86,14 @@ function effects() {
       $("#stars").position({my: "left bottom", at: "left bottom", of: "#profile-pic"});
       $("#rank").position({my: "right bottom", at: "right bottom", of: "#profile-pic"});
     }
+
+  $('#advertisements').slidesjs({
+    width: 250,
+    height: 150,
+    navigation: false,
+    start: Math.floor((Math.random() * $("#advertisements img").length) + 1),
+    play: {
+      auto: true
+    }
+  });
 }
