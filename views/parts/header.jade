@@ -12,21 +12,22 @@ header
       #navbar.navbar-collapse.collapse
         ul.nav.navbar-nav
           //
-            li
-              a(target="_blank", href="https://github.com/Apexal/ontrac/wiki", title="What features does OnTrac provide?") About
+            
           li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') View
               span.caret
             ul.dropdown-menu(role='menu')
+              li
+                a(target="_blank", href="https://github.com/Aedificem/ontrac/wiki", title="What features does OnTrac provide?") About
               if loggedIn
                 li(class=(helpers.isPage(page, "users")))
                   a(href="/users", title="View and search through list of all students, registered and unregistered.") Users
                 li(class=(helpers.isPage(page, "advisements")))
                   a(href="/advisements", title="View and search through all advisements at Regis.") Advisements
               li
-                a(target="_blank", title="View the public source code behind this project, maintained solely by me.", href="https://github.com/Apexal/ontrac") Source Code
+                a(target="_blank", title="View the public source code behind this project, maintained solely by me.", href="https://github.com/Aedificem/ontrac") Source Code
               li
-                a(target="_blank", title="View the recorded issues that I'm working on for the site.", href="https://waffle.io/Apexal/ontrac/join") Issue Progress
+                a(target="_blank", title="View the recorded issues that I'm working on for the site.", href="https://waffle.io/Aedificem/ontrac/join") Issue Progress
               li
                 a(target="_blank", title="View the features that are being worked on and that are coming soon.", href="https://trello.com/b/b9JwXnPH/ontrac") Planned Features
           if loggedIn
