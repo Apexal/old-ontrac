@@ -209,11 +209,14 @@ module.exports = function(io) {
                                 });
                               }
                             }
-                            console.log(user.courses);
+                            //console.log(user.courses);
                             var myC = user.courses;
                             myC.forEach(function(course) {
-                              if(period.className.indexOf(course.title) > -1){
+                              if(period.className.trim().indexOf(course.title.trim()) > -1 || course.title.trim() == period.className.trim()){
+                                //console.log("MATCHED");
                                 period.mID = course.mID;
+                              }else{
+                                console.log("COULDN'T MATCH "+period.className + " TO COURSE");
                               }
                             });
 
