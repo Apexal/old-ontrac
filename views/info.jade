@@ -7,6 +7,6 @@ for i in errs
     setTimeout(function(){sendNotification('error', '', "#{i}");}, 500);
 
 if loggedIn
-  .alert.alert-danger #[b REMINDER:] By using this site now, you are agreeing to be an Alpha Tester for an unstable web service.
+  .alert.alert-danger #[b REMINDER:] By using this site now, you are agreeing to be an Alpha Tester for an unstable web service. #[span.hidden-xs Please report any bugs or ideas you have on improving this site.]
 else
   .alert.alert-danger #[b WARNING:] OnTrac is in Alpha and should not yet be used for a reliable organization platform. Please help by becoming an Alpha Tester!
