@@ -5,5 +5,8 @@ for i in info
 for i in errs
   script.
     setTimeout(function(){sendNotification('error', '', "#{i}");}, 500);
-  
-//.alert.alert-danger.visible-xs #[b WARNING:] Mobile support is still shaky! That will be fixed in upcoming versions.
+
+if loggedIn
+  .alert.alert-danger #[b REMINDER:] By using this site now, you are agreeing to be an Alpha Tester for an unstable web service.
+else
+  .alert.alert-danger #[b WARNING:] OnTrac is in Alpha and should not yet be used for a reliable organization platform. Please help by becoming an Alpha Tester!
