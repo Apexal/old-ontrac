@@ -98,11 +98,11 @@ function sockets() {
       if(user.status != "offline"){
         count +=1;
         usernames.push(user.username);
-        names.push("<span class='user-badge' data-username='"+user.username+"'>"+(user.username == username ? "<b>You</b>" : user.username)+" <img src='/images/status-"+user.status+".png'></span>");
+        names.push("<span class='user-badge' data-username='"+user.username+"'>"+(user.username == username ? "<b>You</b>" : user.username)+" <img src='/images/status-"+user.status.toLowerCase().replace(" ", "")+".png'></span>");
       }
 
       if(user.status == "offline" && user.username == username)
-        names.push("<span class='user-badge text-muted' data-username='"+username+"'><b>You</b><img src='/images/status-"+user.status+".png'></span>");
+        names.push("<span class='user-badge text-muted' data-username='"+username+"'><b>You</b><img src='/images/status-"+user.status.toLowerCase().replace(" ", "")+".png'></span>");
 
       if(user.username == username)
         setStatusNoLoop(user.status);
@@ -110,7 +110,7 @@ function sockets() {
       //console.log(user.advisement +" vs "+advisement);
       if(user.advisement == advisement){
         if(user.status != "offline")
-          advnames.push("<span class='user-badge' data-username='"+user.username+"'>"+(user.username == username ? "<b>You</b>" : user.username)+" <img src='/images/status-"+user.status+".png'></span>");
+          advnames.push("<span class='user-badge' data-username='"+user.username+"'>"+(user.username == username ? "<b>You</b>" : user.username)+" <img src='/images/status-"+user.status.toLowerCase().replace(" ", "")+".png'></span>");
         if(user.status == "offline" && user.username == username)
           advnames.push("<span class='user-badge text-muted' data-username='"+username+"'><b>You</b> </span>");
       }
