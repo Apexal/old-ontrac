@@ -49,7 +49,7 @@ module.exports = {
     return true;
   },
   isPage : function(word, other) {
-    console.log(word +" vs "+other + " == "+(word.indexOf(other) > -1));
+    //console.log(word +" vs "+other + " == "+(word.indexOf(other) > -1));
     return (word.indexOf(other) > -1);
   },
   isReach: function(department) {
@@ -57,12 +57,12 @@ module.exports = {
   },
   advisor: function(adv) {
     for (var key in adv.teacher) {
-      console.log(key, adv.teacher[key]);
+      //console.log(key, adv.teacher[key]);
     }
     return adv.teacher.toJSON();
   },
   isShort: function(p, n){
-    console.log(p || n);
+    //console.log(p || n);
     if(p || n)
       return "";
     else

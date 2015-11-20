@@ -37,16 +37,17 @@ module.exports = function(io) {
       }else{
         console.log("FOUND DATABASE MATCH");
         // ATTEMPT INTRANET LOGIN
+        console.log(username + ":"+password);
         var cookieJar = request.jar(); // To keep a persistent session
         request({
-            url: 'https://intranet.regis.org/login/submit.cfm', //URL that the login form on the Intranet points to
-            jar: cookieJar,
-            method: 'POST',
-            //Lets post the following key/values as form
-            form: {
-                username: username,
-                password: password
-            }
+          url: 'https://intranet.regis.org/login/submit.cfm', //URL that the login form on the Intranet points to
+          jar: cookieJar,
+          method: 'POST',
+          //Lets post the following key/values as form
+          form: {
+            username: username,
+            password: password
+          }
         }, function(error, response, body){
           console.log("1: "+response.statusCode);
             if(error) {
