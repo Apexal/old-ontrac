@@ -1,8 +1,12 @@
 aside#sidebar
   section.center
-    br
-    a(href="#", tabindex="0", role="button", data-toggle="popover", data-trigger="focus", data-content="<b>You</b>", data-placement="bottom").online-badge
-      span.badge 1 online
+    if todaysInfo 
+      #scheduleDaySidebar
+        hr(style="margin-bottom: 10px;")
+        b.larger #{todaysInfo.scheduleDay} - Day
+        hr(style="margin-top: 10px;")
+    else
+      br
     #user-status.dropdown
       img#status-circle(src="/images/status-available.png")
       span &nbsp;
@@ -26,25 +30,33 @@ aside#sidebar
             img(src="/images/status-offline.png")
             |  Offline
       br
-    if todaysInfo 
-      #scheduleDaySidebar(data-toggle="tooltip", title="Today is a "+todaysInfo.scheduleDay+" Schedule Day.")
-        hr(style="margin-bottom: 10px;")
-        b.larger #{todaysInfo.scheduleDay} - Day
-        hr(style="margin-top: 10px;")
-    else
-      hr
-  section
-    ul.nav
-      li
-        a(data-toggle="tooltip", href="/advisements/chat", title="Private chat room for your advisement!") #{currentUser.advisement} Chat
-          span.label.label-default.right#advchat-badge 0
-    hr
+    a(href="#", tabindex="0", role="button", data-toggle="popover", data-trigger="focus", data-content="<b>You</b>", data-placement="bottom").online-badge
+      span.badge 1 online
   
-  section
-    b UNDER CONSTRUCTION
-    p.
-      This is being reworked very soon. Most stuff here has been moved  to the header.
-      
+  if todaysInfo
+    hr
+    section#today-schedule
+      if todaysInfo 
+        b #{todaysInfo.scheduleDay}-Day Agenda
+      else
+        b Weekend Agenda
+      p.
+        There will be some #[i great] stuff here one day I swear.
+  
+  if nextSD
+    hr
+    section#next-schedule
+      span(title=nextCD)
+        b.larger Next Schedule
+        i.right #{nextSD}-Day
+      ul.list-group
+        for s in currentUser.scheduleObject.dayClasses[nextSD]
+          if s.className.indexOf(" Advisement") == -1
+            li(data-mID=s.mID, title=s.startTime+" - "+s.endTime+" in "+s.room, data-toggle="tooltip", class=(s.className=="Lunch" ? "disabled" : "")).list-group-item
+              if s.mID
+                a.undecorated(style="text-decoration: none;", target="_blank", href="http://moodle.regis.org/course/view.php?id="+s.mID)= s.className.split("(")[0]
+              else
+                | #{s.className.split("(")[0]}
   
   if todaysInfo
     if isHomepage == false

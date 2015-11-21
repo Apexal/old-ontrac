@@ -8,6 +8,11 @@ $(function() {
   login();
   days();
   header();
+
+  if($("#today-schedule").length > 0 && moment().isBefore(moment().hour(15))){
+    $("#next-schedule").remove();
+  }
+
   if($('#send-message').data("username") !== undefined){
     if(page == "home" || page==""){
       homepage();

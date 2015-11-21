@@ -83,10 +83,20 @@ app.use(function(req, res, next) {
     page: req.path,
     isHomepage: (req.path == "/" || req.path == "/home" ? true : false)
   }
+
+  if(req.loggedIn){
+    req.toJade.nextCD = schedules.getNextDay(moment(), req.currentUser.scheduleObject);
+    req.toJade.nextSD = req.currentUser.scheduleObject.scheduleDays[req.toJade.nextCD];
+
+    if(moment(req.currentUser.last_login_time).startOf('day').isSame(moment()) == false){
+      var sd = req.currentUser.scheduleObject.scheduleDays[moment().format("MM/DD/YY")];
+      if(sd){
+        req.session.todaysInfo = {scheduleDay: sd, periods: user.scheduleObject.dayClasses[sd]};
+      }
+    }
+  }
   req.toJade.openLogin = (req.toJade.redir == req._parsedUrl.pathname ? false : true);
   console.log(req.toJade.isHomepage);
-  if(req.loggedIn == false)
-    console.log("On login will redirect to "+req.toJade.redir);
 
   req.session.info = [];
   req.session.errs = [];

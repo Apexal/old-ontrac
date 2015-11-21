@@ -15,8 +15,7 @@ module.exports = function(io) {
     req.toJade.title = "OnTrac";
     if(req.loggedIn){
       req.toJade.title = "Your Home";
-      req.toJade.nextCD = schedules.getNextDay(moment(), req.currentUser.scheduleObject);
-      req.toJade.nextSD = req.currentUser.scheduleObject.scheduleDays[req.toJade.nextCD];
+
       res.render('home/homepage', req.toJade);
     }else{
       res.render('home/index', req.toJade);
@@ -294,7 +293,7 @@ module.exports = function(io) {
           }
           req.user = user;
           req.session.currentUser = user;
-          req.session.currentUser.login_time = new Date();
+          req.session.currentUser.last_login_time = new Date();
           user.save(function(err) {
             if(err)console.error(err);
           });
