@@ -11,6 +11,16 @@ router.get("/*", function(req, res, next) {
     res.json({error: "Not authorized."});
 });
 
+router.get('/loggedIn', function(req, res) {
+  var u = req.currentUser;
+  var sd = u.scheduleObject.scheduleDays[moment().format("MM/DD/YY")];
+  if(sd){
+    //console.log(user.scheduleObject.dayClasses);
+    u.todaysClassesInfo = {scheduleDay: sd, periods: u.scheduleObject.dayClasses[sd], currentInfo: schedules.getCurrentClassInfo(u.scheduleObject.dayClasses[sd])};
+  }
+  res.json(u);
+});
+
 /*
 router.get('/user/:username', function(req, res) {
   var username = req.params.username;
