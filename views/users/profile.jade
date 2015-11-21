@@ -23,7 +23,7 @@ block content
                     for s in user.stars
                       span.fa.fa-star
                   if user.username != currentUser.username
-                    b #{user.firstName} has #{pointdiff} points than you.
+                    b #{user.firstName} has #{pointdiff} points than you #[span.text-muted (#{currentUser.points})].
                   if user.bio
                     blockquote
                       p= user.bio
@@ -75,14 +75,13 @@ block content
               .panel-heading
                 h1.panel-title  Achievements
               ol.list-group
-                if user.achievements
+                if user.achievements.length > 0
                   for a in allAchievements
                     if user.achievements.indexOf(a.id) > -1
                       li.list-group-item= a.name
                         small.right= "["+a.reward+" points]"
-                  else
-                    li.list-group-item #{user.firstName} has not yet earned any achievements.
-
+                else
+                  li.text-muted.list-group-item #{user.firstName} has not yet earned any achievements.
                 
       if user.registered
         .row
