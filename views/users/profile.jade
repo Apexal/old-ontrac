@@ -112,6 +112,9 @@ block content
               span.caret
               span.sr-only Toggle Dropdown
             ul.dropdown-menu
+              if currentUser.username == user.username
+                li
+                  a(href="/users/profile") Edit Your Profile
               li
                 a(href="/users/"+user.username+"/schedule") View Schedule
               li
