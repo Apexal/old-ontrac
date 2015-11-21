@@ -8,26 +8,26 @@ aside#sidebar
     else
       br
     #user-status.dropdown
-      img#status-circle(src="/images/status-available.png")
+      img#status-circle(src="/images/statuses/status-available.png")
       span &nbsp;
       b.dropdown-toggle(data-toggle="dropdown") Loading...
         span.caret
       ul.dropdown-menu
         li
           a(href="#")
-            img(src="/images/status-available.png")
+            img(src="/images/statuses/status-available.png")
             |  Available
         li
           a(href="#")
-            img(src="/images/status-working.png")
+            img(src="/images/statuses/status-working.png")
             |  Working
         li
           a(href="#")
-            img(src="/images/status-busy.png")
+            img(src="/images/statuses/status-busy.png")
             |  Busy
         li
           a(href="#", title="You will not appear on the online users list.")
-            img(src="/images/status-offline.png")
+            img(src="/images/statuses/status-offline.png")
             |  Offline
       br
     a(href="#", tabindex="0", role="button", data-toggle="popover", data-trigger="focus", data-content="<b>You</b>", data-placement="bottom").online-badge

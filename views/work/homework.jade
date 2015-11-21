@@ -17,18 +17,5 @@
           .form-group.col-xs-12.col-sm-2
             button.btn.btn-default.full-when-xs#homework-button(style="width: 100%;") Add
     .row.worklist
-    //
-      if hwTitles == false
-        h4.text-center No homework!
-        br
-      else
-        for title in hwTitles
-            ol
-              for item in homework[title]
-                li(data-id=item._id)
-                  span(class="assignment"+(item.completed == true ? " completed" : ""))= item.desc+" "
-                  i.fa.fa-close.remove-assignment
-                  span  &nbsp;  &nbsp;  &nbsp;
-            br
   br
   

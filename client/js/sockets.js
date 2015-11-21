@@ -98,11 +98,11 @@ function sockets() {
       if(user.status != "offline"){
         count +=1;
         usernames.push(user.username);
-        names.push("<span class='user-badge' data-username='"+user.username+"'>"+(user.username == username ? "<b>You</b>" : user.username)+" <img src='/images/status-"+user.status.toLowerCase().replace(" ", "")+".png'></span>");
+        names.push("<span class='user-badge' data-username='"+user.username+"'>"+(user.username == username ? "<b>You</b>" : user.username)+" <img src='/images/statuses/status-"+user.status.toLowerCase().replace(" ", "")+".png'></span>");
       }
 
       if(user.status == "offline" && user.username == username)
-        names.push("<span class='user-badge text-muted' data-username='"+username+"'><b>You</b><img src='/images/status-"+user.status.toLowerCase().replace(" ", "")+".png'></span>");
+        names.push("<span class='user-badge text-muted' data-username='"+username+"'><b>You</b><img src='/images/statuses/status-"+user.status.toLowerCase().replace(" ", "")+".png'></span>");
 
       if(user.username == username)
         setStatusNoLoop(user.status);
@@ -110,7 +110,7 @@ function sockets() {
       //console.log(user.advisement +" vs "+advisement);
       if(user.advisement == advisement){
         if(user.status != "offline")
-          advnames.push("<span class='user-badge' data-username='"+user.username+"'>"+(user.username == username ? "<b>You</b>" : user.username)+" <img src='/images/status-"+user.status.toLowerCase().replace(" ", "")+".png'></span>");
+          advnames.push("<span class='user-badge' data-username='"+user.username+"'>"+(user.username == username ? "<b>You</b>" : user.username)+" <img src='/images/statuses/status-"+user.status.toLowerCase().replace(" ", "")+".png'></span>");
         if(user.status == "offline" && user.username == username)
           advnames.push("<span class='user-badge text-muted' data-username='"+username+"'><b>You</b> </span>");
       }
@@ -352,7 +352,7 @@ function setStatus(status){
   sessionStorage['user-status'] = status;
   socket.emit('setstatus', {status: status.toLowerCase()});
 
-  $("#status-circle").attr("src", "/images/status-"+status.toLowerCase().replace(" ", "")+".png");
+  $("#status-circle").attr("src", "/images/statuses/status-"+status.toLowerCase().replace(" ", "")+".png");
 
   $("#user-status b").html(status+(status !== "In Class" ? "<span class='caret'></span>" : ""));
   console.log("Set status to "+status);
@@ -362,6 +362,6 @@ function setStatusNoLoop(stat){
   if(!stat)
     stat = "available";
   sessionStorage['user-status'] = stat;
-  $("#status-circle").attr("src", "/images/status-"+stat.toLowerCase().replace(" ", "")+".png");
+  $("#status-circle").attr("src", "/images/statuses/status-"+stat.toLowerCase().replace(" ", "")+".png");
   $("#user-status b").html(stat+(stat !== "In Class" ? "<span class='caret'></span>" : ""));
 }
