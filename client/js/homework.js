@@ -191,8 +191,12 @@ function homework(){
       hwHTML += html;
     });
 
+    var percent = Math.round((doneC/total)*100);
+    $("#homework-progress")
+      .animate({ width: percent+"%" }, 500)
+    $("#homework-content .progress").attr("data-original-title", "You are "+percent+"% done with homework!");
     tab.html(hwHTML);
-    $(".hw-badge").attr("title", Math.round((doneC/total)*100) + "% done!").attr("data-toggle", "tooltip").attr("data-placement", "right");
+    $(".hw-badge").attr("title", percent + "% done!").attr("data-toggle", "tooltip").attr("data-placement", "right");
     $(".hw-badge").text(total);
     coursebadges();
     setRemoveClickHandler();

@@ -17,18 +17,6 @@ block content
           if nextDay !== false
             span
               a.fa.fa-arrow-right.right(href='/work/'+nextDay, title="View the next work day!")    
-      //
-        .col-xs-12
-          hr(style="margin-top: 0")
-          ul.nav.nav-pills
-            li.active(role='presentation')
-              a(href='#homework-tab') Homework
-                span.badge.right.hw-badge 
-            li(role='presentation')
-              a(href='#tests-tab') Tests/Quizzes
-            li(role='presentation')
-              a(href='#') Messages
-      
       include homework
     
     .row#day-schedule

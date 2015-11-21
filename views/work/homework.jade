@@ -1,6 +1,6 @@
 #homework-content.col-xs-12
-  .progress(style="margin-bottom: 0;")
-    .progress-bar#homework-progress(role="progressbar", title="You are 0% done with your homework!", style="width: 0%;")
+  .progress(style="margin-bottom: 0;", data-toggle="tooltip", title="You are 0% done with your homework!")
+    .progress-bar#homework-progress(role="progressbar", style="width: 0%;")
   if currentUser.courses.length > 0
     .row
       .col-xs-12
