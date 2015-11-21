@@ -24,6 +24,33 @@ function workindex() {
           if(courses.indexOf(item.course.title) == -1)
             courses.push(item.course.title);
         });
+
+        var table = $("#due-today table");
+
+        var hw = {};
+        var hwTitles = [];
+        var doneC = 0;
+        var total = data.length;
+        data.forEach(function(item){
+          if(item.completed)
+            doneC++;
+          //console.log(item.course.title);
+          if(hwTitles.indexOf(item.course.title) == -1)
+            hwTitles.push(item.course.title);
+
+          if(!hw[item.course.title])
+            hw[item.course.title] = [];
+
+          hw[item.course.title].push(item);
+        });
+
+        table.html("");
+        var html = "";
+        hwTitles.forEach(function(cTitle) {
+          html+="<tr><td>"+cTitle+"</td><td>"+hw[cTitle].length+" items</td></tr>";
+        });
+        table.html(html);
+        
         $("#due-today p").html("<a data-toggle='tooltip' title='"+courses.join(', ')+"' class='undecorated' href='/work/"+date+"'><b>"+data.length+"</b> Homework items <b>"+Math.round((doneC/total)*1000)/10+"%</b> completed.</a>");
       }else{
         $("#due-today").remove();
@@ -46,12 +73,38 @@ function workindex() {
         var courses = [];
         var total = data.length;
         var doneC = 0;
-        data.forEach(function(item) {
+        data.forEach(function(item){
           if(item.completed)
             doneC += 1;
           if(courses.indexOf(item.course.title) == -1)
             courses.push(item.course.title);
         });
+
+        var table = $("#upcoming table");
+
+        var hw = {};
+        var hwTitles = [];
+        var doneC = 0;
+        var total = data.length;
+        data.forEach(function(item){
+          if(item.completed)
+            doneC++;
+          //console.log(item.course.title);
+          if(hwTitles.indexOf(item.course.title) == -1)
+            hwTitles.push(item.course.title);
+
+          if(!hw[item.course.title])
+            hw[item.course.title] = [];
+
+          hw[item.course.title].push(item);
+        });
+
+        table.html("");
+        var html = "";
+        hwTitles.forEach(function(cTitle) {
+          html+="<tr><td>"+cTitle+"</td><td>"+hw[cTitle].length+" items</td></tr>";
+        });
+        table.html(html);
         $("#upcoming p").html("<a data-toggle='tooltip' title='"+courses.join(', ')+"' class='undecorated' href='/work/"+$("#upcoming").data("closest")+"'><b>"+data.length+"</b> Homework items <b>"+Math.round((doneC/total)*1000)/10+"%</b> completed.</a>");
       }else{
         $("#closest").remove();

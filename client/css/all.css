@@ -111,6 +111,10 @@ a.undecorated {
   color: #222;
 }
 
+#agenda ul{
+  padding-left: 10px;
+}
+
 #online-list {
   max-height: 200px;
 }

@@ -33,11 +33,22 @@ aside#sidebar
     a(href="#", tabindex="0", role="button", data-toggle="popover", data-trigger="focus", data-content="<b>You</b>", data-placement="bottom").online-badge
       span.badge 1 online
   
+  //
+    hr
+    section#agenda
+      b.larger Work Agenda
+      br
+      ul
+        li
+          a(href="/work") 0 homework items
+        li 0 tests/quizzes
+      
   if todaysInfo
     hr
     section#today-schedule
       if todaysInfo 
-        b #{todaysInfo.scheduleDay}-Day Agenda
+        b.larger Today's Schedule
+        i.right #{todaysInfo.scheduleDay}-Day
       else
         b Weekend Agenda
       p.
