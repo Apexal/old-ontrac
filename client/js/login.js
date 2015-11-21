@@ -1,6 +1,7 @@
 function login() {
   var loggingIn = false;
-  $("#login-button").click(function() {
+
+  var login = function() {
     var username = $("#username").val();
     var password = $("#password").val();
     if(!username || !password)
@@ -29,5 +30,12 @@ function login() {
           }
       });
     }
+  };
+
+  $("#password").keypress(function(e) {
+    if(e.which == 13) {
+      login();
+    }
   });
+  $("#login-button").click(login);
 }
