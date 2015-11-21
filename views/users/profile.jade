@@ -14,77 +14,84 @@ block content
           | #[a.undecorated(style="font-weight: bold", href="/advisements/"+user.advisement)= user.advisement]
           small.right.hidden-xs.hidden-sm #{user.points} points
       .user-profile
-        .col-xs-12.col-sm-6.col-lg-8
-          .row
-            .col-xs-12.col-sm-12.col-md-6.center-xs
-              .holder
-                img#profile-pic(title="Looking good!", alt=user.firstName+" missed picture day!", src=user.ipicture, onError="this.onerror=null;this.src='"+user.mpicture+"';")
-                #stars(title=user.firstName+" is a "+user.rankName, data-toggle="tooltip", style="color: yellow; font-size: 130%; padding-left: 3px;")
-                  for s in user.stars
-                    span.fa.fa-star
-                if user.username != currentUser.username
-                  b #{user.firstName} has #{pointdiff} points than you.
+        .row
+          .col-xs-12.col-sm-6.col-lg-8
+              .col-xs-12.col-sm-12.col-md-6.center-xs
+                .holder
+                  img#profile-pic(title="Looking good!", alt=user.firstName+" missed picture day!", src=user.ipicture, onError="this.onerror=null;this.src='"+user.mpicture+"';")
+                  #stars(title=user.firstName+" is a "+user.rankName, data-toggle="tooltip", style="color: yellow; font-size: 130%; padding-left: 3px;")
+                    for s in user.stars
+                      span.fa.fa-star
+                  if user.username != currentUser.username
+                    b #{user.firstName} has #{pointdiff} points than you.
+                  if user.bio
+                    blockquote
+                      p= user.bio
+                      footer #{user.fullName} 2015
+                br
+              .col-xs-12.col-sm-12.col-md-6
+                .panel.panel-default
+                  .panel-heading
+                    h1.panel-title  Info
+                  .panel-body
+                    .user-info
+                      b Rank:
+                      |  #{user.rankName}
+                      br
+                      b Grade:
+                      |  #{user.gradeName}
+                      br
+                      b Advisement:
+                      |  #{user.advisement}
+                      br
+                      b Last Logged In:
+                      |  #{moment(user.last_login_time).fromNow()}
+                      br
+                      b User Since:
+                      |  #{moment(user.registered_date).format('dddd, MMMM Do YYYY')}
+                      br
+                      if user.steamlink
+                        b
+                          a(data-toggle="tooltip", title="This guy is cool.", href=user.steamlink, target="_blank") Steam Profile
+                
+                .panel.panel-warning
+                  .panel-heading
+                    h1.panel-title  Stats
 
-              br
-            if user.bio
-              .col-xs-12.col-md-6
-                blockquote
-                  p= user.bio
-                  footer #{user.fullName} 2015
-            .col-xs-12.col-sm-12.col-md-6
-              .panel.panel-default
-                .panel-heading
-                  h1.panel-title  Info
-                .panel-body
-                  .user-info
-                    b Rank:
-                    |  #{user.rankName}
-                    br
-                    b Grade:
-                    |  #{user.gradeName}
-                    br
-                    b Advisement:
-                    |  #{user.advisement}
-                    br
-                    b Last Logged In:
-                    |  #{moment(user.last_login_time).fromNow()}
-                    br
-                    b User Since:
-                    |  #{moment(user.registered_date).format('dddd, MMMM Do YYYY')}
-                    br
-                    if user.steamlink
-                      b
-                        a(data-toggle="tooltip", title="This guy is cool.", href=user.steamlink, target="_blank") Steam Profile
-            
-        
-        //
-        .col-xs-12.col-sm-6.col-md-6.col-lg-4
-          .panel.panel-success
-            .panel-heading
-              h1.panel-title  Achievements
-            ol.list-group
-              if user.achievements
-                for a in allAchievements
-                  if user.achievements.indexOf(a.id) > -1
-                    li.list-group-item= a.name
-                      small.right= "["+a.reward+" points]"
-                else
-                  li.list-group-item #{user.firstName} has not yet earned any achievements.
+                  table.table.table-responsive
+                    tr
+                      td
+                        b Login Count
+                      td= user.login_count
+                    tr
+                      td Total Points Earned
+                      td= user.points
+                    tr
+                      td Current Points
+                      td= user.points
+          
+          .col-xs-12.col-sm-6.col-md-6.col-lg-4
+            .panel.panel-success
+              .panel-heading
+                h1.panel-title  Achievements
+              ol.list-group
+                if user.achievements
+                  for a in allAchievements
+                    if user.achievements.indexOf(a.id) > -1
+                      li.list-group-item= a.name
+                        small.right= "["+a.reward+" points]"
+                  else
+                    li.list-group-item #{user.firstName} has not yet earned any achievements.
 
-        .col-xs-12.col-sm-6.col-md-4
-          .panel.panel-warning
-            .panel-heading
-              h1.panel-title  Stats
-            .panel-body
-              .user-info
-                b Advisement:
-                |  #{user.advisement}
                 
       if user.registered
         .row
-          .col-xs-12.text-center#profile-schedule
-            p.larger.center Loading schedule info...
-
+          if todaysInfo
+            .col-xs-12.text-center#profile-schedule
+              p.larger.center Loading schedule info...
+          else
+            .col-xs-12
+              p.larger.text-center #{user.firstName} does not have school today!
       .row
         .col-xs-12
           hr
