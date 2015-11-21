@@ -11,37 +11,15 @@ block content
       if todaysInfo
         #classInfo
           p.larger Loading class info...          
-    .row.center.visible-sm.visible-md.visible-lg
-      .col-xs-12
-        div.full-width(style="background-color: #222")
-          each c in currentUser.courses
-            a.btn.btn-default(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title.split("(")[0]
-    br
+    //
+      .row.center.visible-sm.visible-md.visible-lg
+        .col-xs-12
+          div.full-width(style="background-color: #222")
+            each c in currentUser.courses
+              a.btn.btn-default(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title.split("(")[0]
+    hr
     .row
-      .col-xs-12.col-md-6.col-lg-4#due-today
-        .panel.panel-default
-          .panel-heading Today's Work
-            i.fa.fa-list.right
-          .panel-body
-            .col-xs-12.col-sm-4.col-md-2.hidden-xs
-              a(href="/work/today")
-                img(style="width: 5em;", src="https://cdn3.iconfinder.com/data/icons/education/512/Booking-512.png")
-            .col-xs-12.col-sm-8.col-md-10
-              .content
-              .progress
-                .progress-bar(role='progressbar', aria-valuemin='0', aria-valuemax='100', style='width: 0%;')
-      .col-xs-12.col-sm-6.col-lg-4#due-closest(data-closest=moment(nextCD, "MM/DD/YY").format("YYYY-MM-DD"))
-        .panel.panel-default
-          .panel-heading Upcoming Work
-            i.fa.fa-list.right
-          .panel-body
-            .col-xs-12.col-sm-4.col-md-2.hidden-xs
-              a(href="/work/closest")
-                img(style="width: 5em;", src="https://cdn3.iconfinder.com/data/icons/education/512/Booking-512.png")
-            .col-xs-12.col-sm-8.col-md-10
-              .content
-              .progress(style="margin-top: 10px")
-                .progress-bar(role='progressbar', aria-valuemin='0', aria-valuemax='100', style='width: 0%;')
+      include work-boxes
       .col-xs-12.col-md-3.text-center
         .visible-sm.visible-md
           hr

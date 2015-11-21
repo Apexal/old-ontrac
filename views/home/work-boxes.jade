@@ -1,0 +1,26 @@
+.col-xs-12.col-sm-6.col-lg-4#due-today
+  .panel.panel-primary
+    .panel-heading Today's Work
+      a.fa.fa-list.right.undecorated(href="/work")
+    .panel-body
+      .col-xs-12.col-md-3.text-center.hidden-xs.hidden-sm(style="padding: 0;")
+        a(href="/work/today")
+          img(style="width: 5em;", src="https://cdn3.iconfinder.com/data/icons/education/512/Booking-512.png")
+      .col-xs-12.col-md-9
+        .content
+        .progress
+          .progress-bar(role='progressbar', aria-valuemin='0', aria-valuemax='100', style='width: 0%;')
+
+
+.col-xs-12.col-sm-6.col-lg-4#due-closest(data-closest=moment(nextCD, "MM/DD/YY").format("YYYY-MM-DD"))
+  .panel.panel-info
+    .panel-heading Upcoming Work
+      a.fa.fa-list.right.undecorated(href="/work")
+    .panel-body
+      .col-xs-12.col-md-3.text-center.hidden-xs.hidden-sm(style="padding: 0;")
+        a(href="/work/closest")
+          img(style="width: 5em;", src="https://cdn3.iconfinder.com/data/icons/education/512/Booking-512.png")
+      .col-xs-12.col-md-9
+        .content
+        .progress(style="margin-top: 10px")
+          .progress-bar(role='progressbar', aria-valuemin='0', aria-valuemax='100', style='width: 0%;')
