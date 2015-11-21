@@ -258,6 +258,7 @@ span.badge {
   margin-bottom: 2px;
 }
 
+/*
 .tilt {
   -webkit-transition: -webkit-transform .8s ease-in-out;
   transition: transform .2s ease-in-out;
@@ -267,6 +268,7 @@ span.badge {
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+*/
 
 .nb {
   background-color: #999;
