@@ -40,11 +40,9 @@ function sockets() {
 
   var full = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
   socket = io.connect(full);
-  username = $('#send-message').data("username");
   online = [];
   list = $("#online-list, #online-list-mobile");
   advlist= $("#advchat-online");
-  title = $("title").text();
 
   var advisement = ( $("#advchat").length > 0 ? $("#advchat").data('adv') : '');
   var advchatmessages = [];

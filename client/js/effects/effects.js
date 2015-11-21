@@ -1,12 +1,9 @@
 function effects() {
-    var title = $("title");
-    username = $('#send-message').data("username");
-    loggedIn = (username !== undefined);
     // Prevent disabled nav links from being clicked
     $(".nav li.disabled a").click(function() {
         return false;
     });
-    if (username) {
+    if (loggedIn) {
       userbadges();
       teacherbadges();
       coursebadges();
@@ -19,8 +16,6 @@ function effects() {
     }, 1000);
 
     var today = moment().format("YYYY-MM-DD");
-
-
     // Prevent the chat form from sending data and refreshing the page
     $("#chat-controls").submit(function(e) {
       e.preventDefault();

@@ -31,7 +31,7 @@ $("#add-reminder").click(function() {
 
 function reminders() {
   var reminders = [];
-  if (username) {
+  if (loggedIn) {
       $.get("/reminders/all", function(data) {
           if (data.reminders && data.reminders.length !==
               0) {

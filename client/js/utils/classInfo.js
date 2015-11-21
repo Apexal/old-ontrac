@@ -214,7 +214,6 @@ var getCurrentClassInfo = function(periods){
 
     // Get the next class
     next = ((periods.length-1 > periods.indexOf(now)) ? periods[periods.indexOf(now)+1] : false);
-
   }
 
   return {
