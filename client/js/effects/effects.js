@@ -29,6 +29,7 @@ function effects() {
     }
 
     $("#toggle-chat").click(function() {
+      $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
       $("#chat-box").toggleClass("shown");
       if(Number(sessionStorage['show-chat']) == 1){
         sessionStorage['show-chat'] = 0;

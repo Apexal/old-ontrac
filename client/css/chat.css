@@ -117,3 +117,7 @@ main.chatpage {
 }
 
 #advchat-badge, #advchat-badge-mobile { display: none; }
+
+.panel-primary #toggle-chat {
+  color: white;
+}

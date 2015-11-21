@@ -25,7 +25,7 @@ function updateTooltips(){
 }
 
 function updateTitle(){
-
+  console.log(originalTitle);
   if(!sessionStorage.unread)
     sessionStorage.unread = 0;
   if(!sessionStorage.advunread)
@@ -33,8 +33,16 @@ function updateTitle(){
 
   var toSet = originalTitle + " (";
 
-  if(Number(sessionStorage.unread) > 0)
+  if(Number(sessionStorage.unread) > 0){
     toSet += sessionStorage.unread+" unread";
+    if($("#chat-box").length){
+      $("#chat-box").removeClass("panel-default").addClass("panel-primary");
+    }
+  }else{
+    if($("#chat-box").length){
+      $("#chat-box").removeClass("panel-primary").addClass("panel-default");
+    }
+  }
   if(Number(sessionStorage.advunread) > 0){
     if(Number(sessionStorage.unread > 0))
       toSet += ", ";
@@ -45,5 +53,5 @@ function updateTitle(){
   if(Number(sessionStorage.unread) == 0 && Number(sessionStorage.advunread) == 0)
     $("title").text(originalTitle);
   else
-    $("title").text(originalTitle);
+    $("title").text(toSet);
 }

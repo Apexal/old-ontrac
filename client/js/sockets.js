@@ -93,6 +93,9 @@ function sockets() {
     var count = 0;
 
     online.forEach(function(user) {
+      if(!user.status)
+        user.status = "available";
+      
       if(user.status != "offline"){
         count +=1;
         usernames.push(user.username);
