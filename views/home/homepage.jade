@@ -19,41 +19,33 @@ block content
     br
     .row
       .col-xs-12.col-md-6.col-lg-4#due-today
-        .media
-          .media-left.media-middle
-            a(href="/work/today")
-              img.media-object(style="width: 5em;", src="https://cdn3.iconfinder.com/data/icons/education/512/Booking-512.png")
-          .media-body
-            h4.media-heading Today's Work
-            .content
-      .col-xs-12.col-md-6.col-lg-4#due-closest(data-closest=moment(nextCD, "MM/DD/YY").format("YYYY-MM-DD"))
-        .media
-          .media-left.media-middle
-            a(href="/work/closest")
-              img.media-object(style="width: 5em;", src="https://cdn3.iconfinder.com/data/icons/education/512/Booking-512.png")
-          .media-body
-            h4.media-heading Upcoming Work
-            .content
-            .progress
-              .progress-bar(role='progressbar', aria-valuemin='0', aria-valuemax='100', style='width: 0%;')
-    hr
-    //
-      .row(style="padding-right: 25px;padding-left: 25px;")
-        .col-xs-12.col-md-6
-          h3.no-margin Looking to talk with classmates?
-          p.
-            Install #[b #[a.undercorated(target="_blank", href="http://wiki.mumble.info/wiki/Main_Page#Download_Mumble") Mumble]],
-            it'll only take seconds, and then
-            #[b #[a.undecorated(href="mumble://"+currentUser.username+":regis@regismumble.ddns.net/School?version=1.2.0") Click Here]]
-        .col-xs-12.col-md-6
-          h3.no-margin Working?
-          p
-            | Need some music to relax to or do homework with? Look no further than
-            b
-              a(target="_blank", href="http://www.musicforprogramming.net")  here!
-      hr
-    .row
-      .col-xs-12.text-center
+        .panel.panel-default
+          .panel-heading Today's Work
+            i.fa.fa-list.right
+          .panel-body
+            .col-xs-12.col-sm-4.col-md-2.hidden-xs
+              a(href="/work/today")
+                img(style="width: 5em;", src="https://cdn3.iconfinder.com/data/icons/education/512/Booking-512.png")
+            .col-xs-12.col-sm-8.col-md-10
+              .content
+              .progress
+                .progress-bar(role='progressbar', aria-valuemin='0', aria-valuemax='100', style='width: 0%;')
+      .col-xs-12.col-sm-6.col-lg-4#due-closest(data-closest=moment(nextCD, "MM/DD/YY").format("YYYY-MM-DD"))
+        .panel.panel-default
+          .panel-heading Upcoming Work
+            i.fa.fa-list.right
+          .panel-body
+            .col-xs-12.col-sm-4.col-md-2.hidden-xs
+              a(href="/work/closest")
+                img(style="width: 5em;", src="https://cdn3.iconfinder.com/data/icons/education/512/Booking-512.png")
+            .col-xs-12.col-sm-8.col-md-10
+              .content
+              .progress(style="margin-top: 10px")
+                .progress-bar(role='progressbar', aria-valuemin='0', aria-valuemax='100', style='width: 0%;')
+      .col-xs-12.col-md-3.text-center
+        .visible-sm.visible-md
+          hr
+          br
         include ads
     hr
     .row

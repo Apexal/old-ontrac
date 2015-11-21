@@ -2,18 +2,19 @@ function homepage() {
   var date = moment().format("YYYY-MM-DD");
   //alert("HOMEPAGE");
   // DUE TODAY
-  if(moment().isBefore(moment().hour(15))){
+  if(/*moment().isBefore(moment().hour(19))*/true){
     $.get("/homework/"+date, function(data){
+      var todaysDate = moment().format("YYYY-MM-DD");
+      var link = "<b><a class='undecorated' href='/work/"+todaysDate+"'>";
+      link += "Today";
+      link += "</a></b>";
       if(data){
         console.log(data);
         if(data.error){
           console.log(data.error);
-
           $("#due-today").remove();
           return;
         }
-
-
         if(data.length == 0){
           $("#due-today").remove();
         }else{
@@ -31,22 +32,20 @@ function homepage() {
           $("#due-today .progress-bar").animate({ width: percent+"%" }, 1000);
 
           if(doneC == 0){
-            $("#due-today .content").html("You have not started <b style='color: red'>any</b> of your <b>"+total+"</b> homework items due <b>Today!</b> Get working!");
+            $("#due-today .content").html("You have not started <b style='color: red'>any</b> of your <b>"+total+"</b> homework items due "+link+". Get working!");
           }else if(doneC == total){
-            $("#due-today .content").html("You have finished all of your <b>"+total+"</b> homework items due <b>Today!</b> Nice!");
+            $("#due-today .content").html("You have finished all of your <b>"+total+"</b> homework items due "+link+". Nice!");
             $("#due-today .progress").remove();
-            $("#due-today .media-heading").html("Today's Work <i class='fa fa-check'></i>");
+            $("#due-today .panel-heading").html("Today's Work <i class='fa fa-check right'></i>");
           }else{
             var comment = "Keep going!";
             if(percent > 50)
               comment = "More than halfway done!";
             if(percent > 80)
               comment = "Almost there!";
-            $("#due-today .content").html("You have <b>"+(total - doneC)+"</b> homework assignment(s) left for <b>Today!</b> <span class='hidden-xs text-muted'><br>"+comment+"</span>");
+            $("#due-today .content").html("You have <b>"+(total - doneC)+"</b> homework assignment(s) left for "+link+". <span class='hidden-xs text-muted'><br>"+comment+"</span>");
           }
         }
-
-
       }
     });
   }else{
@@ -56,6 +55,7 @@ function homepage() {
   // CLOSEST DAY DUE
 
   $.get("/homework/"+$("#due-closest").data("closest"), function(data){
+    var closestDate = $("#due-closest").data("closest");
     if(data){
       console.log(data);
       if(data.error){
@@ -81,19 +81,23 @@ function homepage() {
       var percent = Math.round((doneC/total)*100);
       $("#due-closest .progress-bar").animate({ width: percent+"%" }, 1000);
 
+      var link = "<b><a class='undecorated' href='/work/"+closestDate+"'>";
+      link += moment(closestDate, "YYYY-MM-DD").format("dddd [the] Do");
+      link += "</a></b>";
+
       if(doneC == 0){
-        $("#due-closest .content").html("You have not started <b style='color: red'>any</b> of your <b>"+total+"</b> homework items due on <b>"+moment($("#due-closest").data("closest"), "YYYY-MM-DD").format("dddd [the] Do")+"</b>! Get working!");
+        $("#due-closest .content").html("You have not started <b style='color: red'>any</b> of your <b>"+total+"</b> homework items due on "+link+"! Get working!");
       }else if(doneC == total){
-        $("#due-closest .content").html("You have finished all of your <b>"+total+"</b> homework items due  <b>"+moment($("#due-closest").data("closest"), "YYYY-MM-DD").format("dddd [the] Do")+"</b>! Nice!");
+        $("#due-closest .content").html("You have finished all of your <b>"+total+"</b> homework items due "+link+"! Nice!");
         $("#due-closest .progress").remove();
-        $("#due-closest .media-heading").html("Upcoming Work <i class='fa fa-check'></i>");
+        $("#due-closest .panel-heading").html("Upcoming Work <i class='fa fa-check right'></i>");
       }else{
         var comment = "Keep going!";
         if(percent > 50)
           comment = "More than halfway done!";
-        if(percent > 80)
+        if(percent > 80 || (total > 4 && total-doneC <= 2))
           comment = "Almost there!";
-        $("#due-closest .content").html("You have <b>"+(total - doneC)+"</b> homework assignment(s) left for <b>"+moment($("#due-closest").data("closest"), "YYYY-MM-DD").format("dddd [the] Do")+"</b>! <span class='hidden-xs text-muted'><br>"+comment+"</span>");
+        $("#due-closest .content").html("You have <b>"+(total - doneC)+"</b> homework assignment(s) left for "+link+"! <span class='hidden-xs text-muted'><br>"+comment+"</span>");
       }
 
     }
