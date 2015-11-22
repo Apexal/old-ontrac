@@ -143,10 +143,12 @@ module.exports = function(io) {
 
                           var room = (isNaN(line[5]) ? line[5] : "Room "+line[5]);
 
+                          var duration = moment(line[3], "hh:mm A").diff(moment(line[1], "hh:mm A"), 'minutes');
                           var period = {
                             //date: moment(line[0], "MM/DD/YY").toDate(),
                             startTime: line[1],
                             endTime: line[3],
+                            duration: duration,
                             className: line[4],
                             room: room
                           };
@@ -165,11 +167,13 @@ module.exports = function(io) {
                         user.scheduleObject = schedule;
                         ['A', 'B', 'C', 'D', 'E'].forEach(function(sd){
                           var filledPeriods = [];
+                          console.log(sd);
                           // AM ADVISEMENT
                           var amAdv = {
                             startTime: '08:40 AM',
                             endTime: '08:50 AM',
                             className: 'Morning Advisement',
+                            duration: 10,
                             room: 'Homeroom'
                           };
                           filledPeriods.push(amAdv);
@@ -193,11 +197,16 @@ module.exports = function(io) {
                                   lunch = moment(lastPeriod.endTime, "hh:mm A").startOf('day').hour(12).minute(10);
                                   break;
                               }
+
+
+                              console.log(period.duration);
+
                               if(moment(lastPeriod.endTime, "hh:mm A").isSame(lunch)){
                                 filledPeriods.push({
                                   room: "Cafeteria",
                                   startTime: lunch.format("hh:mm A"),
                                   endTime: moment(lunch).add(40, 'minutes').format("hh:mm A"),
+                                  duration: 40,
                                   className: "Lunch"
                                 });
                               }else{
@@ -205,6 +214,7 @@ module.exports = function(io) {
                                   room: "Anywhere",
                                   startTime: lastPeriod.endTime,
                                   endTime: period.startTime,
+                                  duration: moment(lastPeriod.endTime, "hh:mm A").diff(moment(period.startTime, "hh:mm A"), 'minutes'),
                                   className: "Unstructured Time"
                                 });
                               }
@@ -213,10 +223,10 @@ module.exports = function(io) {
                             var myC = user.courses;
                             myC.forEach(function(course) {
                               if(period.className.trim().indexOf(course.title.trim()) > -1 || course.title.trim() == period.className.trim()){
-                                //console.log("MATCHED");
+                                console.log("MATCHED");
                                 period.mID = course.mID;
                               }else{
-                                console.log("COULDN'T MATCH "+period.className + " TO COURSE");
+                                //console.log("COULDN'T MATCH "+period.className + " TO COURSE");
                               }
                             });
 
@@ -226,10 +236,12 @@ module.exports = function(io) {
 
                           // End of day free
                           if(filledPeriods[filledPeriods.length-1].endTime !== "02:50 PM"){
+                            var duration = moment(lastPeriod.endTime, "hh:mm A").hour(14).minute(50).diff(moment(lastPeriod.endTime, "hh:mm A"), 'minutes');
                             filledPeriods.push({
                               room: "Anywhere",
                               startTime: lastPeriod.endTime,
                               endTime: "02:50 PM",
+                              duration: duration,
                               className: "Unstructured Time"
                             });
                           }
@@ -238,6 +250,7 @@ module.exports = function(io) {
                           filledPeriods.push({
                             startTime: '02:50 PM',
                             endTime: '02:55 PM',
+                            duration: 20,
                             className: 'Afternoon Advisement',
                             room: 'Homeroom'
                           });

@@ -3,6 +3,10 @@ function homework(){
     homework: []
   };
 
+  $("#day-schedule td").each(function() {
+    
+  });
+
   $("#day-schedule td").click(function() {
     var text = $(this).text().trim();
     $("#newHWItemCourseID option").each(function() {

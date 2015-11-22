@@ -37,7 +37,7 @@ block content
             tr
               for s in classes
                 if s.className.indexOf(" Advisement") == -1
-                  td(class=(s.room=="Cafeteria" ? "active" : ""), data-toggle="tooltip", title=moment(s.startTime, "hh:mm A").format("h:mm A")+" to "+moment(s.endTime, "hh:mm A").format("h:mm A"))
+                  td(data-length="40", class=(s.room=="Cafeteria" ? "active" : ""), data-toggle="tooltip", title=moment(s.startTime, "hh:mm A").format("h:mm A")+" to "+moment(s.endTime, "hh:mm A").format("h:mm A"))
                     if s.mID
                       a.undecorated(style="text-decoration: none;", target="_blank", href="http://moodle.regis.org/course/view.php?id="+s.mID)= s.className.split("(")[0]
                     else
