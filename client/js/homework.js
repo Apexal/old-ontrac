@@ -3,8 +3,14 @@ function homework(){
     homework: []
   };
 
+  var durationSizes = {
+    20: 6,
+    40: 11,
+    60: 17
+  }
+
   $("#day-schedule td").each(function() {
-    
+    $(this).css("width", durationSizes[$(this).data("length")]+"%");
   });
 
   $("#day-schedule td").click(function() {

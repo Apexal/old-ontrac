@@ -54,3 +54,9 @@
 i.fa.fa-close.remove-assignment {
   display: none;
 }
+
+#day-schedule td {
+  border-left: 1px solid #f5f5f5;
+  border-right: 1px solid #f5f5f5;
+  border-bottom: 1px solid #f5f5f5;
+}
