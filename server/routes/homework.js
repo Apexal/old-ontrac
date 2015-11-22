@@ -49,6 +49,7 @@ router.post("/:date", function(req, res){
       hwitem.completed = itemStatus;
       hwitem.save(function(err) {
         if(err){res.json({error: "An error occured. Please try again later."}); return;}
+        new req.Log({who: req.currentUser.username, what: "Toggled a HWItem's completion for "+dateString}).save();
         res.json({success: true});
       });
     }else{
@@ -111,6 +112,7 @@ router.delete("/:date", function(req, res){
   }
   req.HWItem.remove({_id: id}, function(err){
     if(err){res.json({error: "Failed to remove item. Please try again later."}); return;}
+    new req.Log({who: req.currentUser.username, what: "Removed a HWItem for "+dateString}).save();
     res.json({success: true});
   });
 });
