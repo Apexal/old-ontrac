@@ -54,7 +54,8 @@ header
                 a(href="https://myfiles.regis.org/", target="_blank") MyFiles
           
           if loggedIn
-            li.dropdown
+          
+            li.dropdown.hidden-xs
               a.service.dropdown-toggle(href="#", title="Manage your work.", data-toggle='dropdown', role='button', aria-expanded='false').fa.fa-book
               ul.dropdown-menu(role='menu')
                 li.dropdown-header Your Work
@@ -68,13 +69,13 @@ header
                   a(href="/work/closest") Current Work Due
             
             if previousDay !== false
-              li
+              li.hidden-xs
                 a.fa.fa-arrow-left(href='/work/'+previousDay, style="padding-left: 4px; padding-right: 4px;", title="View the previous work day!")
             if nextDay !== false
-              li
+              li.hidden-xs
                 a.fa.fa-arrow-right(href='/work/'+nextDay, style="padding-left: 4px; padding-right: 4px;margin-right: 10px;", title="View the next work day!")  
             
-            li.dropdown
+            li.dropdown.hidden-xs
               a.service.dropdown-toggle(href="#", title="Manage your studying.", data-toggle='dropdown', role='button', aria-expanded='false').fa.fa-calendar-check-o
               ul.dropdown-menu(role='menu')
                 li.dropdown-header Study Management
@@ -84,19 +85,20 @@ header
                 li
                   a(href="/study/today") Today's Items
                   
-            li.dropdown
+            li.dropdown.hidden-xs
               a.service.dropdown-toggle(href="#", title="Manage your grades.", data-toggle='dropdown', role='button', aria-expanded='false').fa.fa-line-chart
               ul.dropdown-menu(role='menu')
                 li.dropdown-header Your Grades
                 li
                   a(href="/grades") Overview
+
         ul.nav.navbar-nav.navbar-right
           if loggedIn
-            li
+            li.hidden-xs
               a(href="/users/"+currentUser.username+"/schedule", title="View your class schedule.", style="padding-right: 5px;padding-left: 2px;").fa.fa-calendar
-            li
+            li.hidden-xs
               a(href="#", data-toggle="modal", data-target="#feedback-modal", title="Offer feedback.", style="padding-right: 5px;padding-left: 2px;").fa.fa-comment
-            li
+            li.hidden-xs
               a(href="#", title="Manage your reminders.", data-target="#reminders-modal", data-toggle="modal", style="padding-right: 2px;padding-left: 2px;").reminder-bell.fa.fa-bell-o
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') #{currentUser.firstName} #{currentUser.lastName}
