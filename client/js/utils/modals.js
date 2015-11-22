@@ -10,29 +10,8 @@ function userbadges(){
           if(data != "Not authorized."){
             var title = data.firstName + " " + data.lastName;
             console.log(data);
-            var rank = (data.rank ? data.rank : 0);
-            switch(rank) {
-              case 0:
-                rank = "Guest";
-                break;
-              case 2:
-                rank = "User";
-                break;
-              case 3:
-                rank = "Member";
-                break;
-              case 4:
-                rank = "Operator";
-                break;
-              case 5:
-                rank = "Moderator";
-                break;
-              case 6:
-                rank = "Administrator";
-                break;
-              case 7:
-                rank = "<b>Owner</b>";
-            }
+            var rank = data.rankName;
+            if(rank == "Owner") rank = "<b>"+rank+"</b>";
 
             var button = "";
 
@@ -48,20 +27,13 @@ function userbadges(){
               bio = "<p class='center'>\""+data.bio+"\"</p>";
             }
 
-            var adv = data.advisement.charAt(0);
-            var grade = "";
-            switch(adv) {
-              case "1":
+            var grade = data.gradeName;
+            switch(grade) {
+              case "Freshman":
                 grade = "Frosh";
                 break;
-              case "2":
+              case "Sophomore":
                 grade = "Soph";
-                break;
-              case "3":
-                grade = "Junior";
-                break;
-              case "4":
-                grade = "Senior";
                 break;
             }
 

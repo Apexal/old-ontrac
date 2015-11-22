@@ -93,7 +93,7 @@ var profileUserInfo = null;
 function updateProfileSchedule(){
   var profileUsername = window.location.href.split("/")[2];
   if(!profileUserInfo){
-    $.get('/users/api/'+username, function(data){
+    $.get('/users/api/'+profileUsername, function(data){
       if(data){
         console.log(data);
         registered = data.registered;
