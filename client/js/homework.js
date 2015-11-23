@@ -70,6 +70,7 @@ function homework(){
   });
 
   function addHWItem(cID, desc, link){
+    desc = desc.trim();
     if(!cID || !desc || link.length == undefined){
       console.log("Missing some values")
       return false;

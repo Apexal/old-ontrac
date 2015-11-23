@@ -1,12 +1,6 @@
 aside#sidebar
+  br
   section.center
-    if todaysInfo 
-      #scheduleDaySidebar
-        hr(style="margin-bottom: 10px;")
-        b.larger #{todaysInfo.scheduleDay} - Day
-        hr(style="margin-top: 10px;")
-    else
-      br
     #user-status.dropdown
       img#status-circle(src="/images/statuses/status-available.png")
       span &nbsp;
@@ -33,6 +27,11 @@ aside#sidebar
     a(href="#", tabindex="0", role="button", data-toggle="popover", data-trigger="focus", data-content="<b>You</b>", data-placement="bottom").online-badge
       span.badge 1 online
   
+    if todaysInfo 
+      #scheduleDaySidebar
+        hr(style="margin-bottom: 10px;")
+        b.larger #{todaysInfo.scheduleDay} - Day
+        hr(style="margin-top: 10px;")
   //
     hr
     section#agenda
