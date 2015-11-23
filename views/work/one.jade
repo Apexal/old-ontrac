@@ -4,8 +4,9 @@ block content
   .container-fluid
     include /info
     .page-header.no-margin.center-xs
-      h1(data-toggle="tooltip", title=fromNow)= date.format("dddd, MMMM Do YYYY")
-        b.hidden-xs.right #{scheduleDay}-Day
+      h1(data-toggle="tooltip", title=fromNow) #{date.format("dddd, MMMM Do YYYY")} #[]
+        span.visible-xs.fa.fa-pencil#toggle-hw-form
+        b.hidden-xs.right #{scheduleDay}-Day 
     
     .row
       .col-xs-12.visible-xs
@@ -16,7 +17,8 @@ block content
           | #{scheduleDay}-Day
           if nextDay !== false
             span
-              a.fa.fa-arrow-right.right(href='/work/'+nextDay, title="View the next work day!")    
+              a.fa.fa-arrow-right.right(href='/work/'+nextDay, title="View the next work day!")
+        hr(style="margin-top: 2px; margin-bottom: 7px;")
       include homework
     
     .row#day-schedule

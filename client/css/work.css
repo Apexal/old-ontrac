@@ -59,3 +59,8 @@ i.fa.fa-close.remove-assignment {
   border-left: 1px solid #f5f5f5;
   border-right: 1px solid #f5f5f5;
 }
+
+#toggle-hw-form {
+  font-size: .5em;
+  cursor: pointer;
+}
