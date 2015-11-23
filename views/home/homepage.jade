@@ -4,9 +4,9 @@ block content
   .container-fluid
     include /info
     .jumbotron.center-xs(style="margin-bottom: 0;")
-      .col-xs-12.col-md-6
+      .col-xs-12.col-lg-6
         h1.no-margin(style="text-transform: capitalize")= "Good "+helpers.getGreetingTime(moment())+", " + currentUser.nickname
-      .col-xs-12.col-md-6.hidden-xs
+      .col-xs-12.col-lg-6.hidden-xs
         blockquote.quote
           p
             script(src="http://www.brainyquote.com/link/quotebr.js")
