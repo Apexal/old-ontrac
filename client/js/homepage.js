@@ -29,7 +29,9 @@ function homepage() {
           });
 
           var percent = Math.round((doneC/total)*100);
+          $("#due-today .progress").attr("data-original-title", percent+"% done!");
           $("#due-today .progress-bar").animate({ width: percent+"%" }, 1000);
+          updateTooltips();
 
           if(doneC == 0){
             $("#due-today .content").html("You have not started <b style='color: red'>any</b> of your <b>"+total+"</b> homework items due "+link+". Get working!");
@@ -79,7 +81,9 @@ function homepage() {
       });
 
       var percent = Math.round((doneC/total)*100);
+      $("#due-closest .progress").attr("data-original-title", percent+"% done!");
       $("#due-closest .progress-bar").animate({ width: percent+"%" }, 1000);
+      updateTooltips();
 
       var link = "<b><a class='undecorated' href='/work/"+closestDate+"'>";
       link += moment(closestDate, "YYYY-MM-DD").format("dddd [the] Do");
