@@ -28,7 +28,7 @@ module.exports = function(io) {
     console.log("ATTEMPTING TO LOGIN AS "+username+": \n");
     var errs = [];
     req.Student.findOne({username: username}).populate('courses', 'title mID').exec(function(err, user) {
-      if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
+      if(err){errs.push('An error occured, please try again.'); done(); return;}
 
       if(!user){
         errs.push("0: Incorrect username or password."); // No user with that username found
@@ -51,6 +51,7 @@ module.exports = function(io) {
             if(error) {
                 console.log(error);
                 errs.push("1: An error occured, please try again later.");
+                done(); return;
             }else{
               console.log("1: "+response.statusCode);
               var $ = cheerio.load(body);
@@ -69,6 +70,7 @@ module.exports = function(io) {
                   if(error) {
                       console.log(error);
                       errs.push("1: Failed to register. Please try again later.");
+                      done(); return;
                   }else{
                     var $ = cheerio.load(html);
 
@@ -96,6 +98,11 @@ module.exports = function(io) {
                           jar: cookieJar,
                           method: 'GET'
                       }, function(error, response, text){
+                        if(error){
+                          console.log(error);
+                          errs.push("1: Failed to register. Please try again later.");
+                          done(); return;
+                        }
                         console.log("DOWNLOADED SCHEDULE FOR "+username);
                         var scheduleLines = text.match(/[^\r\n]+/g);
                         var good = [];
