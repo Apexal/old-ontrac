@@ -4,13 +4,19 @@ block content
   .container-fluid
     include /info
     .jumbotron.center-xs(style="margin-bottom: 0;")
-      h1.no-margin(style="text-transform: capitalize")= "Good "+helpers.getGreetingTime(moment())+", " + currentUser.nickname
-      p.visible-xs.no-margin It is #[b#clock Time & Date].
+      .col-xs-12.col-md-6
+        h1.no-margin(style="text-transform: capitalize")= "Good "+helpers.getGreetingTime(moment())+", " + currentUser.nickname
+      .col-xs-12.col-md-6.hidden-xs
+        blockquote.quote
+          p
+            script(src="http://www.brainyquote.com/link/quotebr.js")
+      .col-xs-12
         if todaysInfo
           span.visible-xs Today is a #[b= todaysInfo.scheduleDay+"-Day"].
-      if todaysInfo
-        #classInfo
-          p.larger Loading class info...          
+        if todaysInfo
+          #classInfo
+            p.larger Loading class info...          
+      .clearfix
     //
       .row.center.visible-sm.visible-md.visible-lg
         .col-xs-12

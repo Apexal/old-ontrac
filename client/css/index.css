@@ -29,3 +29,23 @@
 #due-closest .progress, #due-today .progress {
   margin-bottom: 0;
 }
+
+.quote {
+  margin: 0;
+}
+
+.quote p b {
+  display: block;
+}
+
+.quote br {
+  display: none;
+}
+
+.quote p a {
+  font-size: 0.7em;
+}
+
+.quote p a:before {
+  content: "~"
+}
