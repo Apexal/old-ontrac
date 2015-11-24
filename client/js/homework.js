@@ -198,8 +198,6 @@ function homework(){
       hw[item.course.title].push(item);
     });
 
-    console.log(hw);
-
     hwTitles.forEach(function(t){
       var items = hw[t];
       var html = "<div class='col-xs-12 col-md-6 hw-item text-center'> \
@@ -218,6 +216,12 @@ function homework(){
 
       hwHTML += html;
     });
+
+    if(hwTitles.length == 0){
+      hwHTML = "<div class='col-xs-12 col-md-6 text-center'>";
+      hwHTML   +=   "<span class='larger'>No homework!</span>";
+      hwHTML+= "</div>";
+    }
 
     var percent = Math.round((doneC/total)*100);
     $("#homework-progress")
