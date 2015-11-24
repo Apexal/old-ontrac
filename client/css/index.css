@@ -49,3 +49,7 @@
 .quote p a:before {
   content: "~"
 }
+
+.quote p b {
+  font-weight: bold;
+}
