@@ -45,25 +45,6 @@ function login() {
             "There is an issue with the server! Please tell Frank!</div>");
         }
       });
-      /*
-      $.post("/login", {
-          username: username,
-          password: password
-      }, function(data) {
-          $("#login-errors .alert").remove();
-          if (data.errors) {
-              for (var err in data.errors) {
-                  $("#login-errors").append("<div class='alert alert-danger'>"+
-                    data.errors[err]+"</div>");
-              }
-              $("#login-button").text("Login");
-              $("body").css("cursor", "auto");
-              loggingIn = false;
-          } else {
-              window.location.href = $("#login-form").data(
-                  "redirect");
-          }
-      });*/
     }
   };
 

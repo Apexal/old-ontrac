@@ -91,7 +91,7 @@ var hasClasses = false;
 var registered = true;
 var profileUserInfo = null;
 function updateProfileSchedule(){
-  var profileUsername = window.location.href.split("/")[2];
+  var profileUsername = window.location.href.split("/")[4];
   if(!profileUserInfo){
     $.get('/users/api/'+profileUsername, function(data){
       if(data){

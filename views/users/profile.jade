@@ -19,20 +19,23 @@ block content
               .col-xs-12.col-sm-12.col-md-6.center-xs
                 .holder
                   img#profile-pic(title="Looking good!", alt=user.firstName+" missed picture day!", src=user.ipicture, onError="this.onerror=null;this.src='"+user.mpicture+"';")
-                  #stars(title=user.firstName+" is a "+user.rankName, data-toggle="tooltip", style="color: yellow; font-size: 130%; padding-left: 3px;")
-                    for s in user.stars
-                      span.fa.fa-star
-                  if user.username != currentUser.username
-                    b #{user.firstName} has #{pointdiff} points than you #[span.text-muted (#{currentUser.points})].
-                  if user.bio
-                    blockquote
-                      p= user.bio
-                      footer #{user.fullName} 2015
+                  if user.registered
+                    #stars(title=user.firstName+" is a "+user.rankName, data-toggle="tooltip", style="color: yellow; font-size: 130%; padding-left: 3px;")
+                      for s in user.stars
+                        span.fa.fa-star
+                    if user.username != currentUser.username
+                      b #{user.firstName} has #{pointdiff} points than you #[span.text-muted (#{currentUser.points})].
+                    if user.bio
+                      blockquote
+                        p= user.bio
+                        footer #{user.fullName} 2015
                 br
               .col-xs-12.col-sm-12.col-md-6
                 .panel.panel-default
                   .panel-heading
                     h1.panel-title  Info
+                      if user.registered == false
+                        b.text-danger.right UNREGISTERED
                   .panel-body
                     .user-info
                       b Rank:
@@ -43,16 +46,17 @@ block content
                       br
                       b Advisement:
                       |  #{user.advisement}
-                      br
-                      b Last Logged In:
-                      |  #{moment(user.last_login_time).fromNow()}
-                      br
-                      b User Since:
-                      |  #{moment(user.registered_date).format('dddd, MMMM Do YYYY')}
-                      br
-                      if user.steamlink
-                        b
-                          a(data-toggle="tooltip", title="This guy is cool.", href=user.steamlink, target="_blank") Steam Profile
+                      if user.registered
+                        br
+                        b Last Logged In:
+                        |  #{moment(user.last_login_time).fromNow()}
+                        br
+                        b User Since:
+                        |  #{moment(user.registered_date).format('dddd, MMMM Do YYYY')}
+                        br
+                        if user.steamlink
+                          b
+                            a(data-toggle="tooltip", title="This guy is cool.", href=user.steamlink, target="_blank") Steam Profile
                 
                 .panel.panel-warning
                   .panel-heading
