@@ -95,7 +95,7 @@ function sockets() {
     online.forEach(function(user) {
       if(!user.status)
         user.status = "available";
-      
+
       if(user.status != "offline"){
         count +=1;
         usernames.push(user.username);
@@ -261,9 +261,6 @@ function sockets() {
   //  GLOBAL CHAT SYSTEM
   if(sessionStorage.muted == "1") set_muted(true); else set_muted(false);
 
-
-
-
   $("#mute-toggle").click(toggle_muted);
 
   var messages = [];
@@ -273,6 +270,7 @@ function sockets() {
 
   socket.on('pastMessages', function(data) {
     messages = data.messages;
+    //messages.push({username: "fmatranga18", message: "SEPARATED", when: moment().subtract(20, 'hours')});
     showMessages();
     $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
   });
@@ -284,10 +282,16 @@ function sockets() {
         var message = messages[i].message;
         var when = moment(messages[i].when);
 
+        // Totally sanitizes the message
         var div = document.createElement('div');
         div.appendChild(document.createTextNode(message));
         message = div.innerHTML;
         message = linkify(message);
+
+        // If last message is from over 5 hours ago, add a separator
+        try{if(moment(when).diff(messages[i - 1].when, 'hours') > 5){
+            html+="<hr class='chat-divider'>";
+        }}catch(e){}
 
         var part = "<b class='user-badge' data-username='"+user+"'>"+user+": </b>";
         part += "<span title='"+when.fromNow()+" | "+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'>"+message+"</span><br>";
@@ -354,7 +358,6 @@ function setStatus(status){
   socket.emit('setstatus', {status: status.toLowerCase()});
 
   $("#status-circle").attr("src", "/images/statuses/status-"+status.toLowerCase().replace(" ", "")+".png");
-
   $("#user-status b").html(status+(status !== "In Class" ? "<span class='caret'></span>" : ""));
   console.log("Set status to "+status);
 }

@@ -121,3 +121,7 @@ main.chatpage {
 .panel-primary #toggle-chat {
   color: white;
 }
+
+.chat-divider {
+  margin: 10px;
+}
