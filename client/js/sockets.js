@@ -69,6 +69,10 @@ function sockets() {
     location.reload();
   });
 
+  socket.on('mumblers', function(data){
+    console.log(data);
+  });
+
   socket.on('new-login', function(data) {
     //alert("WOW");
     sendNotification('info', 'User Login', data.username+' has just logged in!');

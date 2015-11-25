@@ -18,7 +18,8 @@ var express = require("express")
   , config = require('./server/config')
   , mongo = require('./server/modules/mongodb')
   , school_years = require('./server/modules/years')
-  , schedules = require("./server/modules/schedule");
+  , schedules = require("./server/modules/schedule")
+  , mumble = require("./server/modules/mumble");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -47,6 +48,7 @@ app.locals.moment = moment;
 app.locals.helpers = utils;
 
 app.use(function(req, res, next) {
+  console.log(mumble);
   console.log(("\nRequest from "+req.connection.remoteAddress).blue.bold +(req.session.currentUser ? " by "+req.session.currentUser.username : "")+" at "+(moment().format("dddd, MMMM Do YYYY, h:mm:ss a")).green.bold);
   req.currentUser = req.session.currentUser;
   req.loggedIn = (req.currentUser != undefined ? true : false);
