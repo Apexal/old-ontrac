@@ -16,6 +16,10 @@ block content
             label(for="newbio") Bio
             textarea.form-control#newbio(name="newbio")= currentUser.bio
           .form-group
+            label.checkbox-inline(for="filterProfanity")
+              input(name="filterProfanity", type="checkbox", checked=currentUser.preferences.filterProfanity)
+              b Filter Profanity
+          .form-group
             label(for="newsteamlink") Steam Profile Link
             input.form-control#newsteamlink(type="url", name="newsteamlink", value=currentUser.steamlink)
           button.btn.btn-primary Save

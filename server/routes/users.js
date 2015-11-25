@@ -49,6 +49,7 @@ router.get("/profile", function(req, res) {
 router.post("/profile", function(req, res) {
   var newbio = req.body.newbio;
   var newnickname = req.body.newnickname;
+  var filterProfanity = req.body.filterProfanity;
 
   if(newbio){
     req.Student.findOne({username: req.currentUser.username}, function(err, user) {
@@ -56,12 +57,14 @@ router.post("/profile", function(req, res) {
       if(user){
         user.bio = utils.filter(newbio);
         user.nickname = newnickname;
+        user.preferences.filterProfanity = filterProfanity;
         user.steamlink = (req.body.newsteamlink.indexOf("http://steamcommunity.com") > -1 ? req.body.newsteamlink : user.steamlink);
         user.save(function(err) {
           if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
           req.session.info.push("Successfully updated profile.");
           req.session.currentUser.bio = user.bio;
           req.session.currentUser.nickname = user.nickname;
+          req.session.currentUser.preferences.filterProfanity = user.preferences.filterProfanity;
           req.session.currentUser.steamlink = user.steamlink;
           done();
         });
