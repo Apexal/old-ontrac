@@ -75,6 +75,7 @@ function sockets() {
 
   socket.on('mumblers', function(data){
     console.log(data);
+    mumblers = [];
     data.forEach(function(user) {
       if(user !== "ontrac-bot")
         mumblers.push(user);
