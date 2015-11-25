@@ -1,3 +1,5 @@
+var mumblers = [];
+
 function toggle_muted(){
   sessionStorage.muted = (sessionStorage.muted == "1" ? "0" : "1");
   if(sessionStorage.muted == "1"){
@@ -47,6 +49,8 @@ function sockets() {
   var advisement = ( $("#advchat").length > 0 ? $("#advchat").data('adv') : '');
   var advchatmessages = [];
 
+
+
   var status = sessionStorage['user-status'];
   if (!status){
     status = "available";
@@ -71,6 +75,11 @@ function sockets() {
 
   socket.on('mumblers', function(data){
     console.log(data);
+    data.forEach(function(user) {
+      if(user !== "ontrac-bot")
+        mumblers.push(user);
+    });
+    showMumblers();
   });
 
   socket.on('new-login', function(data) {
@@ -357,6 +366,15 @@ function sockets() {
   $('#chat-message').on('keyup', outgoingMessageKeyUp);
   $('#send-message').on('click', sendMessage);
 
+}
+
+function showMumblers(){
+  var html = "<ul>";
+  mumblers.forEach(function(user) {
+    html+="<li>"+user+"</li>";
+  });
+  html+="</ul>";
+  $("#mumble-list").html(html);
 }
 
 function setStatus(status){
