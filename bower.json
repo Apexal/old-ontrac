@@ -17,7 +17,8 @@
     "jquery": "latest",
     "jquery-ui": "latest",
     "moment": "latest",
-    "d3": "latest"
+    "d3": "latest",
+    "jQuery.ProfanityFilter": "latest"
   },
   "ignore": [
     "**/.*",

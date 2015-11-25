@@ -14,7 +14,7 @@ var jsPath = "client/js";
 var files = {
   js: [bowerPath+'/jquery/dist/jquery.min.js', bowerPath+'/jquery-ui/jquery-ui.min.js',
     bowerPath+'/moment/moment.js', bowerPath+'/bootstrap/dist/js/bootstrap.min.js',
-    'client/lib/js/*.js', jsPath+'/**/*.js', jsPath+'/*.js'],
+    'client/lib/js/*.js', jsPath+'/**/*.js', jsPath+'/*.js', jsPath+'/jQuery.ProfanityFilter/jquery.profanityfilter.js'],
   css: [bowerPath+'/bootstrap/dist/css/bootstrap.min.css', bowerPath+'/bootstrap/dist/css/cosmo-theme.min.css',
     bowerPath+'/fontawesome/css/font-awesome.min.css', 'client/lib/css/*.css', 'client/css/*.css']
 }
@@ -53,7 +53,7 @@ gulp.task('pre', ['scripts', 'styles', 'fonts']);
 
 gulp.task('default', ['jshint', 'scripts', 'styles', 'fonts'], function() {
   // watch for JS changes
-  gulp.watch([jsPath+'/**/*.js', jsPath+'/*.js'], ['jshint', 'scripts']);
+  gulp.watch(files.js, ['jshint', 'scripts']);
 
   // watch for CSS changes
   gulp.watch('./client/css/*.css', ['styles']);

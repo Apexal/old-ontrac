@@ -298,6 +298,9 @@ function sockets() {
         html += part;
     }
     $("#chat-messages").html(html);
+    $('#chat-messages').profanityFilter({
+      externalSwears: '/swears.json'
+    });
     $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
     userbadges();
   };

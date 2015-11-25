@@ -17,13 +17,15 @@ header
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') View
               span.caret
             ul.dropdown-menu(role='menu')
-              li
-                a(target="_blank", href="https://github.com/Aedificem/ontrac/wiki", title="What features does OnTrac provide?") About
+              //
+                li
+                  a(target="_blank", href="https://github.com/Aedificem/ontrac/wiki", title="What features does OnTrac provide?") About
               if loggedIn
                 li(class=(helpers.isPage(page, "users")))
                   a(href="/users", title="View and search through list of all students, registered and unregistered.") Users
                 li(class=(helpers.isPage(page, "advisements")))
                   a(href="/advisements", title="View and search through all advisements at Regis.") Advisements
+                li.divider(role="separator")
               li
                 a(target="_blank", title="View the public source code behind this project, maintained solely by me.", href="https://github.com/Aedificem/ontrac") Source Code
               li
