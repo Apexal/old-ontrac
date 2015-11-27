@@ -19,7 +19,7 @@ $(function() {
 
     updateTitle();
     effects();
-    reminders();
+    init_reminders();
     login();
     days();
     header();

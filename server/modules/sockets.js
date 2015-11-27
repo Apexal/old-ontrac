@@ -26,7 +26,10 @@ module.exports = function(http) {
   require("./mumble")(function(error, connection) {
     if( error ) { throw new Error( error ); }
 
-    connection.authenticate( 'ontrac-bot', 'regis' );
+    if(process.env.NODE_ENV != 'production')
+      connection.authenticate( 'ontrac-bot-testing', 'regis' );
+    else
+      connection.authenticate( 'ontrac-bot', 'regis' );
 
     connection.on( 'initialized', function () {
       console.log('[ Connected to Mumble ]');
