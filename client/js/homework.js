@@ -218,7 +218,7 @@ function homework(){
     });
 
     if(hwTitles.length == 0){
-      hwHTML = "<div class='col-xs-12 col-md-6 text-center'>";
+      hwHTML = "<div class='col-xs-12 text-center'>";
       hwHTML   +=   "<span class='larger'>No homework!</span>";
       hwHTML+= "</div>";
     }
