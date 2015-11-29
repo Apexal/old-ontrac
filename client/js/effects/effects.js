@@ -1,4 +1,4 @@
-function effects() {
+function init_effects() {
     // Prevent disabled nav links from being clicked
     $(".nav li.disabled a").click(function() {
         return false;

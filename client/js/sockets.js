@@ -35,7 +35,7 @@ function handleVisibilityChange() {
   }
 }
 
-function sockets() {
+function init_sockets() {
   document.addEventListener(visibilityChange, handleVisibilityChange, false);
 
   var chat_notification = new Audio('/sounds/ding.mp3');
@@ -70,6 +70,9 @@ function sockets() {
     update_online_lists();
   });
   socket.on('refresh', function(data) {
+    location.reload();
+  });
+  socket.on('disconnect', function () {
     location.reload();
   });
 

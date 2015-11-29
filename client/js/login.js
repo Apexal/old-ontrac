@@ -1,4 +1,4 @@
-function login() {
+function init_login() {
   var loggingIn = false;
 
   var login = function() {
@@ -6,7 +6,7 @@ function login() {
     var password = $("#password").val();
     if (!username || !password)
       return;
-    
+
     $("#login-errors .alert").remove();
     $("#login-button").text("Logging in...");
     $("body").css("cursor", "wait");
@@ -49,7 +49,7 @@ function login() {
     }
   };
 
-  $("#password").keypress(function(e) {
+  $("#password, #username").keypress(function(e) {
     if (e.which == 13) {
       login();
     }

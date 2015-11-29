@@ -120,7 +120,7 @@ function updateProfileSchedule(){
 }
 
 
-function clientSchedule(){
+function init_clientSchedule(){
   $.get('/users/api/'+username, function(data){
     console.log(data);
     userInfo = data;

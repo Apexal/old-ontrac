@@ -18,28 +18,29 @@ $(function() {
     console.log("[ Loading OnTrac JS... ]");
 
     updateTitle();
-    effects();
+    init_effects();
     init_reminders();
-    login();
-    days();
-    header();
 
+    // If it's a school day and it's before 3 PM, remove the next schedule
     if($("#today-schedule").length > 0 && moment().isBefore(moment().hour(15))){
       $("#next-schedule").remove();
     }
 
+    // Self-explanatory
     if(loggedIn){
       console.log("Logged in as "+currentUser.username);
       if(page == "home" || page==""){
         homepage();
       }
-      sockets();
-      clientSchedule();
+      init_sockets();
+      init_clientSchedule();
       console.log(page);
       if(page == "work"){
         workindex();
         homework();
       }
+    }else{
+      init_login();
     }
     updateTooltips();
     console.log("[ Done. ]");
