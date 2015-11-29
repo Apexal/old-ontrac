@@ -72,7 +72,7 @@ function init_sockets() {
   socket.on('refresh', function(data) {
     location.reload();
   });
-  socket.on('disconnect', function () {
+  socket.on('connect_error', function (err) {
     location.reload();
   });
 
