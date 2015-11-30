@@ -23,3 +23,20 @@ block content
             label(for="newsteamlink") Steam Profile Link
             input.form-control#newsteamlink(type="url", name="newsteamlink", value=currentUser.steamlink)
           button.btn.btn-primary Save
+        
+        //
+          hr
+          .form-group
+            label(for="courseForLinks") Edit Custom Course Links
+            select.form-control#courseForLinks(name="courseForLinks")
+              option Select Course
+              for c in currentUser.courses
+                option(value=c._id)= c.title
+
+            .input-group
+              input.form-control#courseLinkName(type="text", name="courseLinkName", placeholder="Page Name")
+              input.form-control#courseLinkHref(type="url", name="courseLinkHref", placeholder="Page URL")
+              span.input-group-addon.fa.fa-plus#addCourseLink
+            ul.list-group#custom-links
+            
+          

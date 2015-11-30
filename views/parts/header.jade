@@ -40,6 +40,13 @@ header
                 each c in currentUser.courses
                   li
                     a(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title
+                  if currentUser.customLinks[c._id]
+                    each l in currentUser.customLinks[c._id]
+                      li.text-muted
+                        a(href=l.link, target="_blank")= l.name  
+                li(role="separator").divider
+                li
+                  a(href="#") Edit Custom Links 
           li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Regis
                 span.caret
@@ -108,6 +115,8 @@ header
               ul.dropdown-menu(role='menu')
                 li
                   a(href="/users/"+currentUser.username, title="View your public profile as other users see it.") View Profile
+                li
+                  a(href="/users/profile") Edit Your Profile
                 if (currentUser.rank > 4 || currentUser.username == "fmatranga18")
                   if helpers.isPage(page, "admin") == false
                     li

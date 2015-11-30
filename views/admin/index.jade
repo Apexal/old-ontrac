@@ -48,7 +48,7 @@ block content
               th Type
               th Message
             for f in feedback
-              tr
+              tr(title=moment(f.date_sent).format("dddd, MMMM Do YYYY, h:mm a"))
                 td= f.feedbackType
                 td= f.text
 

@@ -1,6 +1,6 @@
 $(function() {
   PNotify.desktop.permission();
-  page = window.location.href.split("/")[3];
+  page = window.location.pathname;
   loggedIn = false;
   originalTitle = $("title").text();
   currentUser = undefined;
@@ -29,15 +29,19 @@ $(function() {
     // Self-explanatory
     if(loggedIn){
       console.log("Logged in as "+currentUser.username);
-      if(page == "home" || page==""){
+      if(page == "/" || page == "/home"){
         homepage();
       }
       init_sockets();
       init_clientSchedule();
       console.log(page);
-      if(page == "work"){
+      if(page.indexOf("work") > -1){
         workindex();
         homework();
+      }
+
+      if(page=="/users/profile"){
+        editProfile();
       }
     }else{
       init_login();

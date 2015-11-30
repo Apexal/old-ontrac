@@ -24,12 +24,15 @@ module.exports = {
     advisement: String,
     sclasses: Array,
     courses: [{ type: Schema.Types.ObjectId, ref: 'Course'}],
+    customLinks: Object,
     rank: {type: Number, default: 0},
     points: {type: Number, default: 0},
     login_count: {type: Number, default: 0},
     last_login_time: {type: Date, default: Date.now},
     last_point_login_time: {type: Date, default: Date.now},
-    preferences: {default: {filterProfanity: true}, type: Object},
+    preferences: {default: {
+      filterProfanity: true
+    }, type: Object},
     registered_date: {type: Date, default: Date.now},
     registered: { type: Boolean, default: false }
   },

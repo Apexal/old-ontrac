@@ -79,6 +79,70 @@ router.post("/profile", function(req, res) {
   }
 });
 
+
+// ADD NEW COURSE LINK
+router.post("/courselinks", function(req, res) {
+  console.log(req.body);
+  var id = req.body.addCourseLinkID;
+  var name = req.body.addCourseLinkName;
+  var link = req.body.addCourseLinkHref;
+  if(!id || !name || !link){
+    res.json({error: "Please fill in all fields!"}); return;
+  }
+  req.Student.findOne({username: req.currentUser.username})
+    .exec(function(err, student) {
+      if(err){res.json({error: "An error occured! Please try again later."}); console.log(err); return;}
+      if(student){
+        console.log("Found student "+student.username);
+        console.log(student.course_links);
+
+        if(!student.customLinks)
+          student.customLinks = {};
+
+        if(!student.customLinks[id])
+          student.customLinks[id] = [];
+
+        student.customLinks[id].push({name: name, link: link});
+        console.log(student.customLinks);
+        req.currentUser.customLinks = student.customLinks;
+        student.save(function(err) {
+          if(err){res.json({error: "An error occured! Please try again later."}); console.log(err); return;}
+          res.json({newList: student.customLinks});
+          console.log("saved");
+        });
+      }
+    });
+});
+
+
+// REMOVE COURSE LINK
+router.delete("/courselinks", function(req, res) {
+  var id = req.body.removeCourseLinkID;
+  var link = req.body.removeCourseLinkHref;
+  req.Student.findOne({username: req.currentUser.username}, function(err, student) {
+    if(err){res.json({error: "An error occured! Please try again later."}); console.log(err); return;}
+    if(student){
+      var links = student.customLinks[id];
+      if(links){
+        for(var i=0;i<links.length;i++){
+          if(links[i].link == link){
+            console.log("FOUND");
+            student.customLinks[id].splice(i, 1);
+          }
+        }
+        req.currentUser.customLinks = student.customLinks;
+        student.save(function(err) {
+          if(err){res.json({error: "An error occured! Please try again later."}); console.log(err); return;}
+          res.json({newList: student.customLinks});
+        });
+      }
+    }
+  });
+});
+
+
+
+
 router.get("/:username", function(req, res){
   req.toJade.title = "Not a User";
   var username = req.params.username;

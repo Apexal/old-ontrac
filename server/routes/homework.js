@@ -3,6 +3,7 @@ var router = express.Router();
 var moment = require('moment');
 var schedules = require('../modules/schedule');
 
+// GET ALL THE ITEMS ON A DATE
 router.get("/:date", function(req, res) {
   var dateString = req.params.date;
   var day = false;
@@ -29,6 +30,8 @@ router.get("/:date", function(req, res) {
     });
 });
 
+
+// TOGGLE THE COMPLETION ON A HOMEWORK ITEM
 router.post("/:date", function(req, res){
   var dateString = req.params.date;
   var day = false;
@@ -58,6 +61,8 @@ router.post("/:date", function(req, res){
   });
 });
 
+
+// ADD HOMEWORK ITEM
 router.put("/:date", function(req, res){
   var dateString = req.params.date;
   var day = false;
@@ -85,7 +90,6 @@ router.put("/:date", function(req, res){
     completed: false
   });
   //console.log(newHWItem);
-
   newHWItem.save(function(err){
     if(err){res.json({error: "Failed to save new item. Please try again later."}); return;}
     new req.Log({who: req.currentUser.username, what: "Added a HWItem to "+dateString}).save();
@@ -96,6 +100,8 @@ router.put("/:date", function(req, res){
   });
 });
 
+
+// REMOVE HOMEWORK ITEM
 router.delete("/:date", function(req, res){
   var dateString = req.params.date;
   var day = false;

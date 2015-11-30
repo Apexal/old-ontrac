@@ -26,9 +26,7 @@ module.exports = function(http) {
   require("./mumble")(function(error, connection) {
     if( error ) { throw new Error( error ); }
 
-    if(process.env.NODE_ENV != 'production')
-      connection.authenticate( 'ontrac-bot-testing', 'regis' );
-    else
+    if(process.env.NODE_ENV == 'production')
       connection.authenticate( 'ontrac-bot', 'regis' );
 
     connection.on( 'initialized', function () {
@@ -102,7 +100,7 @@ module.exports = function(http) {
           if(!advchatmessages[client.advisement]){
             advchatmessages[client.advisement] = [];
           }
-          console.log(client.username + " entered the privat chatroom for "+client.advisement);
+          //console.log(client.username + " entered the private chatroom for "+client.advisement);
           socket.emit('advchat-pastmessages', {messages: advchatmessages[client.advisement]})
         });
 
@@ -127,9 +125,6 @@ module.exports = function(http) {
           mumblers.splice(index, 1);
           socket.emit('mumblers', mumblers);
         }
-
-
-        console.log(connection);
 
         socket.on('disconnect', function(socket) {
           console.log("DISCONNECT from "+user.username);

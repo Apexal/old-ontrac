@@ -121,21 +121,18 @@ function updateProfileSchedule(){
 
 
 function init_clientSchedule(){
-  $.get('/users/api/'+username, function(data){
-    console.log(data);
-    userInfo = data;
-    todayInfo = userInfo.todaysClassesInfo;
-    console.log(todayInfo);
+  userInfo = currentUser;
+  todayInfo = userInfo.todaysClassesInfo;
+  console.log(todayInfo);
 
-    if(todayInfo !== undefined){
-      schedule = getCurrentClassInfo(todayInfo.periods);
-      updateDayInfo();
-      setInterval(updateDayInfo, 60000);
-    }else{
-      $("#classInfo").remove();
-      console.log("Not a school day, not updating class info.");
-    }
-  });
+  if(todayInfo !== undefined){
+    schedule = getCurrentClassInfo(todayInfo.periods);
+    updateDayInfo();
+    setInterval(updateDayInfo, 60000);
+  }else{
+    $("#classInfo").remove();
+    console.log("Not a school day, not updating class info.");
+  }
 }
 
 var sendabout = "";

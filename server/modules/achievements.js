@@ -114,5 +114,14 @@ module.exports = [
       check: function(user){
         return true;
       }
+    },
+    {
+      id: 12,
+      name: "Start tracking Homework",
+      reward: 300,
+      check: function(user){
+        // THIS WILL BE SET IN THE HOMEWORK ROUTE
+        return false;
+      }
     }
 ]
