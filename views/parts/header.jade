@@ -40,10 +40,12 @@ header
                 each c in currentUser.courses
                   li
                     a(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title
-                  if currentUser.customLinks[c._id]
-                    each l in currentUser.customLinks[c._id]
-                      li.text-muted
-                        a(href=l.link, target="_blank")= l.name  
+                  //
+                    if currentUser.customLinks
+                      if currentUser.customLinks[c._id]
+                        each l in currentUser.customLinks[c._id]
+                          li.text-muted
+                            a(href=l.link, target="_blank")= l.name  
                 li(role="separator").divider
                 li
                   a(href="#") Edit Custom Links 
