@@ -57,6 +57,7 @@ function updateSidebarClassInfo(){
     var cInfo = schedule;
     if(cInfo.nowClass !== false){
       $("#sidebar-class-info").show();
+      $("#period-countdown").show();
       if(cInfo.nowClass.className == "Unstructured Time") {
         // FREE PERIOD
         $("#sidebar-now-class").text("Free Period");
@@ -69,6 +70,19 @@ function updateSidebarClassInfo(){
         $("#nowclass-room").text(cInfo.nowClass.room);
       }
 
+      // COUNTDOWN TIMER
+      var now = moment();
+      var end = moment(cInfo.nowClass.endTime, "hh:mm A");
+      var total = now.diff(end, 'minutes'); // 60
+
+      var minutes = Math.abs(total % 60);
+      var hours = Math.abs(Math.floor(total / 60));
+
+      minutes = (minutes < 10 ? '0' : '') + minutes;
+      hours = (hours < 10 ? '0' : '') + hours;
+
+      $("#period-countdown").text(hours + ":" + minutes);
+
       if(cInfo.nextClass !== false && cInfo.nextClass.className !== "Afternoon Advisement"){
         $("#sd-nextc").show();
         $("#sidebar-next-class").text(cInfo.nextClass.className.split(")")[0]+")");
@@ -79,6 +93,7 @@ function updateSidebarClassInfo(){
       }
     }else{
       $("#sidebar-class-info").hide();
+      $("#period-countdown").hide();
     }
   }else{
     if(sessionStorage['user-status'].toLowerCase() == "in class"){
