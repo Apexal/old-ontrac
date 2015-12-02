@@ -51,9 +51,12 @@
   padding: 30px;
 }
 
-i.fa.fa-close.remove-assignment {
-  display: none;
+@media only screen and (max-width : 480px) {
+  i.fa.fa-close.remove-assignment.pc{
+    display: none;
+  }
 }
+
 
 #day-schedule td {
   border-left: 1px solid #f5f5f5;

@@ -213,9 +213,18 @@ function homework(){
         if(i.link !== "")
           link = "<a href='"+i.link+"' target='_blank' class='fa fa-link'></a>";
 
+        var visibility = "hidden-xs";
+        if(showForm == 1)
+          visibility = "visible-xs";
+
         html+= "<li data-id='"+i._id+"'><span class='assignment "+(i.completed == true ? " completed" : "");
-        html += "'>"+i.desc+" </span>"+link+"<i class='fa fa-close remove-assignment hidden-xs'></i>";
-        html += "<i class='fa fa-close remove-assignment visible-xs'><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></i><span class='hidden-xs'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li>";
+        html += "'>"+i.desc+" </span>"+link;
+
+        // PC REMOVE ASSIGNMENT
+        html += "<i class='fa fa-close remove-assignment hidden-xs hidden-sm hidden-md hidden-lg pc'></i>";
+
+        // MOBILE REMOVE ASSIGNMENT
+        html += "<i class='fa fa-close remove-assignment "+visibility+" hidden-sm hidden-md hidden-lg mobile'></i></li>";
       });
       html += "</ol></div>";
 
@@ -224,7 +233,7 @@ function homework(){
 
     if(hwTitles.length == 0){
       hwHTML = "<div class='col-xs-12 text-center'>";
-      hwHTML   +=   "<span class='larger'>No homework!</span>";
+      hwHTML   +=   "<span class='larger text-muted'>No homework!</span>";
       hwHTML+= "</div>";
     }
 
@@ -249,13 +258,13 @@ function homework(){
     var items = $(".worklist li");
     items.each(function() {
       var assignment = $(this).find('.assignment');
-      var removeIcon = $(this).find('i.remove-assignment.hidden-xs');
+      var removeIcon = $(this).find('i.remove-assignment.pc');
       $(this).hover(function() {
         //console.log("ON");
-        removeIcon.show();
+        removeIcon.removeClass('hidden-sm hidden-md hidden-lg');
       }, function function_name(argument) {
         //console.log("OFF");
-        removeIcon.hide();
+        removeIcon.addClass('hidden-sm hidden-md hidden-lg');
       });
     });
   }
@@ -263,7 +272,6 @@ function homework(){
 
 
   $("#hw-popup").click(function() {
-
   	return false;
   });
 }
