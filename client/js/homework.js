@@ -7,15 +7,18 @@ function homework(){
 
   if(showForm == 0){
     $("#homework-form").addClass("hidden-xs");
+    $(".worklist .remove-assignment").addClass("hidden-xs");
   }
 
   $("#toggle-hw-form").click(function() {
     if(showForm == 0){
       showForm = 1;
       $("#homework-form").removeClass("hidden-xs");
+      $(".worklist .remove-assignment").removeClass("hidden-xs");
     }else{
       showForm = 0;
       $("#homework-form").addClass("hidden-xs");
+      $(".worklist .remove-assignment").addClass("hidden-xs");
     }
     sessionStorage['showHWForm'] = showForm;
   });
