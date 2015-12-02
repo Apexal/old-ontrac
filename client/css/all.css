@@ -107,7 +107,7 @@ a.undecorated {
   word-wrap: break-word;
 }
 
-#next-schedule .list-group{
+#next-schedule .list-group, #todays-schedule .list-group{
   color: #222;
 }
 

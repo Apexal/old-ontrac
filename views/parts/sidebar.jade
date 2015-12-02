@@ -42,18 +42,20 @@ aside#sidebar
           a(href="/work") 0 homework items
         li 0 tests/quizzes
       
-  if todaysInfo
+  if todaysInfo && moment().isBefore(moment().hour(15))
     hr
-    section#today-schedule
-      if todaysInfo 
+    section#todays-schedule
+      span(title=todaysInfo.scheduleDay)
         b.larger Today's Schedule
-        i.right #{todaysInfo.scheduleDay}-Day
-      else
-        b Weekend Agenda
-      p.
-        There will be some #[i great] stuff here one day I swear.
-  
-  if nextSD
+      ul.list-group
+        for s in todaysInfo.periods
+          if s.className.indexOf(" Advisement") == -1
+            li(data-mID=s.mID, title=s.startTime+" - "+s.endTime+" in "+s.room, data-toggle="tooltip", class=(s.className=="Lunch" ? "disabled" : "")).list-group-item
+              if s.mID
+                a.undecorated(style="text-decoration: none;", target="_blank", href="http://moodle.regis.org/course/view.php?id="+s.mID)= s.className.split("(")[0]
+              else
+                | #{s.className.split("(")[0]}
+  if nextSD && moment().isAfter(moment().hour(15))
     hr
     section#next-schedule
       span(title=nextCD)

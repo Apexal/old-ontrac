@@ -2,12 +2,12 @@ div#tabs.visible-xs
   ul.nav.nav-tabs(role='tablist')
     if todaysInfo
       li.active(role='presentation', data-toggle='tooltip', title='View the ordered list of today\'s classes.')
-        a(href='#todays-schedule', aria-controls='profile', role='tab', data-toggle='tab')
+        a(href='#tab-todays-schedule', aria-controls='profile', role='tab', data-toggle='tab')
           span.hidden-xs Today's Classes &nbsp;
           span.fa.fa-calendar
     if nextSD
       li(role='presentation', data-toggle='tooltip', title='View the ordered list of your next school day\'s classes.')
-        a(href='#next-schedule', aria-controls='profile', role='tab', data-toggle='tab')
+        a(href='#tab-next-schedule', aria-controls='profile', role='tab', data-toggle='tab')
           span.hidden-xs Next Day's Classes &nbsp;
           span.fa.fa-calendar-minus-o
     li(role='presentation', data-toggle='tooltip', title='Get direct links to the Moodle page of each of your courses.')
@@ -16,7 +16,7 @@ div#tabs.visible-xs
         span.fa.fa-link
   .tab-content
     if todaysInfo
-      #todays-schedule.tab-pane.active(role='tabpanel')
+      #tab-todays-schedule.tab-pane.active(role='tabpanel')
         table.table#schedule-table
           thead
             tr
@@ -24,32 +24,8 @@ div#tabs.visible-xs
               th What
               th Where
           tbody
-            if todaysInfo
-              for s in todaysInfo.periods
-                if s.className.indexOf("Advisement") == -1
-                  tr(class=(s.room=="Cafeteria" ? "active" : ""))
-                    td= moment(s.startTime, "hh:mm A").format("h:mm A")
-                    td
-                      if s.mID
-                        a.undecorated(style="text-decoration: none;", target="_blank", href="http://moodle.regis.org/course/view.php?id="+s.mID)= s.className.split("(")[0]
-                      else
-                        | #{s.className.split("(")[0]}
-                    td= s.room
-            else
-              tr
-                td No classes today!
-    #next-schedule.tab-pane(role='tabpanel')
-      b.center-xs Next class day is #{moment(nextCD, "MM/DD/YY").format("dddd [the] Do")}, only #{moment(nextCD, "MM/DD/YY").fromNow()}. It is a #{nextSD}-Day.
-      table.table.table-condensed#next-schedule-table
-        thead
-          tr
-            th When
-            th What
-            th Where
-        tbody
-          if nextSD
-            for s in currentUser.scheduleObject.dayClasses[nextSD]
-              if s.className.indexOf("Advisement") == -1
+            for s in todaysInfo.periods
+              if s.className.indexOf(" Advisement") == -1
                 tr(class=(s.room=="Cafeteria" ? "active" : ""))
                   td= moment(s.startTime, "hh:mm A").format("h:mm A")
                   td
@@ -58,31 +34,19 @@ div#tabs.visible-xs
                     else
                       | #{s.className.split("(")[0]}
                   td= s.room
-          else
-            tr
-              td No classes today!
-    #moodle-links.tab-pane(role='tabpanel').text-center
-      each c in currentUser.courses
-        a.btn.btn-default.hidden-xs(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title
-        a.visible-xs(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title
-        br.visible-xs
-
-
-.hidden-xs
-  if currentUser.scheduleObject.scheduleDays[moment().format("MM/DD/YY")]
-    if(moment().isBefore(moment().hour(16)))
-      #todays-schedule.col-xs-12.col-md-6
-        table.table
-          caption.center Today's Schedule
+    if nextSD
+      #tab-next-schedule.tab-pane(role='tabpanel')
+        b.center-xs Next class day is #{moment(nextCD, "MM/DD/YY").format("dddd [the] Do")}, only #{moment(nextCD, "MM/DD/YY").fromNow()}. It is a #{nextSD}-Day.
+        table.table.table-condensed#next-schedule-table
           thead
             tr
               th When
               th What
               th Where
           tbody
-            if todaysInfo
-              for s in todaysInfo.periods
-                if s.className.indexOf("Advisement") == -1
+            if nextSD
+              for s in currentUser.scheduleObject.dayClasses[nextSD]
+                if s.className.indexOf(" Advisement") == -1
                   tr(class=(s.room=="Cafeteria" ? "active" : ""))
                     td= moment(s.startTime, "hh:mm A").format("h:mm A")
                     td
@@ -94,28 +58,8 @@ div#tabs.visible-xs
             else
               tr
                 td No classes today!
-
-  #next-schedule.col-xs-12.col-md-6
-    table.table
-      caption.center Next Class Day's Schedule (#{moment(nextCD, "MM/DD/YY").format("dddd [the] Do")}) #[b= nextSD+"-Day"]
-      thead
-        tr
-          th When
-          th What
-          th Where
-      tbody
-        if nextSD
-          for s in currentUser.scheduleObject.dayClasses[nextSD]
-            if s.className.indexOf("Advisement") == -1
-              tr(class=(s.room=="Cafeteria" ? "active" : ""))
-                td= moment(s.startTime, "hh:mm A").format("h:mm A")
-                td
-                  if s.mID
-                    a.undecorated(style="text-decoration: none;", target="_blank", href="http://moodle.regis.org/course/view.php?id="+s.mID)= s.className.split("(")[0]
-                  else
-                    | #{s.className.split("(")[0]}
-                td= s.room
-        else
-          tr
-            td No classes today!
-    
+    #moodle-links.tab-pane(role='tabpanel').text-center
+      each c in currentUser.courses
+        a.btn.btn-default.hidden-xs(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title
+        a.visible-xs(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title
+        br.visible-xs
