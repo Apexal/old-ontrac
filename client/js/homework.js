@@ -35,8 +35,10 @@ function homework(){
     $("#newHWItemCourseID option").each(function() {
       var item = $(this).text().trim();
       var that = $(this);
-      if(item.indexOf(text) > -1 || item == text){
+      if(item.indexOf(text) > -1 || item == text || text.indexOf(item) > -1){
         that.attr("selected", true);
+      }else{
+        that.attr("selected", false);
       }
     });
   });
