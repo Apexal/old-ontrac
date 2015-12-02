@@ -13,9 +13,6 @@ block content
       .col-xs-12
         if todaysInfo
           span.visible-xs Today is a #[b= todaysInfo.scheduleDay+"-Day"].
-        if todaysInfo
-          #classInfo
-            p.larger Loading class info...          
       .clearfix
     //
       .row.center.visible-sm.visible-md.visible-lg
@@ -23,6 +20,9 @@ block content
           div.full-width(style="background-color: #222")
             each c in currentUser.courses
               a.btn.btn-default(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title.split("(")[0]
+    if todaysInfo
+      #classInfo
+        p.larger Loading class info...
     hr
     .row
       include work-boxes
