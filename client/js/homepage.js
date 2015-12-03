@@ -1,8 +1,8 @@
 function homepage() {
   var date = moment().format("YYYY-MM-DD");
-  //alert("HOMEPAGE");
+
   // DUE TODAY
-  if(/*moment().isBefore(moment().hour(19))*/true){
+  if(/*moment().isBefore(moment(date).hour(19))*/true){
     $.get("/homework/"+date, function(data){
       var todaysDate = moment().format("YYYY-MM-DD");
       var link = "<b><a class='undecorated' href='/work/"+todaysDate+"'>";
@@ -16,7 +16,11 @@ function homepage() {
           return;
         }
         if(data.length == 0){
-          $("#due-today").remove();
+          $("#due-today .progress").remove();
+          $("#due-today .panel").removeClass("panel-primary").addClass("panel-danger");
+          $("#due-today .box-picture").remove();
+          var message = "You have not recorded any homework for "+link+" yet!";
+          $("#due-today .content").html(message).parent().removeClass("col-md-9");
         }else{
           var courses = [];
           var total = data.length;
@@ -34,9 +38,9 @@ function homepage() {
           updateTooltips();
 
           if(doneC == 0){
-            $("#due-today .content").html("You have not started <b style='color: red'>any</b> of your <b>"+total+"</b> homework items due "+link+". Get working!");
+            $("#due-today .content").html("You have not started <b style='color: red'>any</b> of your <b>"+total+"</b> homework items due "+link+". <span class='text-muted'>Get working!</span>");
           }else if(doneC == total){
-            $("#due-today .content").html("You have finished all of your <b>"+total+"</b> homework items due "+link+". Nice!");
+            $("#due-today .content").html("You have finished all of your <b>"+total+"</b> homework items due "+link+". <span class='text-muted'>Nice!</span>");
             $("#due-today .progress").remove();
             $("#due-today .panel-heading").html("Today's Work <i class='fa fa-check right'></i>");
           }else{
@@ -66,8 +70,16 @@ function homepage() {
         return;
       }
 
+      var link = "<b><a class='undecorated' href='/work/"+closestDate+"'>";
+      link += moment(closestDate, "YYYY-MM-DD").format("dddd [the] Do");
+      link += "</a></b>";
+
       if(data.length == 0){
-        $("#due-closest").remove();
+        $("#due-closest .progress").remove();
+        $("#due-closest .panel").removeClass("panel-primary").addClass("panel-danger");
+        $("#due-closest .box-picture").remove();
+        var message = "You have not recorded any homework for "+link+" yet!";
+        $("#due-closest .content").html(message).parent().removeClass("col-md-9");
         return;
       }
       var courses = [];
@@ -85,14 +97,12 @@ function homepage() {
       $("#due-closest .progress-bar").animate({ width: percent+"%" }, 1000);
       updateTooltips();
 
-      var link = "<b><a class='undecorated' href='/work/"+closestDate+"'>";
-      link += moment(closestDate, "YYYY-MM-DD").format("dddd [the] Do");
-      link += "</a></b>";
+
 
       if(doneC == 0){
-        $("#due-closest .content").html("You have not started <b style='color: red'>any</b> of your <b>"+total+"</b> homework items due on "+link+"! Get working!");
+        $("#due-closest .content").html("You have not started <b style='color: red'>any</b> of your <b>"+total+"</b> homework items due on "+link+"! <span class='text-muted'>Get working!</span>");
       }else if(doneC == total){
-        $("#due-closest .content").html("You have finished all of your <b>"+total+"</b> homework items due "+link+"! Nice!");
+        $("#due-closest .content").html("You have finished all of your <b>"+total+"</b> homework items due "+link+"! <span class='text-muted'>Nice!</span>");
         $("#due-closest .progress").remove();
         $("#due-closest .panel-heading").html("Upcoming Work <i class='fa fa-check right'></i>");
       }else{
