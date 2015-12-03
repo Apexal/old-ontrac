@@ -50,7 +50,7 @@ function workindex() {
           html+="<tr><td>"+cTitle+"</td><td>"+hw[cTitle].length+" items</td></tr>";
         });
         table.html(html);
-        
+
         $("#due-today p").html("<a data-toggle='tooltip' title='"+courses.join(', ')+"' class='undecorated' href='/work/"+date+"'><b>"+data.length+"</b> Homework items <b>"+Math.round((doneC/total)*1000)/10+"%</b> completed.</a>");
       }else{
         $("#due-today").remove();
@@ -109,6 +109,18 @@ function workindex() {
       }else{
         $("#closest").remove();
       }
+    }
+  });
+
+  $('#work-calendar').fullCalendar({
+    weekends: false,
+    header: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'month,basicWeek,basicDay'
+		},
+    dayClick: function(date, jsEvent, view) {
+      window.location.href="/work/"+date.format();
     }
   });
 }
