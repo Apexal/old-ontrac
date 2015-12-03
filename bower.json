@@ -18,7 +18,8 @@
     "jquery-ui": "latest",
     "moment": "latest",
     "d3": "latest",
-    "jQuery.ProfanityFilter": "latest"
+    "jQuery.ProfanityFilter": "latest",
+    "fullcalendar": "latest"
   },
   "ignore": [
     "**/.*",
