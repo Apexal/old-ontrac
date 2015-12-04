@@ -4,9 +4,16 @@ function workcalendar(){
 
   function addToList(date){
     console.log(date);
-    $.get('/homework/'+date+'/event', function(data) {
+    $.get('/work/'+date+'/events', function(data) {
       if(data){
-        events.push(data);
+        if(data.constructor === Array){
+          data.forEach(function(event) {
+            events.push(event);
+          });
+        }else{
+          events.push(data);
+        }
+
         c.fullCalendar('removeEvents');
         c.fullCalendar('addEventSource', events);
       }
@@ -33,18 +40,22 @@ function workcalendar(){
 			center: 'title',
 			right: 'month,basicWeek,basicDay'
 		},
-    dayClick: function(date, jsEvent, view) {
-      window.location.href="/work/"+date.format();
+    dayRender: function(date, cell) {
+      var dateString = date.format("MM/DD/YY");
+      var sd = currentUser.scheduleObject.scheduleDays[dateString];
+      if(sd !== undefined){
+        cell.append('<i class="left text-muted cl-sd">'+sd+'-Day</i>');
+      }
     },
     viewRender: updateEvents,
     eventRender: function(event, element) {
       element.html(event.title);
     },
     eventMouseover: function(event, jsEvent, view) {
-      $(this).html(event.description);
+      //$(this).html(event.description);
     },
     eventMouseout: function function_name(event, jsEvent, view) {
-      $(this).html(event.title);
+      //$(this).html(event.title);
     }
   });
 

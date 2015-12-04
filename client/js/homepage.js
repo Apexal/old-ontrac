@@ -116,4 +116,6 @@ function homepage() {
 
     }
   });
+
+  workcalendar();
 }

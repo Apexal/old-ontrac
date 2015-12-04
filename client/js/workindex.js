@@ -111,6 +111,4 @@ function workindex() {
       }
     }
   });
-
-  workcalendar();
 }

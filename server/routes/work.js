@@ -113,6 +113,76 @@ router.get('/:date', function(req, res){
   res.render('work/one', req.toJade);
 });
 
+
+
+// CALENDAR EVENTS
+
+
+router.get('/:date/events', function(req, res){
+  var dateString = req.params.date;
+
+  if(moment(dateString, 'YYYY-MM-DD', true).isValid() == false){
+    res.json(null);
+    return;
+  }
+
+  // Good date
+  var date = moment(dateString, 'YYYY-MM-DD', true);
+
+  if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
+    res.json(null);
+    return;
+  }
+
+  var events = [];
+
+  req.HWItem.find({username: req.currentUser.username, date: date.toDate()})
+    .populate('course', 'title')
+    .lean()
+    .exec(function(err, items){
+      if(err){res.json(null); console.log(err); return;}
+      if(items.length > 0){
+
+        var hwTitles = [];
+        var counts = {};
+        var doneC = 0;
+        var total = items.length;
+        items.forEach(function(item){
+          if(item.completed)
+            doneC++;
+          //console.log(item.course.title);
+          if(hwTitles.indexOf(item.course.title) == -1)
+            hwTitles.push(item.course.title);
+
+          if(!counts[item.course.title])
+            counts[item.course.title] = 0;
+          counts[item.course.title] += 1;
+        });
+
+        var desc = [];
+        hwTitles.forEach(function(title) {
+          desc.push("<b>"+counts[title]+"</b> items for <i>"+title+"</i>");
+        });
+
+        var percent = Math.round((doneC/total)*100);
+
+        var percentage = "";
+        if(percent !== 100)
+          percentage = " <small class='right'>"+percent+"%<span class='visible-xs'> Done</span></small>";
+
+        events.push({
+          title: "<span class='hidden-xs'>"+total+" Homework Items</span><span class='visible-xs'>"+total+" HW</span>"+percentage,
+          start: dateString,
+          color: '#9954bb',
+          url: '/work/'+dateString,
+          description: desc.join(', ')
+        });
+      }
+    }).then(function() {
+      res.json(events);
+    });
+});
+
 module.exports = function(io) {
   return {router: router, models: ['HWItem', 'Course']}
 };
