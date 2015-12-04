@@ -2,8 +2,8 @@ function init_login() {
   var loggingIn = false;
 
   var login = function() {
-    var username = $("#username").val();
-    var password = $("#password").val();
+    var username = $("#username").val().trim();
+    var password = $("#password").val().trim();
     if (!username || !password)
       return;
 

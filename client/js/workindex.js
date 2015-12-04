@@ -112,15 +112,5 @@ function workindex() {
     }
   });
 
-  $('#work-calendar').fullCalendar({
-    weekends: false,
-    header: {
-			left: 'prev,next today',
-			center: 'title',
-			right: 'month,basicWeek,basicDay'
-		},
-    dayClick: function(date, jsEvent, view) {
-      window.location.href="/work/"+date.format();
-    }
-  });
+  workcalendar();
 }

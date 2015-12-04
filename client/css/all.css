@@ -30,11 +30,13 @@ main.pushed {
   padding-right: 20px;
 }
 
-a.undecorated {
+a.undecorated{
   color: inherit;
   text-decoration: inherit;
   font-weight: inherit;
 }
+
+
 
 .table-pic {
   width: 50px;

@@ -3,7 +3,7 @@ function homework(){
     homework: []
   };
 
-  var showForm = (sessionStorage['showHWForm'] ? Number(sessionStorage['showHWForm']) : 1);
+  var showForm = (sessionStorage['showHWForm'] ? Number(sessionStorage['showHWForm']) : 0);
 
   if(showForm == 0){
     $("#homework-form").addClass("hidden-xs");
