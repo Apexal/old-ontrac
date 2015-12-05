@@ -62,3 +62,8 @@
   min-height: 100px;
   min-width: 150px;
 }
+
+.user-list-status {
+  width: 10px !important;
+  height: 10px !important;
+}

@@ -48,7 +48,7 @@ block content
               img(src=user.ipicture, onError="this.onerror=null;this.src='"+user.mpicture+"';")
               .btn-group.full-width
                 a.user-adv(href="/advisements/"+user.advisement)= user.advisement
-                button.btn.btn-default.full-width.user-badge(data-username=user.username, type="button")= user.fullName
+                button.btn.btn-default.full-width.user-badge(data-username=user.username, data-name=user.fullName, type="button")= user.fullName
     .row
       .col-xs-12
         .page-header

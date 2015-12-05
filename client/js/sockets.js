@@ -134,13 +134,21 @@ function init_sockets() {
       }
 
       // IF YOU'RE ON AN ONLINE USER'S PROFILE
-      if(page.indexOf("/users") > -1){
+      if(page.indexOf("/users/") > -1){
         var profileUsername = page.split("/")[2];
         if(user.username == profileUsername){
           $("#profile-status")
             .attr("src", "/images/statuses/status-"+user.status.toLowerCase().replace(" ", "")+".png")
             .attr("title", $("#profile-status").data("name")+" is "+user.status+"!");
         }
+      }else if(page == "/users"){
+        // IF YOU'RE ON THE USER LIST PAGE
+        var uBtn = $("button.btn.user-badge[data-username='"+user.username+"']");
+        var name = uBtn.data("name");
+        if(user.status !== "offline")
+          uBtn.html(name+" <img class='user-list-status' src='/images/statuses/status-"+user.status.toLowerCase().replace(" ", "")+".png'>");
+        else
+          uBtn.html(name);
       }
     });
 
