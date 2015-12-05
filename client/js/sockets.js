@@ -99,6 +99,7 @@ function init_sockets() {
   // Online User List
 
   function update_online_lists() {
+    $(".user-list-status").remove();
     list.html("");
     if(advlist.length)
       advlist.html("<span>Nobody!</span>");
