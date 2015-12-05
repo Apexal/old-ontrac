@@ -327,6 +327,21 @@ function init_sockets() {
         message = div.innerHTML;
         message = linkify(message);
 
+        var words = message.split(" ");
+        message = "";
+        words.forEach(function(word) {
+          var toAdd = word;
+          if(word.indexOf("@") == 0){
+            var badge = word.replace("@", "");
+            var div = document.createElement('div');
+            div.appendChild(document.createTextNode(badge));
+            badge = div.innerHTML;
+            toAdd = "<b class='user-badge' data-username='"+badge+"'>@"+badge+"</b>";
+          }
+          message += toAdd+" ";
+        });
+        message = message.trim();
+
         // If last message is from over 5 hours ago, add a separator
         try{if(moment(when).diff(messages[i - 1].when, 'hours') > 5){
             html+="<hr class='chat-divider'>";
