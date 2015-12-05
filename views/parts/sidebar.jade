@@ -32,15 +32,6 @@ aside#sidebar
         hr(style="margin-bottom: 10px;")
         b.larger #{todaysInfo.scheduleDay} - Day
         hr(style="margin-top: 10px;")
-  //
-    hr
-    section#agenda
-      b.larger Work Agenda
-      br
-      ul
-        li
-          a(href="/work") 0 homework items
-        li 0 tests/quizzes
       
   if todaysInfo && moment().isBefore(moment().hour(15))
     hr
@@ -55,7 +46,7 @@ aside#sidebar
                 a.undecorated(style="text-decoration: none;", target="_blank", href="http://moodle.regis.org/course/view.php?id="+s.mID)= s.className.split("(")[0]
               else
                 | #{s.className.split("(")[0]}
-  if nextSD && moment().isAfter(moment().hour(15))
+  if nextSD && (todaysInfo == undefined || moment().isAfter(moment().hour(15)))
     hr
     section#next-schedule
       span(title=nextCD)
