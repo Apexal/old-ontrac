@@ -255,9 +255,15 @@ span.badge {
   transition: font-size .2s;
 }
 
-.service:hover {
+li:not(.active) .service{
+  transition: font-size .2s;
+}
+
+li:not(.active) .service:hover {
   font-size: 1.6em;
 }
+
+li.active .service { font-size: 1.6em; }
 
 #status-circle {
   vertical-align: middle;

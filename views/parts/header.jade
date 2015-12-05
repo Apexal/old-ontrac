@@ -65,19 +65,8 @@ header
                 a(href="https://myfiles.regis.org/", target="_blank") MyFiles
           
           if loggedIn
-          
-            li.dropdown.hidden-xs
-              a.service.dropdown-toggle(href="#", title="Manage your work.", data-toggle='dropdown', role='button', aria-expanded='false').fa.fa-book
-              ul.dropdown-menu(role='menu')
-                li.dropdown-header Your Work
-                li
-                  a(href="/work") Overview
-                li(role="separator").divider
-                if currentUser.scheduleObject.scheduleDays[moment().format("MM/DD/YY")]
-                  li
-                    a(href="/work/today") Today's Work Due
-                li
-                  a(href="/work/closest") Current Work Due
+            li(class=(helpers.isPage(page, "work") ? "active" : ""))
+              a(href=(page == "/work" ? "#" : "/work"), title="Manage your work.").service.fa.fa-book
             
             if previousDay !== false
               li.hidden-xs
@@ -86,22 +75,12 @@ header
               li.hidden-xs
                 a.fa.fa-arrow-right(href='/work/'+nextDay, style="padding-left: 4px; padding-right: 4px;margin-right: 10px;", title="View the next work day!")  
             
-            li.dropdown.hidden-xs
-              a.service.dropdown-toggle(href="#", title="Manage your studying.", data-toggle='dropdown', role='button', aria-expanded='false').fa.fa-calendar-check-o
-              ul.dropdown-menu(role='menu')
-                li.dropdown-header Study Management
-                li
-                  a(href="/study") Overview
-                li(role="separator").divider
-                li
-                  a(href="/study/today") Today's Items
+            li(class=(helpers.isPage(page, "study") ? "active" : "study"))
+              a.service(href=(page == "/study" ? "#" : "/study"), title="Manage your studying.").fa.fa-calendar-check-o
                   
-            li.dropdown.hidden-xs
-              a.service.dropdown-toggle(href="#", title="Manage your grades.", data-toggle='dropdown', role='button', aria-expanded='false').fa.fa-line-chart
-              ul.dropdown-menu(role='menu')
-                li.dropdown-header Your Grades
-                li
-                  a(href="/grades") Overview
+            li(class=(helpers.isPage(page, "grades") ? "active" : ""))
+              a.service(href=(page == "/grades" ? "#" : "/grades"), title="Manage your grades.").fa.fa-line-chart
+                
 
         ul.nav.navbar-nav.navbar-right
           if loggedIn
