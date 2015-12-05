@@ -47,6 +47,11 @@
   padding-right: 5px;
 }
 
+#profile-status {
+  margin-left: 8px;
+  width: .34em;
+  margin-bottom: 7px;
+}
 
 
 /* User Profile Page */

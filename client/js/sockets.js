@@ -132,6 +132,16 @@ function init_sockets() {
         if(user.status == "offline" && user.username == username)
           advnames.push("<span class='user-badge text-muted' data-username='"+username+"'><b>You</b> </span>");
       }
+
+      // IF YOU'RE ON AN ONLINE USER'S PROFILE
+      if(page.indexOf("/users") > -1){
+        var profileUsername = page.split("/")[2];
+        if(user.username == profileUsername){
+          $("#profile-status")
+            .attr("src", "/images/statuses/status-"+user.status.toLowerCase().replace(" ", "")+".png")
+            .attr("title", $("#profile-status").data("name")+" is "+user.status+"!");
+        }
+      }
     });
 
     $("#users-online").text(count+" user(s)");
@@ -142,6 +152,7 @@ function init_sockets() {
     if(advlist.length && advnames.length > 0)
       advlist.html(advnames.join(', '));
     userbadges();
+
   }
 
 

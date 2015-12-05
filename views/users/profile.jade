@@ -12,6 +12,8 @@ block content
       .page-header
         h1.center-xs #[b= user.gradeName] #[br.visible-xs] #{user.fullName} of 
           | #[a.undecorated(style="font-weight: bold", href="/advisements/"+user.advisement)= user.advisement]
+          if user.registered
+            img#profile-status(src="/images/statuses/status-offline.png", data-name=user.firstName, title=user.firstName+" is offline!")
           small.right.hidden-xs.hidden-sm #{user.points} points
       .user-profile
         .row
