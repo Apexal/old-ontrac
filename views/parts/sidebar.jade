@@ -82,6 +82,7 @@ aside#sidebar
     b Mumblers
     #mumble-list
   
-  section#period-countdown.text-center(title="The time until the end of the period.")
-    h1 00:00
+  if todaysInfo
+    section#period-countdown.text-center(title="The time until the end of the period.")
+      h1 00:00
     
