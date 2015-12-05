@@ -87,13 +87,15 @@ function init_sockets() {
   });
 
   socket.on('new-login', function(data) {
-    //alert("WOW");
-    sendNotification('info', 'User Login', data.username+' has just logged in!');
+    if(data.username !== currentUser.username)
+      sendNotification('info', 'User Login', data.username+' has just logged in!');
   });
 
   socket.on('new-logout', function(data) {
-    //alert("WOW");
-    sendNotification('error', 'User Login', data.username+' has just logged out!');
+    if(data.username !== currentUser.username)
+      sendNotification('error', 'User Login', data.username+' has just logged out!');
+    else
+      location.reload();
   });
 
   // Online User List
