@@ -308,6 +308,7 @@ function init_sockets() {
   });
 
   socket.on('pastMessages', function(data) {
+    console.log("GOT MESSAGES");
     messages = data.messages;
     //messages.push({username: "fmatranga18", message: "SEPARATED", when: moment().subtract(20, 'hours')});
     showMessages();
@@ -317,9 +318,14 @@ function init_sockets() {
   var showMessages = function() {
     var html = '';
     for(var i=0; i<messages.length; i++) {
+      var message = messages[i].message;
+      var when = moment(messages[i].when);
+
+      if(messages[i].username == "server"){
+        var part = "<i class='text-muted'>"+message+"</i><br>";
+        html += part;
+      }else{
         var user = messages[i].username;
-        var message = messages[i].message;
-        var when = moment(messages[i].when);
 
         // Totally sanitizes the message
         var div = document.createElement('div');
@@ -350,6 +356,7 @@ function init_sockets() {
         var part = "<b class='user-badge' data-username='"+user+"'>"+user+": </b>";
         part += "<span title='"+when.fromNow()+" | "+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'>"+message+"</span><br>";
         html += part;
+      }
     }
     $("#chat-messages").html(html);
     if(currentUser.preferences.filterProfanity){

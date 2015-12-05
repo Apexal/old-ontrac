@@ -329,6 +329,7 @@ module.exports = function(io) {
           req.session.quietlogin = false; // The actual user logged in, not an admin
 
           io.sockets.emit('new-login', {username: username});
+          io.sockets.emit('message', {username: "server", message: username+" has logged in!", when: Date.now()});
           res.json({success: true});
           console.log("COMPLETED LOGIN");
         }
@@ -343,6 +344,7 @@ module.exports = function(io) {
       if(req.session.quietlogin == false){
         new req.Log({who: req.currentUser.username, what: "Logout."}).save();
         io.sockets.emit('new-logout', {username: req.currentUser.username});
+        io.sockets.emit('message', {username: "server", message: req.currentUser.username+" has logged out!", when: Date.now()});
       }
 
       delete req.session.currentUser;
