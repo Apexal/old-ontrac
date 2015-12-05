@@ -6,10 +6,6 @@ block content
 
     .page-header
       h1(title="The cool guys.") Registered Users #[small [Alpha Testers]]
-        if tableForm == false
-          a.btn.btn-default.right(href="/users?table=1") Table Form
-        else
-          a.btn.btn-default.right(href="/users") Regular Form
         
     .row
       .col-xs-12
@@ -22,37 +18,18 @@ block content
               input.form-control(type="text", maxlength="50", name="name")
             button.btn.btn-primary Search
     
-    if tableForm
-      .row
-        .col-xs-12
-          table.table.table-hover.table-striped.user-table
-            thead
-              tr
-                th Picture
-                th Advisement
-                th Name
-                th Rank
-            for user in registered
-              tr
-                td(style="vertical-align: middle;")
-                  img.table-pic(src=user.ipicture, onError="this.onerror=null;this.src='"+user.mpicture+"';")
-                td.larger(style="vertical-align: middle;")
-                  a(href="/advisements/"+user.advisement)= user.advisement
-                td.larger.user-badge(style="vertical-align: middle;", data-username=user.username)= user.fullName
-                td.larger(style="vertical-align: middle;")= user.rankName
-    else
-      .row
-        for user in registered
-          .col-xs-12.col-sm-6.col-md-4.col-lg-3.text-center.magictime.vanishIn
-            .user-box
-              img(src=user.ipicture, onError="this.onerror=null;this.src='"+user.mpicture+"';")
-              .btn-group.full-width
-                a.user-adv(href="/advisements/"+user.advisement)= user.advisement
-                button.btn.btn-default.full-width.user-badge(data-username=user.username, data-name=user.fullName, type="button")= user.fullName
+    .row
+      for user in registered
+        .col-xs-12.col-sm-6.col-md-4.col-lg-3.text-center.magictime.vanishIn
+          .user-box
+            img(src=user.ipicture, onError="this.onerror=null;this.src='"+user.mpicture+"';")
+            .btn-group.full-width
+              a.user-adv(href="/advisements/"+user.advisement)= user.advisement
+              button.btn.btn-default.full-width.user-badge(data-username=user.username, data-name=user.fullName, type="button")= user.fullName
     .row
       .col-xs-12
         .page-header
-          h2 All Users
+          h2 All Students
             small.right
               include /parts/pagination
     .row

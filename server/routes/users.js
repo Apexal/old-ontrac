@@ -9,7 +9,6 @@ var moment = require("moment");
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   req.toJade.title = "Users";
-  req.toJade.tableForm = (req.query.table == "1" ? true : false);
   req.toJade.registered = false;
   req.toJade.users = false;
 
