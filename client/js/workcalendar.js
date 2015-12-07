@@ -32,18 +32,23 @@ function workcalendar(){
       }
     }
     var date = date.format("YYYY-MM-DD");
-    $.get('/work/'+date+'/events', function(data) {
-      if(data){
-        if(data.constructor === Array){
-          data.forEach(function(event) {
-            events.push(event);
-          });
-        }else{
-          events.push(data);
+    $.ajax({
+      method: "GET",
+      url: "/work/"+date+"/events",
+      success: function(data) {
+        if(data){
+          if(data.constructor === Array){
+            data.forEach(function(event) {
+              events.push(event);
+            });
+          }else{
+            events.push(data);
+          }
+          c.fullCalendar('removeEvents');
+          c.fullCalendar('addEventSource', events);
         }
-        c.fullCalendar('removeEvents');
-        c.fullCalendar('addEventSource', events);
-      }
+      },
+      async: false
     });
   }
 
@@ -53,10 +58,11 @@ function workcalendar(){
     var end = view.end;
 
     var current = start;
-    while(current.add(1, 'days').diff(end, 'days') < 0){
+    while(current.diff(end, 'days') < 0){
       if(currentUser.scheduleObject.scheduleDays[current.format("MM/DD/YY")] !== undefined){
         addToList(current, view.name);
       }
+      current.add(1, 'days');
     }
   }
 

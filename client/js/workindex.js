@@ -1,10 +1,7 @@
 function workindex() {
-  if(!$("#upcoming").length)
-    return;
-
-  var date = moment().format("YYYY-MM-DD");
   // DUE TODAY
-  $.get("/homework/"+date, function(data){
+  $.get("/homework/"+moment().format("YYYY-MM-DD"), function(data){
+    var date = moment().format("YYYY-MM-DD");
     if(data){
       console.log(data);
       if(data.error){
@@ -51,7 +48,7 @@ function workindex() {
         });
         table.html(html);
 
-        $("#due-today p").html("<a data-toggle='tooltip' title='"+courses.join(', ')+"' class='undecorated' href='/work/"+date+"'><b>"+data.length+"</b> Homework items <b>"+Math.round((doneC/total)*1000)/10+"%</b> completed.</a>");
+        $("#due-today p").html("<a data-toggle='tooltip' title='"+courses.join(', ')+"' class='undecorated' href='/work/today'><b>"+data.length+"</b> Homework items <b>"+Math.round((doneC/total)*1000)/10+"%</b> completed.</a>");
       }else{
         $("#due-today").remove();
       }
@@ -60,6 +57,8 @@ function workindex() {
 
   // CLOSEST DAY DUE
   $.get("/homework/"+$("#upcoming").data("closest"), function(data){
+    var dateString = $("#upcoming").data("closest");
+    var date = moment(dateString, "YYYY-MM-DD");
     if(data){
       console.log(data);
       if(data.error){
@@ -105,9 +104,9 @@ function workindex() {
           html+="<tr><td>"+cTitle+"</td><td>"+hw[cTitle].length+" items</td></tr>";
         });
         table.html(html);
-        $("#upcoming p").html("<a data-toggle='tooltip' title='"+courses.join(', ')+"' class='undecorated' href='/work/"+$("#upcoming").data("closest")+"'><b>"+data.length+"</b> Homework items <b>"+Math.round((doneC/total)*1000)/10+"%</b> completed.</a>");
+        $("#upcoming p").html("<a data-toggle='tooltip' title='"+courses.join(', ')+"' class='undecorated' href='/work/"+dateString+"'><b>"+data.length+"</b> Homework items <b>"+Math.round((doneC/total)*1000)/10+"%</b> completed.</a>");
       }else{
-        $("#closest").remove();
+        $("#upcoming p").html("<a data-toggle='tooltip' class='undecorated' href='/work/"+dateString+"'><span class='text-muted'>You have not yet recorded any homework items due <b>"+date.format("dddd [the] Do")+"</b>.</span></a>");
       }
     }
   });
