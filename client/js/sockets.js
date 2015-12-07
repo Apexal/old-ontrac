@@ -322,7 +322,7 @@ function init_sockets() {
       var when = moment(messages[i].when);
 
       if(messages[i].username == "server"){
-        var part = "<i class='text-muted'>"+message+"</i><br>";
+        var part = "<span class='text-muted'>"+message+"</span><br>";
         html += part;
       }else{
         var user = messages[i].username;

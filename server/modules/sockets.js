@@ -3,7 +3,7 @@ var filter = require("./utils").filter;
 
 var fs = require('fs');
 
-var MUMBLE_URL = "mumble://regismumble.ddns.net/?version=1.2.0";
+var MUMBLE_URL = "mumble://localhost/?version=1.2.0";
 
 var options = {
   //key: fs.readFileSync( 'private.pem' ),
