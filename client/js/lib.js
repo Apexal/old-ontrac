@@ -30,11 +30,13 @@ $(function() {
     if(loggedIn){
       console.log("Logged in as "+currentUser.username);
       if(page == "/" || page == "/home"){
+        init_ads();
         homepage();
       }
+
       init_sockets();
       init_clientSchedule();
-      console.log(page);
+
       if(page.indexOf("work") > -1){
         workindex();
         homework();

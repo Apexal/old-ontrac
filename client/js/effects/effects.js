@@ -3,17 +3,13 @@ function init_effects() {
     $(".nav li.disabled a").click(function() {
         return false;
     });
+
+    // These effects are only needed when logged in
     if (loggedIn) {
       userbadges();
       teacherbadges();
       coursebadges();
     }
-
-    var clock = $("#clock");
-    clock.text(moment().format('dddd [the] Do, h:mm a'));
-    setInterval(function() {
-      clock.text(moment().format('dddd [the] Do, h:mm a'));
-    }, 1000);
 
     var today = moment().format("YYYY-MM-DD");
     // Prevent the chat form from sending data and refreshing the page
@@ -68,10 +64,6 @@ function init_effects() {
         }
     });
 
-    // When on the schedule page, make the main tag full height so that the schedule iframe is full height
-    if(window.location.href.indexOf("/schedule") > -1){
-      $("main").css("height", "100%");
-    }
     if(window.location.href.indexOf("chat") > -1){
       if(window.location.href.indexOf("/advisements/chat") > -1){
         $("main").css("padding-bottom", "170px");
@@ -82,15 +74,4 @@ function init_effects() {
       $("#stars").position({my: "left bottom", at: "left bottom", of: "#profile-pic"});
       $("#rank").position({my: "right bottom", at: "right bottom", of: "#profile-pic"});
     }
-
-  $('#advertisements').slidesjs({
-    width: 250,
-    height: 110,
-    start: Math.floor((Math.random() * $("#advertisements img").length) + 1),
-    play: {
-      auto: true,
-      interval: 7000,
-      pauseOnHover: true
-    }
-  });
 }
