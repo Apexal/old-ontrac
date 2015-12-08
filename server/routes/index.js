@@ -13,6 +13,7 @@ module.exports = function(io) {
   /* GET home page. */
   router.get(['/', '/home'], function(req, res, next) {
     req.toJade.title = "OnTrac";
+    console.log(req.trimester);
     if(req.loggedIn){
       req.toJade.title = "Your Home";
 
@@ -76,17 +77,22 @@ module.exports = function(io) {
 
                     // SUCCESSFULLY LOGGED IN, IS THIS USER REGISTERED?
 
-                    if(user.registered == false){
-                      console.log("FIRST LOGIN FOR "+username);
+                    if(user.registered == false || user.trimester_updated_in != req.trimester){
+
                       // NO, get his Student ID and register him!
-                      var id = $("td:contains('Locker Number:')").next().text().trim();
-                      //console.log(id);
-                      user.locker_number = id;
-                      user.login_count = 0;
-                      user.last_point_login_time = new Date();
-                      user.registered_date = new Date();
-                      user.registered = true;
-                      user.nickname = user.firstName;
+                      if(user.registered == false){
+                        console.log("FIRST LOGIN FOR "+username);
+                        var id = $("td:contains('Locker Number:')").next().text().trim();
+                        //console.log(id);
+                        user.locker_number = id;
+                        user.login_count = 0;
+                        user.last_point_login_time = new Date();
+                        user.registered_date = new Date();
+                        user.registered = true;
+                        user.nickname = user.firstName;
+                      }else{
+                        console.log("UPDATING INFO FOR "+username);
+                      }
 
                       if(user.username == "fmatranga18")
                         user.rank = 7;
@@ -123,25 +129,31 @@ module.exports = function(io) {
                         scheduleLines.forEach(function(line) {
                           good.push(line.split("\t"));
                         });
-                        var actualClassses = [];
+                        var actualClasses = [];
                         good.forEach(function(line) {
                           var dateS = line[0]; // String date in format MM/DD/YY
                           if(moment(dateS, "MM/DD/YY").isValid()){
                             if(line[4].indexOf(" Day") > -1){ // This line is stating a Schedule Day
                               schedule.scheduleDays[dateS] = line[4].replace(" Day", "");
                             }else{
-                              actualClassses.push(line);
+                              actualClasses.push(line);
                             }
                           }
                         });
 
-                        actualClassses = actualClassses.slice(0, 60);
-                        //console.log(actualClassses);
+                        var dIndex = 0;
+                        if(req.trimester == 2)
+                          dIndex = Math.floor(actualClasses.length / 2)
+                        else if(req.trimester == 3)
+                          dIndex = actualClasses.length-70
+
+                        actualClasses = actualClasses.slice(dIndex, dIndex+60);
+                        //console.log(actualClasses);
 
                         var doneF = false;
                         var i = 0;
-                        while(doneF == false && i < actualClassses.length){
-                          var line = actualClassses[i];
+                        while(doneF == false && i < actualClasses.length){
+                          var line = actualClasses[i];
                           var dateS = line[0];
                           var sd = schedule.scheduleDays[dateS];
 
@@ -267,6 +279,7 @@ module.exports = function(io) {
 
                         console.log("PARSED SCHEDULE FOR "+username);
                         user.scheduleObject = schedule;
+                        user.trimester_updated_in = req.trimester;
                         done();
                       });
 

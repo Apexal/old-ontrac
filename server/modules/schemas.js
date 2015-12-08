@@ -34,7 +34,8 @@ module.exports = {
       filterProfanity: true
     }, type: Object},
     registered_date: {type: Date, default: Date.now},
-    registered: { type: Boolean, default: false }
+    registered: { type: Boolean, default: false },
+    trimester_updated_in: Number
   },
   advisement : {
     teacher: {type: Schema.Types.ObjectId, ref: 'Teacher'},

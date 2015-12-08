@@ -50,7 +50,7 @@ router.get("/events", function(req, res) {
             percentage = " <small class='right'>"+percent+"% Done</small>";
 
           events.push({
-            title: total + " HW <span class='hidden-xs'>Items</span>"+percentage,
+            title: total + " Homework <span class='hidden-xs'>Items</span>"+percentage,
             start: d,
             color: "green",
             url: "/work/"+d
