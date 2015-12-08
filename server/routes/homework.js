@@ -3,6 +3,64 @@ var router = express.Router();
 var moment = require('moment');
 var schedules = require('../modules/schedule');
 
+router.get("/events", function(req, res) {
+  var startDateString = req.query.start;
+  var endDateString = req.query.end;
+  if(!startDateString || !endDateString || !moment(startDateString, 'YYYY-MM-DD',
+    true).isValid() || !moment(endDateString, 'YYYY-MM-DD', true).isValid()){
+      res.json({error: "Invalid paramaters."});
+      return;
+    }
+
+  var start = moment(startDateString, 'YYYY-MM-DD', true);
+  var end = moment(endDateString, 'YYYY-MM-DD', true);
+  req.HWItem.find({username: req.currentUser.username, date: {"$gte": start.toDate(), "$lt": end.toDate()}})
+    .populate('course', 'title')
+    .lean()
+    .exec(function(err, items){
+      if(err){console.log(err);res.json({error: err});return;}
+
+      var events = [];
+      var days = {};
+      var dates = [];
+
+      if(items.length){
+        items.forEach(function(item) {
+          var dateString = moment(item.date).format("YYYY-MM-DD");
+          if(dates.indexOf(dateString) == -1)
+            dates.push(dateString);
+
+          if(!days[dateString])
+            days[dateString] = [];
+
+          days[dateString].push(item);
+        });
+
+        dates.forEach(function(d) {
+          var dayItems = days[d];
+          var total = dayItems.length;
+          var doneC = 0;
+          dayItems.forEach(function(item) {
+            if(item.completed)
+              doneC++;
+          });
+          var percent = Math.round((doneC/total)*100);
+          var percentage = "";
+          if(percent !== 100)
+            percentage = " <small class='right'>"+percent+"% Done</small>";
+
+          events.push({
+            title: total + " HW <span class='hidden-xs'>Items</span>"+percentage,
+            start: d,
+            color: "green",
+            url: "/work/"+d
+          });
+        });
+      }
+      res.json(events);
+    });
+});
+
 // GET ALL THE ITEMS ON A DATE
 router.get("/:date", function(req, res) {
   var dateString = req.params.date;
@@ -126,6 +184,8 @@ router.delete("/:date", function(req, res){
 
 
 // CALENDAR EVENTS
+
+
 
 // GET ALL THE ITEMS ON A DATE
 router.get("/:date/event", function(req, res) {

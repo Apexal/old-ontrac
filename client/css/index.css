@@ -57,3 +57,8 @@
 .cl-sd {
   padding-left: 4px;
 }
+
+#work-calendar {
+  max-width: 900px;
+  margin: 0 auto;
+}
