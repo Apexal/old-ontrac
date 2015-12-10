@@ -83,8 +83,44 @@ function getPrevDay(day, sO){
   return false;
 }
 
+function generateSchedule(text){
+  // text is the huge downloaded text file from the Intranet
+  var scheduleLines = text.match(/[^\r\n]+/g);
+  var allPeriods = [];
+  var schedule = {
+    scheduleDays: {
+      'A': [],
+      'B': [],
+      'C': [],
+      'D': [],
+      'E': []
+    },
+    dayClasses: {}
+  };
+
+  scheduleLines.forEach(function(line) {
+    var parts = line.split("\t");
+    if(moment(parts[0], "MM/DD/YY").isValid()){
+      parts[0] = moment(parts[0], "MM/DD/YY").format("YYYY-MM-DD");
+      if(parts[4].indexOf(" Day") > -1){ // This line is stating a Schedule Day
+        schedule.scheduleDays[parts[0]] = parts[4].replace(" Day", "");
+      }else{
+        parts.splice(2, 1)
+        parts.splice(5, 4);
+        allPeriods.push(parts);
+      }
+    }
+  });
+
+  console.log(allPeriods);
+  console.log(schedule.scheduleDays);
+
+  return schedule;
+}
+
 module.exports = {
   getCurrentClassInfo: getCurrentClassInfo,
   getNextDay: getNextDay,
-  getPrevDay: getPrevDay
+  getPrevDay: getPrevDay,
+  generateSchedule: generateSchedule
 }
