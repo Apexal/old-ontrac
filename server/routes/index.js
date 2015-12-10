@@ -35,76 +35,72 @@ module.exports = function(io) {
     console.log("ATTEMPTING TO LOGIN AS "+username+": \n");
     var errs = [];
 
+    var cookieJar = request.jar();
+    var user = null;
     req.Student.findOne({username: username})
       .populate('courses', 'title mID')
-      .exec(function(err, user) {
-        if(err){finalize("An error occured with the server. Please tell Frank!");}
-        if(!user){finalize("0: Incorrect username or password.");}else{
-          // The username passed exists
-          var cookieJar = request.jar(); // For the session
-          request({
-            url: 'https://intranet.regis.org/login/submit.cfm', //URL that the login form on the Intranet points to
-            jar: cookieJar,
-            method: 'POST',
-            //Lets post the following key/values as form
-            form: {
-              username: username,
-              password: password
-            },
-            resolveWithFullResponse: true,
-            simple: false
-          }).then(function(response){
-            var body = response.body;
-            if(body.indexOf("url=https://www.regis.org/login.cfm?Failed=1") > -1){
-              finalize("2: Incorrect username or password.");
-            }else{
-              //LOGGED IN TO INTRANET SUCCESSFULLY (THIS IS A REAL USER)
-              if(user.registered == false || user.trimester_updated_in != req.trimester){
-                // NOT REGISTERED, get his Student ID and register him!
-                if(user.registered == false){
-                  console.log("FIRST LOGIN FOR "+username);
-                  user.login_count = 0;
-                  user.last_point_login_time = new Date();
-                  user.registered_date = new Date();
-                  user.registered = true;
-                  user.nickname = user.firstName;
+      .exec()
+      .then(function(u){
+        if(!u){throw "Incorrect username or password.";}
+        user = u;
+        console.log(user);
+        // The username passed exists
+         // For the session
+        return request({
+          url: 'https://intranet.regis.org/login/submit.cfm', //URL that the login form on the Intranet points to
+          jar: cookieJar,
+          method: 'POST',
+          //Lets post the following key/values as form
+          form: {
+            username: username,
+            password: password
+          },
+          resolveWithFullResponse: true,
+          simple: false
+        });
+      })
+      .then(function(response){
+        var body = response.body;
+        if(body.indexOf("url=https://www.regis.org/login.cfm?Failed=1") > -1){
+          throw "Incorrect username or password.";
+        }else{
+          //LOGGED IN TO INTRANET SUCCESSFULLY (THIS IS A REAL USER)
+          if(user.registered == false || user.trimester_updated_in != req.trimester){
+            // NOT REGISTERED, get his Student ID and register him!
+            if(user.registered == false){
+              console.log("FIRST LOGIN FOR "+username);
+              user.login_count = 0;
+              user.last_point_login_time = new Date();
+              user.registered_date = new Date();
+              user.registered = true;
+              user.nickname = user.firstName;
 
-                  if(user.username == "fmatranga18")
-                    user.rank = 7;
-                }else{
-                  console.log("UPDATING INFO FOR "+username);
-                }
-                console.log("DOWNLOADING CLASS SCHEDULE FOR "+username);
-                return request({
-                  url: 'http://intranet.regis.org/downloads/outlook_calendar_import/outlook_schedule_download.cfm', //URL to hit
-                  jar: cookieJar,
-                  method: 'GET',
-                  resolveWithFullResponse: true,
-                  simple: false
-                });
-              }else{
-                finalize(null);
-              }
+              if(user.username == "fmatranga18")
+                user.rank = 7;
+            }else{
+              console.log("UPDATING INFO FOR "+username);
             }
-          }).then(function(response) {
-            var body = response.body;
-            schedules.generateSchedule(body);
-          })
-          .catch(finalize);
+            console.log("DOWNLOADING CLASS SCHEDULE FOR "+username);
+            return request({
+              url: 'http://intranet.regis.org/downloads/outlook_calendar_import/outlook_schedule_download.cfm', //URL to hit
+              jar: cookieJar,
+              method: 'GET',
+              resolveWithFullResponse: true,
+              simple: false
+            });
+          }
         }
+      })
+      .then(function(response) {
+        console.log("PARSING SCHEDULE FOR "+username);
+        var body = response.body;
+        user.scheduleObjcet = schedules.generateSchedule(body);
+      })
+      .catch(function(err) {
+        res.json({errs: [err]});
       });
 
 
-    function finalize(err){
-      console.log(err);
-      if(err !== null){
-        err = err.message || err;
-        res.json({errors: [err]});
-        return;
-      }
-
-      return;
-    }
   });
 
   router.get('/logout', function(req, res) {

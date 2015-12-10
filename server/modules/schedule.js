@@ -1,4 +1,5 @@
 var moment = require("moment");
+var getYear = require("./years").getCurrent;
 
 // Return an the scheduleobject for today with the periods filled in.
 var getCurrentClassInfo = function(periods){
@@ -83,10 +84,12 @@ function getPrevDay(day, sO){
   return false;
 }
 
-function generateSchedule(text){
+function generateSchedule(text, tri){
+  var thisYear = getYear();
   // text is the huge downloaded text file from the Intranet
   var scheduleLines = text.match(/[^\r\n]+/g);
   var allPeriods = [];
+  var scheduleDays = [];
   var schedule = {
     scheduleDays: {
       'A': [],
@@ -103,6 +106,7 @@ function generateSchedule(text){
     if(moment(parts[0], "MM/DD/YY").isValid()){
       parts[0] = moment(parts[0], "MM/DD/YY").format("YYYY-MM-DD");
       if(parts[4].indexOf(" Day") > -1){ // This line is stating a Schedule Day
+        scheduleDays.push(parts);
         schedule.scheduleDays[parts[0]] = parts[4].replace(" Day", "");
       }else{
         parts.splice(2, 1)
@@ -112,8 +116,16 @@ function generateSchedule(text){
     }
   });
 
-  console.log(allPeriods);
-  console.log(schedule.scheduleDays);
+  var triStart = moment(thisYear.full.trimesters[tri-1]);
+  var triEnd = moment(thisYear.full.trimesters[tri]);
+
+  var good = allPeriods.filter(function(p) {
+    if(moment(p[0]).isAfter(triStart) && moment(p[0]).isBefore(triEnd))
+      return true;
+    return false;
+  });
+
+  console.log(good);
 
   return schedule;
 }
