@@ -74,7 +74,7 @@ router.get('/:date', function(req, res){
       res.redirect("/work");
       return;
     }else{
-      res.redirect('/work/'+nd);
+      res.redirect('/work/'+nD);
       return;
     }
 

@@ -175,11 +175,12 @@ var fillPeriods = function(unfilled, user){
   var lastPeriod = amAdv;
   unfilled.forEach(function(period) {
     if(!period.className){
+      var room = (isNaN(period[4]) ? period[4] : "Room "+period[4]);
       period = {
         startTime: period[1],
         endTime: period[2],
         className: period[3],
-        room: period[4]
+        room: room
       };
     }
     if(lastPeriod.endTime !== period.startTime){
