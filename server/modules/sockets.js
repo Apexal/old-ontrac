@@ -3,12 +3,6 @@ var filter = require("./utils").filter;
 
 var fs = require('fs');
 
-var MUMBLE_URL = "mumble://localhost/?version=1.2.0";
-
-var options = {
-  //key: fs.readFileSync( 'private.pem' ),
-  //cert: fs.readFileSync( 'public.pem' )
-}
 var sessions = {};
 var channels = {};
 

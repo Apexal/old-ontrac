@@ -3,7 +3,7 @@
 var mumble = require('mumble');
 var fs = require('fs');
 
-var MUMBLE_URL = "mumble://regismumble.ddns.net/Recreation/Gaming?version=1.2.0";
+var MUMBLE_URL = "mumble://localhost/?version=1.2.0";
 
 var options = {
   //key: fs.readFileSync( 'private.pem' ),
