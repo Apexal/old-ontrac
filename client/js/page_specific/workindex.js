@@ -16,8 +16,16 @@ function workindex() {
       window.location.href = "/work/"+date.format("YYYY-MM-DD");
     },
     dayRender: function( date, cell ) {
-      if(date.format("YYYY-MM-DD") == $("#upcoming").data("closest")){
+      var dateString = date.format("YYYY-MM-DD");
+      if(dateString == $("#upcoming").data("closest")){
         cell.css("background-color", "#64e6fc");
+      }
+
+      var sd = currentUser.scheduleObject.scheduleDays[dateString];
+      if(sd !== undefined){
+        cell.append('<i class="left text-muted cl-sd">'+sd+'-Day</i>');
+      }else{
+        cell.css("background-color", "#ededed");
       }
     },
     defaultView: 'month'

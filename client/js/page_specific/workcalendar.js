@@ -9,7 +9,7 @@ function workcalendar(){
 			right: 'month,basicWeek,basicDay'
 		},
     dayRender: function(date, cell) {
-      var dateString = date.format("MM/DD/YY");
+      var dateString = date.format("YYYY-MM-DD");
       var sd = currentUser.scheduleObject.scheduleDays[dateString];
       if(sd !== undefined){
         cell.append('<i class="left text-muted cl-sd">'+sd+'-Day</i>');

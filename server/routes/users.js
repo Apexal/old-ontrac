@@ -244,7 +244,7 @@ router.get("/api/:username", function(req, res){
           u.schedule = undefined;
           u = u.toObject({ getters: true, virtuals: true });
           if(user.registered){
-            var sd = user.scheduleObject.scheduleDays[moment().format("MM/DD/YY")];
+            var sd = user.scheduleObject.scheduleDays[moment().format("YYYY-MM-DD")];
             if(sd){
               //console.log(user.scheduleObject.dayClasses);
               u.todaysClassesInfo = {scheduleDay: sd, periods: user.scheduleObject.dayClasses[sd], currentInfo: schedules.getCurrentClassInfo(user.scheduleObject.dayClasses[sd])};

@@ -9,7 +9,7 @@ var schedules = require('../modules/schedule');
 
 router.get('/', function(req, res) {
   var nD = schedules.getNextDay(moment(), req.currentUser.scheduleObject);
-  req.toJade.closestDay = moment(nD, "MM/DD/YY").format("YYYY-MM-DD");
+  req.toJade.closestDay = nD;
   var adv = req.currentUser.advisement.charAt(0);
   var grade = "";
   switch(adv) {
@@ -38,7 +38,7 @@ router.get('/closest', function(req, res) {
     res.redirect("/work");
     return;
   }else{
-    res.redirect("/work/"+moment(nD, "MM/DD/YY").format("YYYY-MM-DD"));
+    res.redirect("/work/"+nD);
   }
 });
 
@@ -64,7 +64,7 @@ router.get('/:date', function(req, res){
   req.toJade.title = date.format("dddd, MMM Do YY");
   req.toJade.items = false;
 
-  if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
+  if(req.currentUser.scheduleObject.scheduleDays[dateString] == undefined){
     req.session.info.push("Redirected to closest school day.");
     // Passed date is not a school, day try to find the next one
     console.log("Not school day, finding closest one.");
@@ -74,7 +74,7 @@ router.get('/:date', function(req, res){
       res.redirect("/work");
       return;
     }else{
-      res.redirect('/work/'+moment(nD, "MM/DD/YY").format("YYYY-MM-DD"));
+      res.redirect('/work/'+nD);
       return;
     }
 
@@ -84,11 +84,11 @@ router.get('/:date', function(req, res){
       res.redirect("/work");
       return;
     }else{
-      res.redirect('/work/'+moment(pD, "MM/DD/YY").format("YYYY-MM-DD"));
+      res.redirect('/work/'+pD);
       return;
     }
   }
-  req.toJade.scheduleDay = req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")];
+  req.toJade.scheduleDay = req.currentUser.scheduleObject.scheduleDays[dateString];
 
   // Get time from today to this date
   var diff = moment(date).diff(req.today, 'days');
@@ -104,8 +104,8 @@ router.get('/:date', function(req, res){
     req.toJade.fromNow = Math.abs(diff)+" days ago";
 
   // GET THE NEXT AND PREVIOUS DATES FOR THE DAY CONTROLS
-  req.toJade.nextDay = moment(schedules.getNextDay(date, req.currentUser.scheduleObject), "MM/DD/YY").format("YYYY-MM-DD");
-  req.toJade.previousDay = moment(schedules.getPrevDay(date, req.currentUser.scheduleObject), "MM/DD/YY").format("YYYY-MM-DD");
+  req.toJade.nextDay = schedules.getNextDay(date, req.currentUser.scheduleObject);
+  req.toJade.previousDay = schedules.getPrevDay(date, req.currentUser.scheduleObject);
 
   var classes = req.currentUser.scheduleObject.dayClasses[req.toJade.scheduleDay];
   req.toJade.classes = classes;
@@ -129,7 +129,7 @@ router.get('/:date/events', function(req, res){
   // Good date
   var date = moment(dateString, 'YYYY-MM-DD', true);
 
-  if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
+  if(req.currentUser.scheduleObject.scheduleDays[dateString] == undefined){
     res.json(null);
     return;
   }
