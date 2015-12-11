@@ -43,7 +43,6 @@ module.exports = function(io) {
       .then(function(u){
         if(!u){throw "Incorrect username or password.";}
         user = u;
-        console.log(user);
         // The username passed exists
          // For the session
         return request({
@@ -64,6 +63,7 @@ module.exports = function(io) {
         if(body.indexOf("url=https://www.regis.org/login.cfm?Failed=1") > -1){
           throw "Incorrect username or password.";
         }else{
+          console.log("LOGGED IN TO INTRANET");
           //LOGGED IN TO INTRANET SUCCESSFULLY (THIS IS A REAL USER)
           if(user.registered == false || user.trimester_updated_in != req.trimester){
             // NOT REGISTERED, get his Student ID and register him!
@@ -92,12 +92,59 @@ module.exports = function(io) {
         }
       })
       .then(function(response) {
-        console.log("PARSING SCHEDULE FOR "+username);
-        var body = response.body;
-        user.scheduleObjcet = schedules.generateSchedule(body);
+        if(response){
+          console.log("PARSING TRIMESTER "+req.trimester+" SCHEDULE FOR "+username);
+          var body = response.body;
+          user.scheduleObject = schedules.generateSchedule(body, req.trimester, user);
+          user.trimester_updated_in = req.trimester;
+
+          new req.Log({who: user.username, what: "Registration."}).save();
+        }
+
+        var uA = user.achievements;
+        achievements.forEach(function(ach){
+          if(uA.indexOf(ach.id) == -1){
+            if(ach.check(user)){
+              user.achievements.push(ach.id);
+              user.points += ach.reward;
+              req.session.info.push("You have been awarded "+ach.reward+" points for achieving '"+ach.name+"'!");
+            }
+          }
+        });
+
+        user.login_count +=1;
+
+        // Give points if last time points were given was over 5 minutes ago
+        var fiveMinAgo = moment().subtract(5, 'minutes');
+        if(moment(user.last_point_login_time).isBefore(fiveMinAgo)){
+          user.points += 10;
+          req.session.info.push("You have been rewarded 10 points for logging in.");
+          user.last_point_login_time = new Date();
+        }
+        req.user = user;
+        req.session.currentUser = user;
+        req.session.currentUser.last_login_time = new Date();
+        var sd = user.scheduleObject.scheduleDays[moment().format("YYYY-MM-DD")];
+        if(sd){
+          //console.log(user.scheduleObject.dayClasses);
+          req.session.todaysInfo = {scheduleDay: sd, periods: user.scheduleObject.dayClasses[sd]};
+          //console.log(req.session.todaysInfo);
+        }
+
+        user.save(function(err) {
+          if(err) throw(err);
+          new req.Log({who: user.username, what: "Login."}).save();
+          req.session.quietlogin = false;
+          res.json({success: true});
+        });
       })
       .catch(function(err) {
-        res.json({errs: [err]});
+        console.log(err);
+        if(err !== null){
+          err = err.message || err;
+          res.json({errors: [err]});
+          return;
+       }
       });
 
 
@@ -142,7 +189,7 @@ module.exports = function(io) {
         .exec(function(err, user) {
           if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
           if(user){
-            var sd = user.scheduleObject.scheduleDays[moment().format("MM/DD/YY")];
+            var sd = user.scheduleObject.scheduleDays[moment().format("YYYY-MM-DD")];
             if(sd){
               //console.log(user.scheduleObject.dayClasses);
               req.session.todaysInfo = {scheduleDay: sd, periods: user.scheduleObject.dayClasses[sd]};

@@ -15,7 +15,7 @@ router.get('/api/:date', function(req, res) {
     return;
   }
   var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true); // Good date
-  if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
+  if(req.currentUser.scheduleObject.scheduleDays[dateString] == undefined){
     res.json({error: "Date passed is not a school day."});
     return;
   }

@@ -13,7 +13,7 @@ router.get("/*", function(req, res, next) {
 
 router.get('/loggedIn', function(req, res) {
   var u = req.currentUser;
-  var sd = u.scheduleObject.scheduleDays[moment().format("MM/DD/YY")];
+  var sd = u.scheduleObject.scheduleDays[moment().format("YYYY-MM-DD")];
   if(sd){
     //console.log(user.scheduleObject.dayClasses);
     u.todaysClassesInfo = {scheduleDay: sd, periods: u.scheduleObject.dayClasses[sd], currentInfo: schedules.getCurrentClassInfo(u.scheduleObject.dayClasses[sd])};
@@ -21,28 +21,6 @@ router.get('/loggedIn', function(req, res) {
   res.json(u);
 });
 
-/*
-router.get('/user/:username', function(req, res) {
-  var username = req.params.username;
-  req.Student.findOne({username: username}, 'username firstName lastName rank bio ipicture points mpicture scheduleObject registered advisement')
-    .lean()
-    .exec(function(err, user) {
-      if(err){res.json({error: err}); return;};
-      if(user){
-        if(user.registered){
-          var sd = user.scheduleObject.scheduleDays[moment().format("MM/DD/YY")];
-          if(sd){
-            //console.log(user.scheduleObject.dayClasses);
-            user.todaysClassesInfo = {scheduleDay: sd, periods: user.scheduleObject.dayClasses[sd], currentInfo: schedules.getCurrentClassInfo(user.scheduleObject.dayClasses[sd])};
-          }
-        }
-        res.json(user);
-      }else{
-        res.json({error: "No such user!"});
-      }
-    });
-});
-*/
 
 router.get('/teacher/:username', function(req, res) {
   var username = req.params.username;

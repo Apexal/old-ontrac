@@ -71,7 +71,7 @@ router.get("/:date", function(req, res) {
     return;
   }
   var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true); // Good date
-  if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
+  if(req.currentUser.scheduleObject.scheduleDays[dateString] == undefined){
     res.json({error: "Date passed is not a school day."});
     return;
   }
@@ -99,7 +99,7 @@ router.post("/:date", function(req, res){
     return;
   }
   var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true); // Good date
-  if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
+  if(req.currentUser.scheduleObject.scheduleDays[dateString] == undefined){
     res.json({error: "Date passed is not a school day."});
     return;
   }
@@ -130,7 +130,7 @@ router.put("/:date", function(req, res){
     return;
   }
   var date = moment(dateString, 'YYYY-MM-DD', true); // Good date
-  if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
+  if(req.currentUser.scheduleObject.scheduleDays[dateString] == undefined){
     res.json({error: "Date passed is not a school day."});
     return;
   }
@@ -170,7 +170,7 @@ router.delete("/:date", function(req, res){
     return;
   }
   var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true); // Good date
-  if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
+  if(req.currentUser.scheduleObject.scheduleDays[dateString] == undefined){
     res.json({error: "Date passed is not a school day."});
     return;
   }
@@ -197,7 +197,7 @@ router.get("/:date/event", function(req, res) {
     return;
   }
   var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true); // Good date
-  if(req.currentUser.scheduleObject.scheduleDays[date.format("MM/DD/YY")] == undefined){
+  if(req.currentUser.scheduleObject.scheduleDays[dateString] == undefined){
     res.json(null);
     return;
   }

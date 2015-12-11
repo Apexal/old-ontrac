@@ -36,7 +36,7 @@ div#tabs.visible-xs
                   td= s.room
     if nextSD
       #tab-next-schedule.tab-pane(role='tabpanel')
-        b.center-xs Next class day is #{moment(nextCD, "MM/DD/YY").format("dddd [the] Do")}, only #{moment(nextCD, "MM/DD/YY").fromNow()}. It is a #{nextSD}-Day.
+        b.center-xs Next class day is #{moment(nextCD, "YYYY-MM-DD").format("dddd [the] Do")}, #{moment(nextCD, "YYYY-MM-DD").fromNow()}. It is a #{nextSD}-Day.
         table.table.table-condensed#next-schedule-table
           thead
             tr

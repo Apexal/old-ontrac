@@ -62,8 +62,8 @@ function getNextDay(day, sO){
   var current = moment(day).add(1, 'days');
   var count = 0;
   while(count < 50){
-    if(sO.scheduleDays[current.format("MM/DD/YY")] !== undefined){
-      return current.format("MM/DD/YY");
+    if(sO.scheduleDays[current.format("YYYY-MM-DD")] !== undefined){
+      return current.format("YYYY-MM-DD");
     }
     current.add(1, 'days');
     count++;
@@ -75,8 +75,8 @@ function getPrevDay(day, sO){
   var current = moment(day).subtract(1, 'days');
   var count = 50;
   while(count > 0){
-    if(sO.scheduleDays[current.format("MM/DD/YY")] !== undefined){
-      return current.format("MM/DD/YY");
+    if(sO.scheduleDays[current.format("YYYY-MM-DD")] !== undefined){
+      return current.format("YYYY-MM-DD");
     }
     current.subtract(1, 'days');
     count--;
@@ -84,7 +84,7 @@ function getPrevDay(day, sO){
   return false;
 }
 
-function generateSchedule(text, tri){
+function generateSchedule(text, tri, user){
   var thisYear = getYear();
   // text is the huge downloaded text file from the Intranet
   var scheduleLines = text.match(/[^\r\n]+/g);
@@ -92,13 +92,15 @@ function generateSchedule(text, tri){
   var scheduleDays = [];
   var schedule = {
     scheduleDays: {
+
+    },
+    dayClasses: {
       'A': [],
       'B': [],
       'C': [],
       'D': [],
       'E': []
-    },
-    dayClasses: {}
+    }
   };
 
   scheduleLines.forEach(function(line) {
@@ -115,19 +117,142 @@ function generateSchedule(text, tri){
       }
     }
   });
+  var triStart = moment(thisYear.full.trimesters[tri-1], "YYYY-MM-DD");
+  var triEnd = ( tri == 3 ? moment(thisYear.full.end, "YYYY-MM-DD") : moment(thisYear.full.trimesters[tri], "YYYY-MM-DD"));
 
-  var triStart = moment(thisYear.full.trimesters[tri-1]);
-  var triEnd = moment(thisYear.full.trimesters[tri]);
-
+  var triDates = [];
   var good = allPeriods.filter(function(p) {
-    if(moment(p[0]).isAfter(triStart) && moment(p[0]).isBefore(triEnd))
+    var date = moment(p[0], "YYYY-MM-DD");
+    if(date.isAfter(triStart) && date.isBefore(triEnd)){
+      if(triDates.indexOf(p[0]) == -1)
+        triDates.push(p[0]);
       return true;
+    }
     return false;
   });
 
-  console.log(good);
+  var days = {};
+
+  good.forEach(function(p) {
+    if(!days[p[0]])
+      days[p[0]] = [];
+
+    days[p[0]].push(p);
+  });
+  //console.log(days);
+  ['A', 'B', 'C', 'D', 'E'].forEach(function(sd) {
+    var daysWithSD = triDates.filter(function(date) {
+      if(schedule.scheduleDays[date] == sd)
+        return true;
+      return false;
+    });
+
+
+
+    //console.log("\n"+sd+"-Day");
+    var unfilled = days[daysWithSD[0]];
+    //console.log(unfilled);
+    var filled = fillPeriods(unfilled, user);
+    schedule.dayClasses[sd] = filled;
+  });
+  //console.log((good.length/allPeriods.length)*100);
 
   return schedule;
+}
+
+var fillPeriods = function(unfilled, user){
+  var filled = [];
+
+  var amAdv = {
+    startTime: '08:40 AM',
+    endTime: '08:50 AM',
+    className: 'Morning Advisement',
+    duration: 10,
+    room: 'Homeroom'
+  };
+
+  filled.push(amAdv);
+  var lastPeriod = amAdv;
+  unfilled.forEach(function(period) {
+    if(!period.className){
+      period = {
+        startTime: period[1],
+        endTime: period[2],
+        className: period[3],
+        room: period[4]
+      };
+    }
+    if(lastPeriod.endTime !== period.startTime){
+      // There is a gap! Fill it with a free period (or lunch)
+      var room = "Anywhere";
+      var cName = "Unstructured Time";
+      var lunch = moment(lastPeriod.endTime, "hh:mm A").startOf('day').hour(11).minute(30);
+      switch(user.grade){
+        case 9:
+        case 10:
+          lunch = moment(lastPeriod.endTime, "hh:mm A").startOf('day').hour(11).minute(30);
+          break;
+        case 11:
+        case 12:
+          lunch = moment(lastPeriod.endTime, "hh:mm A").startOf('day').hour(12).minute(10);
+          break;
+      }
+
+      if(moment(lastPeriod.endTime, "hh:mm A").isSame(lunch)){
+        filled.push({
+          room: "Cafeteria",
+          startTime: lunch.format("hh:mm A"),
+          endTime: moment(lunch).add(40, 'minutes').format("hh:mm A"),
+          duration: 40,
+          className: "Lunch"
+        });
+      }else{
+        filled.push({
+          room: "Anywhere",
+          startTime: lastPeriod.endTime,
+          endTime: period.startTime,
+          duration: Math.abs(moment(lastPeriod.endTime, "hh:mm A").diff(moment(period.startTime, "hh:mm A"), 'minutes')),
+          className: "Unstructured Time"
+        });
+      }
+    }
+
+    var myC = user.courses;
+    myC.forEach(function(course) {
+      if(period.className.trim().indexOf(course.title.trim()) > -1 || course.title.trim() == period.className.trim()){
+        period.mID = course.mID;
+      }else{
+        //console.log("COULDN'T MATCH "+period.className + " TO COURSE");
+      }
+    });
+
+
+
+    lastPeriod = period;
+    filled.push(period);
+  });
+
+  // End of day free
+  if(filled[filled.length-1].endTime !== "02:50 PM"){
+   var duration = moment(lastPeriod.endTime, "hh:mm A").hour(14).minute(50).diff(moment(lastPeriod.endTime, "hh:mm A"), 'minutes');
+   filled.push({
+     room: "Anywhere",
+     startTime: lastPeriod.endTime,
+     endTime: "02:50 PM",
+     duration: duration,
+     className: "Unstructured Time"
+   });
+  }
+
+  filled.push({
+    startTime: '02:50 PM',
+    endTime: '02:55 PM',
+    duration: 20,
+    className: 'Afternoon Advisement',
+    room: 'Homeroom'
+  });
+
+  return filled;
 }
 
 module.exports = {
