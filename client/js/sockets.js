@@ -419,6 +419,10 @@ function init_sockets() {
 function showMumblers(){
   var html = "<ul>";
   mumblers.forEach(function(user) {
+    try{
+    if(isNaN(user.substring(user.length-3, user.length-1)) == false)
+      user = "<span class='user-badge' data-username='"+user+"'><b>"+user+"</b></span>";
+    }catch(err){}
     html+="<li>"+user+"</li>";
   });
   html+="</ul>";

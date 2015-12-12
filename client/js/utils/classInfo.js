@@ -70,18 +70,10 @@ function updateSidebarClassInfo(){
         $("#nowclass-room").text(cInfo.nowClass.room);
       }
 
-      // COUNTDOWN TIMER
-      var now = moment();
-      var end = moment(cInfo.nowClass.endTime, "hh:mm A");
-      var total = now.diff(end, 'minutes'); // 60
+      $("#todays-schedule li").removeClass("list-group-item-success");
+      $("#todays-schedule li[data-mID='"+cInfo.nowClass.mID+"']").addClass("list-group-item-success");
 
-      var minutes = Math.abs(total % 60);
-      var hours = Math.abs(Math.floor(total / 60));
-
-      minutes = (minutes < 10 ? '0' : '') + minutes;
-      hours = (hours < 10 ? '0' : '') + hours;
-
-      $("#period-countdown").text(hours + ":" + minutes);
+      $("#period-countdown h1").text(moment(cInfo.nowClass.endTime, "hh:mm A").fromNow(true));
 
       if(cInfo.nextClass !== false && cInfo.nextClass.className !== "Afternoon Advisement"){
         $("#sd-nextc").show();
