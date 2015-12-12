@@ -309,3 +309,7 @@ a.slidesjs-navigation {
 .slidesjs-previous {
   margin-right: 20px;
 }
+
+#mumble-list li {
+  padding-left: 19px;
+}

@@ -427,6 +427,11 @@ function showMumblers(){
   });
   html+="</ul>";
   $("#mumble-list").html(html);
+
+  if(mumblers.length == 0){
+    $("#mumble-list").html("<span class='text-muted'>Nobody! Get on!</span>");
+  }
+  $("#mumble-section small").text(mumblers.length+" users");
 }
 
 function setStatus(status){

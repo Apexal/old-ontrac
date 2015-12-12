@@ -78,10 +78,13 @@ aside#sidebar
                 | #{s.className.split("(")[0]}
   
   
-  section
-    b Mumblers
+  section#mumble-section
+    b On Mumble Now
+      small.text-muted.right 0 users
     #mumble-list
-  
+    a(target="_blank", href="http://wiki.mumble.info/wiki/Main_Page") Install
+    b  | 
+    a(href="mumble://"+currentUser.username+":regis@www.getontrac.info/School?version=1.2.0") Join
   if todaysInfo
     section#period-countdown.text-center(title="The time until the end of the period.")
       h1 Loading...
