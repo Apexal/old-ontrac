@@ -14,7 +14,7 @@ module.exports = [
         name: "Set Up Profile",
         reward: 10,
         check: function(user){
-            return (user.bio !== undefined);
+          return (user.bio !== undefined);
         }
     },
     {
@@ -122,6 +122,14 @@ module.exports = [
       check: function(user){
         // THIS WILL BE SET IN THE HOMEWORK ROUTE
         return false;
+      }
+    },
+    {
+      id: 13,
+      name: "Add Steam Profile Link",
+      reward: 300,
+      check: function(user) {
+        return (user.steamlink !== undefined);
       }
     }
 ]

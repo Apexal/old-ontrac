@@ -171,8 +171,6 @@ router.get("/:username", function(req, res){
             pointdiff = "the same amount of";
 
           req.toJade.pointdiff = pointdiff;
-          console.log("TEST: ");
-          console.log(req.toJade.allAchievements);
 
           u.stars = stars;
           req.toJade.user = u;

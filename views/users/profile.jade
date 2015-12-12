@@ -80,6 +80,7 @@ block content
             .panel.panel-success
               .panel-heading
                 h1.panel-title  Achievements
+                  small.right= Math.floor((user.achievements.length/allAchievements.length)*100)+"% earned"
               ol.list-group
                 if user.achievements.length > 0
                   for a in allAchievements
