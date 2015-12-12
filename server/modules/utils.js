@@ -67,5 +67,9 @@ module.exports = {
       return "";
     else
       return "short";
+  },
+  showRoom: function(room) {
+    // I can't get it to work any other way :/
+    return room.replace("Anywhere", "").replace("Auditorium - Front", "").replace("Cafeteria", "");
   }
 }

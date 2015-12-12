@@ -8,12 +8,15 @@ function workindex() {
   $("#hw-calendar").fullCalendar({
     weekends: false,
     header: {
-			left: 'prev,next today',
+			left: 'prev,next',
 			center: 'title',
-      right: ''
+      right: 'today'
 		},
     dayClick: function(date, jsEvent, view) {
-      window.location.href = "/work/"+date.format("YYYY-MM-DD");
+      var dateString = date.format("YYYY-MM-DD");
+      var sd = currentUser.scheduleObject.scheduleDays[dateString];
+      if(sd)
+        window.location.href = "/work/"+dateString;
     },
     dayRender: function( date, cell ) {
       var dateString = date.format("YYYY-MM-DD");
