@@ -162,6 +162,7 @@ module.exports = function(io) {
       delete req.currentUser;
       delete req.loggedIn;
       delete req.session.todaysInfo;
+      delete req.query.redir;
       req.session.info.push("You have successfully logged out.");
     }
     res.redirect('/');
