@@ -68,6 +68,12 @@ module.exports = function(http) {
         //console.log(online);
         io.sockets.emit('online-list', {users: online});
 
+        socket.on('new-login', function(data) {
+          var d = {username: "server", message: data.username+" has logged in.", when: Date.now()};
+          messages.push(d);
+          io.sockets.emit('message', d);
+        });
+
         socket.on('message', function (data) {
           var d = {username: user.username, message: filter(data.message), when: data.when};
           messages.push(d);

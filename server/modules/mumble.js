@@ -4,6 +4,8 @@ var mumble = require('mumble');
 var fs = require('fs');
 
 var MUMBLE_URL = "mumble://localhost/?version=1.2.0";
+if(process.env.NODE_ENV !== 'production')
+  MUMBLE_URL = "mumble://www.getontrac.info/?version=1.2.0";
 
 var options = {
   //key: fs.readFileSync( 'private.pem' ),

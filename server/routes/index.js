@@ -135,6 +135,7 @@ module.exports = function(io) {
           if(err) throw(err);
           new req.Log({who: user.username, what: "Login."}).save();
           req.session.quietlogin = false;
+          io.sockets.emit('new-login', {username: username});
           res.json({success: true});
         });
       })
