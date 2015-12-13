@@ -4,7 +4,7 @@ block content
   .container-fluid
     include /info
     .page-header.no-margin.center-xs
-      h1(data-toggle="tooltip", title=fromNow) #{date.format("dddd, MMMM Do YYYY")} #[]
+      h1(data-toggle="tooltip", title=fromNow) #{date.format("dddd, MMMM Do YYYY")}
         span.visible-xs.fa.fa-pencil#toggle-hw-form
         b.hidden-xs.right #{scheduleDay}-Day 
     
@@ -39,8 +39,8 @@ block content
             tr
               for s in classes
                 if s.className.indexOf(" Advisement") == -1
-                  td(data-length=s.duration, class=(s.room=="Cafeteria" ? "active" : ""), data-toggle="tooltip", title=moment(s.startTime, "hh:mm A").format("h:mm A")+" to "+moment(s.endTime, "hh:mm A").format("h:mm A"))
-                    if s.mID
-                      a.undecorated(style="text-decoration: none;", target="_blank", href="http://moodle.regis.org/course/view.php?id="+s.mID)= s.className.split("(")[0]
-                    else
-                      | #{s.className.split("(")[0]}
+                  td(data-length=s.duration, class=(s.room=="Cafeteria" ? "active" : ""), data-toggle="tooltip", title=moment(s.startTime, "hh:mm A").format("h:mm A")+" to "+moment(s.endTime, "hh:mm A").format("h:mm A"))= s.className.split("(")[0]
+                    if(s.mID)
+                      i.fa.fa-link.hidden-xs(data-mid=s.mID)
+                      a.fa.fa-link.visible-xs(href="http://moodle.regis.org/mod/page/view.php?id="+s.mID)
+                    

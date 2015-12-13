@@ -1,4 +1,5 @@
 function homework(){
+  var moodle_window = null;
   var work = {
     homework: []
   };
@@ -34,16 +35,31 @@ function homework(){
   });
 
   $("#day-schedule td").click(function() {
+    var mID = $(this).data("mid");
     var text = $(this).text().trim();
+    $("#newHWItemCourseID option").attr("selected", false);
     $("#newHWItemCourseID option").each(function() {
       var item = $(this).text().trim();
       var that = $(this);
       if(item.indexOf(text) > -1 || item == text || text.indexOf(item) > -1){
         that.attr("selected", true);
-      }else{
-        that.attr("selected", false);
       }
     });
+  });
+
+  $("#day-schedule td i.fa-link").click(function() {
+    var mID = $(this).data("mid");
+    // POPUP
+    if(mID){
+      if(moodle_window == null || moodle_window.closed){
+        var width = screen.width/2;
+        var height = screen.height/2;
+        moodle_window=window.open('http://moodle.regis.org/course/view.php?id='+mID,'name','height='+height+',width='+width);
+      }else{
+        moodle_window.location = "http://moodle.regis.org/course/view.php?id="+mID;
+      }
+      if (window.focus) {moodle_window.focus()}
+    }
   });
 
   // ------------- GET HOMEWORK ON PAGE LOAD --------------
