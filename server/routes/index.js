@@ -69,6 +69,7 @@ module.exports = function(io) {
             // NOT REGISTERED, get his Student ID and register him!
             if(user.registered == false){
               console.log("FIRST LOGIN FOR "+username);
+              user.rank = 1;
               user.login_count = 0;
               user.last_point_login_time = new Date();
               user.registered_date = new Date();
