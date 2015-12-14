@@ -48,8 +48,9 @@ aside#sidebar
           b Next Class
           br
           span#sidebar-next-class
-          i.right#nextclass-room
-        hr
+          i.right#nextclass-room        
+        #period-countdown.text-center(title="The time until the end of the period.")
+          h3 Loading...
     hr
     section#todays-schedule
       span(title=todaysInfo.scheduleDay)
@@ -87,7 +88,5 @@ aside#sidebar
     a(target="_blank", href="http://wiki.mumble.info/wiki/Main_Page") Install
     b  | 
     a(href="mumble://"+currentUser.username+":regis@www.getontrac.info/School?version=1.2.0") Join
-  if todaysInfo
-    section#period-countdown.text-center(title="The time until the end of the period.")
-      h1 Loading...
+  
     

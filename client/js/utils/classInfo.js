@@ -73,7 +73,7 @@ function updateSidebarClassInfo(){
       $("#todays-schedule li").removeClass("list-group-item-success");
       $("#todays-schedule li[data-mID='"+cInfo.nowClass.mID+"']").addClass("list-group-item-success");
 
-      $("#period-countdown h1").text(moment(cInfo.nowClass.endTime, "hh:mm A").fromNow(true));
+      $("#period-countdown h3").text(moment(cInfo.nowClass.endTime, "hh:mm A").fromNow(true));
 
       if(cInfo.nextClass !== false && cInfo.nextClass.className !== "Afternoon Advisement"){
         $("#sd-nextc").show();
