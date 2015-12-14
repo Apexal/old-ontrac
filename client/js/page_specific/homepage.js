@@ -2,7 +2,7 @@ function homepage() {
   var date = moment().format("YYYY-MM-DD");
 
   // DUE TODAY
-  if(/*moment().isBefore(moment(date).hour(19))*/true){
+  if(moment().isBefore(moment("3:30 PM", "h:mm a"))){
     $.get("/homework/"+date, function(data){
       var todaysDate = moment().format("YYYY-MM-DD");
       var link = "<b><a class='undecorated' href='/work/"+todaysDate+"'>";
