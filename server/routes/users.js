@@ -48,15 +48,21 @@ router.get("/profile", function(req, res) {
 router.post("/profile", function(req, res) {
   var newbio = req.body.newbio;
   var newnickname = req.body.newnickname;
-  var filterProfanity = req.body.filterProfanity;
+  var filterProfanity = (req.body.filterProfanity ? true : false);
+  console.log("NO PROFANITY: ");
+  console.log(filterProfanity);
 
   if(newbio){
-    req.Student.findOne({username: req.currentUser.username}, function(err, user) {
+    req.Student.findOne({username: req.currentUser.username})
+    .exec(function(err, user) {
       if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
       if(user){
         user.bio = utils.filter(newbio);
         user.nickname = newnickname;
-        user.preferences.filterProfanity = filterProfanity;
+        if(!user.preferences)
+          user.preferences = {};
+        user.preferences['filterProfanity'] = filterProfanity;
+        console.log(user.preferences['filterProfanity']);
         user.steamlink = (req.body.newsteamlink.indexOf("http://steamcommunity.com") > -1 ? req.body.newsteamlink : user.steamlink);
         user.save(function(err) {
           if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
