@@ -67,3 +67,8 @@
   width: 10px !important;
   height: 10px !important;
 }
+
+#achievements-modal li.achieved {
+  color: #999;
+  text-decoration: line-through;
+}

@@ -89,7 +89,8 @@ block content
                         small.right= "["+a.reward+" points]"
                 else
                   li.text-muted.list-group-item #{user.firstName} has not yet earned any achievements.
-                
+                li.list-group-item
+                  b(data-toggle="modal", data-target="#achievements-modal") Show All Achievements
       if user.registered
         .row
           if todaysInfo
@@ -136,7 +137,19 @@ block content
                 a(href="http://moodle.regis.org/user/profile.php?id="+user.mID) Moodle Profile
       .col-xs-3
         a.right.btn.btn-primary(href="/users") Back to User List
-      
+
+  #achievements-modal.modal(tabindex="-1", role="dialog")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal")
+          h4.modal-title All Achievements
+
+        ol.list-group
+          for a in allAchievements
+            li.list-group-item(class=(user.achievements.indexOf(a.id) > -1 ? "achieved" : ""))= a.name
+              small.right= "["+a.reward+" points]"
+
 mixin class(course)
   .col-xs-12.col-sm-6.col-md-4
     .panel(title=(currentUser.username !== user.username && currentUser.sclasses.indexOf(course.mID) > -1 ? "You share this class!" : ""), class=( currentUser.username !== user.username && currentUser.sclasses.indexOf(course.mID) > -1 ? "panel-success" : "panel-default"))
