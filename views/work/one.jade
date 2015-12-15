@@ -41,6 +41,7 @@ block content
                 if s.className.indexOf(" Advisement") == -1
                   td(data-length=s.duration, class=(s.room=="Cafeteria" ? "active" : ""), data-toggle="tooltip", title=moment(s.startTime, "hh:mm A").format("h:mm A")+" to "+moment(s.endTime, "hh:mm A").format("h:mm A"))= s.className.split("(")[0]
                     if(s.mID)
+                      br.visible-sm
                       i.fa.fa-link.hidden-xs(data-mid=s.mID)
                       a.fa.fa-link.visible-xs(href="http://moodle.regis.org/mod/page/view.php?id="+s.mID)
                     
