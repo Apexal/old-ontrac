@@ -54,7 +54,7 @@ function homework(){
       if(moodle_window == null || moodle_window.closed){
         var width = screen.width/2;
         var height = screen.height/2;
-        moodle_window=window.open('http://moodle.regis.org/course/view.php?id='+mID,'name','height='+height+',width='+width);
+        moodle_window=window.open('http://moodle.regis.org/course/view.php?id='+mID,'_blank','scrollbars=yes, height='+height+',width='+width);
       }else{
         moodle_window.location = "http://moodle.regis.org/course/view.php?id="+mID;
       }
@@ -67,7 +67,6 @@ function homework(){
   console.log(window.location.pathname.split("/") + date);
   if(moment(date, "YYYY-MM-DD", true).isValid()){
     $.get("/homework/"+date, function(data){
-      console.log(data);
       if(data){
         if(data.error){
           console.log(data.error);

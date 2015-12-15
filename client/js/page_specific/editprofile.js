@@ -1,15 +1,11 @@
 function editProfile(){
   var courseLinks = currentUser.customLinks;
-  console.log(courseLinks);
-  
   var htmlList = $("#custom-links");
 
   var requesting = false;
 
   function showLinks(){
-    console.log(courseLinks);
     var courseID = $("#courseForLinks").val();
-    console.log(courseID);
     $("#custom-links li").remove();
     var links = courseLinks[courseID];
     if(links){

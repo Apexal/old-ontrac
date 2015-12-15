@@ -7,7 +7,6 @@ function userbadges(){
         type: 'GET',
         url: "/users/api/"+username,
         success: function(data) {
-          console.log(data);
           if(data !== "Not authorized." && data.error == undefined){
             var title = data.firstName + " " + data.lastName;
             console.log(data);

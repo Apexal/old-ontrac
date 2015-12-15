@@ -102,7 +102,6 @@ function updateProfileSchedule(){
   if(!profileUserInfo){
     $.get('/users/api/'+profileUsername, function(data){
       if(data){
-        console.log(data);
         registered = data.registered;
         if(data.registered == false){
           $("#profile-schedule").hide();
@@ -130,7 +129,6 @@ function updateProfileSchedule(){
 function init_clientSchedule(){
   userInfo = currentUser;
   todayInfo = userInfo.todaysClassesInfo;
-  console.log(todayInfo);
 
   if(todayInfo !== undefined){
     schedule = getCurrentClassInfo(todayInfo.periods);
