@@ -25,7 +25,7 @@ module.exports = {
     sclasses: Array,
     courses: [{ type: Schema.Types.ObjectId, ref: 'Course'}],
     customLinks: Object,
-    rank: {type: Number, default: 0},
+    rank: {type: Number, default: 1},
     points: {type: Number, default: 0},
     login_count: {type: Number, default: 0},
     last_login_time: {type: Date, default: Date.now},

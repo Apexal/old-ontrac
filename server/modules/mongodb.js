@@ -47,7 +47,7 @@ db.once('open', function (callback) {
   studentSchema.virtual('rankName').get(function () {
     var rank = this.rank;
     switch(rank) {
-      case 0:
+      case 1:
         rank = "Guest";
         break;
       case 2:
