@@ -2,11 +2,12 @@ function userbadges(){
   $(".user-badge").off("click").click(function() {
     var username = $(this).data("username");
 
-    if($("#"+username+"-modal").length === 0){
+    if($("#"+username+"-modal").length === 0 && username){
       $.ajax({
         type: 'GET',
         url: "/users/api/"+username,
         success: function(data) {
+          console.log(data);
           if(data !== "Not authorized." && data.error == undefined){
             var title = data.firstName + " " + data.lastName;
             console.log(data);

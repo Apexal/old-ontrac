@@ -1,4 +1,4 @@
-$(function() {
+(function(){
   PNotify.desktop.permission();
   page = window.location.pathname;
   loggedIn = false;
@@ -51,8 +51,4 @@ $(function() {
     updateTooltips();
     console.log("[ Done. ]");
   });
-
-  var modules = function(){
-    sockets();
-  }
-});
+})();

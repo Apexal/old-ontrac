@@ -337,7 +337,7 @@ function init_sockets() {
         message = "";
         words.forEach(function(word) {
           var toAdd = word;
-          if(word.indexOf("@") == 0){
+          if(word.indexOf("@") == 0 && word !== "@"){
             var badge = word.replace("@", "");
             var div = document.createElement('div');
             div.appendChild(document.createTextNode(badge));
