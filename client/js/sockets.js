@@ -393,6 +393,7 @@ function init_sockets() {
   function sendMessage() {
     var message = $('#chat-message').val();
     socket.emit("message", {message: message, when: moment().toDate()});
+    $('#chat-message').val('');
   }
 
   function outgoingMessageKeyDown(event) {
