@@ -166,7 +166,7 @@ router.get("/:username", function(req, res){
             if(c.teacher)
               c.teacher.schedule = undefined;
           });
-          var stars = _.range(u.rank+1);
+          var stars = _.range(u.rank);
           u.schedule = undefined;
           var pointdiff = "";
           if(req.currentUser.points > u.points)

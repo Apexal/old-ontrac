@@ -98,7 +98,7 @@ header
                   a(href="/users/"+currentUser.username, title="View your public profile as other users see it.") View Profile
                 li
                   a(href="/users/profile") Edit Your Profile
-                if (currentUser.rank > 4 || currentUser.username == "fmatranga18")
+                if (currentUser.username == "fmatranga18")
                   if helpers.isPage(page, "admin") == false
                     li
                       a(href="/admin") Admin Page
