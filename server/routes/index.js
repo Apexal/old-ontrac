@@ -136,7 +136,9 @@ module.exports = function(io) {
           if(err) throw(err);
           new req.Log({who: user.username, what: "Login."}).save();
           req.session.quietlogin = false;
-          io.sockets.emit('new-login', {username: username});
+          var d = {username: "server", message: user.username+" has logged in.", when: Date.now(), ignore: user.username};
+          messages.push(d);
+          io.sockets.emit('message', d);
           res.json({success: true});
         });
       })
@@ -148,17 +150,17 @@ module.exports = function(io) {
           return;
        }
       });
-
-
   });
 
   router.get('/logout', function(req, res) {
     if(req.loggedIn){
       if(req.session.quietlogin == false){
         new req.Log({who: req.currentUser.username, what: "Logout."}).save();
-        io.sockets.emit('new-logout', {username: req.currentUser.username});
-        io.sockets.emit('message', {username: "server", message: req.currentUser.username+" has logged out.", when: Date.now()});
+        var d = {username: "server", message: req.currentUser.username+" has logged out.", when: Date.now(), ignore: req.currentUser.username};
+        messages.push(d);
+        io.sockets.emit('message', d);
       }
+      io.sockets.emit('new-logout', {username: req.currentUser.username});
       delete req.session.currentUser;
       delete req.currentUser;
       delete req.loggedIn;

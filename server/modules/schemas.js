@@ -84,6 +84,7 @@ module.exports = {
   gradedItem: {
     username: String,
     itemType: String,
+    description: String,
     course: { type: Schema.Types.ObjectId, ref: 'Course' },
     checkpoints: [{date: Date, desc: String, reached: Boolean}],
     num_grade: {type: Number, min: 0, max: 100},

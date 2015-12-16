@@ -86,16 +86,10 @@ function init_sockets() {
     showMumblers();
   });
 
-  socket.on('new-login', function(data) {
-    if(data.username !== currentUser.username)
-      sendNotification('info', 'User Login', data.username+' has just logged in!');
-  });
-
   socket.on('new-logout', function(data) {
-    if(data.username !== currentUser.username)
-      sendNotification('error', 'User Login', data.username+' has just logged out!');
-    else
+    if(data.username == currentUser.username){
       location.reload();
+    }
   });
 
   // Online User List
@@ -308,7 +302,6 @@ function init_sockets() {
   });
 
   socket.on('pastMessages', function(data) {
-    console.log("GOT MESSAGES");
     messages = data.messages;
     //messages.push({username: "fmatranga18", message: "SEPARATED", when: moment().subtract(20, 'hours')});
     showMessages();
@@ -371,19 +364,21 @@ function init_sockets() {
   socket.on('message', function (data) {
     if(data.message) {
         messages.push(data);
-        if(data.username != username && sessionStorage.muted == "0")
-          chat_notification.play();
+        if(data.username !== username && data.ignore !== username){
+          if(sessionStorage.muted == "0")
+            chat_notification.play();
 
-        if(!sessionStorage.unread)
-          sessionStorage.unread = 0;
+          if(!sessionStorage.unread)
+            sessionStorage.unread = 0;
 
-        if($("#chat-box").hasClass("shown") == false || document[hidden]){
-          sessionStorage.unread = Number(sessionStorage.unread)+1;
-
-        }else{
-          sessionStorage.unread = 0;
+          if($("#chat-box").hasClass("shown") == false || document[hidden]){
+            sessionStorage.unread = Number(sessionStorage.unread)+1;
+          }else{
+            sessionStorage.unread = 0;
+          }
+          updateTitle();
         }
-        updateTitle();
+
         showMessages();
     } else {
         console.log("There is a problem:", data);

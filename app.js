@@ -39,7 +39,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(cookieParser());
 io.use(function(socket, next) {
-    sessionMiddleware(socket.request, socket.request.res, next);
+  sessionMiddleware(socket.request, socket.request.res, next);
 });
 app.use(sessionMiddleware);
 app.use(express.static(path.join(__dirname, 'client/public')));
