@@ -352,7 +352,7 @@ function init_sockets() {
       }
     }
     $("#chat-messages").html(html);
-    if(currentUser.preferences.filterProfanity !== undefined && currentUser.preferences.filterProfanity == true){
+    if(currentUser.filterProfanity !== undefined && currentUser.preferences.filterProfanity == true){
       $('#chat-messages').profanityFilter({
         externalSwears: '/swears.json'
       });
