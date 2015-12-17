@@ -30,7 +30,7 @@ module.exports = {
     login_count: {type: Number, default: 0},
     last_login_time: {type: Date, default: Date.now},
     last_point_login_time: {type: Date, default: Date.now},
-    preferences: Object,
+    preferences: {type: Object, default: {}},
     registered_date: {type: Date, default: Date.now},
     registered: { type: Boolean, default: false },
     trimester_updated_in: Number
