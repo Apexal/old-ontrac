@@ -18,7 +18,7 @@
                   label(for="username") Regis Username
                   input.form-control#username(required=true, name="username", maxlength="50", placeholder="Username", type="text")
                 .form-group.col-xs-12.col-sm-6
-                  label(for="password") Regis Password #[a(href="#", onclick="$('#login-info').toggle();") ?]
+                  label(for="password") Regis Password #[a(href="#", tabindex="-1", onclick="$('#login-info').toggle();") ?]
                   input.form-control#password(required=true, name="password", maxlength="50", placeholder="Password", type="password")
                 
                 #login-info
