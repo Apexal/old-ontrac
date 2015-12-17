@@ -1,3 +1,8 @@
+if(navigator.userAgent.indexOf('Edge') > -1){
+  // in Edge the navigator.appVersion does not say trident
+  alert("Unfortunately, OnTrac does not yet work on Microsoft Edge. I am looking into this. Please use Chrome or Firefox for now.");
+}
+
 (function(){
   PNotify.desktop.permission();
   page = window.location.pathname;
