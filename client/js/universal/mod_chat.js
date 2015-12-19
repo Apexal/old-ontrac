@@ -63,12 +63,13 @@ modules.push({
 
     var showMessages = function() {
       var html = '';
+      var lastSender = "";
       for(var i=0; i<messages.length; i++) {
         var message = messages[i].message;
         var when = moment(messages[i].when);
 
         if(messages[i].username == "server"){
-          var part = "<span class='text-muted'>"+message+"</span><br>";
+          var part = "<span title='"+when.fromNow()+" | "+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"' class='text-muted'>"+message+"</span><br>";
           html += part;
         }else{
           var user = messages[i].username;
@@ -99,10 +100,14 @@ modules.push({
               html+="<hr class='chat-divider'>";
           }}catch(e){}
 
-          var part = "<b class='user-badge' data-username='"+user+"'>"+user+": </b>";
+          var part = "";
+          if(lastSender !== user)
+            part+= "<b class='user-badge' data-username='"+user+"'>"+user+": </b>";
           part += "<span title='"+when.fromNow()+" | "+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'>"+message+"</span><br>";
           html += part;
         }
+
+        lastSender = messages[i].username;
       }
       $("#chat-messages").html(html);
       if(currentUser.filterProfanity !== undefined && currentUser.preferences.filterProfanity == true){
