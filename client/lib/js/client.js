@@ -62,6 +62,7 @@ $(function() {
     modules.forEach(function(module) {
       if(module.check()){ console.log("[ Running "+module.name+"]"); module.run(); }
     });
+    updateTooltips();
     console.log("[ DONE ]");
   });
 });
