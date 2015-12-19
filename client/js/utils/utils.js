@@ -25,13 +25,12 @@ function updateTooltips(){
 }
 
 function updateTitle(){
-  console.log(originalTitle);
   if(!sessionStorage.unread)
     sessionStorage.unread = 0;
   if(!sessionStorage.advunread)
     sessionStorage.advunread = 0;
 
-  var toSet = originalTitle + " (";
+  var toSet = ORIGINALTITLE + " (";
 
   if(Number(sessionStorage.unread) > 0){
     toSet += sessionStorage.unread+" unread";
@@ -51,7 +50,7 @@ function updateTitle(){
   toSet+= ")";
 
   if(Number(sessionStorage.unread) == 0 && Number(sessionStorage.advunread) == 0)
-    $("title").text(originalTitle);
+    $("title").text(ORIGINALTITLE);
   else
     $("title").text(toSet);
 }

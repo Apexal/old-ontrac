@@ -23,8 +23,5 @@ function sendDesktopNotification(type, title, text){
     desktop: {
         desktop: true
     }
-  })/*.get().click(function(e) {
-      if ($('.ui-pnotify-closer, .ui-pnotify-sticker, .ui-pnotify-closer *, .ui-pnotify-sticker *').is(e.target)) return;
-      alert('Hey! You clicked the desktop notification!');
-  });*/
+  })
 }
