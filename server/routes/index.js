@@ -9,8 +9,6 @@ var secrets = require("../secrets.json");
 
 var redir = "/";
 
-
-
 module.exports = function(io) {
   /* GET home page. */
   router.get(['/', '/home'], function(req, res, next) {
@@ -23,7 +21,6 @@ module.exports = function(io) {
       res.render('home/index', req.toJade);
     }
   });
-
 
   // THE SP00KY LOGIN SYSTEM
   router.post('/login', function(req, res, next) {
@@ -78,6 +75,11 @@ module.exports = function(io) {
 
               if(user.username == "fmatranga18")
                 user.rank = 7;
+
+              var welcomeText = "<h1><b>Welcome to OnTrac!</b></h1><br><br><p>You are now an official <b>Alpha Tester</b> for <b>OnTrac!</b>. Remember, this service is still in early development" +
+                "and is <i>not</i> yet totally ready. It is in very active development and new (and potentially unstable) features are added very frequently.</p><br><br>It is now your job to " +
+                "report <b>ANY AND ALL</b> bugs small or large and recommend <b>ANY AND ALL</b> ideas you have small or large.";
+              require("../modules/mailer")(user.email, "Welcome!", welcomeText);
             }else{
               console.log("UPDATING INFO FOR "+username);
             }
