@@ -73,7 +73,7 @@ modules.push({
           html += part;
         }else{
           var user = messages[i].username;
-
+          html += "<span class='text-muted'>["+when.format("h:mm A")+"]</span> ";
           // Totally sanitizes the message
           var div = document.createElement('div');
           div.appendChild(document.createTextNode(message));
@@ -103,7 +103,7 @@ modules.push({
           var part = "";
           if(lastSender !== user)
             part+= "<b class='user-badge' data-username='"+user+"'>"+user+": </b>";
-          part += "<span title='"+when.fromNow()+" | "+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"'>"+message+"</span><br>";
+          part += "<span title='"+when.fromNow()+"'>"+message+"</span><br>";
           html += part;
         }
 
@@ -195,5 +195,7 @@ modules.push({
       }
       updateTitle();
     });
+
+    setTimeout(showMessages, 300000);
   }
 });

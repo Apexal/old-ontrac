@@ -2,7 +2,6 @@ var moment = require("moment");
 
 module.exports = [
     {
-        id: 0,
         name: "First Login",
         reward: 10,
         check: function(user){
@@ -10,7 +9,6 @@ module.exports = [
         }
     },
     {
-        id: 1,
         name: "Set Up Profile",
         reward: 10,
         check: function(user){
@@ -18,7 +16,6 @@ module.exports = [
         }
     },
     {
-        id: 2,
         name: "Reach 100 Points",
         reward: 20,
         check: function(user){
@@ -28,7 +25,6 @@ module.exports = [
         }
     },
     {
-        id: 3,
         name: "Reach 200 Points",
         reward: 40,
         check: function(user){
@@ -38,7 +34,6 @@ module.exports = [
         }
     },
     {
-        id: 4,
         name: "Reach 400 Points",
         reward: 80,
         check: function(user){
@@ -48,7 +43,6 @@ module.exports = [
         }
     },
     {
-        id: 5,
         name: "Reach 800 Points",
         reward: 100,
         check: function(user){
@@ -58,7 +52,6 @@ module.exports = [
         }
     },
     {
-        id: 6,
         name: "Become a Moderator",
         reward: 60,
         check: function(user){
@@ -68,7 +61,6 @@ module.exports = [
         }
     },
     {
-        id: 7,
         name: "Become a Administrator",
         reward: 70,
         check: function(user){
@@ -78,7 +70,6 @@ module.exports = [
         }
     },
     {
-        id: 8,
         name: "Be the Legendary Frank Matranga",
         reward: 0,
         check: function(user){
@@ -88,7 +79,6 @@ module.exports = [
         }
     },
     {
-      id: 9,
       name: "Be a Member for a Year",
       reward: 1000,
       check: function(user) {
@@ -98,7 +88,6 @@ module.exports = [
       }
     },
     {
-      id: 10,
       name: "Be a Member for 2 Years",
       reward: 5000,
       check: function(user) {
@@ -108,7 +97,6 @@ module.exports = [
       }
     },
     {
-      id: 11,
       name: "Be an Alpha Tester",
       reward: 200,
       check: function(user){
@@ -116,7 +104,6 @@ module.exports = [
       }
     },
     {
-      id: 12,
       name: "Start tracking Homework",
       reward: 300,
       check: function(user){
@@ -125,7 +112,6 @@ module.exports = [
       }
     },
     {
-      id: 13,
       name: "Add Steam Profile Link",
       reward: 300,
       check: function(user) {
