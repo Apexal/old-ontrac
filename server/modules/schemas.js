@@ -85,10 +85,11 @@ module.exports = {
     username: String,
     itemType: String,
     description: String,
+    dateTaken: Date,
     course: { type: Schema.Types.ObjectId, ref: 'Course' },
     checkpoints: [{date: Date, desc: String, reached: Boolean}],
-    num_grade: {type: Number, min: 0, max: 100},
-    string_grade: {type: String, enum: ['F', 'U', 'S-', 'S', 'S+', 'M-', 'M', 'M+', 'H-', 'H', 'H+', 'HH']},
+    numGrade: {type: Number, min: 0, max: 100},
+    letterGrade: {type: String, enum: ['F', 'U', 'S-', 'S', 'S+', 'M-', 'M', 'M+', 'H-', 'H', 'H+', 'HH']},
     comments: {type: String, default: "No comment."}
   },
   reminder: {

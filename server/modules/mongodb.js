@@ -119,6 +119,7 @@ db.once('open', function (callback) {
   var dailyThoughtSchema = new Schema(schemas.dailyThought);
   var DailyThought = mongoose.model('DailyThought', dailyThoughtSchema);
 
+  module.exports.GradedItem = GradedItem;
   module.exports.HWItem = HWItem;
   module.exports.Course = Course;
   module.exports.Teacher = Teacher;

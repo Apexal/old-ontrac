@@ -1,0 +1,37 @@
+extends /layout
+
+block content
+  .container-fluid
+    include /info
+    .jumbotron.no-margin
+      h1.no-margin= title
+      br
+      #stats.larger
+        b There's gonna be some nice helpful stuff here one day I swear.
+      
+    .row
+      .col-xs-12
+        h2 Add New Grade
+        form.form-inline(action="/grades/add", method="POST")
+          select.form-control(name="newGradeItemType")
+            option Test
+            option Quiz
+            option Project
+          select.form-control(name="newGradeCourseID")
+            for c in currentUser.courses
+              option(value=c._id)= c.title
+          .checkbox.form-control
+            input(value="letter", type="radio", checked="true", name="gradeType")
+          select.form-control(name="newGradeLetter")
+            for l in ['F', 'U', 'S-', 'S', 'S+', 'M-', 'M', 'M+', 'H-', 'H', 'H+', 'HH']
+              option(selected=(l == "M"))= l
+          .checkbox.form-control
+            input(value="number", type="radio", name="gradeType")
+          input.form-control(type="number", name="newGradeNumber", min="0", max="110", value="90")
+          button.btn.btn-primary(type="submit") Add
+    
+    .row
+      h1 All Grades
+      for g in grades
+        p
+          b=g.course.title
