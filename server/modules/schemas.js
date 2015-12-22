@@ -100,5 +100,10 @@ module.exports = {
     feedbackType: String,
     text: String,
     date_sent: {type: Date, default: Date.now}
+  },
+  dailyThought: {
+    username: String,
+    date: Date,
+    body: String
   }
 }

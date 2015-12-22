@@ -116,6 +116,9 @@ db.once('open', function (callback) {
   var gradedItemSchema = new Schema(schemas.gradedItem);
   var GradedItem = mongoose.model('GradedItem', gradedItemSchema);
 
+  var dailyThoughtSchema = new Schema(schemas.dailyThought);
+  var DailyThought = mongoose.model('DailyThought', dailyThoughtSchema);
+
   module.exports.HWItem = HWItem;
   module.exports.Course = Course;
   module.exports.Teacher = Teacher;
@@ -124,4 +127,5 @@ db.once('open', function (callback) {
   module.exports.Log = Log;
   module.exports.Reminder = Reminder;
   module.exports.Feedback = Feedback;
+  module.exports.DailyThought = DailyThought;
 });

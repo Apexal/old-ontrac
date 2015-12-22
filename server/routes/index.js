@@ -105,15 +105,15 @@ module.exports = function(io) {
         }
 
         var uA = user.achievements;
-        achievements.forEach(function(ach){
-          if(uA.indexOf(ach.id) == -1){
-            if(ach.check(user)){
-              user.achievements.push(ach.id);
-              user.points += ach.reward;
-              req.session.info.push("You have been awarded "+ach.reward+" points for achieving '"+ach.name+"'!");
+        for(var id = 0; id<achievements.length;id++){
+          if(uA.indexOf(id) == -1){
+            if(achievements[id].check(user)){
+              user.achievements.push(id);
+              user.points += achievements[id].reward;
+              req.session.info.push("You have been awarded "+achievements[id].reward+" points for achieving '"+achievements[id].name+"'!");
             }
           }
-        });
+        }
 
         user.login_count +=1;
 

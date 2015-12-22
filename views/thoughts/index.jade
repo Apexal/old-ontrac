@@ -1,0 +1,15 @@
+extends /layout
+
+block content
+  .container-fluid
+    include /info
+    .jumbotron.no-margin
+      h1.no-margin Daily Thoughts
+      br
+      #stats.larger
+        b There's gonna be some nice helpful stuff here one day I swear.
+    
+    .row
+      .col-xs-12
+        if recent.length == 0
+          b No thoughts recorded in the past week!
