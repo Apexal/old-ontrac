@@ -73,7 +73,6 @@ modules.push({
           html += part;
         }else{
           var user = messages[i].username;
-          html += "<span class='text-muted'>["+when.format("h:mm A")+"]</span> ";
           // Totally sanitizes the message
           var div = document.createElement('div');
           div.appendChild(document.createTextNode(message));
