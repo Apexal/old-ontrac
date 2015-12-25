@@ -7,6 +7,8 @@ modules.push({
     return loggedIn;
   },
   run: function() {
+    localStorage['filterProfanity'] = (localStorage['filterProfanity'] ? localStorage['filterProfanity'] : "on");
+    
     var toggle_muted = function(){
       sessionStorage.muted = (sessionStorage.muted == "1" ? "0" : "1");
       if(sessionStorage.muted == "1"){
@@ -109,7 +111,7 @@ modules.push({
         lastSender = messages[i].username;
       }
       $("#chat-messages").html(html);
-      if(currentUser.filterProfanity !== undefined && currentUser.preferences.filterProfanity == true){
+      if(localStorage['filterProfanity'] == "on"){
         $('#chat-messages').profanityFilter({
           externalSwears: '/swears.json'
         });
