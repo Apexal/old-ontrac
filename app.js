@@ -47,7 +47,7 @@ app.locals.basedir = path.join(__dirname, 'views');
 app.locals.moment = moment;
 app.locals.helpers = utils;
 
-var restricted = ['/users', '/admin', '/advisements', '/forum', 'api', '/grades', '/homework', '/rating', '/reminders', '/study', '/thoughts', '/work'];
+var allowed = ['/', '/home', '/login', '/api/loggedIn'];
 app.use(function(req, res, next) {
   console.log(("\nRequest from "+req.connection.remoteAddress).blue.bold +(req.session.currentUser ? " by "+req.session.currentUser.username : "")+" at "+(moment().format("dddd, MMMM Do YYYY, h:mm:ss a")).green.bold);
   req.currentUser = req.session.currentUser;
@@ -104,8 +104,9 @@ app.use(function(req, res, next) {
   req.session.info = [];
   req.session.errs = [];
 
-  if(restricted.indexOf(req.path) > -1 && req.toJade.loggedIn == false){
+  if(allowed.indexOf(req.path) == -1 && req.toJade.loggedIn == false){
     res.redirect("/?redir="+req._parsedUrl.pathname);
+    console.log("SENDING TO /?redir="+req._parsedUrl.pathname);
     return;
   }
 
