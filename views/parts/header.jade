@@ -23,12 +23,23 @@ header
                 li(class=(helpers.isPage(page, "thoughts")))
                   a(href="/thoughts", title="Record your daily thoughts on school days.") Daily Thoughts
                 li.divider(role="separator")
+
+              li
+                a(href="http://intranet.regis.org/", target="_blank") Intranet
+              li
+                a(href="http://moodle.regis.org/my/", target="_blank") Moodle
+              li
+                a(href="https://owa.regis.org/owa/", target="_blank") Email
+              li
+                a(href="https://myfiles.regis.org/", target="_blank") MyFiles
+              li(role="separator").divider
               li
                 a(target="_blank", title="View the public source code behind this project, maintained solely by me.", href="https://github.com/Aedificem/ontrac") Source Code
               li
                 a(target="_blank", title="View the recorded issues that I'm working on for the site.", href="https://waffle.io/Aedificem/ontrac/join") Issue Progress
               li
                 a(target="_blank", title="View the features that are being worked on and that are coming soon.", href="https://trello.com/b/b9JwXnPH/ontrac") Planned Features
+              
           if loggedIn
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Your Courses
@@ -46,22 +57,6 @@ header
                 li(role="separator").divider
                 li
                   a(href="#") Edit Custom Links
-          
-          if loggedIn == true && isHomepage == false
-            li.dropdown
-              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Regis
-                  span.caret
-              ul.dropdown-menu(role='menu')
-                li
-                  a(href="http://www.regis.org/", target="_blank") Home Page
-                li
-                  a(href="http://intranet.regis.org/", target="_blank") Intranet
-                li
-                  a(href="http://moodle.regis.org/my/", target="_blank") Moodle
-                li
-                  a(href="https://owa.regis.org/owa/", target="_blank") Email
-                li
-                  a(href="https://myfiles.regis.org/", target="_blank") MyFiles
 
           if loggedIn
             li(class=(helpers.isPage(page, "work") ? "active" : ""))
