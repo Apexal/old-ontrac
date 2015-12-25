@@ -21,6 +21,9 @@ router.post('/', function(req, res) {
   if(!body){
     req.session.errs.push('Invalid parameters.'); res.redirect(req.baseUrl); return;
   }
+  if(req.currentUser.scheduleObject.scheduleDays[moment().format("YYYY-MM-DD")] == undefined){
+    req.session.errs.push('Not a school day.'); res.redirect(req.baseUrl); return;
+  }
   req.DailyThought.findOne({username: req.currentUser.username, date: date}, function(err, thought) {
     if(err){req.session.errs.push('Failed to save item.'); res.redirect(req.baseUrl); return;}
     console.log(thought);

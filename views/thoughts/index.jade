@@ -8,13 +8,19 @@ block content
       br
       #stats.larger
         b There's gonna be some nice helpful stuff here one day I swear.
-
+    hr
     .row
-      .col-xs-12
-        if thoughts.length == 0
-          b No thoughts recorded in the past week!
-        else
-          for t in thoughts
-            div
-              b= moment(t.date).format("dddd [the] D")
-              p= t.body
+      .col-xs-12.col-sm-6.col-md-4
+        .panel.panel-primary#thoughtbox
+          .panel-heading Daily Thoughts
+          form.form-inline(role="form", action="/thoughts", method="POST")
+            textarea.form-control(rows="2", name="newThoughtsBody")= dailythought
+            button.btn.btn-primary Update
+
+      if thoughts.length == 0
+        b No thoughts recorded in the past week!
+      else
+        for t in thoughts
+          .col-xs-12.col-sm-6.col-md-4
+            b= moment(t.date).format("dddd [the] D")
+            p= t.body
