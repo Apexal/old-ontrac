@@ -26,3 +26,14 @@ block content
             .btn-group.full-width
               a.user-adv(href="/advisements/"+user.advisement)= user.advisement
               button.btn.btn-default.full-width.user-badge(data-username=user.username, data-name=user.fullName, type="button")= user.fullName
+    
+    br
+    .row
+      .col-xs-12
+        .page-header
+          h1 Leaderboards
+        button.btn.btn-default#lb-points Points
+        button.btn.btn-default#lb-logins Login Count
+        button.btn.btn-default#lb-rank Rank
+        #leaderboard
+          p.text-center.text-muted Loading leaderboard...

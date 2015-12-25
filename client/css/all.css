@@ -318,3 +318,25 @@ a.slidesjs-navigation {
   padding-left: 2px;
   padding-right: 2px;
 }
+
+
+/* -------------------------------------------------------- */
+*.user-badge[data-username="fmatranga18"]
+{
+ -webkit-animation: cc 1s linear 1s infinite alternate;
+ animation: cc 1s linear 1s infinite alternate;
+}
+
+@-webkit-keyframes cc
+{
+ 0%   { text-shadow: none;}
+ 50%  { text-shadow: 1px 1px grey;}
+ 100% { text-shadow: none;}
+}
+
+@keyframes cc
+{
+  0%   { text-shadow: none;}
+  50%  { text-shadow: 1px 1px grey;}
+  100% { text-shadow: none;}
+}

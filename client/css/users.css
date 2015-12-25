@@ -72,3 +72,27 @@
   color: #999;
   text-decoration: line-through;
 }
+
+#leaderboard img {
+  width: 60px;
+}
+
+.lb-pos-1 {
+  font-size: 2em;
+}
+
+.lb-pos-2 {
+  font-size: 1.8em;
+}
+
+.lb-pos-3 {
+  font-size: 1.6em;
+}
+
+.lb-pos-4 {
+  font-size: 1.4em;
+}
+
+.lb-pos-5 {
+  font-size: 1.2em;
+}
