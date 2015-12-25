@@ -20,23 +20,8 @@ router.get('/', function(req, res, next) {
     .sort({rank: -1, points: -1})
     .exec(function(err, registered){
       if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
-      if(registered)
-        req.toJade.registered = registered;
-      req.Student.find({}, 'registered firstName lastName advisement username rank mpicture ipicture')
-        .sort({advisement: 1})
-        .skip(perPage*(pageNum-1))
-        .limit(perPage)
-        .exec(function(err, users){
-          if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
-          if(users){
-            req.toJade.users = users;
-            req.toJade.pageNum = pageNum;
-            req.toJade.prev = ((pageNum-1) <= 0 ? pages : (pageNum-1));
-            req.toJade.next = ((pageNum+1) > pages ? 1 : (pageNum+1));
-            req.toJade.pages = pages;
-          }
-          res.render('users/list', req.toJade);
-        });
+      req.toJade.registered = registered;
+      res.render('users/list', req.toJade);
     });
 });
 

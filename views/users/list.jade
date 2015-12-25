@@ -26,28 +26,3 @@ block content
             .btn-group.full-width
               a.user-adv(href="/advisements/"+user.advisement)= user.advisement
               button.btn.btn-default.full-width.user-badge(data-username=user.username, data-name=user.fullName, type="button")= user.fullName
-    .row
-      .col-xs-12
-        .page-header
-          h2 All Students
-            small.right
-              include /parts/pagination
-    .row
-      .col-xs-12
-        table.table.user-table
-          thead
-            th Picture
-            th Advisement
-            th Grade
-            th Name
-          for user in users
-            tr(class=(currentUser && user.username == currentUser.username ? "success" : ""))
-              td
-                img.table-pic.user-badge(data-username=user.username, src=user.ipicture, onError="this.onerror=null;this.src='"+user.mpicture+"';")
-              td.larger(style="vertical-align: middle;")
-                a.undecorated(href="/advisements/"+user.advisement)= user.advisement
-              td.larger(style="vertical-align: middle")= user.gradeName
-              td.larger.user-badge(data-username=user.username, style="vertical-align: middle;")= user.fullName
-            
-    .row
-      br.bottom-spacer
