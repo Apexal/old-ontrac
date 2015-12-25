@@ -62,3 +62,19 @@
   max-width: 900px;
   margin: 0 auto;
 }
+
+#thoughtbox textarea{
+  min-width: 100%;
+  width: 100%;
+  max-width: 100%;
+
+  min-height: 45px;
+  max-height: 200px;
+
+  font-size: 0.8em;
+  padding: 8px;
+}
+
+#thoughtbox button {
+  width: 100%;
+}

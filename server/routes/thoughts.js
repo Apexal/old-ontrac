@@ -9,10 +9,37 @@ router.get('/', function(req, res) {
     .exec(function(err, thoughts) {
       if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
       if(thoughts){
-        req.toJade.recent = thoughts;
+        req.toJade.thoughts = thoughts;
       }
       res.render('thoughts/index', req.toJade);
     });
+});
+
+router.post('/', function(req, res) {
+  var body = req.body.newThoughtsBody;
+  var date = moment().startOf('day').toDate();
+  if(!body){
+    req.session.errs.push('Invalid parameters.'); res.redirect(req.baseUrl); return;
+  }
+  req.DailyThought.findOne({username: req.currentUser.username, date: date}, function(err, thought) {
+    if(err){req.session.errs.push('Failed to save item.'); res.redirect(req.baseUrl); return;}
+    console.log(thought);
+    if(!thought){
+      thought = new req.DailyThought({
+        username: req.currentUser.username,
+        date: date,
+        body: body
+      });
+    }else{
+      thought.body = body;
+    }
+    thought.save(function(err) {
+      if(err){req.session.errs.push('Failed to save item.'); res.redirect(req.baseUrl); return;}
+      req.session.dailythought = thought.body;
+      res.redirect("/thoughts");
+    });
+  });
+
 });
 
 module.exports = function(io) {

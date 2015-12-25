@@ -14,17 +14,19 @@ block content
         if todaysInfo
           span.visible-xs Today is a #[b= todaysInfo.scheduleDay+"-Day"].
       .clearfix
-    //
-      .row.center.visible-sm.visible-md.visible-lg
-        .col-xs-12
-          div.full-width(style="background-color: #222")
-            each c in currentUser.courses
-              a.btn.btn-default(href="http://moodle.regis.org/course/view.php?id="+c.mID, target="_blank")= c.title.split("(")[0]
     if todaysInfo
       #classInfo
         p.larger Loading class info...
     hr
     .row
+      if todaysInfo
+        .col-xs-12.col-sm-6.col-md-4
+          .panel.panel-primary#thoughtbox
+            .panel-heading Daily Thoughts
+              a.undecorated.fa.fa-list.right(href="/thoughts")
+            form.form-inline(role="form", action="/thoughts", method="POST")
+              textarea.form-control(rows="2", name="newThoughtsBody")= dailythought
+              button.btn.btn-primary Update
       include work-boxes
       .col-xs-12.col-md-3.text-center
         .visible-sm.visible-md

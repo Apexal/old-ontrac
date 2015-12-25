@@ -12,19 +12,18 @@ header
       #navbar.navbar-collapse.collapse
         ul.nav.navbar-nav
           //
-            
+
           li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') View
               span.caret
             ul.dropdown-menu(role='menu')
-              //
-                li
-                  a(target="_blank", href="https://github.com/Aedificem/ontrac/wiki", title="What features does OnTrac provide?") About
               if loggedIn
                 li(class=(helpers.isPage(page, "users")))
                   a(href="/users", title="View and search through list of all students, registered and unregistered.") Users
                 li(class=(helpers.isPage(page, "advisements")))
                   a(href="/advisements", title="View and search through all advisements at Regis.") Advisements
+                li(class=(helpers.isPage(page, "thoughts")))
+                  a(href="/thoughts", title="Record your daily thoughts on school days.") Daily Thoughts
                 li.divider(role="separator")
               li
                 a(target="_blank", title="View the public source code behind this project, maintained solely by me.", href="https://github.com/Aedificem/ontrac") Source Code
@@ -45,10 +44,10 @@ header
                       if currentUser.customLinks[c._id]
                         each l in currentUser.customLinks[c._id]
                           li.text-muted
-                            a(href=l.link, target="_blank")= l.name  
+                            a(href=l.link, target="_blank")= l.name
                 li(role="separator").divider
                 li
-                  a(href="#") Edit Custom Links 
+                  a(href="#") Edit Custom Links
           li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Regis
                 span.caret
@@ -63,24 +62,24 @@ header
                 a(href="https://owa.regis.org/owa/", target="_blank") Email
               li
                 a(href="https://myfiles.regis.org/", target="_blank") MyFiles
-          
+
           if loggedIn
             li(class=(helpers.isPage(page, "work") ? "active" : ""))
               a(href=(page == "/work" ? "#" : "/work"), title="Manage your work.").service.fa.fa-book
-            
+
             if previousDay !== false
               li.hidden-xs
                 a.fa.fa-arrow-left(href='/work/'+previousDay, style="padding-left: 4px; padding-right: 4px;", title="View the previous work day!")
             if nextDay !== false
               li.hidden-xs
-                a.fa.fa-arrow-right(href='/work/'+nextDay, style="padding-left: 4px; padding-right: 4px;margin-right: 10px;", title="View the next work day!")  
-            
+                a.fa.fa-arrow-right(href='/work/'+nextDay, style="padding-left: 4px; padding-right: 4px;margin-right: 10px;", title="View the next work day!")
+
             li(class=(helpers.isPage(page, "study") ? "active" : "study"))
               a.service(href=(page == "/study" ? "#" : "/study"), title="Manage your studying.").fa.fa-calendar-check-o
-                  
+
             li(class=(helpers.isPage(page, "grades") ? "active" : ""))
               a.service(href=(page == "/grades" ? "#" : "/grades"), title="Manage your grades.").fa.fa-line-chart
-                
+
 
         ul.nav.navbar-nav.navbar-right
           if loggedIn

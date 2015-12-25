@@ -83,6 +83,7 @@ app.use(function(req, res, next) {
     nextDay: false,
     previousDay: false,
     page: req.path,
+    dailythought: (req.session.dailythought ? req.session.dailythought : ""),
     isHomepage: (req.path == "/" || req.path == "/home" ? true : false)
   }
 
