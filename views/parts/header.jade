@@ -11,8 +11,6 @@ header
           img.tilt#ontrac-img(title="Homepage.", src="/images/logos/logo64x64.png")
       #navbar.navbar-collapse.collapse
         ul.nav.navbar-nav
-          //
-
           li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') View
               span.caret
@@ -48,20 +46,22 @@ header
                 li(role="separator").divider
                 li
                   a(href="#") Edit Custom Links
-          li.dropdown
-            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Regis
-                span.caret
-            ul.dropdown-menu(role='menu')
-              li
-                a(href="http://www.regis.org/", target="_blank") Home Page
-              li
-                a(href="http://intranet.regis.org/", target="_blank") Intranet
-              li
-                a(href="http://moodle.regis.org/my/", target="_blank") Moodle
-              li
-                a(href="https://owa.regis.org/owa/", target="_blank") Email
-              li
-                a(href="https://myfiles.regis.org/", target="_blank") MyFiles
+          
+          if loggedIn == true && isHomepage == false
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') Regis
+                  span.caret
+              ul.dropdown-menu(role='menu')
+                li
+                  a(href="http://www.regis.org/", target="_blank") Home Page
+                li
+                  a(href="http://intranet.regis.org/", target="_blank") Intranet
+                li
+                  a(href="http://moodle.regis.org/my/", target="_blank") Moodle
+                li
+                  a(href="https://owa.regis.org/owa/", target="_blank") Email
+                li
+                  a(href="https://myfiles.regis.org/", target="_blank") MyFiles
 
           if loggedIn
             li(class=(helpers.isPage(page, "work") ? "active" : ""))
@@ -83,15 +83,15 @@ header
 
         ul.nav.navbar-nav.navbar-right
           if loggedIn
+            li#points-badge
+              a(href="#")
+                span.badge(title="Your points!")= currentUser.points
             li.hidden-xs
               a(href="/users/"+currentUser.username+"/schedule", title="View your class schedule.", style="padding-right: 5px;padding-left: 2px;").fa.fa-calendar
             li.hidden-xs
               a(href="#", data-toggle="modal", data-target="#feedback-modal", title="Offer feedback.", style="padding-right: 5px;padding-left: 2px;").fa.fa-comment
             li.hidden-xs
               a(href="#", title="Manage your reminders.", data-target="#reminders-modal", data-toggle="modal", style="padding-right: 2px;padding-left: 2px;").reminder-bell.fa.fa-bell-o
-            li#points-badge
-              a(href="#")
-                span.badge(title="Your points!")= currentUser.points
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') #{currentUser.firstName} #{currentUser.lastName}
                 span.caret

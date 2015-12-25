@@ -14,6 +14,14 @@ block content
         if todaysInfo
           span.visible-xs Today is a #[b= todaysInfo.scheduleDay+"-Day"].
       .clearfix
+    
+    .row.center
+      .col-xs-12
+        div.full-width(style="background-color: #222")
+          a.btn.btn-default(href="http://intranet.regis.org/", target="_blank") Intranet
+          a.btn.btn-default(href="http://moodle.regis.org/my/", target="_blank") Moodle
+          a.btn.btn-default(href="https://owa.regis.org/owa/", target="_blank") Email
+          a.btn.btn-default(href="https://myfiles.regis.org/", target="_blank") MyFiles
     if todaysInfo
       #classInfo
         p.larger Loading class info...
