@@ -26,6 +26,7 @@ $(function() {
       currentUser = data;
       username = currentUser.username;
       loggedIn = true;
+      $("span.badge.odometer").text(currentUser.points);
       console.log("[ Logged in as "+username+" ]");
       var full = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
       socket = io.connect(full);

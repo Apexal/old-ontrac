@@ -313,3 +313,8 @@ a.slidesjs-navigation {
 #mumble-list ul {
   padding-left: 19px;
 }
+
+#points-badge a {
+  padding-left: 2px;
+  padding-right: 2px;
+}

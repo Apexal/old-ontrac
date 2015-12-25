@@ -89,6 +89,9 @@ header
               a(href="#", data-toggle="modal", data-target="#feedback-modal", title="Offer feedback.", style="padding-right: 5px;padding-left: 2px;").fa.fa-comment
             li.hidden-xs
               a(href="#", title="Manage your reminders.", data-target="#reminders-modal", data-toggle="modal", style="padding-right: 2px;padding-left: 2px;").reminder-bell.fa.fa-bell-o
+            li#points-badge
+              a(href="#")
+                span.badge(title="Your points!")= currentUser.points
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false') #{currentUser.firstName} #{currentUser.lastName}
                 span.caret
