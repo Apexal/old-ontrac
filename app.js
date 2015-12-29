@@ -111,7 +111,7 @@ app.use(function(req, res, next) {
       return;
     }else{
       if(req.query.api_token !== api_token){
-        res.json("Not authorized!");
+        res.json({error: "Not authorized."});
         return;
       }
     }
