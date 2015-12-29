@@ -5,14 +5,10 @@ var schedules = require('../modules/schedule');
 var filter = require("../modules/utils").filter;
 var api_token = require("../secrets.json").api_token;
 
-router.get("/*", function(req, res, next) {
-  if(req.loggedIn || req.query.api_token == api_token)
-    next();
-  else
-    res.json({error: "Not authorized."});
-});
-
 router.get('/loggedIn', function(req, res) {
+  if(!req.loggedIn){
+    res.json({error: "Not logged in!"}); return;
+  }
   var u = req.currentUser;
   var sd = u.scheduleObject.scheduleDays[moment().format("YYYY-MM-DD")];
   if(sd){
