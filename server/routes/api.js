@@ -3,9 +3,10 @@ var router = express.Router();
 var moment = require('moment');
 var schedules = require('../modules/schedule');
 var filter = require("../modules/utils").filter;
+var api_token = require("../secrets.json").api_token;
 
 router.get("/*", function(req, res, next) {
-  if(req.loggedIn)
+  if(req.loggedIn || req.query.api_token == api_token)
     next();
   else
     res.json({error: "Not authorized."});

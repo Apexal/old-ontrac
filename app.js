@@ -19,8 +19,8 @@ var express = require("express")
   , mongo = require('./server/modules/mongodb')
   , school_years = require('./server/modules/years')
   , schedules = require("./server/modules/schedule")
-  , mumble = require("./server/modules/mumble");
-
+  , mumble = require("./server/modules/mumble")
+  , api_token = require("./server/secrets.json").api_token;
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -104,10 +104,17 @@ app.use(function(req, res, next) {
   req.session.info = [];
   req.session.errs = [];
 
-  if(allowed.indexOf(req.path) == -1 && req.toJade.loggedIn == false){
-    res.redirect("/?redir="+req._parsedUrl.pathname);
-    console.log("SENDING TO /?redir="+req._parsedUrl.pathname);
-    return;
+  if(allowed.indexOf(req.path) == -1 && req.toJade.loggedIn == false ){
+    if(req.path.indexOf("api") == -1){
+      res.redirect("/?redir="+req._parsedUrl.pathname);
+      console.log("SENDING TO /?redir="+req._parsedUrl.pathname);
+      return;
+    }else{
+      if(req.query.api_token !== api_token){
+        res.json("Not authorized!");
+        return;
+      }
+    }
   }
 
   next();
