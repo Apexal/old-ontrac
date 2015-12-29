@@ -4,191 +4,162 @@ modules.push({
     return loggedIn;
   },
   run: function() {
-    userbadges = function(){
-      $(".user-badge").off("click").click(function() {
-        var username = $(this).data("username");
-        if($("#"+username+"-modal").length === 0 && username){
+    personbadges = function(){
+      var createPersonBadge = function(bType, username) {
+        var content = $("<div class='modal "+bType+"-modal' id='"+username+"-modal' tabindex='-1'>" +
+              "        <div class='modal-dialog'>" +
+              "            <div class='modal-content'>" +
+              "                <div class='modal-header'>" +
+              "                    <button class='close' data-dismiss='modal' type=" +
+              "                    'button'><span>&times;</span></button>" +
+              "                    <h4 class='modal-title'>Loading...</h4>" +
+              "                </div>" +
+              "                <div class='modal-body'>" +
+              "                   <div class='container-fluid'>" +
+              "                     <div class='row'>" +
+              "                       <div class='col-xs-12 col-sm-3 center-xs modal-img'>" +
+              "                         <img class='modal-pic' title='Looking good!' " +
+              "                           alt='No profile picture yet!' src='/images/placeholder.png'>" +
+              "                         <div class='modal-underimg'></div>" +
+              "                       </div>" +
+              "                       <div class='col-xs-12 col-sm-9'>" +
+              "                         <h3 class='no-margin center modal-info'>Loading...</h3>" +
+              "                         <div class='modal-inside'>Loading...</div>" +
+              "                       </div>" +
+              "                     </div>" +
+              "                   </div>"+
+              "                </div>" +
+              "                <div class='modal-footer'></div>" +
+              "            </div>" +
+              "        </div>" +
+              "    </div>");
+
+          $("body").append(content);
+          var mod = $("#"+username+"-modal");
+          mod.modal();
+
+          var url = "/users/api/"+username;
+          if(bType == "staff")
+            url = "/api/teacher/"+username;
+
           $.ajax({
             type: 'GET',
-            url: "/users/api/"+username,
-            success: function(data) {
-              if(data !== "Not authorized." && data.error == undefined){
-                var title = data.firstName + " " + data.lastName;
-                console.log(data);
-                var rank = data.rankName;
-                if(rank == "Owner") rank = "<b>"+rank+"</b>";
+            url: url,
+            success: function(user) {
+              if(user !== "Not authorized." && user.error == undefined){
+                var heading = (bType == "user" ? user.rankName : "Teacher") + " Summary";
+                mod.find(".modal-title").html(heading);
 
-                var button = "";
-
-                var underimg = "<b class='left'>Not registered</b>";
-                if(data.registered){
-                  underimg = "<b class='left'>"+data.points+" points</b>";
-                }
-                button = "<a class='btn btn-primary' href='/users/"+username+"'>View Profile</a>";
-
-                var imgsrc = data.ipicture;
-                var bio = "<br>";
-                if(data.bio){
-                  bio = "<p class='center'>\""+data.bio+"\"</p>";
+                var grade = user.gradeName;
+                if(grade !== undefined){
+                  switch(grade) {
+                    case "Freshman":
+                      grade = "Frosh";
+                      break;
+                    case "Sophomore":
+                      grade = "Soph";
+                      break;
+                  }
                 }
 
-                var grade = data.gradeName;
-                switch(grade) {
-                  case "Freshman":
-                    grade = "Frosh";
-                    break;
-                  case "Sophomore":
-                    grade = "Soph";
-                    break;
+                var dep = user.department;
+                if(bType == "user")
+                  dep = user.advisement;
+                if(bType == "user")
+                  dep = "<a class='undecorated' href='/advisements/"+dep+"'>"+dep+"</a>";
+                var info = (bType=="user" ? "<b>"+grade+"</b> " : "") + user.fullName +" of <b>"+dep+"</b>";
+                mod.find(".modal-info").html(info)
+                if(bType == "staff")
+                  mod.find(".modal-inside").append("<br><br>");
+
+                // ------- IMG DIV -----------------------------------
+                mod.find(".modal-pic").attr("src", user.ipicture);
+                if(bType == "user"){
+                  var underimg = "<b class='left text-danger'>Not registered</b>";
+                  if(user.registered){
+                    underimg = "<b class='left'>"+user.points+" points</b>";
+                  }
+                  mod.find(".modal-underimg").html(underimg);
+                }else{
+                  mod.find(".modal-underimg").remove();
                 }
+                // ----------------------------------------------------
 
-                var location = "";
-                //console.log(data.sInfo);
-                if(data.registered){
-                  //console.log(data);
-                  if(data.todaysClassesInfo){
-                    data.sInfo = data.todaysClassesInfo.currentInfo;
-                    if(data.sInfo.inSchool){
-                      //console.log("GOOD");
-                      var now = (data.sInfo.nowClass !== false && data.sInfo.nowClass !== "between" ? data.sInfo.nowClass : data.sInfo.justStarted);
-                      if(now !== false){
-                        console.log(now);
+                if(bType == "user"){
+                  bio = "<p class='text-center text-muted'>"+user.firstName+" has not set a bio!</span>";
+                  if(user.bio){
+                    bio = "<p class='text-center'>\""+user.bio+"\"</p>";
+                  }
+                  mod.find(".modal-inside").html(bio);
+                }
+                if(bType == "user"){
+                  if(user.registered){
+                    //console.log(data);
+                    if(user.todaysClassesInfo){
+                      user.sInfo = user.todaysClassesInfo.currentInfo;
+                      if(user.sInfo.inSchool){
+                        var now = (user.sInfo.nowClass !== false && user.sInfo.nowClass !== "between" ? user.sInfo.nowClass : user.sInfo.justStarted);
+                        if(now !== false){
+                          var location = $("<div class='well well-sm'>As of <b>" +moment().format("h:mm A")+
+                            "</b>, "+user.firstName+" is in <b>"+now.className+"</b> in <b>"+
+                            now.room + "</b> until <b>"+moment(now.endTime, "hh:mm A").format("h:mm A")+"</b></div>");
+                            mod.find(".modal-inside").append(location);
 
-
-                        location = "<div class='well well-sm'>As of <b>" +moment().format("h:mm A")+
-                          "</b>, "+data.firstName+" is in <b>"+now.className+"</b> in <b>"+
-                          now.room + "</b> until <b>"+moment(now.endTime, "hh:mm A").format("h:mm A")+"</b></div>";
+                        }
                       }
                     }
+                  }else{
+                    mod.find(".modal-inside").text(user.fullName+" has not yet used OnTrac. Why don't you invite him!");
                   }
+                }else if(bType == "staff"){
+                  var coursenames = ['None!'];
+                  if(user.courses.length > 0){
+                    coursenames=[];
+                    for(var c in user.courses){
+                      coursenames.push(user.courses[c].title);
+                    }
+                  }
+                  var well = "<div class='well well-sm'><b>Classes: </b><span>";
+                  well += coursenames.join(',  ')+"</span></div>";
 
+                  mod.find('.modal-inside').html(well);
                 }
-
-
-
-                // TODO: this thing...
-                var content = $("<div class='modal user-modal' id='"+username+"-modal' tabindex='-1'>" +
-                      "        <div class='modal-dialog'>" +
-                      "            <div class='modal-content'>" +
-                      "                <div class='modal-header'>" +
-                      "                    <button class='close' data-dismiss='modal' type=" +
-                      "                    'button'><span>&times;</span></button>" +
-                      "                    <h4 class='modal-title'>"+rank+
-                      "                     Summary</h4>" +
-                      "                </div>" +
-                      "                <div class='modal-body'>" +
-                                        "<div class='container-fluid'>" +
-                                        "    <div class='row'>" +
-                                        "        <div class='col-xs-12 col-sm-3 center-xs'>" +
-                                        "            <img class='modal-pic' title='Looking good!' alt='No profile picture yet!' src='"+imgsrc+"'>" +
-                                        "            <br>"+underimg +
-                                        "        </div>" +
-                                        "        <div class='col-xs-12 col-sm-9'>" +
-                                        "             <h3 class='no-margin center'><b>"+grade+"</b> "+data.firstName +
-                                        " " +data.lastName+" of <a class='undecorated' href='/advisements/"+data.advisement +
-                                        "'><b>" + data.advisement+"</b></a></h3>" + bio + location +
-                                        "        </div>" +
-                                        "    </div>" +
-                                        "</div>"+
-                      "                </div>" +
-                      "                <div class='modal-footer'>" +
-                      "                    <button class='btn btn-default' data-dismiss='modal' type=" +
-                      "                    'button'>Close</button>" + button +
-                      "                </div>" +
-                      "            </div>" +
-                      "        </div>" +
-                      "    </div>");
-
-                $("body").append(content);
-                $("#"+username+"-modal").modal();
+                // -----------------------------------------------------
+                var button = "";
+                if(bType == "user"){
+                  button += "<a class='btn btn-primary' href='/users/"+username+"'>View Profile</a>";
+                  button += "<button class='btn btn-default' data-dismiss='modal' type='button'>Close</button>";
+                }else{
+                  button += "<a class='btn btn-default' href='mailto:"+user.email+"'>Email</a>";
+                  button += "<a class='btn btn-info' target='_blank' href='http://moodle.regis.org/user/profile.php?id="+user.mID+"'>Moodle Profile</a>";
+                  button += "<a class='btn btn-primary' href='http://intranet.regis.org/infocenter/default.cfm?StaffCode="+user.code+"' target='blank'>Schedule</a>";
+                }
+                mod.find('.modal-footer').append($(button));
               }
             }
           });
-        }else{
-          $("#"+username+"-modal").modal();
-        }
-      });
-    }
+      }
 
-
-    teacherbadges = function() {
-      $(".teacher-badge").off("click").click(function(){
+      $(".user-badge").off("click").click(function() {
+        if($(this).data("username") == undefined) return;
         var username = $(this).data("username");
 
-        if($("#"+username+"-modal").length === 0){
-          $.ajax({
-            type: 'GET',
-            url: "/api/teacher/"+username,
-            success: function(data) {
-              if(data != "Not authorized."){
-                var title = data.firstName + " " + data.lastName;
-                console.log(data);
-                var coursenames = ['None!'];
-                if(data.courses.length > 0){
-                  coursenames=[];
-                  for(var c in data.courses){
-                    coursenames.push(data.courses[c].title);
-                  }
-                }
-                if(data.ratingCount > 0)
-                  var rating = "Going by <b>"+data.ratingCount+"</b> unique ratings, this teacher is <b>"+data.ratingStringJSON+"</b> by his students";
-                else
-                  var rating = "None of this teacher's students has yet rated them";
-
-                var imgsrc = data.ipicture;
-                var dep = data.department;
-
-                // TODO: this thing too...
-                var content = $("<div class='modal fade teacher-modal' id='"+username+"-modal' tabindex='-1'>" +
-                      "        <div class='modal-dialog'>" +
-                      "            <div class='modal-content'>" +
-                      "                <div class='modal-header'>" +
-                      "                    <button class='close' data-dismiss='modal' type=" +
-                      "                    'button'><span>&times;</span></button>" +
-                      "                    <h4 class='modal-title'>Teacher" +
-                      "                    Summary</h4>" +
-                      "                </div>" +
-                      "                <div class='modal-body'>" +
-                                        "<div class='container-fluid'>" +
-                                        "    <div class='row'>" +
-                                        "        <div class='col-xs-12 col-sm-3 center'>" +
-                                        "            <img class='modal-pic' title='Looking good!' alt='No profile picture yet!' src='"+imgsrc+"'>" +
-                                        "        </div>" +
-                                        "        <div class='col-xs-12 col-sm-9'>" +
-                                        "             <h3 class='no-margin'>"+data.firstName + " " +data.lastName+" of <b>"+dep+"</b></h3><br>" +
-                                        "             <div class='well well-sm'>" +
-                                        "                 <b>Classes: </b><span>"+coursenames.join(',  ')+"</span>" +
-                                        "             </div>" +
-                                        "        </div>" +
-                                        "    </div>" +
-                                        "    <div class='row'>" +
-                                        "       <h4>"+rating+"</h4>" +
-                                        "    </div>" +
-                                        "</div>"+
-                      "                </div>" +
-                      "                <div class='modal-footer'><a class='btn btn-default' href='mailto:"+data.email+"'>Email</a> " +
-                      "                     <a class='btn btn-info' target='_blank' " +
-                      "                    href='http://moodle.regis.org/user/profile.php?id="+data.mID+"'>Moodle Profile</a>" +
-                      "                     <a class='btn btn-primary' " +
-                      "                     href='http://intranet.regis.org/infocenter/default.cfm?StaffCode="+
-                                            data.code+"' target='blank'>Schedule</a>" +
-                      "                </div>" +
-                      "            </div>" +
-                      "        </div>" +
-                      "    </div>");
-
-                $("body").append(content);
-                $("#"+username+"-modal").modal();
-              }
-            }
-          });
-        }else{
+        if($("#"+username+"-modal").length === 0)
+          createPersonBadge("user", username);
+        else
           $("#"+username+"-modal").modal();
-        }
+      });
+
+      $(".teacher-badge").off("click").click(function() {
+        if($(this).data("username") == undefined) return;
+        var username = $(this).data("username");
+
+        if($("#"+username+"-modal").length === 0)
+          createPersonBadge("staff", username);
+        else
+          $("#"+username+"-modal").modal();
       });
     }
-
-
 
     coursebadges = function (){
       $(".course-badge").off("click").click(function() {
@@ -255,8 +226,7 @@ modules.push({
       });
     }
 
-    userbadges();
-    teacherbadges();
+    personbadges();
     coursebadges();
   }
 });

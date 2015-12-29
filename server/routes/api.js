@@ -27,6 +27,7 @@ router.get('/teacher/:username', function(req, res) {
   req.Teacher.findOne({username: username}).populate('courses', 'title mID').exec(function(err, teacher) {
     if(err){res.json({error: err}); return;};
     if(teacher){
+      teacher = teacher.toObject({virtuals: true});
       teacher.ratingStringJSON = String(teacher.ratingString);
       //console.log("LOOK: "+teacher);
       res.json(teacher);

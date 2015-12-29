@@ -117,7 +117,7 @@ modules.push({
         });
       }
       $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
-      userbadges();
+      personbadges();
     };
 
     socket.on('message', function (data) {

@@ -67,7 +67,7 @@ modules.push({
       $(".online-badge").attr("data-content", names.join(', '));
 
       list.html(names.join(''));
-      userbadges();
+      personbadges();
     }
 
 

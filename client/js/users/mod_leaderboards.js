@@ -72,7 +72,7 @@ modules.push({
       html.push('</table>');
 
       lb.html(html.join(''));
-      userbadges();
+      personbadges();
     }
 
     $("#lb-points").click(function() {
