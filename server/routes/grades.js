@@ -1,10 +1,12 @@
 var express = require('express');
 var router = express.Router();
+var moment = require('moment');
 
 router.get('/', function(req, res) {
   req.toJade.title = "Your Grades";
-  req.GradedItem.find({username: req.currentUser.username})
+  req.GradedItem.find({username: req.currentUser.username, dateTaken: {"$lt": moment().startOf('day').toDate()}})
     .populate('course', 'title mID')
+    .sort({dateTaken: 1})
     .exec(function(err, grades) {
       if(err){req.session.errs.push("Failed get all grades.");res.redirect(req.baseUrl);return;}
       req.toJade.grades = grades;

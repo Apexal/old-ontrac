@@ -6,20 +6,36 @@ block content
     .jumbotron.no-margin
       h1.no-margin Handle Your Studies
       br
-      #stats.larger
-        b There's gonna be some nice helpful stuff here one day I swear.
+      #stats
+        p This page is going to be super cool. It will get your test schedule automatically and display them here.
       
     .row
       .col-xs-12.col-sm-7
         .page-header
           h2 Today's Items
-            small.right 0 items
-        .col-xs-12
-          p No tests or quizzes today!
-      .col-xs-12.col-sm-4
+            small.right #{today.length} items
+        
+        if today.length > 0
+          table.table
+            each i in today
+              tr
+                td= i.course.title
+        else
+          .col-xs-12
+            p No tests or quizzes today!
+      .col-xs-12.col-sm-5
         .page-header
           h2 Upcoming Items
-            small.right 0 items
-        
-        .col-xs-12
-          p No tests or quizzes for at least a month!
+            small.right #{upcoming.length} items
+          if upcoming.length > 0
+            table.table
+              each i in upcoming
+                tr
+                  td
+                    a.undecorated(href="/study/"+i.id)= i.course.title
+                    if i.desc
+                      | : #{i.desc}
+                  td(title=moment(i.dateTaken).format("dddd, MMMM Do YYYY"))= moment(i.dateTaken).fromNow()
+          else
+            .col-xs-12
+              p No tests or quizzes for at least a month!

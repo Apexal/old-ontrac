@@ -40,6 +40,7 @@ module.exports = function(io) {
       .then(function(u){
         if(!u){throw "Incorrect username or password.";}
         user = u;
+        adv = u.advisement;
         // The username passed exists
          // For the session
         return request({
@@ -134,6 +135,64 @@ module.exports = function(io) {
           //console.log(req.session.todaysInfo);
         }
 
+
+
+        return request({
+          url: 'http://intranet.regis.org/calendar/qry_searchresults.cfm', //URL that the login form on the Intranet points to
+          jar: cookieJar,
+          method: 'POST',
+          //Lets post the following key/values as form
+          form: {
+            SearchCriteria: adv.split("-")[0]
+          },
+          resolveWithFullResponse: true,
+          simple: false
+        });
+      }).then(function(response) {
+        var body = response.body;
+        //console.log(body);
+        $ = cheerio.load(body);
+
+        var items = [];
+        $("li[type='square'] a").each(function(i, e) {
+          var date = $(this).parent().parent().parent().find('td').last().text().trim();
+          var parsed = moment(date, "ddd, MMM. D, YYYY");
+          //Mon, Dec. 15, 2014'
+          var advs = $(this).text().split(";");
+          var l = advs.length;
+
+          var subject = advs[l-1].trim().split(",")[0];
+          if(advs.indexOf(adv) > -1 || advs.indexOf(adv.split("-")[0]) > -1)
+            items.push({course:subject, date: parsed});
+        });
+
+        items = items.filter(function(i) {
+          return (i.date.isAfter(moment().subtract(1, 'days')));
+        });
+        items.forEach(function(i) {
+          var cID = user.courses.filter(function (c) {
+            return (c.title.indexOf(i.course) > -1 || c.title == i.course || i.course.indexOf(c.title) > -1);
+          })[0].id;
+          console.log(cID);
+          req.GradedItem.count({username: username, course: cID, dateTaken: i.date.toDate()}, function(err, count) {
+            if(err){throw "Failed to get tests!";}
+            console.log(count);
+            if(count == 0){
+              new req.GradedItem({
+                username: username,
+                itemType: "test",
+                course: cID,
+                dateTaken: i.date.toDate()
+              }).save(function(err) {
+                if(err){
+                  throw "Failed to get tests!";
+                }
+                new req.Log({who: user.username, what: "Login added new GradedItem."}).save();
+              });
+            }
+          });
+        });
+
         user.save(function(err) {
           if(err) throw(err);
           new req.Log({who: user.username, what: "Login."}).save();
@@ -222,5 +281,5 @@ module.exports = function(io) {
     res.render('chat/chatpage', req.toJade);
   });
 
-  return {router: router, noLogin: true, models: ['Student']}
+  return {router: router, noLogin: true, models: ['Student', 'GradedItem']}
 };

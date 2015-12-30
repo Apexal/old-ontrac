@@ -3,7 +3,6 @@ var express = require("express")
   , app = express()
   , http = require("http").createServer(app)
   , Promise = require("bluebird")
-  , bodyParser = require("body-parser")
   , io = require("./server/modules/sockets")(http)
   , compression = require('compression')
   , fs = require("fs")
@@ -11,6 +10,7 @@ var express = require("express")
   , favicon = require('serve-favicon')
   , logger = require('morgan')
   , bodyParser = require('body-parser')
+  , cookieParser = require('cookie-parser')
   , colors = require('colors')
   , session = require('express-session')
   , utils = require('./server/modules/utils')
@@ -37,7 +37,7 @@ app.use(compression());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-//app.use(cookieParser());
+//app.use(cookieParser({ secret: 'mrsavage', cookie: { maxAge: 60 * 60 * 24000 }}));
 io.use(function(socket, next) {
   sessionMiddleware(socket.request, socket.request.res, next);
 });
