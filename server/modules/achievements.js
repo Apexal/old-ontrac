@@ -131,5 +131,29 @@ module.exports = [
       check: function(user) {
         return (user.steamlink !== undefined);
       }
+    },
+    {
+      id: 14,
+      name: "Reach 2000 Points",
+      reward: 500,
+      check: function(user) {
+        return (user.points >= 2000);
+      }
+    },
+    {
+      id: 15,
+      name: "Reach 5000 Points",
+      reward: 1000,
+      check: function(user) {
+        return (user.points >= 5000);
+      }
+    },
+    {
+      id: 16,
+      name: "Reach 10000 Points",
+      reward: 5000,
+      check: function(user) {
+        return (user.points >= 10000);
+      }
     }
 ]
