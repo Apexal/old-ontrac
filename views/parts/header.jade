@@ -22,23 +22,28 @@ header
                   a(href="/advisements", title="View and search through all advisements at Regis.") Advisements
                 li(class=(helpers.isPage(page, "thoughts")))
                   a(href="/thoughts", title="Record your daily thoughts on school days.") Daily Thoughts
-                li.divider(role="separator")
-
-              li
-                a(href="http://intranet.regis.org/", target="_blank") Intranet
-              li
-                a(href="http://moodle.regis.org/my/", target="_blank") Moodle
-              li
-                a(href="https://owa.regis.org/owa/", target="_blank") Email
-              li
-                a(href="https://myfiles.regis.org/", target="_blank") MyFiles
-              li(role="separator").divider
-              li
-                a(target="_blank", title="View the public source code behind this project, maintained solely by me.", href="https://github.com/Aedificem/ontrac") Source Code
-              li
-                a(target="_blank", title="View the recorded issues that I'm working on for the site.", href="https://waffle.io/Aedificem/ontrac/join") Issue Progress
-              li
-                a(target="_blank", title="View the features that are being worked on and that are coming soon.", href="https://trello.com/b/b9JwXnPH/ontrac") Planned Features
+                
+              if loggedIn == true
+                if isHomepage == false
+                  li(role="separator").divider
+                  li
+                    a(href="http://intranet.regis.org/", target="_blank") Intranet
+                  li
+                    a(href="http://moodle.regis.org/my/", target="_blank") Moodle
+                  li
+                    a(href="https://owa.regis.org/owa/", target="_blank") Email
+                  li
+                    a(href="https://myfiles.regis.org/", target="_blank") MyFiles
+              
+              if loggedIn == false
+                if isHomepage == true
+                  
+                  li
+                    a(target="_blank", title="View the public source code behind this project, maintained solely by me.", href="https://github.com/Aedificem/ontrac") Source Code
+                  li
+                    a(target="_blank", title="View the recorded issues that I'm working on for the site.", href="https://waffle.io/Aedificem/ontrac/join") Issue Progress
+                  li
+                    a(target="_blank", title="View the features that are being worked on and that are coming soon.", href="https://trello.com/b/b9JwXnPH/ontrac") Planned Features
               
           if loggedIn
             li.dropdown
@@ -79,8 +84,8 @@ header
         ul.nav.navbar-nav.navbar-right
           if loggedIn
             li#points-badge
-              a(href="#")
-                span.badge(title="Your points!")= currentUser.points
+              a(href="/shop")
+                span.badge(style="margin: 0;", title="Your points!")= currentUser.points
             li.hidden-xs
               a(href="/users/"+currentUser.username+"/schedule", title="View your class schedule.", style="padding-right: 5px;padding-left: 2px;").fa.fa-calendar
             li.hidden-xs
