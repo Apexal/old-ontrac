@@ -1,0 +1,19 @@
+extends /layout
+
+block content
+  .container-fluid
+    include /info
+    .row
+      .col-xs-12
+        .page-header
+          h1.center-xs
+            b= item.course.title +" Test"
+            if item.desc
+              | : #{i.desc}
+            small.right(title=moment(item.dateTaken).fromNow())= moment(item.dateTaken).format("dddd, MMM Do YYYY")
+      .col-xs-12
+        p There will be really helpful stuff here one day I swear
+      
+    .row
+      .col-xs-12
+        a.btn.btn-default(href="/study") Back to Index

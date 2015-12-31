@@ -22,6 +22,59 @@ router.get('/', function(req, res) {
 
 });
 
+router.get("/events", function(req, res) {
+  var startDateString = req.query.start;
+  var endDateString = req.query.end;
+  if(!startDateString || !endDateString || !moment(startDateString, 'YYYY-MM-DD',
+    true).isValid() || !moment(endDateString, 'YYYY-MM-DD', true).isValid()){
+      res.json({error: "Invalid paramaters."});
+      return;
+    }
+
+  var start = moment(startDateString, 'YYYY-MM-DD', true);
+  var end = moment(endDateString, 'YYYY-MM-DD', true);
+  req.GradedItem.find({username: req.currentUser.username, dateTaken: {"$gte": start.toDate(), "$lt": end.toDate()}})
+    .populate('course', 'title')
+    .lean()
+    .exec(function(err, items){
+      if(err){console.log(err);res.json({error: err});return;}
+
+      var events = [];
+
+      if(items.length){
+        items.forEach(function(item) {
+          events.push({
+            title: item.course.title + " Test",
+            start: moment(item.dateTaken).format("YYYY-MM-DD"),
+            color: "red",
+            url: "/study/"+item._id.toString()
+          });
+        });
+        res.json(events);
+      }else{
+        res.json(null);
+      }
+    });
+});
+
+router.get('/:id', function(req, res) {
+  var id = req.params.id;
+
+  req.GradedItem.findOne({itemType: "test", username: req.currentUser.username, _id: id})
+    .lean()
+    .populate('course', 'mID title')
+    .exec(function(err, item) {
+      if(err){req.session.errs.push("Failed get item.");res.redirect(req.baseUrl);return;}
+
+      if(item){
+        req.toJade.item = item;
+        res.render('study/one', req.toJade);
+      }else{
+        req.session.errs.push("No such item exists!");res.redirect(req.baseUrl);return;
+      }
+    });
+});
+
 module.exports = function(io) {
-  return {router: router, models: ['HWItem', 'Course']}
+  return {router: router, models: ['GradedItem', 'Course']}
 };
