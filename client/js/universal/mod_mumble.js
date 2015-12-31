@@ -22,6 +22,7 @@ modules.push({
         $("#mumble-list").html("<span class='text-muted'>Nobody! Get on!</span>");
       }
       $("#mumble-section small").text(mumblers.length+" users");
+      personbadges();
     }
 
     socket.on('mumblers', function(data){
