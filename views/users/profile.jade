@@ -107,8 +107,19 @@ block content
           .user-classes
             for c in user.courses
               +class(c)
-          
-      
+      if recentActions
+        .row
+          hr
+          .col-xs-12
+            .panel.panel-success(style="max-height: 300px; overflow: scroll;")
+              .panel-heading
+                h1.panel-title  Recent Actions
+              table.table
+                tbody
+                  each l in recentActions
+                    tr
+                      td= l.what
+                      td= moment(l.when).format("dddd, MMMM Do YYYY, h:mm:ss a")
     .row
       hr
       if user !== false
