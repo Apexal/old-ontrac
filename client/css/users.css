@@ -96,3 +96,8 @@
 .lb-pos-5 {
   font-size: 1.2em;
 }
+
+.user-box button {
+  padding-left: 0;
+  padding-right: 0;
+}
