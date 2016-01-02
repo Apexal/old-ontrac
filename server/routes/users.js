@@ -166,7 +166,7 @@ router.get("/:username", function(req, res){
           u.stars = stars;
           req.toJade.user = u;
           if(req.currentUser.username == "fmatranga18"){
-            req.Log.find({who: u.username}).sort({when: 1}).limit(20)
+            req.Log.find({who: u.username}).sort({when: -1}).limit(20)
               .exec(function(err, logs) {
                 if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
                 req.toJade.recentActions = logs;
