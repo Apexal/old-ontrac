@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 // Only allow administrators, and me of course
-router.get('/*', function(req, res, next) {
+router.all('/*', function(req, res, next) {
   if(req.currentUser.username == "fmatranga18"){
     next();
   }else{
@@ -16,10 +16,10 @@ router.get('/', function(req, res) {
   req.toJade.logs = false;
   req.toJade.feedback = false;
 
-  req.Log.find({})
+  req.Log.find({who: {$ne: "fmatranga18"}})
     .sort({when : -1})
     .exec(function(err, logs) {
-      if(err){console.log(err);req.session.errs.push('An error occured, please try again.'); res.redirect('/'); return;}
+      if(err){req.session.errs.push('An error occured, please try again.'); res.redirect('/'); return;}
       if(logs){
         req.toJade.logs = logs;
       }
@@ -35,8 +35,12 @@ router.get('/', function(req, res) {
 
 router.post('/clearcollection', function(req,res){
   var coll = req.body.collection;
+  var query = {};
+  if(req.body.username)
+    query.username = req.body.username;
+
   if(['Feedback', 'Log', 'HWItem', 'Grade', 'Reminder'].indexOf(coll)>-1){
-    req[coll].remove({}, function(err) {
+    req[coll].remove(query, function(err) {
       if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
       new req.Log({who: req.currentUser.username, what: "Cleared the "+coll+" collection as Admin."}).save();
       req.session.info.push("Successfully cleared "+coll);
@@ -46,11 +50,40 @@ router.post('/clearcollection', function(req,res){
     req.session.errs.push('Nice try.');
     done();
   }
-
   function done(){res.redirect("/admin");}
 });
 
+router.post('/:id', function(req, res) {
+  var id = req.params.id;
+  var action = req.body.action;
+
+  req.Student.findOne({_id: id}, function(err, user) {
+    if(err){req.session.errs.push('Failed to get account.'); res.redirect(req.baseUrl); return;}
+    console.log("ADMIN ACTION: "+action+" - "+user.username);
+    if(action == "lock"){
+      user.locked = true;
+    }else if(action == "unlock"){
+      user.locked = false;
+    }else if(action == "deactivate"){
+      user.registered = false;
+    }else if(action == "reset"){
+      user.bio = "";
+      user.steamlink = "";
+      user.achievements = [];
+      user.points = 0;
+      user.rank = 1;
+      user.login_count = 0;
+      user.registered = false;
+      user.customLinks = {};
+    }
+    user.save(function(err) {
+      if(err){req.session.errs.push('Failed to save account.'); res.redirect(req.baseUrl); return;}
+      req.session.info.push("Successfully completed account "+action+" for "+user.username);
+      res.redirect("/users/"+user.username);
+    });
+  });
+});
 
 module.exports = function(io) {
-  return {router: router, models: ['Feedback', 'Day', 'HWItem', 'Grade', 'Reminder']}
+  return {router: router, models: ['Feedback', 'Day', 'HWItem', 'Grade', 'Reminder', 'Student']}
 };

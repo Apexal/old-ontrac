@@ -120,6 +120,13 @@ block content
                     tr
                       td= l.what
                       td= moment(l.when).format("dddd, MMMM Do YYYY, h:mm:ss a")
+    
+    if currentUser.username == "fmatranga18"
+      .row
+        .col-xs-12
+          include profile-admin
+    
+    
     .row
       hr
       if user !== false

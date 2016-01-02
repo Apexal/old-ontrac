@@ -40,6 +40,10 @@ module.exports = function(io) {
       .then(function(u){
         if(!u){throw "Incorrect username or password.";}
         user = u;
+        if(u.locked){
+          new req.Log({who: user.username, what: "Login attempt on locked account."}).save();
+          throw "Your account is locked by an admin!";
+        }
         adv = u.advisement;
         // The username passed exists
          // For the session

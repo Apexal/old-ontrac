@@ -33,7 +33,8 @@ module.exports = {
     preferences: Object,
     registered_date: {type: Date, default: Date.now},
     registered: { type: Boolean, default: false },
-    trimester_updated_in: Number
+    trimester_updated_in: Number,
+    locked: {type: Boolean, default: false}
   },
   advisement : {
     teacher: {type: Schema.Types.ObjectId, ref: 'Teacher'},
