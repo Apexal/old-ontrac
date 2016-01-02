@@ -117,7 +117,7 @@ module.exports = [
     },
     {
       id: 12,
-      name: "Start tracking Homework",
+      name: "Start Tracking Homework",
       reward: 300,
       check: function(user){
         // THIS WILL BE SET IN THE HOMEWORK ROUTE

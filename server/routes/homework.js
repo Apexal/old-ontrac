@@ -88,6 +88,18 @@ router.get("/:date", function(req, res) {
     });
 });
 
+router.post("/:date", function(req, res, next) {
+  var achievementID = 12;
+  if(req.session.currentUser.achievements.indexOf(achievementID) == -1){
+    req.Student.findOneAndUpdate({username: req.currentUser.username}, { $push: { achievements: achievementID }}, function(err) {
+      req.session.currentUser.achievements.push(achievementID);
+      req.session.currentUser.points += 300;
+      next();
+    });
+  }else{
+    next();
+  }
+});
 
 // TOGGLE THE COMPLETION ON A HOMEWORK ITEM
 router.post("/:date", function(req, res){
@@ -183,5 +195,5 @@ router.delete("/:date", function(req, res){
 
 
 module.exports = function(io) {
-  return {router: router, models: ['HWItem', 'Course']}
+  return {router: router, models: ['Student', 'HWItem', 'Course']}
 };
