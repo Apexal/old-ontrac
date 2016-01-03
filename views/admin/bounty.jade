@@ -1,0 +1,16 @@
+.col-xs-12
+  hr
+  form.form(method="POST", action="/admin/bounty")
+    h3 Bug/Suggestion Rewards 
+    .form-group
+      label(for="username") Username
+      input.form-control(type="text", name="username", required=true)
+    
+    .form-group
+      label(for="reward") Point Reward (only if not first time)
+      input.form-control(type="number", name="reward", value="200", required=true)
+    
+    .form-group
+      label(for="description") Description
+      textarea.form-control(name="description", rows="4", placeholder="Bounty description.", required=true)
+    button.btn.btn-primary Reward User
