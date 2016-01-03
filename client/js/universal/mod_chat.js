@@ -134,6 +134,7 @@ modules.push({
           externalSwears: '/swears.json'
         });
       }
+      $("#chat-messages").scrollTop(100000);
       $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
       personbadges();
     };
@@ -200,7 +201,7 @@ modules.push({
     }
 
     $("#toggle-chat").click(function() {
-      $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
+
       $("#chat-box").toggleClass("shown");
       if(Number(sessionStorage['show-chat']) == 1){
         sessionStorage['show-chat'] = 0;
@@ -212,6 +213,8 @@ modules.push({
         $("#toggle-chat").removeClass("fa-chevron-up");
         $("#toggle-chat").addClass("fa-chevron-down");
       }
+      $("#chat-messages").scrollTop(100000);
+      $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
       updateTitle();
     });
 
