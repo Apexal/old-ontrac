@@ -4,6 +4,7 @@ form.form-inline(method="POST", action="/admin/"+user._id)
       option(value="unlock", selected="true") Unlock Account
     else
       option(value="lock", selected="true") Lock Account
-    option(value="deactivate") Deactivate Account
-    option(value="reset") Reset Account
+    if user.registered
+      option(value="deactivate") Deactivate Account
+      option(value="reset") Reset Account
   button.btn.btn-danger#reset-account Save

@@ -5,7 +5,7 @@ modules.push({
     var loggingIn = false;
 
     var login = function() {
-      var username = $("#username").val().trim();
+      var username = $("#username").val().trim().toLowerCase();
       var password = $("#password").val().trim();
       if (!username || !password)
         return;
