@@ -320,7 +320,7 @@ a.slidesjs-navigation {
 }
 
 
-/* -------------------------------------------------------- */
+/* --------------------------------------------------------
 *.user-badge[data-username="fmatranga18"]
 {
  -webkit-animation: cc 1s linear 1s infinite alternate;
@@ -340,3 +340,4 @@ a.slidesjs-navigation {
   50%  { text-shadow: 1px 1px grey;}
   100% { text-shadow: none;}
 }
+*/

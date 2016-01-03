@@ -125,3 +125,11 @@ main.chatpage {
 .chat-divider {
   margin: 10px;
 }
+
+#filter-toggle {
+  margin-right: 5px;
+}
+
+#toggle-chat, #mute-toggle, #filter-toggle {
+  cursor: pointer;
+}

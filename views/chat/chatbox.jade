@@ -2,8 +2,9 @@
   .panel-heading
     h3.panel-title 
       small.fa.fa-chevron-up#toggle-chat(style="font-size: 80%;")
-      |  Global Chat &nbsp;&nbsp;
-      small.right.fa.fa-volume-up#mute-toggle
+      |  Global Chat &nbsp;
+      small.right.fa.fa-volume-up#mute-toggle(title="Toggle the sound notification.")
+      small.right.fa.fa-filter#filter-toggle(title="Toggle profanity filter.")
   .panel-body#chat-messages.small-chat
     
   form#chat-controls.form-inline.small-chat(role="form")

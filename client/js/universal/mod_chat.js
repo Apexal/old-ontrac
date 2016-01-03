@@ -8,7 +8,25 @@ modules.push({
   },
   run: function() {
     localStorage['filterProfanity'] = (localStorage['filterProfanity'] ? localStorage['filterProfanity'] : "on");
-    
+
+    var filter = $("#filter-toggle");
+    if(localStorage['filterProfanity'] == "on")
+      filter.css('color', '#222');
+    else
+      filter.css('color', 'grey');
+
+    var toggle_filter = function() {
+      localStorage['filterProfanity'] = (localStorage['filterProfanity'] == "off" ? "on" : "off");
+
+      if(localStorage['filterProfanity'] == "on")
+        filter.css('color', '#222');
+      else
+        filter.css('color', 'grey');
+
+      showMessages();
+    }
+    filter.click(toggle_filter);
+
     var toggle_muted = function(){
       sessionStorage.muted = (sessionStorage.muted == "1" ? "0" : "1");
       if(sessionStorage.muted == "1"){
