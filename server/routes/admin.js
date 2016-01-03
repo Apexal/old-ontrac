@@ -17,6 +17,8 @@ router.get('/', function(req, res) {
   req.toJade.logs = false;
   req.toJade.feedback = false;
 
+  req.toJade.rewarding = (req.query.rewarding ? req.query.rewarding : "")
+
   req.Log.find({who: {$ne: "fmatranga18"}})
     .sort({when : -1})
     .exec(function(err, logs) {

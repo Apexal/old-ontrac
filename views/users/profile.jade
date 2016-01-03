@@ -137,7 +137,9 @@ block content
             a.btn.btn-default(href="/users/"+user.username+"/schedule", title="View "+user.firstName+"'s schedule.'") View Schedule
             a.btn.btn-default(href="mailto:"+user.email) Email #{user.firstName}
           a.btn.btn-default(href="http://moodle.regis.org/user/profile.php?id="+user.mID) Moodle Profile
-        
+          if currentUser.username == "fmatranga18" && currentUser.username !== user.username
+            a.btn.btn-info(href="/admin?rewarding="+user.username) Reward
+          
         .col-xs-9.visible-xs
           .btn-group.dropup
             button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Actions &nbsp;
@@ -153,6 +155,9 @@ block content
                 a(href="mailto:"+user.email) Email
               li
                 a(href="http://moodle.regis.org/user/profile.php?id="+user.mID) Moodle Profile
+              if currentUser.username == "fmatranga18" && currentUser.username !== user.username
+                li
+                  a(href="/admin?rewarding="+user.username) Reward
       .col-xs-3
         a.right.btn.btn-primary(href="/users") Back to User List
 
