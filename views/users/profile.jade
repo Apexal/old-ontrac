@@ -168,10 +168,12 @@ block content
           button.close(type="button", data-dismiss="modal")
           h4.modal-title All Achievements
 
-        ol.list-group
+        ol.list-group(style="margin-bottom: 0;")
           for a in allAchievements
             li.list-group-item(class=(user.achievements.indexOf(a.id) > -1 ? "achieved" : ""))= a.name
               small.right= "["+a.reward+" points]"
+        .modal-footer
+          button.btn.btn-default(data-dismiss='modal', type='button') Close
 
 mixin class(course)
   .col-xs-12.col-sm-6.col-md-4
