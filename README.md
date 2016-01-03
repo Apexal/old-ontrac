@@ -1,5 +1,5 @@
-[![Stories in Ready](https://badge.waffle.io/Apexal/ontrac.png?label=ready&title=Ready)](https://waffle.io/Apexal/ontrac)
-[![Stories in Progress](https://badge.waffle.io/Apexal/ontrac.svg?label=In%20Progress&title=In%20Progress)](http://waffle.io/Apexal/ontrac)
+[![Stories in Ready](https://badge.waffle.io/Aedificem/ontrac.png?label=ready&title=Ready)](https://waffle.io/Aedificem/ontrac)
+[![Stories in Progress](https://badge.waffle.io/Aedificem/ontrac.svg?label=In%20Progress&title=In%20Progress)](http://waffle.io/Aedificem/ontrac)
 
 # README #
 
@@ -58,4 +58,4 @@ If you are interested in helping,
 
 
 ### Progress ###
-[![Throughput Graph](https://graphs.waffle.io/Apexal/ontrac/throughput.svg)](https://waffle.io/Apexal/ontrac/metrics)
+[![Throughput Graph](https://graphs.waffle.io/Aedificem/ontrac/throughput.svg)](https://waffle.io/Aedificem/ontrac/metrics)
