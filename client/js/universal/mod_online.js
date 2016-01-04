@@ -71,7 +71,7 @@ modules.push({
     }
 
 
-    var sendStatus = function (){
+    sendStatus = function (){
       var status = sessionStorage['user-status'].toLowerCase();
       if(status === undefined)
         sessionStorage['user-status'] = status = "available";
