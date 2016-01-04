@@ -42,8 +42,11 @@ html
                   i.fa.fa-info-circle
                   |    #{helpPage.title}
               .modal-body !{helpPage.html}
-                
-          
+              .modal-footer
+                form.form-inline
+                  .form-group
+                    label(for="show_again") Don't show this message again &nbsp;
+                    input#show_again(type="checkbox", name="show_again")
       
     if loggedIn
       include /parts/footer

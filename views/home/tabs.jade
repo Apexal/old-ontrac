@@ -1,12 +1,12 @@
 div#tabs.visible-xs
   ul.nav.nav-tabs(role='tablist')
-    if todaysInfo
+    if todaysInfo && helpers.nowIs("before", "2:50 PM")
       li.active(role='presentation', data-toggle='tooltip', title='View the ordered list of today\'s classes.')
         a(href='#tab-todays-schedule', aria-controls='profile', role='tab', data-toggle='tab')
           span.hidden-xs Today's Classes &nbsp;
           span.fa.fa-calendar
     if nextSD
-      li(role='presentation', data-toggle='tooltip', title='View the ordered list of your next school day\'s classes.')
+      li(class=(todaysInfo == undefined || helpers.nowIs("after", "2:50 PM") ? 'active' : ''), role='presentation', data-toggle='tooltip', title='View the ordered list of your next school day\'s classes.')
         a(href='#tab-next-schedule', aria-controls='profile', role='tab', data-toggle='tab')
           span.hidden-xs Next Day's Classes &nbsp;
           span.fa.fa-calendar-minus-o
@@ -15,7 +15,7 @@ div#tabs.visible-xs
         span.hidden-xs Moodle Links &nbsp;
         span.fa.fa-link
   .tab-content
-    if todaysInfo
+    if todaysInfo && helpers.nowIs("before", "2:50 PM")
       #tab-todays-schedule.tab-pane.active(role='tabpanel')
         table.table#schedule-table
           thead
@@ -35,7 +35,7 @@ div#tabs.visible-xs
                       | #{s.className.split("(")[0]}
                   td= s.room
     if nextSD
-      #tab-next-schedule.tab-pane(role='tabpanel')
+      #tab-next-schedule.tab-pane(class=(todaysInfo == undefined || helpers.nowIs("after", "2:50 PM") ? 'active' : ''), role='tabpanel')
         b.center-xs Next class day is #{moment(nextCD, "YYYY-MM-DD").format("dddd [the] Do")}, #{moment(nextCD, "YYYY-MM-DD").fromNow()}. It is a #{nextSD}-Day.
         table.table.table-condensed#next-schedule-table
           thead
