@@ -135,7 +135,7 @@ module.exports = [
     {
       id: 14,
       name: "Reach 2000 Points",
-      reward: 100,
+      reward: 500,
       check: function(user) {
         return (user.points >= 2000);
       }
@@ -143,7 +143,7 @@ module.exports = [
     {
       id: 15,
       name: "Reach 5000 Points",
-      reward: 500,
+      reward: 750,
       check: function(user) {
         return (user.points >= 5000);
       }

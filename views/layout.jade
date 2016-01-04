@@ -20,7 +20,7 @@ html
     
     if loggedIn
       include /parts/sidebar
-
+    
     main(class=(loggedIn ? "pushed" : ""), class=(helpers.isPage(page, '/gchat') ? "chatpage" : ""))
       if loggedIn
         include /parts/feedback-modal
@@ -31,7 +31,20 @@ html
       block content      
       if loggedIn && helpers.isPage(page, '/gchat') == false
         include /chat/chatbox
-    
+      
+      if helpPage
+        #help-modal.modal.fade(role="dialog")
+          .modal-dialog
+            .modal-content
+              .modal-header
+                button.close(data-dismiss="modal") &times;
+                h4.modal-title
+                  i.fa.fa-info-circle
+                  |    #{helpPage.title}
+              .modal-body !{helpPage.html}
+                
+          
+      
     if loggedIn
       include /parts/footer
     

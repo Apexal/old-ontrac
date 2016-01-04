@@ -37,7 +37,8 @@ router.get('/:advisement', function(req, res){
   req.toJade.title = "Advisement "+advisement;
   req.toJade.advisement = false;
 
-  req.Advisement.findOne({title: advisement}).populate('students', 'username firstName lastName registered ipicture email')
+  req.Advisement.findOne({title: advisement})
+    .populate('students', 'username firstName lastName registered ipicture email')
     .populate('teacher', 'ipicture firstName lastName username').sort({title: 1})
     .exec(function(err, adv){
       if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}

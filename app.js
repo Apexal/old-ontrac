@@ -47,6 +47,8 @@ app.locals.basedir = path.join(__dirname, 'views');
 app.locals.moment = moment;
 app.locals.helpers = utils;
 
+var helpPages = require("./server/modules/helpPages");
+
 var allowed = ['/', '/home', '/login', '/api/loggedIn'];
 app.use(function(req, res, next) {
   console.log(("\nRequest from "+req.connection.remoteAddress).blue.bold +(req.session.currentUser ? " by "+req.session.currentUser.username : "")+" at "+(moment().format("dddd, MMMM Do YYYY, h:mm:ss a")).green.bold);
@@ -90,6 +92,15 @@ app.use(function(req, res, next) {
   if(req.loggedIn){
     req.toJade.nextCD = schedules.getNextDay(moment(), req.currentUser.scheduleObject);
     req.toJade.nextSD = req.currentUser.scheduleObject.scheduleDays[req.toJade.nextCD];
+
+    var route = req.originalUrl.split("?")[0];
+    if(route == "/") route = "/home";
+    
+    for (var path in helpPages) {
+      if (helpPages.hasOwnProperty(path) && route.indexOf(path) > -1) {
+        req.toJade.helpPage = helpPages[path];
+      }
+    }
 
     if(moment(req.currentUser.last_login_time).startOf('day').isSame(moment()) == false){
       var sd = req.currentUser.scheduleObject.scheduleDays[moment().format("MM/DD/YY")];
