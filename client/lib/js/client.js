@@ -65,5 +65,7 @@ $(function() {
     });
     updateTooltips();
     console.log("[ DONE ]");
+
+    setTimeout(location.reload, 1000 * 60 * 60 * 2);
   });
 });
