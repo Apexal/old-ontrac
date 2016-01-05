@@ -95,10 +95,11 @@ app.use(function(req, res, next) {
 
     var route = req.originalUrl.split("?")[0];
     if(route == "/") route = "/home";
-    
+
     for (var path in helpPages) {
       if (helpPages.hasOwnProperty(path) && route.indexOf(path) > -1) {
         req.toJade.helpPage = helpPages[path];
+        req.toJade.helpPath = path;
       }
     }
 

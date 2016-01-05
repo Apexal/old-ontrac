@@ -15,6 +15,34 @@ router.get('/', function(req, res) {
     });
 });
 
+router.post('/api', function(req, res) {
+  var body = req.body.newThoughtsBody;
+  var date = moment().startOf('day').toDate();
+  if(!body){
+    res.json({error: "No description!"}); return;
+  }
+  if(req.currentUser.scheduleObject.scheduleDays[moment().format("YYYY-MM-DD")] == undefined){
+    res.json({error: "Not a school day."}); return;
+  }
+  req.DailyThought.findOne({username: req.currentUser.username, date: date}, function(err, thought) {
+    if(err){res.json({error: "Failed to save item."}); return;}
+    if(!thought){
+      thought = new req.DailyThought({
+        username: req.currentUser.username,
+        date: date,
+        body: body
+      });
+    }else{
+      thought.body = body;
+    }
+    thought.save(function(err) {
+      if(err){res.json({error: "Failed to save thought."}); return;}
+      req.session.dailythought = thought.body;
+      res.json({success: true}); return;
+    });
+  });
+})
+
 router.post('/', function(req, res) {
   var body = req.body.newThoughtsBody;
   var date = moment().startOf('day').toDate();
@@ -26,7 +54,6 @@ router.post('/', function(req, res) {
   }
   req.DailyThought.findOne({username: req.currentUser.username, date: date}, function(err, thought) {
     if(err){req.session.errs.push('Failed to save item.'); res.redirect(req.baseUrl); return;}
-    console.log(thought);
     if(!thought){
       thought = new req.DailyThought({
         username: req.currentUser.username,

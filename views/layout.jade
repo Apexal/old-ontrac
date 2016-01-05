@@ -33,7 +33,7 @@ html
         include /chat/chatbox
       
       if helpPage
-        #help-modal.modal.fade(role="dialog")
+        #help-modal.modal.fade(role="dialog", data-path=helpPath)
           .modal-dialog
             .modal-content
               .modal-header
@@ -45,7 +45,7 @@ html
               .modal-footer
                 form.form-inline
                   .form-group
-                    label(for="show_again") Don't show this message again &nbsp;
+                    label(for="show_again") Don't automatically show this message &nbsp;
                     input#show_again(type="checkbox", name="show_again")
       
     if loggedIn
