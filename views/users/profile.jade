@@ -91,11 +91,13 @@ block content
                   li.text-muted.list-group-item #{user.firstName} has not yet earned any achievements.
                 li.list-group-item
                   b(data-toggle="modal", data-target="#achievements-modal") Show All Achievements
+      
       if user.registered
         .row
           if todaysInfo
-            .col-xs-12.text-center#profile-schedule
-              p.larger.center Loading schedule info...
+            if helpers.nowIs("between", "8:40 AM", "2:50 PM")
+              .col-xs-12.text-center#profile-schedule
+                p.larger.center Loading schedule info...
           else
             .col-xs-12
               p.larger.text-center #{user.firstName} does not have school today!
