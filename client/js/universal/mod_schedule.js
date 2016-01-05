@@ -1,7 +1,7 @@
 modules.push({
   name: "schedule",
   check: function() {
-    return (loggedIn && (PAGE == "/" || PAGE == "/home"));
+    return (loggedIn);
   },
   run: function() {
     // HOMEPAGE CLASS INFO
