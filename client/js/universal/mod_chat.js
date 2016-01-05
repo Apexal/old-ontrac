@@ -134,7 +134,7 @@ modules.push({
           externalSwears: '/swears.json'
         });
       }
-      
+
       personbadges();
     };
 
@@ -166,6 +166,8 @@ modules.push({
       var message = $('#chat-message').val();
       socket.emit("message", {message: message, when: moment().toDate()});
       $('#chat-message').val('');
+      $("#chat-messages").scrollTop(100000);
+      $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
     }
 
     var outgoingMessageKeyDown = function(event) {
