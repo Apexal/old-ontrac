@@ -134,8 +134,7 @@ modules.push({
           externalSwears: '/swears.json'
         });
       }
-      $("#chat-messages").scrollTop(100000);
-      $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
+      
       personbadges();
     };
 
