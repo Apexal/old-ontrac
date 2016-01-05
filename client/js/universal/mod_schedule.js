@@ -19,10 +19,13 @@ modules.push({
 
         //console.log(sInfo);
         if(cInfo.nowClass !== false){
-          if(cInfo.nowClass.className == "Unstructured Time" && sessionStorage['user-status'] == "In Class")
-            setStatus("Available");
-          else if(cInfo.nowClass.className !== "Unstructured Time")
-            setStatus("In Class");
+          if(cInfo.nowClass.className == "Unstructured Time" && sessionStorage['user-status'] == "In Class"){
+            sessionStorage['user-status'] = "available";
+            sendStatus();
+          }else if(cInfo.nowClass.className !== "Unstructured Time"){
+            sessionStorage['user-status'] = "in class";
+            sendStatus();
+          }
 
           if(cInfo.justEnded !== false){
             content += "<p class='larger no-margin'><b>"+cInfo.justEnded.className+"</b> has just ended.</p>";
@@ -47,12 +50,14 @@ modules.push({
         }else{
           // out of school
           if(sessionStorage['user-status'].toLowerCase() == "in class"){
-            setStatus("Available");
+            sessionStorage['user-status'] = "available";
+            sendStatus();
           }
         }
       }else{
         if(sessionStorage['user-status'].toLowerCase() == "in class"){
-          setStatus("Available");
+          sessionStorage['user-status'] = "available";
+          sendStatus();
         }
       }
     }
@@ -95,7 +100,8 @@ modules.push({
         }
       }else{
         if(sessionStorage['user-status'].toLowerCase() == "in class"){
-          setStatus("Available");
+          sessionStorage['user-status'] = "available";
+          sendStatus();
         }
       }
     }
