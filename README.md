@@ -56,6 +56,9 @@ If you are interested in helping,
 3. ???
 4. Profit
 
+### Screenshots ###
+
+![A typical OnTrac homepage!](/client/public/images/screenshots/homepage.png)
 
 ### Progress ###
 [![Throughput Graph](https://graphs.waffle.io/Aedificem/ontrac/throughput.svg)](https://waffle.io/Aedificem/ontrac/metrics)
