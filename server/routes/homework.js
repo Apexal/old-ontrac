@@ -91,10 +91,14 @@ router.get("/:date", function(req, res) {
 router.post("/:date", function(req, res, next) {
   var achievementID = 12;
   if(req.session.currentUser.achievements.indexOf(achievementID) == -1){
-    req.Student.findOneAndUpdate({username: req.currentUser.username}, { $push: { achievements: achievementID }}, function(err) {
+    req.Student.findOne({username: req.currentUser.username}, function(err, user) {
       req.session.currentUser.achievements.push(achievementID);
       req.session.currentUser.points += 300;
-      next();
+      user.points += 300;
+      user.achievements.push(achievementID);
+      user.save(function(err) {
+        next();
+      });
     });
   }else{
     next();

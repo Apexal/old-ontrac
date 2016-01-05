@@ -82,6 +82,8 @@ modules.push({
     });
 
     var showMessages = function() {
+      var scrollPos = $("#chat-messages")[0].scrollHeight - $("#chat-messages").scrollTop();
+
       var html = '';
       var lastSender = "";
       for(var i=0; i<messages.length; i++) {
@@ -134,8 +136,12 @@ modules.push({
           externalSwears: '/swears.json'
         });
       }
-      $("#chat-messages").scrollTop(100000);
-      $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
+
+      if(scrollPos == $("#chat-messages").outerHeight()){
+        $("#chat-messages").scrollTop(100000);
+        $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
+      }
+      
       personbadges();
     };
 
@@ -167,6 +173,8 @@ modules.push({
       var message = $('#chat-message').val();
       socket.emit("message", {message: message, when: moment().toDate()});
       $('#chat-message').val('');
+      $("#chat-messages").scrollTop(100000);
+      $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
     }
 
     var outgoingMessageKeyDown = function(event) {

@@ -33,7 +33,7 @@ aside#sidebar
         b.larger #{todaysInfo.scheduleDay} - Day
         hr(style="margin-top: 10px;")
 
-  if todaysInfo && moment().isBefore(moment().hour(15))
+  if todaysInfo && helpers.nowIs("between", "8:40 AM", "2:50 PM")
     if isHomepage == false
       section#sidebar-class-info
         #sd-nowc
@@ -51,6 +51,8 @@ aside#sidebar
           i.right#nextclass-room        
         #period-countdown.text-center(title="The time until the end of the period.")
           h3 Loading...
+  
+  if todaysInfo && helpers.nowIs("before", "2:50 PM")
     hr
     section#todays-schedule
       span(title=todaysInfo.scheduleDay)
@@ -65,7 +67,7 @@ aside#sidebar
                 | #{s.className.split("(")[0]}
               small.text-muted.right= helpers.showRoom(s.room)
               
-  if nextSD && (todaysInfo == undefined || moment().isAfter(moment().hour(15)))
+  if nextSD && (todaysInfo == undefined || helpers.nowIs("after", "2:50 PM"))
     hr
     section#next-schedule
       span(title=nextCD)

@@ -23,6 +23,26 @@ module.exports = {
 
   	return g;
   },
+  nowIs: function() {
+    // ARGS: what, start, end
+    // - 'after', '4:00 PM'
+    // - 'between', '8:40 AM', '3:00 PM'
+    var what = arguments[0];
+    if(arguments[2]){
+      var start = moment(arguments[1], "h:mm A");
+      var end = moment(arguments[2], "h:mm A");
+      return (moment().isBetween(start, end));
+    }else{
+      var time = moment(arguments[1], "h:mm A");
+
+      if(what == "after")
+        return (moment().isAfter(time));
+      else if(what == "before")
+        return (moment().isBefore(time));
+      else
+        return false;
+    }
+  },
   pluralize: function(num, non, pluralized) {
     if(num == 0 || num > 1)
       return pluralized;
