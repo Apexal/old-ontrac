@@ -51,6 +51,7 @@ block content
               th Message
             for f in feedback
               tr(title=moment(f.date_sent).format("dddd, MMMM Do YYYY, h:mm a"))
+                td.user-badge(data-username=f.username)= f.username
                 td= f.feedbackType
                 td= f.text
 

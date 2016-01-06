@@ -99,6 +99,7 @@ module.exports = {
     added_date: {type: Date, default: Date.now}
   },
   feedback: {
+    username: {type: String, default: "unknown"},
     feedbackType: String,
     text: String,
     date_sent: {type: Date, default: Date.now}

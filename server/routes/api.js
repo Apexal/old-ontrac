@@ -54,12 +54,12 @@ router.post("/feedback/send", function(req, res) {
   if(text && feedbackType){
     console.log(feedbackType + " " + text);
     new req.Feedback({
+      username: req.currentUser.username,
       feedbackType: feedbackType,
       text: filter(text)
     }).save(function(err, fb) {
       if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
       res.json({success: true});
-      console.log(fb);
     });
   }else{
     res.end("Not enough info.");
