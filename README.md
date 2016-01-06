@@ -22,7 +22,7 @@ life while at the same time providing an easy, customized
 platform for organization and collaboration with their
 classmates and schoolmates.
 
-* Alpha v1.x
+* Alpha v2.x
 * Make Regis eas*ier*
 * Track homework, projects, tests, quizzes, grades, notes, tasks, reminders, friends, schedules, meetings, clubs, groups, and more all in one place at the same time.
 
@@ -59,6 +59,8 @@ If you are interested in helping,
 ### Screenshots ###
 
 ![A typical OnTrac homepage!](/client/public/images/screenshots/homepage.png)
+
+![A profile page!](/client/public/images/screenshots/profile.png)
 
 ### Progress ###
 [![Throughput Graph](https://graphs.waffle.io/Aedificem/ontrac/throughput.svg)](https://waffle.io/Aedificem/ontrac/metrics)
