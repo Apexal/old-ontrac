@@ -177,10 +177,8 @@ module.exports = function(io) {
           var cID = user.courses.filter(function (c) {
             return (c.title.indexOf(i.course) > -1 || c.title == i.course || i.course.indexOf(c.title) > -1);
           })[0].id;
-          console.log(cID);
           req.GradedItem.count({username: username, course: cID, dateTaken: i.date.toDate()}, function(err, count) {
             if(err){throw "Failed to get tests!";}
-            console.log(count);
             if(count == 0){
               new req.GradedItem({
                 username: username,
@@ -201,9 +199,6 @@ module.exports = function(io) {
           if(err) throw(err);
           new req.Log({who: user.username, what: "Login."}).save();
           req.session.quietlogin = false;
-          var d = {username: "server", message: user.username+" has logged in.", when: Date.now(), ignore: user.username};
-          messages.push(d);
-          io.sockets.emit('message', d);
           res.json({success: true});
         });
       })
@@ -221,9 +216,6 @@ module.exports = function(io) {
     if(req.loggedIn){
       if(req.session.quietlogin == false){
         new req.Log({who: req.currentUser.username, what: "Logout."}).save();
-        var d = {username: "server", message: req.currentUser.username+" has logged out.", when: Date.now(), ignore: req.currentUser.username};
-        messages.push(d);
-        io.sockets.emit('message', d);
       }
       io.sockets.emit('new-logout', {username: req.currentUser.username});
       delete req.session.currentUser;
