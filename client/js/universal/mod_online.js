@@ -107,6 +107,7 @@ modules.push({
     });
 
     socket.on('online-list', function(data) {
+      console.log(data);
       online = data.users;
       update_online_lists();
     });
