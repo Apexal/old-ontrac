@@ -12,7 +12,7 @@ module.exports = function(io) {
   mumble(function(error, connection) {
     if( error ) { throw new Error( error ); }
 
-    //if(process.env.NODE_ENV == 'production')
+    if(process.env.NODE_ENV == 'production')
       connection.authenticate( 'ontrac-bot2', 'regis' );
 
     connection.on( 'userState', function (state) {
