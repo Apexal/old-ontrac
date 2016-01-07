@@ -76,61 +76,66 @@ modules.push({
 
     socket.on('pastMessages', function(data) {
       messages = data.messages;
-      //messages.push({username: "fmatranga18", message: "SEPARATED", when: moment().subtract(20, 'hours')});
       showMessages();
       $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
     });
 
+    var createMessageHTML = function(m, lastSender){
+      var toReturn = [];
+      var message = m.message;
+      var when = moment(m.when);
+
+      if(m.username == "server"){
+        toReturn.push("<span title='"+when.fromNow()+" | "+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"' class='text-muted'>"+message+"</span><br>");
+      }else{
+        var user = m.username;
+        // Totally sanitizes the message
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(message));
+        message = div.innerHTML;
+        message = linkify(message);
+
+        var words = message.split(" ");
+        message = "";
+        words.forEach(function(word) {
+          var toAdd = word;
+          if(word.indexOf("@") == 0 && word !== "@"){
+            var badge = word.replace("@", "");
+            var div = document.createElement('div');
+            div.appendChild(document.createTextNode(badge));
+            badge = div.innerHTML;
+            toAdd = "<b class='user-badge' data-username='"+badge+"'>@"+badge+"</b>";
+          }
+          message += toAdd+" ";
+        });
+        message = message.trim();
+
+        // If last message is from over 5 hours ago, add a separator
+        try{if(moment(when).diff(messages[i - 1].when, 'hours') > 5){
+            toReturn.push("<hr class='chat-divider'>");
+        }}catch(e){}
+
+        toReturn.push("<div class='message "+(user==currentUser.username ? "you" : "")+"'>");
+        if(lastSender !== user)
+          toReturn.push("<b class='user-badge' data-username='"+user+"'>"+user+": </b>");
+
+        toReturn.push("<span title='"+when.fromNow()+"'>"+message+"</span></div>");
+      }
+
+      return toReturn.join('');
+    }
+
     var showMessages = function() {
       var scrollPos = $("#chat-messages")[0].scrollHeight - $("#chat-messages").scrollTop();
 
-      var html = '';
+      var html = [];
       var lastSender = "";
       for(var i=0; i<messages.length; i++) {
-        var message = messages[i].message;
-        var when = moment(messages[i].when);
-
-        if(messages[i].username == "server"){
-          var part = "<span title='"+when.fromNow()+" | "+when.format("dddd, MMMM Do YYYY, h:mm:ss a")+"' class='text-muted'>"+message+"</span><br>";
-          html += part;
-        }else{
-          var user = messages[i].username;
-          // Totally sanitizes the message
-          var div = document.createElement('div');
-          div.appendChild(document.createTextNode(message));
-          message = div.innerHTML;
-          message = linkify(message);
-
-          var words = message.split(" ");
-          message = "";
-          words.forEach(function(word) {
-            var toAdd = word;
-            if(word.indexOf("@") == 0 && word !== "@"){
-              var badge = word.replace("@", "");
-              var div = document.createElement('div');
-              div.appendChild(document.createTextNode(badge));
-              badge = div.innerHTML;
-              toAdd = "<b class='user-badge' data-username='"+badge+"'>@"+badge+"</b>";
-            }
-            message += toAdd+" ";
-          });
-          message = message.trim();
-
-          // If last message is from over 5 hours ago, add a separator
-          try{if(moment(when).diff(messages[i - 1].when, 'hours') > 5){
-              html+="<hr class='chat-divider'>";
-          }}catch(e){}
-
-          var part = "";
-          if(lastSender !== user)
-            part+= "<b class='user-badge' data-username='"+user+"'>"+user+": </b>";
-          part += "<span title='"+when.fromNow()+"'>"+message+"</span><br>";
-          html += part;
-        }
-
+        html.push(createMessageHTML(messages[i], lastSender));
         lastSender = messages[i].username;
       }
-      $("#chat-messages").html(html);
+      $("#chat-messages").html(html.join(""));
+
       if(localStorage['filterProfanity'] == "on"){
         $('#chat-messages').profanityFilter({
           externalSwears: '/swears.json'
@@ -141,7 +146,7 @@ modules.push({
         $("#chat-messages").scrollTop(100000);
         $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
       }
-      
+
       personbadges();
     };
 
@@ -163,7 +168,25 @@ modules.push({
             updateTitle();
           }
 
-          showMessages();
+          var scrollPos = $("#chat-messages")[0].scrollHeight - $("#chat-messages").scrollTop();
+          var lastSender = '';
+          if(messages.indexOf(data) - 1 >= 0 )
+            lastSender = messages[messages.indexOf(data) - 1].username;
+
+          $("#chat-messages").append(createMessageHTML(data, lastSender));
+
+          if(localStorage['filterProfanity'] == "on"){
+            $('#chat-messages').profanityFilter({
+              externalSwears: '/swears.json'
+            });
+          }
+
+          if(scrollPos == $("#chat-messages").outerHeight()){
+            $("#chat-messages").scrollTop(100000);
+            $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
+          }
+
+          personbadges();
       } else {
           console.log("There is a problem:", data);
       }
