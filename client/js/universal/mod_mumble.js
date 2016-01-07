@@ -25,14 +25,15 @@ modules.push({
       personbadges();
     }
 
-    socket.on('mumblers', function(data){
-      console.log(data);
-      mumblers = [];
-      data.forEach(function(user) {
-        if(user !== "ontrac-bot")
-          mumblers.push(user);
+    var updateMumblers = function(){
+      $.get("/mumble/online", function(data) {
+        console.log("GOT MUMBLERS")
+        mumblers = data;
+        showMumblers();
       });
-      showMumblers();
-    });
+    }
+
+    setInterval(updateMumblers, 1000 * 60);
+    updateMumblers();
   }
 });
