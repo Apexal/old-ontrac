@@ -13,19 +13,10 @@ module.exports = function(io) {
     if( error ) { throw new Error( error ); }
 
     if(process.env.NODE_ENV == 'production')
-      connection.authenticate( 'ontrac-bot2', 'regis' );
+      connection.authenticate( 'ontrac-bot', 'regis' );
 
     connection.on( 'userState', function (state) {
-      sessions[state.session] = state;
-      online = [];
-      for (var key in sessions) {
-        if (sessions.hasOwnProperty(key)) {
-          if(sessions[key].name !== undefined){
-            if(sessions[key].name.indexOf("ontrac") == -1)
-              online.push( sessions[key].name );
-          }
-        }
-      }
+
     });
 
     router.get('/online', function(req, res) {
