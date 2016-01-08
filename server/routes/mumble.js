@@ -20,7 +20,7 @@ module.exports = function(io) {
       online = [];
       for (var key in sessions) {
         if (sessions.hasOwnProperty(key)) {
-          if(sessions[key]){
+          if(sessions[key].name !== undefined){
             if(sessions[key].name.indexOf("ontrac") == -1)
               online.push( sessions[key].name );
           }
