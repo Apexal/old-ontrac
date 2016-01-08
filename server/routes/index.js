@@ -16,7 +16,15 @@ module.exports = function(io) {
     console.log(req.trimester);
     if(req.loggedIn){
       req.toJade.title = "Your Home";
-      res.render('home/homepage', req.toJade);
+      req.toJade.dailythought = "";
+      req.DailyThought.findOne({username: req.currentUser.username, date: req.today}, function(err, thought) {
+        if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
+        if(thought){
+          req.toJade.dailythought = thought.body;
+          req.session.dailythought = thought.body;
+        }
+        res.render('home/homepage', req.toJade);
+      })
     }else{
       res.render('home/index', req.toJade);
     }
@@ -277,5 +285,5 @@ module.exports = function(io) {
     res.render('chat/chatpage', req.toJade);
   });
 
-  return {router: router, noLogin: true, models: ['Student', 'GradedItem']}
+  return {router: router, noLogin: true, models: ['Student', 'DailyThought', 'GradedItem']}
 };

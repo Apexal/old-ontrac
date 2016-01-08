@@ -6,7 +6,7 @@ var messages = [];
 var online = [];
 var usernames = [];
 
-var timeoutSeconds = 5;
+var timeoutSeconds = 10;
 
 var advchatmessages = {};
 
