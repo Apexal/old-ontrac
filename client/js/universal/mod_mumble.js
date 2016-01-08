@@ -33,7 +33,7 @@ modules.push({
       });
     }
 
-    setInterval(updateMumblers, 1000 * 60);
+    setInterval(updateMumblers, 1000 * 30);
     updateMumblers();
   }
 });
