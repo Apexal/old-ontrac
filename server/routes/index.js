@@ -13,7 +13,6 @@ module.exports = function(io) {
   /* GET home page. */
   router.get(['/', '/home'], function(req, res, next) {
     req.toJade.title = "OnTrac";
-    console.log(req.trimester);
     if(req.loggedIn){
       req.toJade.title = "Your Home";
       req.toJade.dailythought = "";
@@ -127,7 +126,6 @@ module.exports = function(io) {
             }
           }
         });
-
         user.login_count +=1;
 
         // Give points if last time points were given was over 5 minutes ago
@@ -225,7 +223,7 @@ module.exports = function(io) {
       if(req.session.quietlogin == false){
         new req.Log({who: req.currentUser.username, what: "Logout."}).save();
       }
-      io.sockets.emit('new-logout', {username: req.currentUser.username});
+
       delete req.session.currentUser;
       delete req.currentUser;
       delete req.loggedIn;

@@ -15,7 +15,7 @@ module.exports = {
     bio: String,
     steamlink: String,
     email: String,
-    achievements: Array,
+    achievements: {type: Array, default: []},
     locker_number: String,
     schedule: String,
     scheduleObject: Object,

@@ -2,11 +2,11 @@ var moment = require("moment");
 var filter = require("./utils").filter;
 var fs = require('fs');
 
-var messages = [];
-var online = [];
-var usernames = [];
+messages = [];
+online = [];
+usernames = [];
 
-var timeoutSeconds = 10;
+var timeoutSeconds = 30;
 
 var advchatmessages = {};
 
@@ -105,7 +105,7 @@ module.exports = function(http) {
 
       socket.on('disconnect', function(socket) {
         var index = usernames.indexOf(user.username);
-        if(index == -1) throw "FAILED";
+        if(index == -1) return "FAILED";
         online[index].tabs -= 1;
 
         if(online[index].tabs <= 0){
