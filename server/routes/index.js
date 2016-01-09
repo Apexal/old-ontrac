@@ -209,7 +209,7 @@ module.exports = function(io) {
         });
       })
       .catch(function(err) {
-        console.log(err);
+        console.erro(err.stack);
         if(err !== null){
           err = err.message || err;
           res.json({errors: [err]});

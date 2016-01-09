@@ -13,7 +13,7 @@ block content
       .col-xs-12.col-sm-6.col-md-4
         .panel.panel-warning#thoughtbox
           .panel-heading Today's Thoughts
-          form.form-inline(role="form", action="/thoughts", method="POST")
+          form.form-inline(role="form", action="/thoughts/add", method="POST")
             textarea.form-control(rows="2", name="newThoughtsBody")= dailythought
             button.btn.btn-warning Update
 

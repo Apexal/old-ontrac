@@ -42,7 +42,7 @@ router.post('/clearcollection', function(req,res){
   if(req.body.username)
     query.username = req.body.username;
 
-  if(['Feedback', 'Log', 'HWItem', 'Grade', 'Reminder'].indexOf(coll)>-1){
+  if(['Feedback', 'Log', 'HWItem', 'Grade', 'Reminder', 'DailyThought'].indexOf(coll)>-1){
     req[coll].remove(query, function(err) {
       if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
       new req.Log({who: req.currentUser.username, what: "Cleared the "+coll+" collection as Admin."}).save();
@@ -117,5 +117,5 @@ router.post('/:id', function(req, res) {
 });
 
 module.exports = function(io) {
-  return {router: router, models: ['Feedback', 'Day', 'HWItem', 'Grade', 'Reminder', 'Student']}
+  return {router: router, models: ['Feedback', 'Day', 'HWItem', 'Grade', 'Reminder', 'Student', 'DailyThought']}
 };

@@ -236,6 +236,10 @@ modules.push({
     }else{
       $("#classInfo").remove();
       console.log("Not a school day, not updating class info.");
+      if(sessionStorage['user-status'] == "in class"){
+        sessionStorage['user-status'] = "available";
+        sendStatus();
+      }
     }
   }
 })
