@@ -154,7 +154,7 @@ modules.push({
       if(data.message) {
           messages.push(data);
           if(data.username !== username && data.ignore !== username){
-            if(sessionStorage.muted == "0")
+            if(sessionStorage.muted == "0" && data.message.indexOf("has logged in!") == -1 && data.message.indexOf("has logged out!") == -1)
               chat_notification.play();
 
             if(!sessionStorage.unread)
