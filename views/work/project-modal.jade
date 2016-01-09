@@ -1,0 +1,26 @@
+#add-project-modal.modal.fade(role="dialog")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(data-dismiss="modal") &times;
+        h4.modal-title Add a Project
+      .modal-body
+        form.form#projectForm(role="form", method="POST", action="/work/add")
+          .form-group
+            label(for="projectCourse") Project Course
+            select.form-control(name="projectCourse")
+              each c in currentUser.courses
+                option(value=c._id)= c.title
+          .form-group
+            label(for="projectPriority") Project Priority
+            select.form-control(name="projectPriority")
+              option(value="1") 1 - Normal Priority
+              option(value="2") 2 - High Priority
+              option(value="3") 3 - Highest Priority
+              
+          .form-group
+            label(for="projectTitle") Project Title
+            input.form-control(type="text", name="projectTitle", placeholder="Bible Exegesis/Odyssey Paper/Historical Analysis Essay", required=true)
+      .modal-footer
+        button.btn.btn-default(type='button', data-dismiss='modal') Close
+        button.btn.btn-primary(type='submit', form='projectForm') Save

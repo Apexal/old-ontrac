@@ -12,17 +12,25 @@ block content
         span(data-toggle="tooltip", title="Hooray!") 0 tests, 
         span(data-toggle="tooltip", title="Hooray!") 0 quizzes, 
         span(data-toggle="tooltip", title="Hooray!") 0 projects
-
     .row
       .col-xs-12
         div(style="background-color: #222;")
           if currentUser.scheduleObject.scheduleDays[moment().format("YYYY-MM-DD")]
-            a.btn.btn-default(href="/work/today", title="View the work due today!") Today's Work
-          a.btn.btn-default(href="/work/closest", title="Find the closest day from today that you have work!") Next Day's Work
-          
+            a.btn.btn-default(href="/work/today", title="View the work due today!") Today's Homework
+          a.btn.btn-default(href="/work/closest", title="Find the closest day from today that you have work!")
+            b= "Homework "+(nDName == "Monday" ? "for the Weekend": "due "+nDName)
+
+    .row
+      .col-xs-12.col-sm-6.col-md-5
+        .page-header
+          h2 Upcoming Projects
+            span.right.fa.fa-plus(data-toggle="modal", data-target="#add-project-modal", style="font-size: .7em")
+        .col-xs-12
+          p.text-muted Nothing coming up in a while!
+        
       .col-xs-12.col-sm-6.col-md-3#due-today
         .page-header
-          h2 Due Today
+          h2 Homework Due Today
             small.right 0 items
         
         .col-xs-12
@@ -31,9 +39,9 @@ block content
             tr
               td 
       
-      .col-xs-12.col-sm-6.col-md-3#upcoming(data-closest=closestDay)
+      .col-xs-12.col-sm-6.col-md-4#upcoming(data-closest=closestDay)
         .page-header
-          h2 Upcoming
+          h2= (nDName == "Monday" ? "Weekend Homework" : "Work due "+nDName)
             small.right 0 items
         
         .col-xs-12
@@ -41,6 +49,7 @@ block content
           table.table.table-condensed
             tr
               td 
-      .col-xs-12.col-md-4.center
+      .col-xs-12.col-md-6.center
         #hw-calendar
         hr
+  include project-modal

@@ -10,24 +10,12 @@ var schedules = require('../modules/schedule');
 router.get('/', function(req, res) {
   var nD = schedules.getNextDay(moment(), req.currentUser.scheduleObject);
   req.toJade.closestDay = nD;
-  var adv = req.currentUser.advisement.charAt(0);
-  var grade = "";
-  switch(adv) {
-    case "1":
-      grade = "Freshman";
-      break;
-    case "2":
-      grade = "Sophomore";
-      break;
-    case "3":
-      grade = "Junior";
-      break;
-    case "4":
-      grade = "Senior";
-      break;
+  if(nD == moment().add(1, 'days').format("YYYY-MM-DD")){
+    req.toJade.nDName = "Tomorrow";
+  }else{
+    req.toJade.nDName = moment(nD, "YYYY-MM-DD").format("dddd");
   }
-
-  req.toJade.title = "Your "+grade+" Work";
+  req.toJade.title = "Your "+req.currentUser.gradeName+" Work";
   res.render('work/index', req.toJade);
 });
 

@@ -8,7 +8,7 @@ var modules = [];
         'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
         'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
         'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
-        'timeStamp', 'trace', 'warn'
+        'timeline', 'timelineEnd', 'timeStamp', 'trace', 'warn'
     ];
     var length = methods.length;
     var console = (window.console = window.console || {});
@@ -24,7 +24,7 @@ var modules = [];
 }());
 
 //INIT
-console.log("[ Loading OnTrac JS ]");
+//console.log("[ Loading OnTrac JS ]");
 PAGE = window.location.pathname;
 ORIGINALTITLE = $("title").text();
 loggedIn = false;
@@ -44,16 +44,16 @@ $(function() {
       username = currentUser.username;
       loggedIn = true;
       $("span.badge.odometer").text(currentUser.points);
-      console.log("[ Logged in as "+username+" ]");
+      //console.log("[ Logged in as "+username+" ]");
       var full = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
       socket = io.connect(full);
 
       socket.on('connect', function () {
         sessionId = socket.io.engine.id;
-        console.log('Connected ' + sessionId);
+        //console.log('Connected ' + sessionId);
       });
       socket.on('error', function (reason) {
-        console.log('Unable to connect to server', reason);
+        //console.log('Unable to connect to server', reason);
       });
       socket.on('refresh', function(data) {
         location.reload();
@@ -78,10 +78,10 @@ $(function() {
       return 0;
     });
     modules.forEach(function(module) {
-      if(module.check()){ console.log("[ Running "+module.name+"]"); module.run(); }
+      if(module.check()){ /*console.log("[ Running "+module.name+"]");*/ module.run(); }
     });
     updateTooltips();
-    console.log("[ DONE ]");
+    //console.log("[ DONE ]");
 
     setTimeout(location.reload, 1000 * 60 * 60 * 2);
   });
