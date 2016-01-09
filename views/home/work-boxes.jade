@@ -15,7 +15,7 @@ if todaysInfo && helpers.nowIs("before", "2:50 PM")
             .progress-bar(role='progressbar', aria-valuemin='0', aria-valuemax='100', style='width: 0%; background-color: #2780e3;')
 
 
-if helpers.nowIs("after", "1:00 PM") && nextCD
+if ((todaysInfo && helpers.nowIs("after", "1:00 PM")) || todaysInfo == undefined) && nextCD
   .col-xs-12.col-sm-6.col-lg-4#due-closest(data-closest=nextCD)
     .panel.panel-info
       a.undecorated(href="/work/closest")
