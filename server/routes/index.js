@@ -87,11 +87,6 @@ module.exports = function(io) {
 
               if(user.username == "fmatranga18")
                 user.rank = 7;
-
-              var welcomeText = "<h1><b>Welcome to OnTrac!</b></h1><br><br><p>You are now an official <b>Alpha Tester</b> for <b>OnTrac!</b>. Remember, this service is still in early development" +
-                "and is <i>not</i> yet totally ready. It is in very active development and new (and potentially unstable) features are added very frequently.</p><br>It is now your job to " +
-                "report <b>ANY AND ALL</b> bugs small or large and recommend <b>ANY AND ALL</b> ideas you have small or large.";
-              require("../modules/mailer")(user.email, "Welcome!", welcomeText);
             }else{
               console.log("UPDATING INFO FOR "+username);
             }
@@ -205,11 +200,18 @@ module.exports = function(io) {
           if(err) throw(err);
           new req.Log({who: user.username, what: "Login."}).save();
           req.session.quietlogin = false;
+          var welcomeText = "<h1><b>Welcome to OnTrac!</b></h1><br><br><p>You are now an official <b>Alpha Tester</b> for <b>OnTrac!</b>. Remember, this service is still in early development" +
+            "and is <i>not</i> yet totally ready. It is in very active development and new (and potentially unstable) features are added very frequently.</p><br>It is now your job to " +
+            "report <b>ANY AND ALL</b> bugs small or large and recommend <b>ANY AND ALL</b> ideas you have small or large.";
+          require("../modules/mailer")(user.email, "Welcome!", welcomeText);
+          require("../modules/mailer")("fmatranga18@regis.org", "New User", user.username+" has just registered!");
           res.json({success: true});
         });
       })
       .catch(function(err) {
-        console.erro(err.stack);
+        console.log(err);
+        console.error(err);
+        console.error(err.stack);
         if(err !== null){
           err = err.message || err;
           res.json({errors: [err]});
