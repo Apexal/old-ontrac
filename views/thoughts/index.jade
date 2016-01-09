@@ -7,19 +7,20 @@ block content
       h1.no-margin Daily Thoughts
       br
       #stats.larger
-        b There's gonna be some nice helpful stuff here one day I swear.
+        b For when you want to remember that crazy thing that happened in school today.
     hr
     .row
       .col-xs-12.col-sm-6.col-md-4
-        .panel.panel-primary#thoughtbox
-          .panel-heading Daily Thoughts
+        .panel.panel-warning#thoughtbox
+          .panel-heading Today's Thoughts
           form.form-inline(role="form", action="/thoughts", method="POST")
             textarea.form-control(rows="2", name="newThoughtsBody")= dailythought
-            button.btn.btn-primary Update
+            button.btn.btn-warning Update
 
       if thoughts.length == 0
         b No thoughts recorded in the past week!
       else
+        h3 Last Week's Thoughts
         for t in thoughts
           .col-xs-12.col-sm-6.col-md-4
             b= moment(t.date).format("dddd [the] D")
