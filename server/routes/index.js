@@ -135,12 +135,8 @@ module.exports = function(io) {
         req.session.currentUser.last_login_time = new Date();
         var sd = user.scheduleObject.scheduleDays[moment().format("YYYY-MM-DD")];
         if(sd){
-          //console.log(user.scheduleObject.dayClasses);
           req.session.todaysInfo = {scheduleDay: sd, periods: user.scheduleObject.dayClasses[sd]};
-          //console.log(req.session.todaysInfo);
         }
-
-
 
         return request({
           url: 'http://intranet.regis.org/calendar/qry_searchresults.cfm', //URL that the login form on the Intranet points to
@@ -177,23 +173,27 @@ module.exports = function(io) {
         items.forEach(function(i) {
           var cID = user.courses.filter(function (c) {
             return (c.title.indexOf(i.course) > -1 || c.title == i.course || i.course.indexOf(c.title) > -1);
-          })[0].id;
-          req.GradedItem.count({username: username, course: cID, dateTaken: i.date.toDate()}, function(err, count) {
-            if(err){throw "Failed to get tests!";}
-            if(count == 0){
-              new req.GradedItem({
-                username: username,
-                itemType: "test",
-                course: cID,
-                dateTaken: i.date.toDate()
-              }).save(function(err) {
-                if(err){
-                  throw "Failed to get tests!";
-                }
-                new req.Log({who: user.username, what: "Login added new GradedItem."}).save();
-              });
-            }
-          });
+          })[0];
+          if(cID){
+            cID = cID.id;
+
+            req.GradedItem.count({username: username, course: cID, dateTaken: i.date.toDate()}, function(err, count) {
+              if(err){throw "Failed to get tests!";}
+              if(count == 0){
+                new req.GradedItem({
+                  username: username,
+                  itemType: "test",
+                  course: cID,
+                  dateTaken: i.date.toDate()
+                }).save(function(err) {
+                  if(err){
+                    throw "Failed to get tests!";
+                  }
+                  new req.Log({who: user.username, what: "Login added new GradedItem."}).save();
+                });
+              }
+            });
+          }
         });
 
         user.save(function(err) {
@@ -203,8 +203,10 @@ module.exports = function(io) {
           var welcomeText = "<h1><b>Welcome to OnTrac!</b></h1><br><br><p>You are now an official <b>Alpha Tester</b> for <b>OnTrac!</b>. Remember, this service is still in early development" +
             "and is <i>not</i> yet totally ready. It is in very active development and new (and potentially unstable) features are added very frequently.</p><br>It is now your job to " +
             "report <b>ANY AND ALL</b> bugs small or large and recommend <b>ANY AND ALL</b> ideas you have small or large.";
-          require("../modules/mailer")(user.email, "Welcome!", welcomeText);
-          require("../modules/mailer")("fmatranga18@regis.org", "New User", user.username+" has just registered!");
+          if(user.login_count == 1){
+            require("../modules/mailer")(user.email, "Welcome!", welcomeText);
+            require("../modules/mailer")("fmatranga18@regis.org", "New User", user.username+" has just registered!");
+          }
           res.json({success: true});
         });
       })
