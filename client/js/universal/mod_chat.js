@@ -188,7 +188,7 @@ modules.push({
 
           personbadges();
       } else {
-          console.log("There is a problem:", data);
+          alert("There is a problem:", data);
       }
     });
 

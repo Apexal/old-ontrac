@@ -69,12 +69,10 @@ modules.push({
 
     // ------------- GET HOMEWORK ON PAGE LOAD --------------
     var date = window.location.pathname.split("/")[2];
-    console.log(window.location.pathname.split("/") + date);
     if(moment(date, "YYYY-MM-DD", true).isValid()){
       $.get("/homework/"+date, function(data){
         if(data){
           if(data.error){
-            console.log(data.error);
             sendNotification("info", "", data.error);
             return;
           }
@@ -82,8 +80,6 @@ modules.push({
           displayWork();
         }
       });
-    }else{
-      console.log("Not specific work  page.");
     }
     // -----------------------------------------------------
 
@@ -97,7 +93,6 @@ modules.push({
     var addHWItem = function (cID, desc, link){
       desc = desc.trim();
       if(!cID || !desc || link.length == undefined){
-        console.log("Missing some values")
         return false;
       }
 
@@ -203,8 +198,6 @@ modules.push({
     var displayWork = function(){
       tab.html("");
       var hwHTML = "";
-      console.log("displayWork()");
-      console.log(work.homework);
       // HOMEWORK
       var hw = {};
       var hwTitles = [];

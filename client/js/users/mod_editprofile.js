@@ -27,7 +27,6 @@ modules.push({
         var courseID = $("#courseForLinks").val();
         var link = $(this).find("a").text();
         if(confirm("Are you sure you want to remove this link?")){
-          console.log(courseID + " " + link);
           $.ajax( {url: "/users/courselinks", data: {
             removeCourseLinkID: courseID,
             removeCourseLinkHref: link

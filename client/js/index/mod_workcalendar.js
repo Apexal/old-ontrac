@@ -34,7 +34,6 @@ modules.push({
         element.html(event.title);
       },
       eventMouseover: function(event, jsEvent, view) {
-        console.log(event);
         if(event.itemType == "period")
           $(this).html("<b>"+event.room+"</b>");
       },

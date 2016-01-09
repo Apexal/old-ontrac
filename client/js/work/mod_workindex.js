@@ -45,7 +45,6 @@ modules.push({
         if(data){
 
           if(data.error){
-            console.log(data.error);
             holder.remove();
             return;
           }

@@ -5,7 +5,6 @@ modules.push({
     var reminders = [];
 
     var removeReminder = function() {
-      console.log("click");
       if (confirm("Remove this reminder?")) {
         var id = $(this).data("id");
         $.post("/reminders/remove", {
@@ -72,7 +71,6 @@ modules.push({
 
     $.get("/reminders/all", function(data) {
       if(data.error){
-        console.log(data.error);
         return;
       }
       reminders = data;

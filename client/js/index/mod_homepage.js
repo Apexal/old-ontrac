@@ -16,9 +16,7 @@ modules.push({
 
       $.get("/homework/"+dateString, function(data){
         if(data){
-          console.log(data);
           if(data.error){
-            console.log(data.error);
             box.remove();
             return;
           }

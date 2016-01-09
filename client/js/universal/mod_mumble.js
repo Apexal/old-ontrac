@@ -27,7 +27,6 @@ modules.push({
 
     var updateMumblers = function(){
       $.get("/mumble/online", function(data) {
-        console.log("GOT MUMBLERS")
         mumblers = data;
         showMumblers();
       });

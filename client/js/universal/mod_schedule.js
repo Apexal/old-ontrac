@@ -165,7 +165,6 @@ modules.push({
         updateProfileSchedule();
 
       updateSidebarClassInfo();
-      console.log("Updated schedule info");
     }
 
     // Return an the scheduleobject for today with the periods filled in.
@@ -235,7 +234,6 @@ modules.push({
       setInterval(updateDayInfo, 60000);
     }else{
       $("#classInfo").remove();
-      console.log("Not a school day, not updating class info.");
       if(sessionStorage['user-status'] == "in class"){
         sessionStorage['user-status'] = "available";
         sendStatus();

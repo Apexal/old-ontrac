@@ -17,7 +17,6 @@ modules.push({
           text: text
         }, function(data) {
           if (data.success === true) {
-            console.log("Good!");
             $("#feedback-text").val("");
             $("#feedback-modal").modal("hide");
           }

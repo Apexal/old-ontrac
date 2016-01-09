@@ -40,7 +40,6 @@ modules.push({
           },
           error: function(XMLHttpRequest, textStatus, error) {
             $("#login-errors .alert").remove();
-            console.log(textStatus + ": " + error);
             $("#login-button").text("Login");
             $("body").css("cursor", "auto");
             loggingIn = false;

@@ -172,7 +172,6 @@ modules.push({
             success: function(data) {
               if(data != "Not authorized."){
                 var title = data.title;
-                console.log(data);
                 var teachertitle = "";
                 var teacherpic = "";
                 if(data.teacher){
