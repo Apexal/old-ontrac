@@ -33,7 +33,7 @@ router.get("/events", function(req, res) {
 
   var start = moment(startDateString, 'YYYY-MM-DD', true);
   var end = moment(endDateString, 'YYYY-MM-DD', true);
-  req.GradedItem.find({username: req.currentUser.username, date: {"$gte": start.toDate(), "$lt": end.toDate()}})
+  req.GradedItem.find({username: req.currentUser.username, itemType: "test", date: {"$gte": start.toDate(), "$lt": end.toDate()}})
     .populate('course', 'title')
     .lean()
     .exec(function(err, items){

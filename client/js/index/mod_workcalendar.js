@@ -43,7 +43,7 @@ modules.push({
       minTime: "08:40:00",
       maxTime: "14:50:00",
       slotDuration: "00:20:00",
-      eventSources: ["/homework/events", "/study/events"]
+      eventSources: ["/homework/events", "/study/events", "/work/events"]
     });
   }
 })

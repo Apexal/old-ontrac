@@ -5,4 +5,19 @@ block content
     .row
       include /info
       .col-xs-12
+        .page-heading
+          .hidden-xs
+            h1
+              b Priority #{project.priority} #{project.course.title} Project: 
+              span= project.title
+          .visible-xs.text-center
+            h3 P#{project.priority} #{project.course.title} Project 
+            i#project-title.larger= project.title
+        
+    .row
+      .col-xs-12 
+        hr
+        a.btn.btn-default(href="/work") Back to Index
+        a.btn.btn-info(href="#") Edit Info
+        a.btn.btn-danger(href="#") Remove
         

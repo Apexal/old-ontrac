@@ -26,8 +26,15 @@ block content
           h2 Upcoming Projects
             span.right.fa.fa-plus(data-toggle="modal", data-target="#add-project-modal", style="font-size: .7em")
         .col-xs-12
-          p.text-muted Nothing coming up in a while!
-        
+          if !projects
+            p.text-muted Nothing coming up in a while!
+          else
+            each p in projects
+              a.project-link.undecorated(href="/work/"+p._id, style="font-size: 1."+p.priority+"em")
+                b(title="A priority "+p.priority+" "+p.course.title+" project due on "+moment().format("YYYY-MM-DD")+".")= "P"+p.priority+" "+p.course.title +": "
+                span(title="Due "+moment(p.date).fromNow())= p.title
+                small.text-muted.right(title=moment(p.date).fromNow()) #{moment(p.date).format("dddd, MMMM Do")}
+              br
       .col-xs-12.col-sm-6.col-md-3#due-today
         .page-header
           h2 Homework Due Today

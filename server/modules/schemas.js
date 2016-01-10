@@ -88,6 +88,7 @@ module.exports = {
     title: String,
     description: String,
     date: Date,
+    priority: {type: Number, default: 1},
     course: { type: Schema.Types.ObjectId, ref: 'Course' },
     checkpoints: [{date: Date, desc: String, reached: Boolean}],
     numGrade: {type: Number, min: 0, max: 100},

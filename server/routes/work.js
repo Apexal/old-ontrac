@@ -16,7 +16,13 @@ router.get('/', function(req, res) {
     req.toJade.nDName = moment(nD, "YYYY-MM-DD").format("dddd");
   }
   req.toJade.title = "Your "+req.currentUser.gradeName+" Work";
-  res.render('work/index', req.toJade);
+  req.GradedItem.find({itemType: {$ne: "test"}, username: req.currentUser.username, date: {$gte: req.today, $lt: moment(req.today).add(20, 'days').toDate()}})
+    .populate('course', 'title mID')
+    .sort({date: 1})
+    .exec(function(err, items) {
+      req.toJade.projects = items;
+      res.render('work/index', req.toJade);
+    });
 });
 
 router.get('/closest', function(req, res) {
@@ -32,6 +38,48 @@ router.get('/closest', function(req, res) {
 
 router.get("/today", function(req, res) {
   res.redirect("/work/"+moment().format("YYYY-MM-DD"));
+});
+
+router.get("/events", function(req, res) {
+  var startDateString = req.query.start;
+  var endDateString = req.query.end;
+  if(!startDateString || !endDateString || !moment(startDateString, 'YYYY-MM-DD',
+    true).isValid() || !moment(endDateString, 'YYYY-MM-DD', true).isValid()){
+      res.json({error: "Invalid paramaters."});
+      return;
+    }
+
+  var start = moment(startDateString, 'YYYY-MM-DD', true);
+  var end = moment(endDateString, 'YYYY-MM-DD', true);
+  req.GradedItem.find({username: req.currentUser.username, itemType: {$ne: "test"}, date: {"$gte": start.toDate(), "$lt": end.toDate()}})
+    .populate('course', 'title')
+    .lean()
+    .exec(function(err, items){
+      if(err){console.log(err);res.json({error: err});return;}
+
+      var events = [];
+
+      if(items.length){
+        items.forEach(function(item) {
+          var title = item.course.title;
+          if(title.length > 10)
+            title = title.slice(0, 11).trim()+"...";
+
+          var itemType = item.itemType;
+          itemType = itemType.charAt(0).toUpperCase() + itemType.slice(1);
+
+          events.push({
+            title: title + " "+itemType,
+            start: moment(item.date).format("YYYY-MM-DD"),
+            color: "orange",
+            url: "/work/"+item._id.toString()
+          });
+        });
+        res.json(events);
+      }else{
+        res.json(null);
+      }
+    });
 });
 
 router.get('/:date', function(req, res, next){
@@ -99,27 +147,34 @@ router.get('/:date', function(req, res, next){
 
 router.get("/:pid", function(req, res) {
   var id = req.params.pid;
-  req.GradedItem.findOne({_id: id}, function(err, project) {
-    if(err){req.session.errs.push("Failed to get project!"); res.redirect('/work'); return;}
-    if(project){
-      req.toJade.project = project;
-      res.render('/work/project', req.toJade);
-    }else{
-      req.session.errs.push("No such project exists!"); res.redirect('/work'); return;
-    }
-  });
+  req.GradedItem.findOne({_id: id})
+    .populate('course', 'title mID')
+    .exec(function(err, project) {
+      if(err){req.session.errs.push("Failed to get project!"); res.redirect('/work'); return;}
+      if(project){
+        req.toJade.project = project;
+        res.render('work/project', req.toJade);
+      }else{
+        req.session.errs.push("No such project exists!"); res.redirect('/work'); return;
+      }
+    });
 });
 
 router.post("/add", function(req, res) {
+  console.log(req.body);
   var pCourse = req.body.projectCourse;
   var pPriority = req.body.projectPriority;
-  var pTitle = req.body.projectBody;
+  var pTitle = req.body.projectTitle;
   var pDueDate = req.body.projectDueDate;
 
-  if(!pCourse || !pPriority || !pTitle){
+  if(!pCourse || !pPriority || !pTitle || !pDueDate){
     req.session.errs.push("Not enough parameters!");
     res.redirect('/work');
     return;
+  }
+
+  if(req.currentUser.scheduleObject.scheduleDays[pDueDate] == undefined){
+    req.session.errs.push("Not a school day!"); res.redirect(req.baseUrl); return;
   }
 
   var project = new req.GradedItem({
@@ -140,6 +195,8 @@ router.post("/add", function(req, res) {
     });
   });
 });
+
+
 
 module.exports = function(io) {
   return {router: router, models: ['HWItem', 'Course', 'GradedItem']}
