@@ -15,7 +15,25 @@ router.get('/', function(req, res) {
   }else{
     req.toJade.nDName = moment(nD, "YYYY-MM-DD").format("dddd");
   }
-  req.toJade.title = "Your "+req.currentUser.gradeName+" Work";
+
+  var adv = req.currentUser.advisement.charAt(0);
+  var grade = "";
+  switch(adv) {
+    case "1":
+      grade = "Freshman";
+      break;
+    case "2":
+      grade = "Sophomore";
+      break;
+    case "3":
+      grade = "Junior";
+      break;
+    case "4":
+      grade = "Senior";
+      break;
+  }
+  req.toJade.title = "Your "+grade+" Work";
+
   req.GradedItem.find({itemType: {$ne: "test"}, username: req.currentUser.username, date: {$gte: req.today, $lt: moment(req.today).add(20, 'days').toDate()}})
     .populate('course', 'title mID')
     .sort({date: 1})
@@ -161,7 +179,6 @@ router.get("/:pid", function(req, res) {
 });
 
 router.post("/add", function(req, res) {
-  console.log(req.body);
   var pCourse = req.body.projectCourse;
   var pPriority = req.body.projectPriority;
   var pTitle = req.body.projectTitle;

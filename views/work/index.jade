@@ -16,10 +16,16 @@ block content
       .col-xs-12
         div(style="background-color: #222;")
           if currentUser.scheduleObject.scheduleDays[moment().format("YYYY-MM-DD")]
-            a.btn.btn-default(href="/work/today", title="View the work due today!") Today's Homework
-          a.btn.btn-default(href="/work/closest", title="Find the closest day from today that you have work!")
-            b= "Homework "+(nDName == "Monday" ? "for the Weekend": "due "+nDName)
-
+            .hidden-xs
+              a.btn.btn-default(href="/work/today", title="View the work due today!") Today's Homework
+            .visible-xs
+              a.btn.btn-default(href="/work/today", title="View the work due today!") Today's HW
+          .hidden-xs
+            a.btn.btn-default(href="/work/closest", title="Find the closest day from today that you have work!")
+              b= "Homework "+(nDName == "Monday" ? "for the Weekend": "due "+nDName)
+          .visible-xs
+            a.btn.btn-default(href="/work/closest", title="Find the closest day from today that you have work!")
+              b= "HW Due "+nDName
     .row
       .col-xs-12.col-sm-6.col-md-5
         .page-header
