@@ -4,9 +4,9 @@ var moment = require('moment');
 
 router.get('/', function(req, res) {
   req.toJade.title = "Your Grades";
-  req.GradedItem.find({username: req.currentUser.username, dateTaken: {"$lt": moment().startOf('day').toDate()}})
+  req.GradedItem.find({username: req.currentUser.username, date: {"$lt": moment().startOf('day').toDate()}})
     .populate('course', 'title mID')
-    .sort({dateTaken: 1})
+    .sort({date: 1})
     .exec(function(err, grades) {
       if(err){req.session.errs.push("Failed get all grades.");res.redirect(req.baseUrl);return;}
       req.toJade.grades = grades;
@@ -28,7 +28,7 @@ router.post('/add', function(req, res) {
   }else{
     var props = {
       username: req.currentUser.username,
-      dateTaken: new Date(),
+      date: new Date(),
       itemType: itemType,
       description: desc,
       course: courseID

@@ -7,6 +7,9 @@
       .modal-body
         form.form#projectForm(role="form", method="POST", action="/work/add")
           .form-group
+            label(for="projectDueDate") Project Due Date
+            input.form-control#projectDueDate(type="date", name="projectDueDate", placeholder="YYYY-MM-DD")
+          .form-group
             label(for="projectCourse") Project Course
             select.form-control(name="projectCourse")
               each c in currentUser.courses

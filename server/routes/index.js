@@ -177,14 +177,14 @@ module.exports = function(io) {
           if(cID){
             cID = cID.id;
 
-            req.GradedItem.count({username: username, course: cID, dateTaken: i.date.toDate()}, function(err, count) {
+            req.GradedItem.count({username: username, course: cID, date: i.date.toDate()}, function(err, count) {
               if(err){throw "Failed to get tests!";}
               if(count == 0){
                 new req.GradedItem({
                   username: username,
                   itemType: "test",
                   course: cID,
-                  dateTaken: i.date.toDate()
+                  date: i.date.toDate()
                 }).save(function(err) {
                   if(err){
                     throw "Failed to get tests!";
@@ -211,7 +211,6 @@ module.exports = function(io) {
         });
       })
       .catch(function(err) {
-        console.log(err);
         console.error(err);
         console.error(err.stack);
         if(err !== null){

@@ -34,72 +34,113 @@ router.get("/today", function(req, res) {
   res.redirect("/work/"+moment().format("YYYY-MM-DD"));
 });
 
-router.get('/:date', function(req, res){
+router.get('/:date', function(req, res, next){
   var dateString = req.toJade.dateString = req.params.date;
   req.toJade.day = false;
   req.toJade.date = false;
   req.toJade.isToday = (dateString == req.today.format("YYYY-MM-DD"));
 
   if(moment(dateString, 'YYYY-MM-DD', true).isValid() == false){
-    // Bad date passed
-    req.session.errs.push("Bad date.");
+    next();
+  }else{
+    // Good date
+    var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true);
+    req.toJade.title = date.format("dddd, MMM Do YY");
+    req.toJade.items = false;
+
+    if(req.currentUser.scheduleObject.scheduleDays[dateString] == undefined){
+      req.session.info.push("Redirected to closest school day.");
+      // Passed date is not a school, day try to find the next one
+      console.log("Not school day, finding closest one.");
+      var nD = schedules.getNextDay(date, req.currentUser.scheduleObject);
+      if(!nD){
+        req.session.info.push("Cannot find the next class day!");
+        res.redirect("/work");
+        return;
+      }else{
+        res.redirect('/work/'+nD);
+        return;
+      }
+
+      var pD = schedules.getPrevDay(date, req.currentUser.scheduleObject);
+      if(!pD){
+        req.session.info.push("Cannot find the previous class day!");
+        res.redirect("/work");
+        return;
+      }else{
+        res.redirect('/work/'+pD);
+        return;
+      }
+    }
+    req.toJade.scheduleDay = req.currentUser.scheduleObject.scheduleDays[dateString];
+
+    // Get time from today to this date
+    var diff = moment(date).diff(req.today, 'days');
+    if(diff == 0)
+      req.toJade.fromNow = "today";
+    else if(diff == 1)
+      req.toJade.fromNow = "tomorrow";
+    else if(diff > 0)
+      req.toJade.fromNow = diff+" days away";
+    else if(diff == -1)
+      req.toJade.fromNow = "yesterday";
+    else
+      req.toJade.fromNow = Math.abs(diff)+" days ago";
+
+    // GET THE NEXT AND PREVIOUS DATES FOR THE DAY CONTROLS
+    req.toJade.nextDay = schedules.getNextDay(date, req.currentUser.scheduleObject);
+    req.toJade.previousDay = schedules.getPrevDay(date, req.currentUser.scheduleObject);
+
+    var classes = req.currentUser.scheduleObject.dayClasses[req.toJade.scheduleDay];
+    req.toJade.classes = classes;
+    res.render('work/one', req.toJade);
+  }
+});
+
+router.get("/:pid", function(req, res) {
+  var id = req.params.pid;
+  req.GradedItem.findOne({_id: id}, function(err, project) {
+    if(err){req.session.errs.push("Failed to get project!"); res.redirect('/work'); return;}
+    if(project){
+      req.toJade.project = project;
+      res.render('/work/project', req.toJade);
+    }else{
+      req.session.errs.push("No such project exists!"); res.redirect('/work'); return;
+    }
+  });
+});
+
+router.post("/add", function(req, res) {
+  var pCourse = req.body.projectCourse;
+  var pPriority = req.body.projectPriority;
+  var pTitle = req.body.projectBody;
+  var pDueDate = req.body.projectDueDate;
+
+  if(!pCourse || !pPriority || !pTitle){
+    req.session.errs.push("Not enough parameters!");
     res.redirect('/work');
     return;
   }
 
-  // Good date
-  var date = req.toJade.date = moment(dateString, 'YYYY-MM-DD', true);
-  req.toJade.title = date.format("dddd, MMM Do YY");
-  req.toJade.items = false;
+  var project = new req.GradedItem({
+    username: req.currentUser.username,
+    itemType: "project",
+    date: pDueDate,
+    course: pCourse,
+    priority: pPriority,
+    title: pTitle
+  });
 
-  if(req.currentUser.scheduleObject.scheduleDays[dateString] == undefined){
-    req.session.info.push("Redirected to closest school day.");
-    // Passed date is not a school, day try to find the next one
-    console.log("Not school day, finding closest one.");
-    var nD = schedules.getNextDay(date, req.currentUser.scheduleObject);
-    if(!nD){
-      req.session.info.push("Cannot find the next class day!");
-      res.redirect("/work");
-      return;
-    }else{
-      res.redirect('/work/'+nD);
-      return;
-    }
-
-    var pD = schedules.getPrevDay(date, req.currentUser.scheduleObject);
-    if(!pD){
-      req.session.info.push("Cannot find the previous class day!");
-      res.redirect("/work");
-      return;
-    }else{
-      res.redirect('/work/'+pD);
-      return;
-    }
-  }
-  req.toJade.scheduleDay = req.currentUser.scheduleObject.scheduleDays[dateString];
-
-  // Get time from today to this date
-  var diff = moment(date).diff(req.today, 'days');
-  if(diff == 0)
-    req.toJade.fromNow = "today";
-  else if(diff == 1)
-    req.toJade.fromNow = "tomorrow";
-  else if(diff > 0)
-    req.toJade.fromNow = diff+" days away";
-  else if(diff == -1)
-    req.toJade.fromNow = "yesterday";
-  else
-    req.toJade.fromNow = Math.abs(diff)+" days ago";
-
-  // GET THE NEXT AND PREVIOUS DATES FOR THE DAY CONTROLS
-  req.toJade.nextDay = schedules.getNextDay(date, req.currentUser.scheduleObject);
-  req.toJade.previousDay = schedules.getPrevDay(date, req.currentUser.scheduleObject);
-
-  var classes = req.currentUser.scheduleObject.dayClasses[req.toJade.scheduleDay];
-  req.toJade.classes = classes;
-  res.render('work/one', req.toJade);
+  project.save(function(err) {
+    if(err){req.session.errs.push("Failed to save project."); res.redirect(req.baseUrl); return;}
+    new req.Log({who: req.currentUser.username, what: "Added a project due "+pDueDate, when: new Date()});
+    req.Student.findOneAndUpdate({username: req.currentUser.username}, {"$inc": {points: 50}}, function(err) {
+      if(err){req.session.errs.push("Failed to add points."); res.redirect(req.baseUrl); return;}
+      res.redirect("/work/"+project._id);
+    });
+  });
 });
 
 module.exports = function(io) {
-  return {router: router, models: ['HWItem', 'Course']}
+  return {router: router, models: ['HWItem', 'Course', 'GradedItem']}
 };

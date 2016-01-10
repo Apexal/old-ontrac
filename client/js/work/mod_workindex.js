@@ -10,6 +10,10 @@ modules.push({
     return (PAGE=="/work");
   },
   run: function() {
+    $("#projectDueDate").datepicker({
+      dateFormat: "yy-mm-dd"
+    });
+
     $("#hw-calendar").fullCalendar({
       weekends: false,
       header: {

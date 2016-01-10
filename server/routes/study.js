@@ -4,15 +4,15 @@ var moment = require('moment');
 
 router.get('/', function(req, res) {
   req.toJade.title = "Study Management";
-  req.GradedItem.find({username: req.currentUser.username, dateTaken: {"$gte": moment().startOf('day').toDate()}})
+  req.GradedItem.find({username: req.currentUser.username, date: {"$gte": moment().startOf('day').toDate()}})
     .populate('course', 'title mID')
-    .sort({dateTaken: 1})
+    .sort({date: 1})
     .exec(function(err, items) {
       if(err){req.session.errs.push("Failed get all items.");res.redirect(req.baseUrl);return;}
       req.toJade.today = [];
       req.toJade.upcoming = [];
       items.forEach(function(i) {
-        if(moment(i.dateTaken).isSame(req.today))
+        if(moment(i.date).isSame(req.today))
           req.toJade.today.push(i);
         else
           req.toJade.upcoming.push(i);
@@ -33,7 +33,7 @@ router.get("/events", function(req, res) {
 
   var start = moment(startDateString, 'YYYY-MM-DD', true);
   var end = moment(endDateString, 'YYYY-MM-DD', true);
-  req.GradedItem.find({username: req.currentUser.username, dateTaken: {"$gte": start.toDate(), "$lt": end.toDate()}})
+  req.GradedItem.find({username: req.currentUser.username, date: {"$gte": start.toDate(), "$lt": end.toDate()}})
     .populate('course', 'title')
     .lean()
     .exec(function(err, items){
@@ -45,7 +45,7 @@ router.get("/events", function(req, res) {
         items.forEach(function(item) {
           events.push({
             title: item.course.title + " Test",
-            start: moment(item.dateTaken).format("YYYY-MM-DD"),
+            start: moment(item.date).format("YYYY-MM-DD"),
             color: "red",
             url: "/study/"+item._id.toString()
           });
