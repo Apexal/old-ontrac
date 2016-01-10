@@ -180,7 +180,7 @@ router.post("/add", function(req, res) {
   var project = new req.GradedItem({
     username: req.currentUser.username,
     itemType: "project",
-    date: pDueDate,
+    date: moment(pDueDate).toDate(),
     course: pCourse,
     priority: pPriority,
     title: pTitle
