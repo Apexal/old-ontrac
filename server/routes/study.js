@@ -4,7 +4,7 @@ var moment = require('moment');
 
 router.get('/', function(req, res) {
   req.toJade.title = "Study Management";
-  req.GradedItem.find({username: req.currentUser.username, date: {"$gte": moment().startOf('day').toDate()}})
+  req.GradedItem.find({username: req.currentUser.username, itemType: "test", date: {"$gte": moment().startOf('day').toDate()}})
     .populate('course', 'title mID')
     .sort({date: 1})
     .exec(function(err, items) {

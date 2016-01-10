@@ -35,7 +35,7 @@ block content
                     a.undecorated(href="/study/"+i.id)= i.course.title
                     if i.desc
                       | : #{i.desc}
-                  td(title=moment(i.dateTaken).format("dddd, MMMM Do YYYY"))= moment(i.dateTaken).fromNow()
+                  td(title=moment(i.date).format("dddd, MMMM Do YYYY"))= moment(i.date).fromNow()
           else
             .col-xs-12
               p No tests or quizzes for at least a month!
