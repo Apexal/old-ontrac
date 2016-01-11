@@ -19,7 +19,7 @@ modules.push({
 
         //console.log(sInfo);
         if(cInfo.nowClass !== false){
-          if(cInfo.nowClass.className == "Unstructured Time" && sessionStorage['user-status'] == "In Class"){
+          if(cInfo.nowClass.className == "Unstructured Time" && sessionStorage['user-status'] == "in class"){
             sessionStorage['user-status'] = "available";
             sendStatus();
           }else if(cInfo.nowClass.className !== "Unstructured Time"){

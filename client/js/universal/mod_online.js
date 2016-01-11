@@ -93,12 +93,11 @@ modules.push({
 
     // USER STATUS BUTTONS
     $("#user-status li a").click(function() {
-      var status = sessionStorage['user-status'] = $(this).text().toLowerCase().trim();
-
-      if(status == "in class")
+      if(sessionStorage['user-status'] == "in class")
         return;
-      sendStatus();
 
+      var status = sessionStorage['user-status'] = $(this).text().toLowerCase().trim();
+      sendStatus();
       if(['in class', 'working', 'busy', 'offline'].indexOf(status) > -1){
         if(sessionStorage.muted == "0")
           sendNotification("warning", "", "Muted chat due to status.");
