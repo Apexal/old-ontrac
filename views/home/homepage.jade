@@ -30,7 +30,7 @@ block content
           a.btn.btn-default.fa.fa-github(target="_blank", title="View the public source code behind this project, maintained solely by me.", href="https://github.com/Aedificem/ontrac")
           a.btn.btn-default.fa.fa-bug(target="_blank", title="View the recorded issues that I'm working on for the site.", href="https://waffle.io/Aedificem/ontrac/join")
           a.btn.btn-default.fa.fa-tasks(target="_blank", title="View the features that are being worked on and that are coming soon.", href="https://trello.com/b/b9JwXnPH/ontrac")
-    if todaysInfo && nowIs("between", "8:50 AM", "2:50 PM")
+    if todaysInfo && helpers.nowIs("between", "8:50 AM", "2:50 PM")
       #classInfo
         p.larger Loading class info...
     hr
