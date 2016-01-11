@@ -16,12 +16,12 @@ block content
       .col-xs-12
         div(style="background-color: #222;")
           .hidden-xs
-            if currentUser.scheduleObject.scheduleDays[moment().format("YYYY-MM-DD")]
+            if todaysInfo
               a.btn.btn-default(href="/work/today", title="View the work due today!") Today's Homework
             a.btn.btn-default(href="/work/closest", title="Find the closest day from today that you have work!")
               b= (nDName == "Monday" ? "Weekend Homework": "Homework due "+nDName)
           .visible-xs
-            if currentUser.scheduleObject.scheduleDays[moment().format("YYYY-MM-DD")]
+            if todaysInfo
               a.btn.btn-default(href="/work/today", title="View the work due today!") Today's HW
             a.btn.btn-default(href="/work/closest", title="Find the closest day from today that you have work!")
               b= "HW Due "+nDName

@@ -135,6 +135,8 @@ modules.push({
                   button += "<a class='btn btn-primary' href='http://intranet.regis.org/infocenter/default.cfm?StaffCode="+user.code+"' target='blank'>Schedule</a>";
                 }
                 mod.find('.modal-footer').append($(button));
+              }else{
+                mod.modal("hide");
               }
             }
           });
