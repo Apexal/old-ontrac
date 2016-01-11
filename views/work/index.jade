@@ -15,15 +15,14 @@ block content
     .row
       .col-xs-12
         div(style="background-color: #222;")
-          if currentUser.scheduleObject.scheduleDays[moment().format("YYYY-MM-DD")]
-            .hidden-xs
-              a.btn.btn-default(href="/work/today", title="View the work due today!") Today's Homework
-            .visible-xs
-              a.btn.btn-default(href="/work/today", title="View the work due today!") Today's HW
           .hidden-xs
+            if currentUser.scheduleObject.scheduleDays[moment().format("YYYY-MM-DD")]
+              a.btn.btn-default(href="/work/today", title="View the work due today!") Today's Homework
             a.btn.btn-default(href="/work/closest", title="Find the closest day from today that you have work!")
-              b= "Homework "+(nDName == "Monday" ? "for the Weekend": "due "+nDName)
+              b= (nDName == "Monday" ? "Weekend Homework": "Homework due "+nDName)
           .visible-xs
+            if currentUser.scheduleObject.scheduleDays[moment().format("YYYY-MM-DD")]
+              a.btn.btn-default(href="/work/today", title="View the work due today!") Today's HW
             a.btn.btn-default(href="/work/closest", title="Find the closest day from today that you have work!")
               b= "HW Due "+nDName
     .row
