@@ -3,6 +3,8 @@
 
 # README #
 
+[![Join the chat at https://gitter.im/Aedificem/ontrac](https://badges.gitter.im/Aedificem/ontrac.svg)](https://gitter.im/Aedificem/ontrac?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 **O** - Open-source <br>
 **N** - Networked <br>
 **T** - Third-party <br>
