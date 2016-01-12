@@ -187,8 +187,6 @@ modules.push({
           }
 
           personbadges();
-      } else {
-          alert("There is a problem:", data);
       }
     });
 

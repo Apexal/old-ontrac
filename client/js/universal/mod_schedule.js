@@ -82,6 +82,8 @@ modules.push({
           }
 
           $("#todays-schedule li").removeClass("list-group-item-success");
+
+          //TODO: have this work with free periods
           $("#todays-schedule li[data-mID='"+cInfo.nowClass.mID+"']").addClass("list-group-item-success");
 
           $("#period-countdown h3").text(moment(cInfo.nowClass.endTime, "hh:mm A").fromNow(true));
@@ -156,6 +158,13 @@ modules.push({
           text = "You now have a free until "+n.endTime+"!";
         sendDesktopNotification("info", title, text);
         sendabout = n.room;
+      }
+
+      if(!schedule.nowClass){
+        if(sessionStorage['user-status'] == "in class"){
+          sessionStorage['user-status'] = "available";
+          sendStatus();
+        }
       }
 
       if($("#classInfo").length)

@@ -132,6 +132,7 @@ module.exports = function(io) {
         }
         req.user = user;
         req.session.currentUser = user;
+        user.last_login_time = new Date();
         req.session.currentUser.last_login_time = new Date();
         var sd = user.scheduleObject.scheduleDays[moment().format("YYYY-MM-DD")];
         if(sd){

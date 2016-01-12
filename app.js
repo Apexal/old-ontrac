@@ -111,7 +111,6 @@ app.use(function(req, res, next) {
     }
   }
   req.toJade.openLogin = (req.toJade.redir == req._parsedUrl.pathname ? false : true);
-  console.log(req.toJade.isHomepage);
 
   req.session.info = [];
   req.session.errs = [];
