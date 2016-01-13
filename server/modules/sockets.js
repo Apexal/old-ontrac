@@ -79,10 +79,23 @@ module.exports = function(http) {
           io.sockets.emit('broadcast', {message: data.message.split("/bc ")[1]});
           return;
         }
-        var minimum = moment().subtract(2, 'seconds');
+        var minimum = moment().subtract(5, 'seconds');
         var recentUserMessages = messages.filter(function(m) {
           return (m.username == user.username && moment(m.when).isAfter(minimum));
         });
+        for(var i=0;i<recentUserMessages.length;i++){
+          if(i-1 >= 0){
+            var last = recentUserMessages[i-1];
+            if(last.message.length > 30 && recentUserMessages[i].message.length > 30){
+              if(spammers.indexOf(user.username) == -1){
+                spammers.push(user.username);
+                socket.emit('message', {username: "server", message: "Muted for 10 seconds due to spamming.", when: Date.now()});
+                spamWait(user.username);
+              }
+              return;
+            }
+          }
+        }
         if(recentUserMessages.length > 4 || spammers.indexOf(user.username) > -1){
           if(spammers.indexOf(user.username) == -1){
             spammers.push(user.username);
