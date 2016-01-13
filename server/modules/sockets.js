@@ -6,12 +6,20 @@ messages = [];
 online = [];
 usernames = [];
 
+spammers = [];
+
 var timeoutSeconds = 30;
 
 var advchatmessages = {};
 
 module.exports = function(http) {
   var io = require("socket.io").listen(http);
+
+  var spamWait = function(username){
+    setTimeout(function() {
+      spammers.splice(spammers.indexOf(username), 1);
+    }, 10000);
+  }
 
   var detectLogout = function(username){
     setTimeout(function(){
@@ -67,9 +75,25 @@ module.exports = function(http) {
       });
 
       socket.on('message', function (data) {
-        var d = {username: user.username, message: filter(data.message), when: data.when};
-        messages.push(d);
-        io.sockets.emit('message', d);
+        if(client.rank >= 6 && data.message.indexOf("/bc ") > -1){
+          io.sockets.emit('broadcast', {message: data.message.split("/bc ")[1]});
+          return;
+        }
+        var minimum = moment().subtract(2, 'seconds');
+        var recentUserMessages = messages.filter(function(m) {
+          return (m.username == user.username && moment(m.when).isAfter(minimum));
+        });
+        if(recentUserMessages.length > 4 || spammers.indexOf(user.username) > -1){
+          if(spammers.indexOf(user.username) == -1){
+            spammers.push(user.username);
+            socket.emit('message', {username: "server", message: "Muted for 10 seconds due to spamming.", when: Date.now()});
+            spamWait(user.username);
+          }
+        }else{
+          var d = {username: user.username, message: filter(data.message), when: data.when};
+          messages.push(d);
+          io.sockets.emit('message', d);
+        }
       });
 
       socket.on('setstatus', function (data) {

@@ -282,6 +282,12 @@ module.exports = function(io) {
     }
   });
 
+  router.get('/chatpopout', function(req, res){
+    if(req.loggedIn){
+      res.render('chat/popout', req.toJade);
+    }
+  });
+
   router.get('/gchat', function(req, res){
     req.toJade.title = "Global Chat";
     res.render('chat/chatpage', req.toJade);

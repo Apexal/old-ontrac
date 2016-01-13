@@ -150,11 +150,17 @@ modules.push({
       personbadges();
     };
 
+    socket.on('broadcast', function(data) {
+      if(data.message){
+        alert("Admin Broadcast: "+data.message);
+      }
+    });
+
     socket.on('message', function (data) {
       if(data.message) {
           messages.push(data);
           if(data.username !== username && data.ignore !== username){
-            if(sessionStorage.muted == "0" && data.message.indexOf("has logged in!") == -1 && data.message.indexOf("has logged out!") == -1)
+            if(sessionStorage.muted == "0" && data.username !== "server")
               chat_notification.play();
 
             if(!sessionStorage.unread)
@@ -168,25 +174,27 @@ modules.push({
             updateTitle();
           }
 
-          var scrollPos = $("#chat-messages")[0].scrollHeight - $("#chat-messages").scrollTop();
-          var lastSender = '';
-          if(messages.indexOf(data) - 1 >= 0 )
-            lastSender = messages[messages.indexOf(data) - 1].username;
+          if(sessionStorage['show-chat'] == "1"){
+            var scrollPos = $("#chat-messages")[0].scrollHeight - $("#chat-messages").scrollTop();
+            var lastSender = '';
+            if(messages.indexOf(data) - 1 >= 0 )
+              lastSender = messages[messages.indexOf(data) - 1].username;
 
-          $("#chat-messages").append(createMessageHTML(data, lastSender));
+            $("#chat-messages").append(createMessageHTML(data, lastSender));
 
-          if(localStorage['filterProfanity'] == "on"){
-            $('#chat-messages').profanityFilter({
-              externalSwears: '/swears.json'
-            });
+            if(localStorage['filterProfanity'] == "on"){
+              $('#chat-messages').profanityFilter({
+                externalSwears: '/swears.json'
+              });
+            }
+
+            if(scrollPos == $("#chat-messages").outerHeight()){
+              $("#chat-messages").scrollTop(100000);
+              $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
+            }
+
+            personbadges();
           }
-
-          if(scrollPos == $("#chat-messages").outerHeight()){
-            $("#chat-messages").scrollTop(100000);
-            $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
-          }
-
-          personbadges();
       }
     });
 
@@ -198,27 +206,15 @@ modules.push({
       $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
     }
 
-    var outgoingMessageKeyDown = function(event) {
-      if (event.which == 13) {
-        if ($('#chat-message').val().trim().length <= 0) {
-          return;
-        }
-        sendMessage();
-        $('#chat-message').val('');
-      }
-    }
-
-    var outgoingMessageKeyUp = function() {
-      var message = $('#chat-message').val();
-      $('#send-message').attr('disabled', (message.trim()).length > 0 ? false : true);
-    }
-
-    $('#chat-message').on('keydown', outgoingMessageKeyDown);
-    $('#chat-message').on('keyup', outgoingMessageKeyUp);
     $('#send-message').on('click', sendMessage);
 
-
     $("#chat-controls").submit(function(e) {
+      if ($('#chat-message').val().trim().length <= 0) {
+        return false;
+      }
+      sendMessage();
+      $('#chat-message').val('');
+
       e.preventDefault();
       return false;
     });
@@ -230,7 +226,6 @@ modules.push({
     }
 
     $("#toggle-chat").click(function() {
-
       $("#chat-box").toggleClass("shown");
       if(Number(sessionStorage['show-chat']) == 1){
         sessionStorage['show-chat'] = 0;
@@ -241,6 +236,7 @@ modules.push({
         sessionStorage.unread = 0;
         $("#toggle-chat").removeClass("fa-chevron-up");
         $("#toggle-chat").addClass("fa-chevron-down");
+        showMessages();
       }
       $("#chat-messages").scrollTop(100000);
       $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
