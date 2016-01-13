@@ -40,6 +40,7 @@ router.post('/add', function(req, res) {
     var newGrade = new req.GradedItem(props);
     newGrade.save(function(err) {
       if(err){req.session.errs.push("Failed to save the grade. Please try again.");res.redirect(req.baseUrl);return;}
+      new req.Log({who: req.currentUser.username, what: "Added a grade"}).save();
       res.redirect("/grades");
     });
   }

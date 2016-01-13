@@ -86,7 +86,7 @@ module.exports = function(http) {
         for(var i=0;i<recentUserMessages.length;i++){
           if(i-1 >= 0){
             var last = recentUserMessages[i-1];
-            if(last.message.length > 30 && recentUserMessages[i].message.length > 30){
+            if(last.message.length > 20 && recentUserMessages[i].message.length > 20){
               if(spammers.indexOf(user.username) == -1){
                 spammers.push(user.username);
                 socket.emit('message', {username: "server", message: "Muted for 10 seconds due to spamming.", when: Date.now()});

@@ -208,6 +208,7 @@ router.post("/add", function(req, res) {
     new req.Log({who: req.currentUser.username, what: "Added a project due "+pDueDate, when: new Date()});
     req.Student.findOneAndUpdate({username: req.currentUser.username}, {"$inc": {points: 50}}, function(err) {
       if(err){req.session.errs.push("Failed to add points."); res.redirect(req.baseUrl); return;}
+      new req.Log({who: req.currentUser.username, what: "Added a project."}).save();
       res.redirect("/work/"+project._id);
     });
   });
