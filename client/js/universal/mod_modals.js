@@ -163,6 +163,7 @@ modules.push({
       });
     }
 
+    // TODO: Use the new system with this
     coursebadges = function (){
       $(".course-badge").off("click").click(function() {
         var mID = $(this).data("mid");
@@ -185,7 +186,7 @@ modules.push({
                   teachertitle = "with <b>Teacher "+data.teacher.firstName+" "+data.teacher.lastName+"</b>";
                 }
 
-                // TODO: this thing too...
+
                 var content = $("<div class='modal fade teacher-modal' id='course-"+mID+"-modal' tabindex='-1'>" +
                       "        <div class='modal-dialog'>" +
                       "            <div class='modal-content'>" +

@@ -24,7 +24,7 @@ aside#sidebar
             img(src="/images/statuses/status-offline.png")
             |  Offline
       br
-    a(href="#", tabindex="0", role="button", data-toggle="popover", data-trigger="focus", data-content="<b>You</b>", data-placement="bottom").online-badge
+    a(href="#", data-toggle="popover", data-container="body", data-content="<b>You</b>", data-placement="bottom").online-badge
       span.badge 1 online
   
     if todaysInfo 

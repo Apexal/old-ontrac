@@ -64,7 +64,7 @@ modules.push({
 
       $("#users-online").text(count+" user(s)");
       $(".online-badge span").text(count+" online");
-      $(".online-badge").attr("data-content", names.join(', '));
+      $(".online-badge").attr("data-content", names.join('<br>'));
 
       list.html(names.join(''));
       personbadges();

@@ -31,7 +31,7 @@ module.exports = function(http) {
           usernames.splice(index, 1);
           console.log((username+" LOGGED OUT!").red);
           io.sockets.emit('online-list', {users: online});
-          var d = {username: "server", message: username+" has logged out.", when: Date.now(), ignore: username};
+          var d = {username: "server", message: username+" is now offline.", when: Date.now(), ignore: username};
           messages.push(d);
           io.sockets.emit('message', d);
         }else{
@@ -59,7 +59,7 @@ module.exports = function(http) {
       }else{
         usernames.push(user.username);
         online.push(user);
-        var d = {username: "server", message: user.username+" has logged in.", when: Date.now(), ignore: user.username};
+        var d = {username: "server", message: user.username+" is now online.", when: Date.now(), ignore: user.username};
         messages.push(d);
         io.sockets.emit('message', d);
       }
