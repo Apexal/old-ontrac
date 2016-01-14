@@ -50,7 +50,7 @@ module.exports = function(http) {
       var user = {username: client.username, tabs: 1, advisement: client.advisement};
       //var user = {name: client.firstName, username: client.username, code: client.code, tabs: 1};
       socket.emit('pastMessages', {messages: messages});
-      var status = "Available";
+      var status = "available";
 
       //console.log(codes.indexOf(user.code));
       if(usernames.indexOf(user.username) > -1){
@@ -77,6 +77,13 @@ module.exports = function(http) {
       socket.on('message', function (data) {
         if(client.rank >= 6 && data.message.indexOf("/bc ") > -1){
           io.sockets.emit('broadcast', {message: data.message.split("/bc ")[1]});
+          return;
+        }
+        if(client.rank >= 7 && data.message == "/clear"){
+          messages = [];
+          var d = {username: "server", message: "An admin has cleared the chat.", when: data.when};
+          messages.push(d);
+          socket.emit('pastMessages', {messages: messages});
           return;
         }
         var minimum = moment().subtract(5, 'seconds');
