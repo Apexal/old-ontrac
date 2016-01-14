@@ -60,12 +60,7 @@ aside#sidebar
       ul.list-group
         for s in todaysInfo.periods
           if s.className.indexOf(" Advisement") == -1
-            li(data-mID=s.mID, title=s.startTime+" - "+s.endTime, data-toggle="tooltip", class=(s.className=="Lunch" ? "disabled" : "")).list-group-item
-              if s.mID
-                a.undecorated(style="text-decoration: none;", target="_blank", href="http://moodle.regis.org/course/view.php?id="+s.mID)= s.className.split("(")[0]
-              else
-                | #{s.className.split("(")[0]}
-              small.text-muted.right= helpers.showRoom(s.room)
+            | !{helpers.makePeriodListItem(s)}
               
   if nextSD && (todaysInfo == undefined || helpers.nowIs("after", "2:50 PM"))
     hr
@@ -76,12 +71,7 @@ aside#sidebar
       ul.list-group
         for s in currentUser.scheduleObject.dayClasses[nextSD]
           if s.className.indexOf(" Advisement") == -1
-            li(data-mID=s.mID, title=s.startTime+" - "+s.endTime, data-toggle="tooltip", class=(s.className=="Lunch" ? "disabled" : "")).list-group-item
-              if s.mID
-                a.undecorated(style="text-decoration: none;", target="_blank", href="http://moodle.regis.org/course/view.php?id="+s.mID)= s.className.split("(")[0]
-              else
-                | #{s.className.split("(")[0]}
-              small.text-muted.right= helpers.showRoom(s.room)
+            | !{helpers.makePeriodListItem(s)}
   
   section#mumble-section
     b On Mumble Now

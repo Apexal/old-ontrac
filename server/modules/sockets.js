@@ -103,7 +103,7 @@ module.exports = function(http) {
             }
           }
         }
-        if(recentUserMessages.length > 4 || spammers.indexOf(user.username) > -1){
+        if(recentUserMessages.length > 5 || spammers.indexOf(user.username) > -1){
           if(spammers.indexOf(user.username) == -1){
             spammers.push(user.username);
             socket.emit('message', {username: "server", message: "Muted for 10 seconds due to spamming.", when: Date.now()});

@@ -88,8 +88,35 @@ module.exports = {
     else
       return "short";
   },
-  showRoom: function(room) {
-    // I can't get it to work any other way :/
-    return room.replace("Anywhere", "").replace("Auditorium - Front", "").replace("Cafeteria", "");
+  makePeriodListItem: function(p) {
+    var duration = -(moment(p.startTime, "hh:mm a").diff(moment(p.endTime, "hh:mm a"), 'minutes'));
+    var room = p.room.replace("Anywhere", "").replace("Auditorium - Front", "").replace("Cafeteria", "");
+
+    var className = p.className.split("(")[0].trim();
+    if(className.length > 12){
+      className = p.className.slice(0, 12)+"...";
+    }
+
+    [' 9', ' 10', ' 11', ' 12'].forEach(function(grade) {
+      className = className.replace(grade, "");
+    });
+
+    if(p.startTime.charAt(0) == "0")
+      p.startTime = p.startTime.substring(1);
+
+    if(p.endTime.charAt(0) == "0")
+      p.endTime = p.endTime.substring(1);
+
+    var span = p.startTime +" to "+p.endTime+"<br>";
+
+    var returning = [];
+    returning.push("<li data-mID='"+p.mID+"' title='"+span+room+"' data-toggle='tooltip' class='"+(p.className=="Lunch" || p.room == "Anywhere" ? "disabled" : "")+" list-group-item'>");
+    if(p.mID)
+      returning.push("<a style='text-decoration: none;' target='_blank' href='http://moodle.regis.org/course/view.php?id="+p.mID+"' class='undecorated'>"+className+"</a>");
+    else
+      returning.push(className);
+    returning.push("<small class='right text-muted'>"+duration+"m</small></li>");
+
+    return returning.join("");
   }
 }
