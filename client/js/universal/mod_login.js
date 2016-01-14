@@ -3,6 +3,7 @@ modules.push({
   check: function(){ return !loggedIn; },
   run: function() {
     var loggingIn = false;
+    var registered = [];
 
     var login = function() {
       var username = $("#username").val().trim().toLowerCase();
@@ -11,6 +12,13 @@ modules.push({
         return;
 
       $("#login-errors .alert").remove();
+
+      if(registered.indexOf(username) == -1){
+        $("#login-errors").append("<div class='alert alert-danger'>" +
+          "Sorry! OnTrac is currently only available to Alpha Testers who registered before January 14th.</div>");
+        return;
+      }
+
       $("#login-button").text("Logging in...");
       $("body").css("cursor", "wait");
       if (loggingIn == false) {
@@ -56,6 +64,10 @@ modules.push({
         login();
       }
     });
-    $("#login-button").click(login);
+
+    $.get("/registered", function(data) {
+      registered = data;
+      $("#login-button").click(login);
+    })
   }
 });

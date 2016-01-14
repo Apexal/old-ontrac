@@ -293,5 +293,14 @@ module.exports = function(io) {
     res.render('chat/chatpage', req.toJade);
   });
 
+  router.get('/registered', function(req, res) {
+    req.Student.find({registered: true}, {username: 1}, function(err, registered) {
+      if(err){res.json({error: "Failed to get all registered users!"}); return;}
+      res.json(registered.map(function(r) {
+        return r.username;
+      }));
+    });
+  });
+
   return {router: router, noLogin: true, models: ['Student', 'DailyThought', 'GradedItem']}
 };

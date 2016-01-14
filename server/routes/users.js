@@ -204,7 +204,6 @@ router.get("/:username/schedule", function(req, res){
 // AAAAA   PPPPP      I
 //A     A  P        IIIIII
 
-
 /* GET users */
 router.get('/api/list', function(req, res, next) {
   var query = {};
