@@ -13,7 +13,7 @@
                 for course in currentUser.courses
                   option(value=course._id)= course.title  
           .form-group.col-xs-12.col-sm-6.com-md-7
-            input.form-control(style="width: 100%;", id="newHWItemDesc", name="newHWItemDesc", maxlength="140", type="text", placeholder="Description", required=true)
+            input.form-control(style="width: 100%;", id="newHWItemDesc", name="newHWItemDesc", autocomplete="off", maxlength="160", type="text", placeholder="Description", required=true)
           .form-group.col-xs-12.col-sm-2
             button.btn.btn-default.full-when-xs#homework-button(style="width: 100%;") Add
     .row.worklist

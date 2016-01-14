@@ -8,5 +8,5 @@
   .panel-body#chat-messages.small-chat
     
   form#chat-controls.form-inline.small-chat(role="form")
-    input.form-control#chat-message.small-chat(type="text", maxlength="100", name="message")
+    input.form-control#chat-message.small-chat(type="text", maxlength="100", name="message", autocomplete="off")
     button#send-message.small-chat.btn.btn-primary(type="button", data-username=currentUser.username) Send
