@@ -159,7 +159,7 @@ modules.push({
     socket.on('message', function (data) {
       if(data.message) {
           messages.push(data);
-          if(data.username !== username && data.ignore !== username){
+          if(data.username !== username && data.ignore !== username && data.username !== "server"){
             if(sessionStorage.muted == "0" && data.username !== "server")
               chat_notification.play();
 
