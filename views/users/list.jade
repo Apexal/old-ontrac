@@ -23,7 +23,7 @@ block content
       for user in registered
         .col-xs-12.col-sm-6.col-md-4.col-lg-3.text-center.magictime.vanishIn
           .user-box
-            img(src=user.ipicture, onError="this.onerror=null;this.src='"+user.mpicture+"';")
+            img(src=user.ipicture+"?_="+moment().format("X"), onError="this.onerror=null;this.src='"+user.mpicture+"';")
             .btn-group.full-width
               a.user-adv(href="/advisements/"+user.advisement)= user.advisement
               button.btn.btn-default.full-width.user-badge(data-username=user.username, data-name=user.fullName, type="button")= user.fullName
