@@ -64,8 +64,10 @@ modules.push({
     });
 
     $("#accept-terms").click(function() {
+      if($(this).hasClass("disabled"))
+        return;
+
       if(confirm("Are you sure you understand the Terms and Conditions?")){
-        console.log("GOOD");
         registering = false;
         $("#terms").hide();
         $("#login-form").show();
@@ -73,29 +75,37 @@ modules.push({
       }
     });
 
-    $("#password, #username").keypress(function(e) {
-      if (e.which == 13) {
-        var username = $("#username").val().trim().toLowerCase();
-        if(registered.indexOf(username) == -1){
-          registering = true;
-          $("#login-form").hide();
-          $("#terms").show();
-        }
-        login();
+    $("#terms .scroll").scroll(function() {
+      var elem = $(this);
+      if (elem[0].scrollHeight - elem.scrollTop() < 400) {
+        $("#accept-terms").removeClass("disabled");
+      }else if($("#accept-terms").hasClass("disabled") == false){
+        $("#accept-terms").addClass("disabled");
       }
     });
 
+    $("#password, #username").keypress(function(e) {
+      if (e.which == 13) {
+        checkRegistered();
+      }
+    });
+
+    var checkRegistered = function() {
+      var username = $("#username").val().trim().toLowerCase();
+      var password = $("#password").val().trim();
+      if (!username || !password)
+        return;
+      if(registered.indexOf(username) == -1){
+        registering = true;
+        $("#login-form").hide();
+        $("#terms").show();
+      }
+      login();
+    }
+
     $.get("/registered", function(data) {
       registered = data;
-      $("#login-button").click(function(){
-        var username = $("#username").val().trim().toLowerCase();
-        if(registered.indexOf(username) == -1){
-          registering = true;
-          $("#login-form").hide();
-          $("#terms").show();
-        }
-        login();
-      });
+      $("#login-button").click(checkRegistered);
     })
   }
 });

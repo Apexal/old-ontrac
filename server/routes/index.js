@@ -79,7 +79,8 @@ module.exports = function(io) {
             if(user.registered == false){
               console.log("FIRST LOGIN FOR "+username);
               user.rank = 1;
-              user.login_count = 0;
+              if(!user.login_count)
+                user.login_count = 0;
               user.last_point_login_time = new Date();
               user.registered_date = new Date();
               user.registered = true;
