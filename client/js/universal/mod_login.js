@@ -3,6 +3,7 @@ modules.push({
   check: function(){ return !loggedIn; },
   run: function() {
     var loggingIn = false;
+    var registering = false;
     var registered = [];
 
     var login = function() {
@@ -13,17 +14,10 @@ modules.push({
 
       $("#login-errors .alert").remove();
 
-      if(registered.indexOf(username) == -1){
-        $("#login-errors").append("<div class='alert alert-danger'>" +
-          "Sorry! OnTrac is currently only available to Alpha Testers who registered before January 14th.</div>");
-        return;
-      }
-
-      $("#login-button").text("Logging in...");
-      $("body").css("cursor", "wait");
-      if (loggingIn == false) {
+      if (loggingIn == false && registering == false) {
+        $("#login-button").text("Logging in...");
+        $("body").css("cursor", "wait");
         loggingIn = true;
-
         $.ajax({
           type: "POST",
           url: "/login",
@@ -57,17 +51,51 @@ modules.push({
           }
         });
       }
+
+
     };
+
+    $("#back-login").click(function() {
+      registering = false;
+      $("#terms").hide();
+      $("#login-errors .alert").remove();
+      $("#login-form").show();
+      $("#login-form input").val("");
+    });
+
+    $("#accept-terms").click(function() {
+      if(confirm("Are you sure you understand the Terms and Conditions?")){
+        console.log("GOOD");
+        registering = false;
+        $("#terms").hide();
+        $("#login-form").show();
+        login();
+      }
+    });
 
     $("#password, #username").keypress(function(e) {
       if (e.which == 13) {
+        var username = $("#username").val().trim().toLowerCase();
+        if(registered.indexOf(username) == -1){
+          registering = true;
+          $("#login-form").hide();
+          $("#terms").show();
+        }
         login();
       }
     });
 
     $.get("/registered", function(data) {
       registered = data;
-      $("#login-button").click(login);
+      $("#login-button").click(function(){
+        var username = $("#username").val().trim().toLowerCase();
+        if(registered.indexOf(username) == -1){
+          registering = true;
+          $("#login-form").hide();
+          $("#terms").show();
+        }
+        login();
+      });
     })
   }
 });

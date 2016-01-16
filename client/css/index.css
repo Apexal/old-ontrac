@@ -78,3 +78,13 @@
 #thoughtbox button {
   width: 100%;
 }
+
+#terms {
+  display: none;
+}
+
+#terms .scroll{
+  height: 300px;
+  overflow: scroll;
+  background-color: white;
+}
