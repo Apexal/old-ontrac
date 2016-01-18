@@ -314,11 +314,14 @@ a.slidesjs-navigation {
   padding-left: 19px;
 }
 
-#points-badge a {
+#points-badge a, #contrib-badge a {
   padding-left: 2px;
   padding-right: 2px;
 }
 
+#contrib-badge .badge {
+  background-color: #ff7518;
+}
 
 /* --------------------------------------------------------
 *.user-badge[data-username="fmatranga18"]

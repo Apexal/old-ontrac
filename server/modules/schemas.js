@@ -27,6 +27,7 @@ module.exports = {
     customLinks: Object,
     rank: {type: Number, default: 1},
     points: {type: Number, default: 0},
+    contributor_score: {type: Number, default: 0},
     login_count: {type: Number, default: 0},
     last_login_time: {type: Date, default: Date.now},
     last_point_login_time: {type: Date, default: Date.now},

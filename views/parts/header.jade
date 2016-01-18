@@ -83,6 +83,9 @@ header
 
         ul.nav.navbar-nav.navbar-right
           if loggedIn
+            li#contrib-badge
+              a(href="/contributions")
+                span.badge(style="margin: 0;", title="Your contributor score!")= currentUser.contributor_score
             li#points-badge
               a(href="/shop")
                 span.badge(style="margin: 0;", title="Your points!")= currentUser.points
