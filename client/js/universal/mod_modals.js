@@ -6,7 +6,7 @@ modules.push({
   run: function() {
     personbadges = function(){
       var createPersonBadge = function(bType, username) {
-        var content = $("<div class='modal "+bType+"-modal' id='"+username+"-modal' tabindex='-1'>" +
+        var content = $("<div class='modal "+bType+"-modal fade' id='"+username+"-modal' tabindex='-1'>" +
               "        <div class='modal-dialog'>" +
               "            <div class='modal-content'>" +
               "                <div class='modal-header'>" +

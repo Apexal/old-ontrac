@@ -200,13 +200,27 @@ var fillPeriods = function(unfilled, user){
       }
 
       if(moment(lastPeriod.endTime, "hh:mm A").isSame(lunch)){
+        var lunchEnd = moment(lunch).add(40, 'minutes');
         filled.push({
           room: "Cafeteria",
           startTime: lunch.format("hh:mm A"),
-          endTime: moment(lunch).add(40, 'minutes').format("hh:mm A"),
+          endTime: lunchEnd.format("hh:mm A"),
           duration: 40,
           className: "Lunch"
         });
+
+        var nIndex = periods.indexOf(period) + 1;
+        if(nIndex < periods.length){
+          if(lunchEnd.isSame(periods[nIndex].startTime, "hh:mm A") == false){
+            filled.push({
+              room: "Anywhere",
+              startTime: lunchEnd.format("hh:mm A"),
+              endTime: periods[nIndex].startTime,
+              duration: Math.abs(lunchEnd.diff(moment(periods[nIndex].startTime, "hh:mm A"), 'minutes')),
+              className: "Unstructured Time"
+            });
+          }
+        }
       }else{
         filled.push({
           room: "Anywhere",
