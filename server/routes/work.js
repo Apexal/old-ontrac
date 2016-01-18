@@ -163,6 +163,7 @@ router.get('/:date', function(req, res, next){
   }
 });
 
+
 router.get("/:pid", function(req, res) {
   var id = req.params.pid;
   req.GradedItem.findOne({_id: id})
@@ -211,6 +212,16 @@ router.post("/add", function(req, res) {
       new req.Log({who: req.currentUser.username, what: "Added a project."}).save();
       res.redirect("/work/"+project._id);
     });
+  });
+});
+
+router.post("/:pid/remove", function(req, res) {
+  var pID = req.params.pid;
+  if(!pID){req.session.errs.push("Invalid project ID."); res.redirect(req.baseUrl); return;}
+
+  req.GradedItem.remove({username: req.currentUser.username, _id: pID, itemType: "project"}, function(err) {
+    if(err){req.session.errs.push("Failed to remove project."); res.redirect(req.baseUrl); return;}
+    res.redirect("/work");
   });
 });
 

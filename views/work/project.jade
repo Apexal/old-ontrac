@@ -19,5 +19,6 @@ block content
         hr
         a.btn.btn-default(href="/work") Back to Index
         a.btn.btn-info(href="#") Edit Info
-        a.btn.btn-danger(href="#") Remove
+        form(action="/work/"+project._id+"/remove", method="POST", onsubmit="if(!confirm('Are you sure?')) return false;")
+          button.btn.btn-danger(href="#") Remove
         

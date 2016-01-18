@@ -190,7 +190,7 @@ router.delete("/:date", function(req, res){
     res.json({error: "Date passed is not a school day."});
     return;
   }
-  req.HWItem.remove({_id: id}, function(err){
+  req.HWItem.remove({username: req.currentUser.username, _id: id}, function(err){
     if(err){res.json({error: "Failed to remove item. Please try again later."}); return;}
     new req.Log({who: req.currentUser.username, what: "Removed a HWItem for "+dateString}).save();
     res.json({success: true});
