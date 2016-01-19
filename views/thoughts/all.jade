@@ -1,0 +1,20 @@
+extends /layout
+
+block content
+  .container-fluid
+    .row
+      .col-xs-12
+        .page-header
+          h1 All Daily Thoughts
+      
+    .row
+      each t in thoughts
+        .col-xs-12.col-sm-6.col-md-4
+          .panel.panel-default
+            .panel-heading
+              h3.panel-title= moment(t.date).format("dddd, MMMM Do YYYY")
+            .panel-body
+              p= t.body
+    .row
+      .col-xs-12
+        a.btn.btn-default(href="/thoughts") Recent

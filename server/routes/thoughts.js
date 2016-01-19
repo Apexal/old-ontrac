@@ -15,6 +15,15 @@ router.get('/', function(req, res) {
     });
 });
 
+router.get("/all", function(req, res) {
+  req.toJade.title = "Past Daily Thoughts";
+
+  req.DailyThought.find({username: req.currentUser.username}, function(err, thoughts) {
+    req.toJade.thoughts = thoughts;
+    res.render('thoughts/all', req.toJade);
+  });
+});
+
 router.post('/add', function(req, res) {
   var body = req.body.newThoughtsBody;
   var date = moment().startOf('day').toDate();

@@ -9,6 +9,7 @@ usernames = [];
 spammers = [];
 
 var timeoutSeconds = 30;
+var banLength = 5;
 
 var advchatmessages = {};
 
@@ -18,7 +19,7 @@ module.exports = function(http) {
   var spamWait = function(username){
     setTimeout(function() {
       spammers.splice(spammers.indexOf(username), 1);
-    }, 10000);
+    }, 1000 * banLength);
   }
 
   var detectLogout = function(username){
@@ -79,7 +80,7 @@ module.exports = function(http) {
           io.sockets.emit('broadcast', {message: data.message.split("/bc ")[1]});
           return;
         }
-        if(client.rank >= 7 && data.message == "/clear"){
+        if(client.rank >= 6 && data.message == "/clear"){
           messages = [];
           var d = {username: "server", message: "An admin has cleared the chat.", when: data.when};
           messages.push(d);

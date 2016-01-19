@@ -12,20 +12,17 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "bootstrap": "latest",
-    "fontawesome": "latest",
-    "jquery": "latest",
-    "jquery-ui": "latest",
-    "moment": "latest",
-    "d3": "latest",
-    "jQuery.ProfanityFilter": "latest",
-    "fullcalendar": "latest"
+    "jquery-animateNumber": "git@github.com:aishek/jquery-animateNumber.git#~0.0.12"
   },
   "ignore": [
     "**/.*",
     "node_modules",
     "client/public/components",
     "test",
-    "tests"
-  ]
+    "tests",
+    "bower_components",
+    "./vendor"
+  ],
+  "moduleType": [],
+  "private": true
 }

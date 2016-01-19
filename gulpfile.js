@@ -13,7 +13,7 @@ var jsPath = "client/js";
 
 var files = {
   js: [bowerPath+'/jquery/dist/jquery.min.js', bowerPath+'/jquery-ui/jquery-ui.min.js',
-    bowerPath+'/moment/moment.js', bowerPath+'/bootstrap/dist/js/bootstrap.min.js', bowerPath+'/fullcalendar/dist/fullcalendar.min.js',
+    bowerPath+'/moment/moment.js', bowerPath+'/jquery-animateNumber/jquery.animateNumber.min.js', bowerPath+'/bootstrap/dist/js/bootstrap.min.js', bowerPath+'/fullcalendar/dist/fullcalendar.min.js',
     'client/lib/js/*.js', jsPath+'/**/*.js', jsPath+'/*.js', jsPath+'/jQuery.ProfanityFilter/jquery.profanityfilter.js'],
   css: [bowerPath+'/bootstrap/dist/css/bootstrap.min.css', bowerPath+'/bootstrap/dist/css/cosmo-theme.min.css',
     bowerPath+'/fullcalendar/dist/fullcalendar.min.css',
