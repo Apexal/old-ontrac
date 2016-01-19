@@ -14,12 +14,14 @@ block content
         .page-header
           h2 Today's Items
             small.right #{today.length} items
-        
-        if today.length > 0
-          table.table
-            each i in today
-              tr
-                td= i.course.title
+          if today.length > 0
+            table.table
+              each i in today
+                tr
+                  td
+                    a.undecorated(href="/study/"+i.id)= i.course.title
+                    if i.desc
+                      | : #{i.desc}
         else
           .col-xs-12
             p No tests or quizzes today!

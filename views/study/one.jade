@@ -10,9 +10,11 @@ block content
             b= item.course.title +" Test"
             if item.desc
               | : #{i.desc}
-            small.right(title=moment(item.dateTaken).fromNow())= moment(item.dateTaken).format("dddd, MMM Do YYYY")
+            small.hidden-xs.right(title=moment(item.dateTaken).fromNow())= moment(item.dateTaken).format("dddd, MMMM Do YYYY")
+      .col-xs-12.text-center.visible-xs
+        span(title=moment(item.dateTaken).fromNow())= moment(item.dateTaken).format("ddd, MMM Do YY")
       .col-xs-12
-        p There will be really helpful stuff here one day I swear
+        p Coming soon...
       
     .row
       .col-xs-12
