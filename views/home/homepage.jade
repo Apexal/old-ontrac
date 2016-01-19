@@ -40,7 +40,7 @@ block content
           .panel-heading Daily Thoughts
             a.undecorated.fa.fa-list.right(href="/thoughts")
           form.form-inline(role="form", action="/thoughts/add", method="POST")
-            textarea.form-control(rows="2", name="newThoughtsBody")= dailythought
+            textarea.form-control(rows="2", placeholder="What happened today?", name="newThoughtsBody")= dailythought
             button.btn.btn-warning Update
       include work-boxes
       .col-xs-12.col-md-3.text-center

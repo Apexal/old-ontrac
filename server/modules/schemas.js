@@ -110,6 +110,7 @@ module.exports = {
   dailyThought: {
     username: String,
     date: Date,
+    accepted: {type: Boolean, default: false},
     body: String
   }
 }
