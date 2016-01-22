@@ -104,10 +104,7 @@ app.use(function(req, res, next) {
     }
 
     if(moment(req.currentUser.last_login_time).startOf('day').isSame(moment()) == false){
-      var sd = req.currentUser.scheduleObject.scheduleDays[moment().format("MM/DD/YY")];
-      if(sd){
-        req.session.todaysInfo = {scheduleDay: sd, periods: req.currentUser.scheduleObject.dayClasses[sd]};
-      }
+      res.redirect("/logout"); return;
     }
   }
   req.toJade.openLogin = (req.toJade.redir == req._parsedUrl.pathname ? false : true);

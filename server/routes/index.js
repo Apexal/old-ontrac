@@ -53,7 +53,7 @@ module.exports = function(io) {
         }
         adv = u.advisement;
         // The username passed exists
-         // For the session
+        // For the session
         return request({
           url: 'https://intranet.regis.org/login/submit.cfm', //URL that the login form on the Intranet points to
           jar: cookieJar,
