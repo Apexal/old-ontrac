@@ -209,6 +209,7 @@ var fillPeriods = function(unfilled, user){
           className: "Lunch"
         });
 
+        /*
         var nIndex = unfilled.indexOf(period) + 1;
         if(nIndex < unfilled.length){
           if(lunchEnd.isSame(unfilled[nIndex].startTime, "hh:mm A") == false){
@@ -220,7 +221,7 @@ var fillPeriods = function(unfilled, user){
               className: "Unstructured Time"
             });
           }
-        }
+        }*/
       }else{
         filled.push({
           room: "Anywhere",
