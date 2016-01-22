@@ -209,14 +209,14 @@ var fillPeriods = function(unfilled, user){
           className: "Lunch"
         });
 
-        var nIndex = periods.indexOf(period) + 1;
-        if(nIndex < periods.length){
-          if(lunchEnd.isSame(periods[nIndex].startTime, "hh:mm A") == false){
+        var nIndex = unfilled.indexOf(period) + 1;
+        if(nIndex < unfilled.length){
+          if(lunchEnd.isSame(unfilled[nIndex].startTime, "hh:mm A") == false){
             filled.push({
               room: "Anywhere",
               startTime: lunchEnd.format("hh:mm A"),
-              endTime: periods[nIndex].startTime,
-              duration: Math.abs(lunchEnd.diff(moment(periods[nIndex].startTime, "hh:mm A"), 'minutes')),
+              endTime: unfilled[nIndex].startTime,
+              duration: Math.abs(lunchEnd.diff(moment(unfilled[nIndex].startTime, "hh:mm A"), 'minutes')),
               className: "Unstructured Time"
             });
           }
