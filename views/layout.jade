@@ -23,7 +23,6 @@ html
     
     main(class=(loggedIn ? "pushed" : ""), class=(helpers.isPage(page, '/gchat') ? "chatpage" : ""))
       if loggedIn
-        include /parts/feedback-modal
         include /parts/reminders
       else
         include /users/login-modal

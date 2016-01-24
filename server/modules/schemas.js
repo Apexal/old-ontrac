@@ -105,7 +105,8 @@ module.exports = {
     username: {type: String, default: "unknown"},
     feedbackType: String,
     text: String,
-    date_sent: {type: Date, default: Date.now}
+    date_sent: {type: Date, default: Date.now},
+    accepted: {type: Boolean, default: false}
   },
   dailyThought: {
     username: String,

@@ -2,6 +2,7 @@ extends /layout
 
 block content
   .container-fluid
+    include /info
     .row
       .col-xs-12
         .jumbotron
@@ -12,27 +13,42 @@ block content
             #[b OnTrac] depends on the ideas and suggestions of the student's that use it. That includes you, #[b= currentUser.nickname].
     hr
     .row
+      .col-xs-12.col-sm-6.col-md-4
+        .panel.panel-default
+          .panel-heading Submit Feedback
+          .panel-body
+            form.form.contrib-form(action="/contributions/submit", method="POST")
+              .form-group
+                select.form-control(name="cType")
+                  option Issue
+                  option Suggestion
+              .form-group
+                textarea.form-control(rows="5", name="cBody", placeholder="Your contribution.")
+              button.right.btn.btn-default Submit
+        
       .col-xs-12.col-sm-6.col-md-4.contributor-score
         .panel.panel-default
           .panel-body
-            .col-xs-12.col-sm-3
-              span(style="font-size: 5em") 0
-            .col-xs-12.col-sm-9
+            .col-xs-12.col-sm-4
+              span.animate-number(style="font-size: 5em", data-number=currentUser.contributor_score) 0
+            .col-xs-12.col-sm-8
               p(style="font-size: 1.4em") Your Current Contributor Score
-              span.text-muted Nice!
-      .col-xs-12.col-sm-6.col-md-4
-        .panel.panel-info
-          .panel-body
-            .col-xs-12.col-sm-3
-              span(style="font-size: 4.7em") 0
-            .col-xs-12.col-sm-9
-              p(style="font-size: 1.3em") Accepted Submitted Contributions
               span.text-muted Nice!
       .col-xs-12.col-sm-6.col-md-4
         .panel.panel-danger
           .panel-body
-            .col-xs-12.col-sm-3
-              span(style="font-size: 4.4em") 0
-            .col-xs-12.col-sm-9
+            .col-xs-12.col-sm-4
+              span.animate-number(style="font-size: 4.4em", data-number=pending.length) 0
+            .col-xs-12.col-sm-8
               p(style="font-size: 1.2em") Pending Submitted Feedback
               span.text-muted Nice!
+    .row
+      .col-xs-12
+        .page-header
+          h3 Recent Submissions
+            small.right
+              a.btn.btn-default(href="/") View All
+        each s in recent
+          .col-xs-12.col-sm-4.col-md-3
+            b= "Pending "+s.feedbackType 
+            p= s.text

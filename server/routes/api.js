@@ -48,24 +48,6 @@ router.get('/course/:mID', function(req, res) {
     });
 });
 
-router.post("/feedback/send", function(req, res) {
-  var feedbackType = req.body.feedbackType;
-  var text = req.body.text;
-  if(text && feedbackType){
-    console.log(feedbackType + " " + text);
-    new req.Feedback({
-      username: req.currentUser.username,
-      feedbackType: feedbackType,
-      text: filter(text)
-    }).save(function(err, fb) {
-      if(err){req.session.errs.push('An error occured, please try again.'); res.redirect(req.baseUrl); return;}
-      res.json({success: true});
-    });
-  }else{
-    res.end("Not enough info.");
-  }
-});
-
 module.exports = function(io) {
   return {router: router, models: ['Student', 'Teacher', 'GradedItem', 'Feedback', 'Course']}
 };
