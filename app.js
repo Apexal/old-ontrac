@@ -28,7 +28,10 @@ app.set('view engine', 'jade');
 var sessionMiddleware = session({
   secret: 'oh mr savage', // ayy l m a o
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 5
+  }
 });
 
 // Soon
