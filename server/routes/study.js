@@ -75,6 +75,16 @@ router.get('/:id', function(req, res) {
     });
 });
 
+router.post("/:tid/remove", function(req, res) {
+  var tID = req.params.tid;
+  if(!tID){req.session.errs.push("Invalid test ID."); res.redirect(req.baseUrl); return;}
+
+  req.GradedItem.remove({username: req.currentUser.username, _id: tID, itemType: "test"}, function(err) {
+    if(err){req.session.errs.push("Failed to remove test."); res.redirect(req.baseUrl); return;}
+    res.redirect("/study");
+  });
+});
+
 module.exports = function(io) {
   return {router: router, models: ['GradedItem', 'Course']}
 };

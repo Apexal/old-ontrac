@@ -18,4 +18,7 @@ block content
       
     .row
       .col-xs-12
-        a.btn.btn-default(href="/study") Back to Index
+        form(action="/study/"+item._id+"/remove", method="POST", onsubmit="if(!confirm('Are you sure?')) return false;")
+          a.btn.btn-default(href="/study") Back to Index
+          button.btn.btn-danger(href="#") Remove
+        
