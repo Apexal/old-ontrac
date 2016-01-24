@@ -104,7 +104,7 @@ app.use(function(req, res, next) {
     }
 
     if(req.loggedIn){
-      if(moment(req.currentUser.last_login_time).isSame(moment(), 'day') == false){
+      if(path !== "/logout" && moment(req.currentUser.last_login_time).isSame(moment(), 'day') == false){
         res.redirect("/logout"); return;
       }
     }
