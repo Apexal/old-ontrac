@@ -209,7 +209,7 @@ router.get('/api/list', function(req, res, next) {
   var query = {};
   if(req.query.registeredOnly == "1")
     query.registered = true;
-  req.Student.find(query, 'registered firstName lastName advisement username rank mpicture ipicture points login_count rankName')
+  req.Student.find(query, 'registered firstName lastName advisement username rank mpicture ipicture points login_count rankName contributor_score')
     .sort({advisement: 1})
     .lean()
     .exec(function(err, users){

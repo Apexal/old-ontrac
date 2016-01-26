@@ -11,7 +11,7 @@ router.get('/', function(req, res) {
         return f.accepted;
       });
       req.toJade.pending = feedback.filter(function(f) {
-        return !f.accepted;
+        return f.accepted == false;
       });
       req.toJade.recent = feedback.splice(0, 5);
       res.render('contributions/index', req.toJade);
