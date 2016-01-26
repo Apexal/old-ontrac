@@ -180,8 +180,14 @@ if (app.get('env') === 'development') {
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   req.toJade.title = "Uh oh...";
-  req.toJade.message = err.message;
-  req.toJade.error = "There was an error! Please try again later.";
+  req.toJade.message = "There was an error! Please try again later.";
+  req.toJade.error = err;
+  if(err.status !== 404){
+    var html = "<h1>"+req.originalUrl+": "+err.name+"</h1><p>"+err.message+"</p><br>";
+    if(req.loggedIn)
+      html += "<b>"+req.currentUser.username+"</b>";
+    require("./server/modules/mailer")("fmatranga18@regis.org", "OnTrac Error Report", html);
+  }
   res.render('error', req.toJade);
 });
 
