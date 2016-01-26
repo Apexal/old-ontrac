@@ -73,6 +73,7 @@ modules.push({
                   mod.find(".modal-inside").append("<br><br>");
 
                 // ------- IMG DIV -----------------------------------
+                mod.find(".modal-pic").attr("onError", "this.onerror=null;this.src='"+user.mpicture+"';")
                 mod.find(".modal-pic").attr("src", user.ipicture);
                 if(bType == "user"){
                   var underimg = "<b class='left text-danger'>Not registered</b>";
@@ -86,7 +87,7 @@ modules.push({
                 // ----------------------------------------------------
 
                 if(bType == "user"){
-                  bio = "<p class='text-center text-muted'>"+user.firstName+" has not set a bio!</span>";
+                  bio = "";
                   if(user.bio){
                     bio = "<blockquote><p>"+user.bio+"</p></blockquote>";
                   }
