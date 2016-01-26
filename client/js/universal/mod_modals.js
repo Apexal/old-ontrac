@@ -23,7 +23,7 @@ modules.push({
               "                         <div class='modal-underimg'></div>" +
               "                       </div>" +
               "                       <div class='col-xs-12 col-sm-9'>" +
-              "                         <h3 class='no-margin center modal-info'>Loading...</h3>" +
+              "                         <h3 class='no-margin modal-info'>Loading...</h3>" +
               "                         <div class='modal-inside'>Loading...</div>" +
               "                       </div>" +
               "                     </div>" +
@@ -88,7 +88,7 @@ modules.push({
                 if(bType == "user"){
                   bio = "<p class='text-center text-muted'>"+user.firstName+" has not set a bio!</span>";
                   if(user.bio){
-                    bio = "<p class='text-center'>\""+user.bio+"\"</p>";
+                    bio = "<blockquote><p>"+user.bio+"</p></blockquote>";
                   }
                   mod.find(".modal-inside").html(bio);
                 }
@@ -109,7 +109,7 @@ modules.push({
                       }
                     }
                   }else{
-                    mod.find(".modal-inside").text(user.fullName+" has not yet used OnTrac. Why don't you invite him!");
+                    mod.find(".modal-inside").text(user.fullName+" is not a registered user.");
                   }
                 }else if(bType == "staff"){
                   var coursenames = ['None!'];
