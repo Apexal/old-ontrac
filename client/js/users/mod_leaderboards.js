@@ -7,29 +7,23 @@ modules.push({
     var users = [];
     var lb = $("#leaderboard");
 
+    var rankNames = {
+      1: "Guest",
+      2: "User",
+      3: "Member",
+      4: "Operator",
+      5: "Moderator",
+      6: "Admin"
+      7: "Owner"
+    }
+
     var header = "Points";
     var comparing = "points";
 
-    function comparePoints(a,b) {
-      if (a.points < b.points)
+    function compare(a, b){
+      if (a[comparing] < b[comparing])
         return 1;
-      if (a.points > b.points)
-        return -1;
-      return 0;
-    }
-
-    function compareLogins(a,b) {
-      if (a.login_count < b.login_count)
-        return 1;
-      if (a.login_count > b.login_count)
-        return -1;
-      return 0;
-    }
-
-    function compareRanks(a,b) {
-      if (a.rank < b.rank)
-        return 1;
-      if (a.rank > b.rank)
+      if (a[comparing] > b[comparing])
         return -1;
       return 0;
     }
@@ -40,32 +34,8 @@ modules.push({
       users.forEach(function(u) {
         var pos = (users.indexOf(u)+1);
         display = u[comparing];
-        if(comparing == "rank"){
-          var rank = u.rank;
-          switch(rank) {
-            case 1:
-              rank = "Guest";
-              break;
-            case 2:
-              rank = "User";
-              break;
-            case 3:
-              rank = "Member";
-              break;
-            case 4:
-              rank = "Operator";
-              break;
-            case 5:
-              rank = "Moderator";
-              break;
-            case 6:
-              rank = "Admin";
-              break;
-            case 7:
-              rank = "Owner";
-          }
-          display = rank;
-        }
+        if(comparing == "rank")
+          display = rankNames[u.rank];
 
         html.push('<tr class="lb-pos-'+pos+'"><td><img src="'+u.mpicture+'"></td><td>'+pos+'</td><td><span data-username="'+u.username+'" class="user-badge">'+u.firstName+' '+u.lastName+'</span></td><td>'+display+'</td></tr>');
       });
@@ -75,30 +45,16 @@ modules.push({
       personbadges();
     }
 
-    $("#lb-points").click(function() {
-      header = "Points";
-      comparing = "points";
-      users.sort(comparePoints);
-      updateLeaderboards();
-    });
-
-    $("#lb-logins").click(function() {
-      header = "Login Count";
-      comparing = "login_count";
-      users.sort(compareLogins);
-      updateLeaderboards();
-    });
-
-    $("#lb-rank").click(function() {
-      header = "User Rank";
-      comparing = "rank";
-      users.sort(compareRanks);
+    $("#leaderboard-sorting button").click(function() {
+      comparing = $(this).data("compare");
+      header = $(this).text();
+      users.sort(compare);
       updateLeaderboards();
     });
 
     $.get('/users/api/list', {registeredOnly: "1"}, function(data) {
       users = data;
-      users.sort(comparePoints);
+      users.sort(compare);
       updateLeaderboards();
     });
   }
