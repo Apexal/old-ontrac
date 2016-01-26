@@ -13,7 +13,7 @@ modules.push({
       3: "Member",
       4: "Operator",
       5: "Moderator",
-      6: "Admin"
+      6: "Admin",
       7: "Owner"
     }
 
