@@ -24,6 +24,7 @@ html
     main(class=(loggedIn ? "pushed" : ""), class=(helpers.isPage(page, '/gchat') ? "chatpage" : ""))
       if loggedIn
         include /parts/reminders
+        include /users/online-modal
       else
         include /users/login-modal
       
@@ -46,7 +47,7 @@ html
                   .form-group
                     label(for="show_again") Don't automatically show this message &nbsp;
                     input#show_again(type="checkbox", name="show_again")
-      
+
     if loggedIn
       include /parts/footer
     

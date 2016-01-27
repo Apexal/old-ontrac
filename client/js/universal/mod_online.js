@@ -20,6 +20,8 @@ modules.push({
       var advnames = [];
       var count = 0;
 
+      var modal = [];
+
       online.forEach(function(user) {
         if(user.status === undefined)
           user.status = "available";
@@ -27,7 +29,9 @@ modules.push({
         if(user.status != "offline"){
           count +=1;
           usernames.push(user.username);
-          names.push("<span class='user-badge' data-username='"+user.username+"'>"+(user.username == username ? "<b>You</b>" : user.username)+" <img src='/images/statuses/status-"+user.status.toLowerCase().replace(" ", "")+".png'></span>");
+          var toPush  = "<span class='user-badge' data-username='"+user.username+"'>"+(user.username == username ? "<b>You</b>" : user.username)+" <img src='/images/statuses/status-"+user.status.toLowerCase().replace(" ", "")+".png'></span>";
+          names.push(toPush);
+          modal.push("<tr><td class='user-badge' data-username='"+user.username+"'>"+user.firstName+" "+user.lastName+"</td><td>"+user.status.charAt(0).toUpperCase() + user.status.slice(1)+"</td><tr>");
         }
 
         if(user.status == "offline" && user.username == username)
@@ -62,6 +66,8 @@ modules.push({
         }
       });
 
+      $("#online-modal .list").html(modal.join(''));
+      $("#online-modal .count").text(count);
       $("#users-online").text(count+" user(s)");
       $(".online-badge span").text(count+" online");
       $(".online-badge").attr("data-content", names.join('<br>'));

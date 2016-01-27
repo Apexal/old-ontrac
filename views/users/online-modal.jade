@@ -1,0 +1,20 @@
+.modal.fade.in#online-modal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+          h4.modal-title Online Users
+            small.right.count 0
+      .modal-body
+        table.table.table-condensed.list
+          tr
+            td.text-muted Loading online list...
+          
+      .modal-footer
+        button.btn.btn-default(data-dismiss='modal', type='button') Close
+
+script.
+  sessionStorage.unread = 0;
+  sessionStorage.advunread = 0;
+  sessionStorage.currentUser = undefined;
