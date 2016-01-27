@@ -344,3 +344,8 @@ a.slidesjs-navigation {
   100% { text-shadow: none;}
 }
 */
+
+
+.modal-inside blockquote {
+  font-size: 1em;
+}
